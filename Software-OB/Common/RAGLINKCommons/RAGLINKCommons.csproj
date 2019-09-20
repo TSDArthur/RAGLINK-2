@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A2543A95-C6FD-4FDC-81F2-097A2435177D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>RAGLINKCommons</RootNamespace>
+    <AssemblyName>RAGLINKCommons</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Program\RAGLINK-OB\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="RAGLINKPlatform\BoardsManager.cs" />
+    <Compile Include="RAGLINKPlatform\Communication.cs" />
+    <Compile Include="RAGLINKPlatform\ControlObjects.cs" />
+    <Compile Include="RAGLINKPlatform\DataManager.cs" />
+    <Compile Include="RAGLINKPlatform\DevicesManager.cs" />
+    <Compile Include="RAGLINKPlatform\FileEncryption.cs" />
+    <Compile Include="RAGLINKPlatform\GraphicOptionsManager.cs" />
+    <Compile Include="RAGLINKPlatform\ProjectLoader.cs" />
+    <Compile Include="RAGLINKPlatform\ProjectsManager.cs" />
+    <Compile Include="RAGLINKPlatform\PackagesManager.cs" />
+    <Compile Include="RAGLINKPlatform\SettingsContent.cs" />
+    <Compile Include="RAGLINKPlatform\SettingsFileIO.cs" />
+    <Compile Include="RAGLINKPlatform\UserInterface\formSummary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RAGLINKPlatform\UserInterface\formSummary.Designer.cs">
+      <DependentUpon>formSummary.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RAGLINKPlatform\UserInterface\formSummary.ItemsLoader.cs">
+      <DependentUpon>formSummary.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RAGLINKPlatform\UserInterface\formSummaryInit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RAGLINKPlatform\UserInterface\formSummaryInit.Designer.cs">
+      <DependentUpon>formSummaryInit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RAGLINKPlatform\UserInterface\UserInterfaceSwap.cs" />
+    <Compile Include="RAGLINKProxy\TrainMethodsClient.cs" />
+    <Compile Include="RAGLINKProxy\UserInterface\formController.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RAGLINKProxy\UserInterface\formController.Designer.cs">
+      <DependentUpon>formController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RAGLINKProxy\UserInterface\formController.Loader.cs">
+      <DependentUpon>formController.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RAGLINKProxy\UserInterface\formDataMonitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RAGLINKProxy\UserInterface\formDataMonitor.Designer.cs">
+      <DependentUpon>formDataMonitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RAGLINKProxy\UserInterface\formDataMonitor.Update.cs">
+      <DependentUpon>formDataMonitor.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RAGLINKProxy\UserInterface\formStreamRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RAGLINKProxy\UserInterface\formStreamRecord.Designer.cs">
+      <DependentUpon>formStreamRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RAGLINKProxy\UserInterface\ListBoxDoubleBuffered.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RAGLINKProxy\UserInterface\ListViewDoubleBuffered.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RAGLINKProxy\UserInterface\UserInterfaceSwap.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FastColoredTextBox, Version=2.16.23.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Program\RAGLINK-OB\FastColoredTextBox.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=3.1.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DockPanelSuite.3.1.0-beta3\lib\net40\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
+    <Reference Include="WeifenLuo.WinFormsUI.Docking.ThemeVS2015, Version=3.1.0.0, Culture=neutral, PublicKeyToken=5cded1a1a0a7b481, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\DockPanelSuite.ThemeVS2015.3.1.0-beta3\lib\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2015.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RAGLINKPlatform\UserInterface\formSummary.resx">
+      <DependentUpon>formSummary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RAGLINKPlatform\UserInterface\formSummaryInit.resx">
+      <DependentUpon>formSummaryInit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RAGLINKProxy\UserInterface\formController.resx">
+      <DependentUpon>formController.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RAGLINKProxy\UserInterface\formDataMonitor.resx">
+      <DependentUpon>formDataMonitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RAGLINKProxy\UserInterface\formStreamRecord.resx">
+      <DependentUpon>formStreamRecord.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\Delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Import.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Loading.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Log.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Modify.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\New.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\option.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PlanReaderBackground.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Prop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Record.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\review.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Sel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SwitchOn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\TextBack.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\train.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\About.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\alarm.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Board.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\control.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Data.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\InitBackground.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Background.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets'))" />
+  </Target>
+</Project>

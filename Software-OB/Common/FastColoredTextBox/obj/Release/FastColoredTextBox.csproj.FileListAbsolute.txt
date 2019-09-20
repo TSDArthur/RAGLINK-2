@@ -1,0 +1,10 @@
+E:\NewStart2017\ThirdParty\FastColoredTextBox\FastColoredTextBox\obj\Release\FastColoredTextBoxNS.FastColoredTextBox.resources
+E:\NewStart2017\ThirdParty\FastColoredTextBox\FastColoredTextBox\obj\Release\FastColoredTextBoxNS.FindForm.resources
+E:\NewStart2017\ThirdParty\FastColoredTextBox\FastColoredTextBox\obj\Release\FastColoredTextBoxNS.GoToForm.resources
+E:\NewStart2017\ThirdParty\FastColoredTextBox\FastColoredTextBox\obj\Release\FastColoredTextBoxNS.HotkeysEditorForm.resources
+E:\NewStart2017\ThirdParty\FastColoredTextBox\FastColoredTextBox\obj\Release\FastColoredTextBoxNS.ReplaceForm.resources
+E:\NewStart2017\ThirdParty\FastColoredTextBox\FastColoredTextBox\obj\Release\FastColoredTextBox.csproj.GenerateResource.Cache
+E:\NewStart2017\ThirdParty\FastColoredTextBox\FastColoredTextBox\bin\Release\FastColoredTextBox.dll
+E:\NewStart2017\ThirdParty\FastColoredTextBox\FastColoredTextBox\bin\Release\FastColoredTextBox.pdb
+E:\NewStart2017\ThirdParty\FastColoredTextBox\FastColoredTextBox\obj\Release\FastColoredTextBox.dll
+E:\NewStart2017\ThirdParty\FastColoredTextBox\FastColoredTextBox\obj\Release\FastColoredTextBox.pdb

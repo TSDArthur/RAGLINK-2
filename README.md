@@ -1,9 +1,13 @@
 # ALL NEW RAGLINK 2
 ALL NEW RAGLINK System : Desktop Train Contoller Solution for OpenBVE and OpenRails.
 
-⚪Still in developing...
+⚪OpenBVE Version: Preview Version
 
-# New features:
+⚪OpenRails Version: Still in developing...
+
+# New Features
+
+⚪ALL NEW Support OpenRails Platform.
 
 ⚪Full Modular Design, Modifying Hardware and Software Settings of Controllers without Re-programming.
 

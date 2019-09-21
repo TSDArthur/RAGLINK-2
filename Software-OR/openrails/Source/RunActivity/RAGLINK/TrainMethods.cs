@@ -395,7 +395,314 @@ namespace Orts.RAGLINKProxy
         }
         static public void SetEmergencyState(bool dataValue)
         {
-
+            try
+            {
+                ((MSTSLocomotive)playerLocomotive).SetEmergency(dataValue);
+                emergencyEnable = dataValue;
+            }
+            catch (Exception) { };
+        }
+        static public bool GetCurrentEmergencyState()
+        {
+            bool retValue = false;
+            retValue = emergencyEnable;
+            return retValue;
+        }
+        static public string GetNextStationName()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.NextStationName;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetNextStationArrivalScheduledTime()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.NextStationArriveScheduled;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetNextStationDepartScheduled()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.NextStationDepartScheduled;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public double GetNextStationDistance()
+        {
+            double retValue = double.NaN;
+            try
+            {
+                retValue = Convert.ToDouble(Program.Viewer.NextStationWindow.NextStationDistance);
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetCurrentStationName()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.CurrentStationName;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetCurrentStationArrivalScheduledTime()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.CurrentStationArriveScheduled;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetCurrentStationArrivalActualTime()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.CurrentStationArriveActual;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetCurrentStationDepartScheduledTime()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.CurrentStationDepartScheduled;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public double GetCurrentStationDistance()
+        {
+            double retValue = double.NaN;
+            try
+            {
+                retValue = Convert.ToDouble(Program.Viewer.NextStationWindow.CurrentStationDistance);
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetPreviousStationName()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.PreviousStationName;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetPreviousStationArrivalScheduledTime()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.PreviousStationArriveScheduled;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetPreviousStationArrivalActualTime()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.PreviousStationArriveActual;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetPreviousStationDepartScheduledTime()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.PreviousStationDepartScheduled;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetPreviousStationDepartActualTime()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.PreviousStationDepartActual;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public double GetPreviousStationDistance()
+        {
+            double retValue = double.NaN;
+            try
+            {
+                retValue = Convert.ToDouble(Program.Viewer.NextStationWindow.CurrentStationDistance);
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetDestinationStationName()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.DestStationName;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public int GetStationCount()
+        {
+            int retValue = 0;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.StationCount;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetStationPlatformName()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.CurrentStationPlatform;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetActivityName()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.ActMessage;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetCurrentRouteName()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = playerLocomotive.Simulator.RouteName;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetCurrentTrainName()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = playerLocomotive.Train.Name;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetCurrentConsistName()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = playerLocomotive.Simulator.conFileName;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetCurrentActivityName()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = playerLocomotive.Simulator.ActivityFileName;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public string GetCurrentTime()
+        {
+            string retValue = string.Empty;
+            try
+            {
+                retValue = Program.Viewer.NextStationWindow.CurrentWorldTime;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public void SetLeftDoorState(bool dataValue)
+        {
+            try
+            {
+                if (((MSTSLocomotive)playerLocomotive).GetCabFlipped())
+                {
+                    if (((MSTSLocomotive)playerLocomotive).DoorRightOpen != dataValue)
+                        ((MSTSLocomotive)playerLocomotive).ToggleDoorsRight();
+                }
+                else
+                {
+                    if (((MSTSLocomotive)playerLocomotive).DoorLeftOpen != dataValue)
+                        ((MSTSLocomotive)playerLocomotive).ToggleDoorsLeft();
+                }
+            }
+            catch (Exception) { };
+        }
+        static public void SetRightDoorState(bool dataValue)
+        {
+            try
+            {
+                if (((MSTSLocomotive)playerLocomotive).GetCabFlipped())
+                {
+                    if (((MSTSLocomotive)playerLocomotive).DoorLeftOpen != dataValue)
+                        ((MSTSLocomotive)playerLocomotive).ToggleDoorsLeft();
+                }
+                else
+                {
+                    if (((MSTSLocomotive)playerLocomotive).DoorRightOpen != dataValue)
+                        ((MSTSLocomotive)playerLocomotive).ToggleDoorsRight();
+                }
+            }
+            catch (Exception) { };
+        }
+        static public bool GetLeftDoorState()
+        {
+            bool retValue = false;
+            try
+            {
+                if (((MSTSLocomotive)playerLocomotive).GetCabFlipped()) retValue = ((MSTSLocomotive)playerLocomotive).DoorRightOpen;
+                else retValue = ((MSTSLocomotive)playerLocomotive).DoorLeftOpen;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+        static public bool GetRightDoorState()
+        {
+            bool retValue = false;
+            try
+            {
+                if (((MSTSLocomotive)playerLocomotive).GetCabFlipped()) retValue = ((MSTSLocomotive)playerLocomotive).DoorLeftOpen;
+                else retValue = ((MSTSLocomotive)playerLocomotive).DoorRightOpen;
+            }
+            catch (Exception) { };
+            return retValue;
         }
     }
 }

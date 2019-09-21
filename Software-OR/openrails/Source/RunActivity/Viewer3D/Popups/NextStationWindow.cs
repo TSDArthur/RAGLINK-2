@@ -30,10 +30,19 @@ namespace Orts.Viewer3D.Popups
 {
     public class NextStationWindow : Window
     {
+        public string CurrentWorldTime;
+        public string CurrentUserDelay;
+        public string CurrentStationPlatform;
         Label CurrentTime;
         Label StationPlatform;
         Label CurrentDelay;
 
+        public string PreviousStationName;
+        public string PreviousStationDistance;
+        public string PreviousStationArriveScheduled;
+        public string PreviousStationArriveActual;
+        public string PreviousStationDepartScheduled;
+        public string PreviousStationDepartActual;
         Label StationPreviousName;
         Label StationPreviousDistance;
         Label StationPreviousArriveScheduled;
@@ -41,19 +50,30 @@ namespace Orts.Viewer3D.Popups
         Label StationPreviousDepartScheduled;
         Label StationPreviousDepartActual;
 
+        public string CurrentStationName;
+        public string CurrentStationDistance;
+        public string CurrentStationArriveScheduled;
+        public string CurrentStationArriveActual;
+        public string CurrentStationDepartScheduled;
         Label StationCurrentName;
         Label StationCurrentDistance;
         Label StationCurrentArriveScheduled;
         Label StationCurrentArriveActual;
         Label StationCurrentDepartScheduled;
 
+        public string NextStationName;
+        public string NextStationDistance;
+        public string NextStationArriveScheduled;
+        public string NextStationDepartScheduled;
         Label StationNextName;
         Label StationNextDistance;
-
-
         Label StationNextArriveScheduled;
         Label StationNextDepartScheduled;
 
+        public string DestStationName;
+        public int StationCount = 0;
+
+        public string ActMessage;
         Label Message;
 
         public NextStationWindow(WindowManager owner)
@@ -123,15 +143,20 @@ namespace Orts.Viewer3D.Popups
             if (updateFull)
             {
                 CurrentTime.Text = FormatStrings.FormatTime(Owner.Viewer.Simulator.ClockTime);
+                CurrentWorldTime = CurrentTime.Text;
                 Activity act = Owner.Viewer.Simulator.ActivityRun;
                 Train playerTrain = Owner.Viewer.Simulator.PlayerLocomotive.Train;
                 if (playerTrain.Delay.HasValue)
                 {
                     CurrentDelay.Text = Viewer.Catalog.GetPluralStringFmt("Current Delay: {0} minute", "Current Delay: {0} minutes", (long)playerTrain.Delay.Value.TotalMinutes);
+                    //
+                    CurrentUserDelay = ((long)playerTrain.Delay.Value.TotalMinutes).ToString();
                 }
                 else
                 {
                     CurrentDelay.Text = "";
+                    //
+                    CurrentUserDelay = "";
                 }
 
                 bool metric = Owner.Viewer.MilepostUnitsMetric;
@@ -147,23 +172,44 @@ namespace Orts.Viewer3D.Popups
 
                     // train name
                     StationPlatform.Text = String.Concat(playerTimetableTrain.Name.Substring(0, Math.Min(playerTimetableTrain.Name.Length, 20)));
+                    //
+                    CurrentStationPlatform = StationPlatform.Text;
 
                     if (playerTimetableTrain.ControlMode == Train.TRAIN_CONTROL.INACTIVE || playerTimetableTrain.MovementState == Simulation.AIs.AITrain.AI_MOVEMENT_STATE.AI_STATIC)
                     {
                         // no info available
-                        StationPreviousName.Text = "";
+                        PreviousStationName = "";
+                        PreviousStationDistance = "";
+                        PreviousStationArriveScheduled = "";
+                        PreviousStationArriveActual = "";
+                        PreviousStationDepartScheduled = "";
+                        PreviousStationDepartActual = "";
+                        //
                         StationPreviousArriveScheduled.Text = "";
                         StationPreviousArriveActual.Text = "";
                         StationPreviousDepartScheduled.Text = "";
                         StationPreviousDepartActual.Text = "";
                         StationPreviousDistance.Text = "";
 
+                        //
+                        CurrentStationName = "";
+                        CurrentStationArriveScheduled = "";
+                        CurrentStationArriveActual = "";
+                        CurrentStationDepartScheduled = "";
+                        CurrentStationDistance = "";
+                        //
                         StationCurrentName.Text = "";
                         StationCurrentArriveScheduled.Text = "";
                         StationCurrentArriveActual.Text = "";
                         StationCurrentDepartScheduled.Text = "";
                         StationCurrentDistance.Text = "";
 
+                        //
+                        NextStationName = "";
+                        NextStationArriveScheduled = "";
+                        NextStationDepartScheduled = "";
+                        NextStationDistance = "";
+                        //
                         StationNextName.Text = "";
                         StationNextArriveScheduled.Text = "";
                         StationNextDepartScheduled.Text = "";
@@ -186,12 +232,16 @@ namespace Orts.Viewer3D.Popups
                             if (otherTrain == null)
                             {
                                 Message.Text = Viewer.Catalog.GetString("Waiting for train to attach");
+                                //
+                                ActMessage = Message.Text;
                                 Message.Color = Color.Orange;
                                 validMessage = true;
                             }
                             else
                             {
                                 Message.Text = String.Concat(Viewer.Catalog.GetString("Waiting for train to attach : "), otherTrain.Name);
+                                //
+                                ActMessage = Message.Text;
                                 Message.Color = Color.Orange;
                                 validMessage = true;
                             }
@@ -205,6 +255,8 @@ namespace Orts.Viewer3D.Popups
                                 {
 
                                     Message.Text = Viewer.Catalog.GetString("Waiting for transfer");
+                                    //
+                                    ActMessage = Message.Text;
                                     Message.Color = Color.Orange;
                                     break;
                                 }
@@ -221,29 +273,41 @@ namespace Orts.Viewer3D.Popups
                                 if (playerTimetableTrain.ControlMode == Train.TRAIN_CONTROL.INACTIVE)
                                 {
                                     Message.Text = Viewer.Catalog.GetString("Train inactive.");
+                                    //
+                                    ActMessage = Message.Text;
                                 }
                                 else if (playerTimetableTrain.MovementState == Simulation.AIs.AITrain.AI_MOVEMENT_STATE.AI_STATIC)
                                 {
                                     Message.Text = Viewer.Catalog.GetString("Train static.");
+                                    //
+                                    ActMessage = Message.Text;
                                 }
                                 else
                                 {
                                     Message.Text = Viewer.Catalog.GetString("Train not active.");
+                                    //
+                                    ActMessage = Message.Text;
                                 }
 
                                 // set activation message or time
                                 if (playerTimetableTrain.TriggeredActivationRequired)
                                 {
                                     Message.Text = String.Concat(Message.Text, Viewer.Catalog.GetString(" Activated by other train."));
+                                    //
+                                    ActMessage = Message.Text;
                                 }
                                 else
                                 {
                                     Message.Text = String.Concat(Message.Text, Viewer.Catalog.GetString(" Activation time : "), activateDT.ToString("HH:mm:ss"));
+                                    //
+                                    ActMessage = Message.Text;
                                 }
                             }
                             else
                             {
                                 Message.Text = Viewer.Catalog.GetString("Train has terminated.");
+                                //
+                                ActMessage = Message.Text;
                             }
                         }
                     }
@@ -252,6 +316,13 @@ namespace Orts.Viewer3D.Popups
                         // previous stop
                         if (playerTimetableTrain.PreviousStop == null)
                         {
+                            PreviousStationName = "";
+                            PreviousStationDistance = "";
+                            PreviousStationArriveScheduled = "";
+                            PreviousStationArriveActual = "";
+                            PreviousStationDepartScheduled = "";
+                            PreviousStationDepartActual = "";
+                            //
                             StationPreviousName.Text = "";
                             StationPreviousArriveScheduled.Text = "";
                             StationPreviousArriveActual.Text = "";
@@ -262,71 +333,126 @@ namespace Orts.Viewer3D.Popups
                         else
                         {
                             StationPreviousName.Text = playerTimetableTrain.PreviousStop.PlatformItem.Name;
+                            //
+                            PreviousStationName = StationPreviousName.Text;
                             StationPreviousArriveScheduled.Text = playerTimetableTrain.PreviousStop.arrivalDT.ToString("HH:mm:ss");
+                            //
+                            PreviousStationArriveScheduled = StationPreviousArriveScheduled.Text;
                             if (playerTimetableTrain.PreviousStop.ActualArrival >= 0)
                             {
                                 DateTime actArrDT = new DateTime((long)(Math.Pow(10, 7) * playerTimetableTrain.PreviousStop.ActualArrival));
                                 StationPreviousArriveActual.Text = actArrDT.ToString("HH:mm:ss");
+                                //
+                                PreviousStationArriveActual = StationPreviousArriveActual.Text;
                                 StationPreviousArriveActual.Color = actArrDT < playerTimetableTrain.PreviousStop.arrivalDT ? Color.LightGreen : Color.LightSalmon;
                                 DateTime actDepDT = new DateTime((long)(Math.Pow(10, 7) * playerTimetableTrain.PreviousStop.ActualDepart));
                                 StationPreviousDepartActual.Text = actDepDT.ToString("HH:mm:ss");
+                                //
+                                PreviousStationDepartActual = StationPreviousDepartActual.Text;
                                 StationPreviousDepartActual.Color = actDepDT > playerTimetableTrain.PreviousStop.arrivalDT ? Color.LightGreen : Color.LightSalmon;
                             }
                             else
                             {
                                 StationPreviousArriveActual.Text = Viewer.Catalog.GetString("(missed)");
+                                //
+                                PreviousStationArriveActual = StationPreviousArriveActual.Text;
                                 StationPreviousArriveActual.Color = Color.LightSalmon;
                                 StationPreviousDepartActual.Text = "";
                             }
                             StationPreviousDepartScheduled.Text = playerTimetableTrain.PreviousStop.departureDT.ToString("HH:mm:ss");
+                            //
+                            PreviousStationDepartScheduled = StationPreviousDepartScheduled.Text;
                             StationPreviousDistance.Text = "";
+                            //
+                            PreviousStationDistance = StationPreviousDistance.Text;
                         }
 
                         if (playerTimetableTrain.StationStops == null || playerTimetableTrain.StationStops.Count == 0)
                         {
+                            CurrentStationName = "";
+                            CurrentStationArriveScheduled = "";
+                            CurrentStationArriveActual = "";
+                            CurrentStationDepartScheduled = "";
+                            CurrentStationDistance = "";
+                            //
                             StationCurrentName.Text = "";
                             StationCurrentArriveScheduled.Text = "";
                             StationCurrentArriveActual.Text = "";
                             StationCurrentDepartScheduled.Text = "";
                             StationCurrentDistance.Text = "";
 
+                            NextStationName = "";
+                            NextStationArriveScheduled = "";
+                            NextStationDepartScheduled = "";
+                            NextStationDistance = "";
+                            //
                             StationNextName.Text = "";
                             StationNextArriveScheduled.Text = "";
                             StationNextDepartScheduled.Text = "";
                             StationNextDistance.Text = "";
 
                             Message.Text = Viewer.Catalog.GetString("No more stations.");
+                            //
+                            ActMessage = Message.Text;
                             Message.Color = Color.White;
                         }
                         else
                         {
                             StationCurrentName.Text = playerTimetableTrain.StationStops[0].PlatformItem.Name;
+                            //
+                            CurrentStationName = StationCurrentName.Text;
                             StationCurrentArriveScheduled.Text = playerTimetableTrain.StationStops[0].arrivalDT.ToString("HH:mm:ss");
+                            //
+                            CurrentStationArriveScheduled = StationCurrentArriveScheduled.Text;
                             if (playerTimetableTrain.StationStops[0].ActualArrival >= 0)
                             {
                                 DateTime actArrDT = new DateTime((long)(Math.Pow(10, 7) * playerTimetableTrain.StationStops[0].ActualArrival));
                                 StationCurrentArriveActual.Text = actArrDT.ToString("HH:mm:ss");
+                                //
+                                CurrentStationArriveActual = StationCurrentArriveActual.Text;
                                 StationCurrentArriveActual.Color = actArrDT < playerTimetableTrain.StationStops[0].arrivalDT ? Color.LightGreen : Color.LightSalmon;
 
                             }
                             else
                             {
                                 StationCurrentArriveActual.Text = "";
+                                //
+                                CurrentStationArriveActual = StationCurrentArriveActual.Text;
                             }
                             StationCurrentDepartScheduled.Text = playerTimetableTrain.StationStops[0].departureDT.ToString("HH:mm:ss");
+                            //
+                            CurrentStationDepartScheduled = StationCurrentDepartScheduled.Text;
                             StationCurrentDistance.Text = FormatStrings.FormatDistanceDisplay(playerTimetableTrain.StationStops[0].DistanceToTrainM, metric);
+                            //
+                            CurrentStationDistance = StationCurrentDistance.Text;
                             Message.Text = playerTimetableTrain.DisplayMessage;
+                            //
+                            ActMessage = Message.Text;
                             Message.Color = playerTimetableTrain.DisplayColor;
-
                             if (playerTimetableTrain.StationStops.Count >= 2)
                             {
                                 StationNextName.Text = playerTimetableTrain.StationStops[1].PlatformItem.Name;
+                                //
+                                StationCount = Math.Max(StationCount, playerTimetableTrain.StationStops.Count);
+                                DestStationName = playerTimetableTrain.StationStops[StationCount - 1].PlatformItem.Name;
+                                NextStationName = StationNextName.Text;
                                 StationNextArriveScheduled.Text = playerTimetableTrain.StationStops[1].arrivalDT.ToString("HH:mm:ss");
+                                //
+                                NextStationArriveScheduled = StationNextArriveScheduled.Text;
                                 StationNextDepartScheduled.Text = playerTimetableTrain.StationStops[1].departureDT.ToString("HH:mm:ss");
+                                //
+                                NextStationDepartScheduled = StationNextDepartScheduled.Text;
                                 StationNextDistance.Text = "";
+                                //
+                                NextStationDistance = StationNextDistance.Text;
                             }
                             else
                             {
+                                NextStationName = "";
+                                NextStationArriveScheduled = "";
+                                NextStationDepartScheduled = "";
+                                NextStationDistance = "";
+                                //
                                 StationNextName.Text = "";
                                 StationNextArriveScheduled.Text = "";
                                 StationNextDepartScheduled.Text = "";
@@ -388,6 +514,8 @@ namespace Orts.Viewer3D.Popups
                                 {
                                     Message.Text = Viewer.Catalog.GetString("Train is to attach to : ");
                                     Message.Text = String.Concat(Message.Text, playerTimetableTrain.AttachDetails.AttachTrainName);
+                                    //
+                                    ActMessage = Message.Text;
                                     Message.Color = Color.Orange;
                                 }
                                 else
@@ -395,6 +523,8 @@ namespace Orts.Viewer3D.Popups
                                     Message.Text = Viewer.Catalog.GetString("Train is to attach to : ");
                                     Message.Text = String.Concat(Message.Text, playerTimetableTrain.AttachDetails.AttachTrainName);
                                     Message.Text = String.Concat(Message.Text, Viewer.Catalog.GetString(" ; other train not yet ready"));
+                                    //
+                                    ActMessage = Message.Text;
                                     Message.Color = Color.Orange;
                                 }
                             }
@@ -404,21 +534,29 @@ namespace Orts.Viewer3D.Popups
                         else if (playerTimetableTrain.PickUpStaticOnForms)
                         {
                             Message.Text = Viewer.Catalog.GetString("Train is to pickup train at end of path");
+                            //
+                            ActMessage = Message.Text;
                             Message.Color = Color.Orange;
                         }
                         else if (playerTimetableTrain.NeedPickUp)
                         {
                             Message.Text = Viewer.Catalog.GetString("Pick up train ahead");
+                            //
+                            ActMessage = Message.Text;
                             Message.Color = Color.Orange;
                         }
                         else if (transferValid)
                         {
                             Message.Text = String.Copy(TransferMessage);
+                            //
+                            ActMessage = Message.Text;
                             Message.Color = Color.Orange;
                         }
                         else if (playerTimetableTrain.NeedTransfer)
                         {
                             Message.Text = Viewer.Catalog.GetString("Transfer units with train ahead");
+                            //
+                            ActMessage = Message.Text;
                             Message.Color = Color.Orange;
                         }
                     }
@@ -429,10 +567,19 @@ namespace Orts.Viewer3D.Popups
                 {
                     // train name
                     StationPlatform.Text = String.Concat(playerTrain.Name.Substring(0, Math.Min(playerTrain.Name.Length, 20)));
+                    //
+                    CurrentStationPlatform = StationPlatform.Text;
 
                     if (playerTrain.ControlMode == Train.TRAIN_CONTROL.INACTIVE)
                     {
                         // no info available
+                        PreviousStationName = "";
+                        PreviousStationDistance = "";
+                        PreviousStationArriveScheduled = "";
+                        PreviousStationArriveActual = "";
+                        PreviousStationDepartScheduled = "";
+                        PreviousStationDepartActual = "";
+                        //
                         StationPreviousName.Text = "";
                         StationPreviousArriveScheduled.Text = "";
                         StationPreviousArriveActual.Text = "";
@@ -440,18 +587,31 @@ namespace Orts.Viewer3D.Popups
                         StationPreviousDepartActual.Text = "";
                         StationPreviousDistance.Text = "";
 
+                        CurrentStationName = "";
+                        CurrentStationArriveScheduled = "";
+                        CurrentStationArriveActual = "";
+                        CurrentStationDepartScheduled = "";
+                        CurrentStationDistance = "";
+                        //
                         StationCurrentName.Text = "";
                         StationCurrentArriveScheduled.Text = "";
                         StationCurrentArriveActual.Text = "";
                         StationCurrentDepartScheduled.Text = "";
                         StationCurrentDistance.Text = "";
 
+                        NextStationName = "";
+                        NextStationArriveScheduled = "";
+                        NextStationDepartScheduled = StationNextDepartScheduled.Text;
+                        NextStationDepartScheduled = StationNextDistance.Text;
+                        //
                         StationNextName.Text = "";
                         StationNextArriveScheduled.Text = "";
                         StationNextDepartScheduled.Text = "";
                         StationNextDistance.Text = "";
 
                         Message.Text = Viewer.Catalog.GetString("Train not active.");
+                        //
+                        ActMessage = Message.Text;
                         Message.Color = Color.White;
 
                         if (playerTrain.GetType() == typeof(TTTrain))
@@ -461,6 +621,8 @@ namespace Orts.Viewer3D.Popups
                             {
                                 DateTime activateDT = new DateTime((long)(Math.Pow(10, 7) * playerTimetableTrain.ActivateTime.Value));
                                 Message.Text = String.Concat(Message.Text, Viewer.Catalog.GetString(" Activation time : "), activateDT.ToString("HH:mm:ss"));
+                                //
+                                ActMessage = Message.Text;
                             }
                         }
                     }
@@ -469,6 +631,13 @@ namespace Orts.Viewer3D.Popups
                         // previous stop
                         if (playerTrain.PreviousStop == null)
                         {
+                            PreviousStationName = "";
+                            PreviousStationDistance = "";
+                            PreviousStationArriveScheduled = "";
+                            PreviousStationArriveActual = "";
+                            PreviousStationDepartScheduled = "";
+                            PreviousStationDepartActual = "";
+                            //
                             StationPreviousName.Text = "";
                             StationPreviousArriveScheduled.Text = "";
                             StationPreviousArriveActual.Text = "";
@@ -497,52 +666,95 @@ namespace Orts.Viewer3D.Popups
                             }
                             StationPreviousDepartScheduled.Text = playerTrain.PreviousStop.departureDT.ToString("HH:mm:ss");
                             StationPreviousDistance.Text = "";
+                            //
+                            PreviousStationDistance = "";
                         }
 
                         if (playerTrain.StationStops == null || playerTrain.StationStops.Count == 0)
                         {
+                            CurrentStationName = StationCurrentName.Text;
+                            CurrentStationArriveScheduled = StationCurrentArriveScheduled.Text;
+                            CurrentStationArriveActual = StationCurrentArriveActual.Text;
+                            CurrentStationDepartScheduled = StationCurrentDepartScheduled.Text;
+                            CurrentStationDistance = StationCurrentDistance.Text;
+                            //
                             StationCurrentName.Text = "";
                             StationCurrentArriveScheduled.Text = "";
                             StationCurrentArriveActual.Text = "";
                             StationCurrentDepartScheduled.Text = "";
                             StationCurrentDistance.Text = "";
 
+                            NextStationName = "";
+                            NextStationArriveScheduled = "";
+                            NextStationDepartScheduled = "";
+                            NextStationDistance = "";
+                            //
                             StationNextName.Text = "";
                             StationNextArriveScheduled.Text = "";
                             StationNextDepartScheduled.Text = "";
                             StationNextDistance.Text = "";
 
                             Message.Text = Viewer.Catalog.GetString("No more stations.");
+                            //
+                            ActMessage = Message.Text;
                         }
                         else
                         {
                             StationCurrentName.Text = playerTrain.StationStops[0].PlatformItem.Name;
+                            //
+                            CurrentStationName = StationCurrentName.Text;
                             StationCurrentArriveScheduled.Text = playerTrain.StationStops[0].arrivalDT.ToString("HH:mm:ss");
+                            //
+                            CurrentStationArriveScheduled = StationCurrentArriveScheduled.Text;
                             if (playerTrain.StationStops[0].ActualArrival >= 0)
                             {
                                 DateTime actArrDT = new DateTime((long)(Math.Pow(10, 7) * playerTrain.StationStops[0].ActualArrival));
                                 StationCurrentArriveActual.Text = actArrDT.ToString("HH:mm:ss");
+                                //
+                                CurrentStationArriveActual = StationCurrentArriveActual.Text;
                                 StationCurrentArriveActual.Color = actArrDT < playerTrain.StationStops[0].arrivalDT ? Color.LightGreen : Color.LightSalmon;
-
                             }
                             else
                             {
                                 StationCurrentArriveActual.Text = "";
+                                //
+                                CurrentStationArriveActual = "";
                             }
                             StationCurrentDepartScheduled.Text = playerTrain.StationStops[0].departureDT.ToString("HH:mm:ss");
+                            //
+                            CurrentStationDepartScheduled = StationCurrentDepartScheduled.Text;
                             StationCurrentDistance.Text = FormatStrings.FormatDistanceDisplay(playerTrain.StationStops[0].DistanceToTrainM, metric);
+                            //
+                            CurrentStationDistance = StationCurrentDistance.Text;
                             Message.Text = playerTrain.DisplayMessage;
+                            //
+                            ActMessage = Message.Text;
                             Message.Color = playerTrain.DisplayColor;
 
                             if (playerTrain.StationStops.Count >= 2)
                             {
                                 StationNextName.Text = playerTrain.StationStops[1].PlatformItem.Name;
+                                //
+                                StationCount = Math.Max(StationCount, playerTrain.StationStops.Count);
+                                DestStationName = playerTrain.StationStops[StationCount - 1].PlatformItem.Name;
+                                NextStationName = StationNextName.Text;
                                 StationNextArriveScheduled.Text = playerTrain.StationStops[1].arrivalDT.ToString("HH:mm:ss");
+                                //
+                                NextStationArriveScheduled = StationNextArriveScheduled.Text;
                                 StationNextDepartScheduled.Text = playerTrain.StationStops[1].departureDT.ToString("HH:mm:ss");
+                                //
+                                NextStationDepartScheduled = StationNextDepartScheduled.Text;
                                 StationNextDistance.Text = "";
+                                //
+                                NextStationDistance = StationNextDistance.Text;
                             }
                             else
                             {
+                                NextStationName = "";
+                                NextStationArriveScheduled = "";
+                                NextStationDepartScheduled = "";
+                                NextStationDistance = "";
+                                //
                                 StationNextName.Text = "";
                                 StationNextArriveScheduled.Text = "";
                                 StationNextDepartScheduled.Text = "";
@@ -566,23 +778,43 @@ namespace Orts.Viewer3D.Popups
                     if (at != null)
                     {
                         StationPreviousName.Text = at.PlatformEnd1.Station;
+                        //
+                        PreviousStationName = StationPreviousName.Text;
                         StationPreviousArriveScheduled.Text = at.SchArrive.ToString("HH:mm:ss");
+                        //
+                        PreviousStationArriveActual = StationPreviousArriveActual.Text;
                         StationPreviousArriveActual.Text = at.ActArrive.HasValue ? at.ActArrive.Value.ToString("HH:mm:ss") : Viewer.Catalog.GetString("(missed)");
+                        //
+                        PreviousStationArriveActual = StationPreviousArriveActual.Text;
                         StationPreviousArriveActual.Color = GetArrivalColor(at.SchArrive, at.ActArrive);
                         StationPreviousDepartScheduled.Text = at.SchDepart.ToString("HH:mm:ss");
+                        //
+                        PreviousStationDepartScheduled = StationPreviousDepartScheduled.Text;
                         StationPreviousDepartActual.Text = at.ActDepart.HasValue ? at.ActDepart.Value.ToString("HH:mm:ss") : Viewer.Catalog.GetString("(missed)");
+                        //
+                        PreviousStationDepartActual = StationPreviousDepartActual.Text;
                         StationPreviousDepartActual.Color = GetDepartColor(at.SchDepart, at.ActDepart);
-
                         StationPreviousDistance.Text = "";
+                        //
+                        PreviousStationDistance = "";
                         if (playerTrain.StationStops.Count > 0 && playerTrain.StationStops[0].PlatformItem != null &&
                             String.Compare(playerTrain.StationStops[0].PlatformItem.Name, StationPreviousName.Text) == 0 &&
                             playerTrain.StationStops[0].DistanceToTrainM > 0)
                         {
                             StationPreviousDistance.Text = FormatStrings.FormatDistanceDisplay(playerTrain.StationStops[0].DistanceToTrainM, metric);
+                            //
+                            PreviousStationDistance = StationPreviousDistance.Text;
                         }
                     }
                     else
                     {
+                        PreviousStationName = "";
+                        PreviousStationArriveScheduled = "";
+                        PreviousStationArriveActual = "";
+                        PreviousStationDepartScheduled = "";
+                        PreviousStationDepartActual = "";
+                        PreviousStationDistance = "";
+                        //
                         StationPreviousName.Text = "";
                         StationPreviousArriveScheduled.Text = "";
                         StationPreviousArriveActual.Text = "";
@@ -595,13 +827,25 @@ namespace Orts.Viewer3D.Popups
                     if (at != null)
                     {
                         StationPlatform.Text = at.PlatformEnd1.ItemName;
+                        //
+                        CurrentStationPlatform = StationPlatform.Text;
                         StationCurrentName.Text = at.PlatformEnd1.Station;
+                        //
+                        CurrentStationName = StationCurrentName.Text;
                         StationCurrentArriveScheduled.Text = at.SchArrive.ToString("HH:mm:ss");
+                        //
+                        CurrentStationArriveScheduled = StationCurrentArriveScheduled.Text;
                         StationCurrentArriveActual.Text = at.ActArrive.HasValue ? at.ActArrive.Value.ToString("HH:mm:ss") : "";
+                        //
+                        CurrentStationArriveActual = StationCurrentArriveActual.Text;
                         StationCurrentArriveActual.Color = GetArrivalColor(at.SchArrive, at.ActArrive);
                         StationCurrentDepartScheduled.Text = at.SchDepart.ToString("HH:mm:ss");
+                        //
+                        CurrentStationDepartScheduled = StationCurrentDepartScheduled.Text;
                         Message.Color = at.DisplayColor;
                         Message.Text = at.DisplayMessage;
+                        //
+                        ActMessage = Message.Text;
 
                         StationCurrentDistance.Text = "";
                         if (playerTrain.StationStops.Count > 0 && playerTrain.StationStops[0].PlatformItem != null &&
@@ -609,10 +853,19 @@ namespace Orts.Viewer3D.Popups
                             playerTrain.StationStops[0].DistanceToTrainM > 0)
                         {
                             StationCurrentDistance.Text = FormatStrings.FormatDistanceDisplay(playerTrain.StationStops[0].DistanceToTrainM, metric);
+                            //
+                            CurrentStationDistance = StationCurrentDistance.Text;
                         }
                     }
                     else
                     {
+                        CurrentStationPlatform = "";
+                        CurrentStationName = "";
+                        CurrentStationArriveScheduled = "";
+                        CurrentStationArriveActual = "";
+                        CurrentStationDepartScheduled = "";
+                        CurrentStationDistance = "";
+                        //
                         StationPlatform.Text = "";
                         StationCurrentName.Text = "";
                         StationCurrentArriveScheduled.Text = "";
@@ -620,25 +873,41 @@ namespace Orts.Viewer3D.Popups
                         StationCurrentDepartScheduled.Text = "";
                         StationCurrentDistance.Text = "";
                         Message.Text = "";
+                        //
+                        ActMessage = "";
                     }
 
                     at = Current != null ? Current.NextTask as ActivityTaskPassengerStopAt : null;
                     if (at != null)
                     {
                         StationNextName.Text = at.PlatformEnd1.Station;
+                        //
+                        NextStationName = StationNextName.Text;
                         StationNextArriveScheduled.Text = at.SchArrive.ToString("HH:mm:ss");
+                        //
+                        NextStationArriveScheduled = StationNextArriveScheduled.Text;
                         StationNextDepartScheduled.Text = at.SchDepart.ToString("HH:mm:ss");
-
+                        //
+                        NextStationDepartScheduled = StationNextDepartScheduled.Text;
                         StationNextDistance.Text = "";
+                        //
+                        NextStationDistance = "";
                         if (playerTrain.StationStops.Count > 0 && playerTrain.StationStops[0].PlatformItem != null &&
                             String.Compare(playerTrain.StationStops[0].PlatformItem.Name, StationNextName.Text) == 0 &&
                             playerTrain.StationStops[0].DistanceToTrainM > 0)
                         {
                             StationNextDistance.Text = FormatStrings.FormatDistanceDisplay(playerTrain.StationStops[0].DistanceToTrainM, metric);
+                            //
+                            NextStationDistance = StationNextDistance.Text;
                         }
                     }
                     else
                     {
+                        NextStationName = "";
+                        NextStationArriveScheduled = "";
+                        NextStationDepartScheduled = "";
+                        NextStationDistance = "";
+                        //
                         StationNextName.Text = "";
                         StationNextArriveScheduled.Text = "";
                         StationNextDepartScheduled.Text = "";
@@ -648,6 +917,8 @@ namespace Orts.Viewer3D.Popups
                     if (act != null && act.IsComplete)
                     {
                         Message.Text = Viewer.Catalog.GetString("Activity completed.");
+                        //
+                        ActMessage = Message.Text;
                     }
                 }
             }

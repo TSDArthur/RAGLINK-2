@@ -118,7 +118,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
                             //reset data
                             BoardsManager.ResetBoardManager();
                             ControlObjects.ResetControlObjects();
-                            Communication.ResetSerial();
+                            CommunicationSerial.ResetSerial();
                             DataManager.ResetTrainData();
                             PackagesManager.ResetPackageManager();
                             GraphicOptionsManager.ResetGraphicOptionsManager();
@@ -148,7 +148,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
                             ProjectsManager.SetupBoard();
                             ProjectsManager.SetupControlObjects();
                             DevicesManager.UpdateDevicesInitMode();
-                            Communication.InitializeSerial();
+                            CommunicationSerial.InitializeSerial();
                             ProcessEvent(LoadingState.PROJECT_DEFINE_LOADED);
                             break;
                         }

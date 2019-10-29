@@ -69,6 +69,5 @@ C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\FastColoredTextBox\obj\De
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\FastColoredTextBox\obj\Debug\FastColoredTextBoxNS.HotkeysEditorForm.resources
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\FastColoredTextBox\obj\Debug\FastColoredTextBoxNS.ReplaceForm.resources
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\FastColoredTextBox\obj\Debug\FastColoredTextBox.csproj.GenerateResource.cache
-C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\FastColoredTextBox\obj\Debug\FastColoredTextBox.csproj.CoreCompileInputs.cache
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\FastColoredTextBox\obj\Debug\FastColoredTextBox.dll
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\FastColoredTextBox\obj\Debug\FastColoredTextBox.pdb

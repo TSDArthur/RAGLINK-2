@@ -29,7 +29,6 @@ C:\Documents\RAGLINKProject\RAGLINK\Program\RAGLINK-OB\RAGLINKFileConvert.exe.co
 C:\Documents\RAGLINKProject\RAGLINK\Program\RAGLINK-OB\RAGLINKFileConvert.exe
 C:\Documents\RAGLINKProject\RAGLINK\Program\RAGLINK-OB\RAGLINKFileConvert.pdb
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileConvert\obj\Debug\RAGLINKFileConvert.csprojAssemblyReference.cache
-C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileConvert\obj\Debug\RAGLINKFileConvert.csproj.CoreCompileInputs.cache
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileConvert\obj\Debug\RAGLINKFileConvert.csproj.CopyComplete
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileConvert\obj\Debug\RAGLINKFileConvert.exe
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileConvert\obj\Debug\RAGLINKFileConvert.pdb

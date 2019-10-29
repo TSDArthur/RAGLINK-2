@@ -26,7 +26,15 @@ namespace RAGLINKCommons.RAGLINKPlatform
 		}
 		static public void SetDeviceValue(int deviceID, int dataValue)
 		{
-			deviceValue[deviceID] = dataValue;
+            // Hack: BUTTON_AUTORESET
+            if (devicesInitMode[deviceID] == DevicesIOMode.DEVICE_BUTTON_AUTORESET)
+            {
+                if (dataValue == 1) deviceValue[deviceID] = deviceValue[deviceID] == 0 ? 1 : 0;
+            }
+            else
+            {
+                deviceValue[deviceID] = dataValue;
+            }
 		}
 		static public void UpdateDevicesInitMode()
 		{

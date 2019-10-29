@@ -267,11 +267,11 @@ namespace RAGLINKCommons.RAGLINKPlatform
 			listViewDetails.BeginUpdate();
 			listViewDetails.Columns.Add("ID", 150, HorizontalAlignment.Left);
 			listViewDetails.Columns.Add("端口", 450, HorizontalAlignment.Left);
-			for (int i = 0; i < Communication.GetSerialPortNames().Count; i++)
+			for (int i = 0; i < CommunicationSerial.GetSerialPortNames().Count; i++)
 			{
 				ListViewItem listViewItem = new ListViewItem();
 				listViewItem.Text = "设备" + (i + 1).ToString();
-				listViewItem.SubItems.Add(Communication.GetSerialPortNames()[i]);
+				listViewItem.SubItems.Add(CommunicationSerial.GetSerialPortNames()[i]);
 				listViewDetails.Items.Add(listViewItem);
 			}
 			listViewDetails.EndUpdate();

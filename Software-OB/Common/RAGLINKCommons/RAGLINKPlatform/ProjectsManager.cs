@@ -262,9 +262,9 @@ namespace RAGLINKCommons.RAGLINKPlatform
 					retValue.Add(tempError);
 				}
 				//Check serial
-				foreach (SerialPort serialPort in Communication.serialList)
+				foreach (SerialPort serialPort in CommunicationSerial.serialList)
 				{
-					if (Communication.GetSerialPortNames().IndexOf(serialPort.PortName) == -1)
+					if (CommunicationSerial.GetSerialPortNames().IndexOf(serialPort.PortName) == -1)
 					{
 						ProjectErrorProvider tempError = new ProjectErrorProvider
 						{

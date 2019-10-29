@@ -430,5 +430,10 @@ namespace OpenBve
 			StartArgsEvent(System.Environment.GetCommandLineArgs());
 			RAGLINKCommons.RAGLINKPlatform.formSummary.FormMainStartButtonEvent += ButtonStartStateSet;
 		}
+
+		private void formMain_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			e.Cancel = !listViewPlanFile.Enabled;
+		}
 	}
 }

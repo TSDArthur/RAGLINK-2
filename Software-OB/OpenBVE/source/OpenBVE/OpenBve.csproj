@@ -96,7 +96,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dependencies\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="PIEHid32Net">
+    <Reference Include="PIEHid32Net, Version=2.2.4.21348, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dependencies\PIEHid32Net.dll</HintPath>
     </Reference>
     <Reference Include="SharpCompress, Version=0.21.1.0, Culture=neutral, processorArchitecture=MSIL">

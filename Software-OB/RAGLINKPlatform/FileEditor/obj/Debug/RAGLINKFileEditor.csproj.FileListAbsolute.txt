@@ -61,7 +61,6 @@ C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileEditor\obj\D
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileEditor\obj\Debug\RAGLINKFileEditor.UserInterface.FormMain.resources
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileEditor\obj\Debug\RAGLINKFileEditor.Properties.Resources.resources
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileEditor\obj\Debug\RAGLINKFileEditor.csproj.GenerateResource.cache
-C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileEditor\obj\Debug\RAGLINKFileEditor.csproj.CoreCompileInputs.cache
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileEditor\obj\Debug\RAGLINKFileEditor.csproj.CopyComplete
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileEditor\obj\Debug\RAGLINKFileEditor.exe
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\RAGLINKPlatform\FileEditor\obj\Debug\RAGLINKFileEditor.pdb

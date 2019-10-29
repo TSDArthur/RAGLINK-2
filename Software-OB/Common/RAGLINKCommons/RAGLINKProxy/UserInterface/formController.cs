@@ -266,7 +266,7 @@ namespace RAGLINKCommons.RAGLINKProxy
                 }
                 try
                 {
-                    if (!RAGLINKPlatform.Communication.serialList[0].IsOpen)
+                    if (!RAGLINKPlatform.CommunicationSerial.serialList[0].IsOpen)
                     {
                         checkBoxStreamDebugEnable.Enabled = false;
                         checkBoxStreamDebugEnable.Checked = false;
@@ -299,22 +299,22 @@ namespace RAGLINKCommons.RAGLINKProxy
                 }
                 UpdateLabels();
                 //Try to re-connect if connection failed
-                if (boardConnection && !RAGLINKPlatform.Communication.serialList[0].IsOpen)
+                if (boardConnection && !RAGLINKPlatform.CommunicationSerial.serialList[0].IsOpen)
                 {
-                    RAGLINKPlatform.Communication.SerialConnect(0);
-                    if (RAGLINKPlatform.Communication.serialList[0].IsOpen) RAGLINKPlatform.Communication.communicationStateList[0] = RAGLINKPlatform.Communication.CommunicationState.STATE1;
+                    RAGLINKPlatform.CommunicationSerial.SerialConnect(0);
+                    if (RAGLINKPlatform.CommunicationSerial.serialList[0].IsOpen) RAGLINKPlatform.CommunicationSerial.communicationStateList[0] = RAGLINKPlatform.CommunicationSerial.CommunicationState.STATE1;
                 }
                 else if (!boardConnection)
                 {
                     try
                     {
-                        RAGLINKPlatform.Communication.serialList[0].Dispose();
-                        RAGLINKPlatform.Communication.communicationStateList[0] = RAGLINKPlatform.Communication.CommunicationState.STATE0;
-                        RAGLINKPlatform.Communication.dealWithBoardSerialStream = false;
+                        RAGLINKPlatform.CommunicationSerial.serialList[0].Dispose();
+                        RAGLINKPlatform.CommunicationSerial.communicationStateList[0] = RAGLINKPlatform.CommunicationSerial.CommunicationState.STATE0;
+                        RAGLINKPlatform.CommunicationSerial.dealWithBoardSerialStream = false;
                     }
                     catch (Exception) { };
                 }
-                for (int i = 1; i < RAGLINKPlatform.Communication.serialList.Count; i++) RAGLINKPlatform.Communication.SerialConnect(i);
+                for (int i = 1; i < RAGLINKPlatform.CommunicationSerial.serialList.Count; i++) RAGLINKPlatform.CommunicationSerial.SerialConnect(i);
             }
             catch (Exception) { };
             //Main-form Monitor Inv:3s
@@ -504,17 +504,17 @@ namespace RAGLINKCommons.RAGLINKProxy
         {
             try
             {
-                int recievedIndex = RAGLINKPlatform.Communication.StreamRecord.boardSerialStreamRecord.Count - 1;
-                int sentIndex = RAGLINKPlatform.Communication.StreamRecord.boardSentStreamRecord.Count - 1;
+                int recievedIndex = RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSerialStreamRecord.Count - 1;
+                int sentIndex = RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSentStreamRecord.Count - 1;
                 if (recievedIndex >= 0)
                 {
-                    if (textBoxRecievedStream.Text != RAGLINKPlatform.Communication.StreamRecord.boardSerialStreamRecord[recievedIndex])
-                        textBoxRecievedStream.Text = RAGLINKPlatform.Communication.StreamRecord.boardSerialStreamRecord[recievedIndex];
+                    if (textBoxRecievedStream.Text != RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSerialStreamRecord[recievedIndex])
+                        textBoxRecievedStream.Text = RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSerialStreamRecord[recievedIndex];
                 }
                 if (sentIndex >= 0)
                 {
-                    if (textBoxSentStream.Text != RAGLINKPlatform.Communication.StreamRecord.boardSentStreamRecord[sentIndex])
-                        textBoxSentStream.Text = RAGLINKPlatform.Communication.StreamRecord.boardSentStreamRecord[sentIndex];
+                    if (textBoxSentStream.Text != RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSentStreamRecord[sentIndex])
+                        textBoxSentStream.Text = RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSentStreamRecord[sentIndex];
                 }
             }
             catch (Exception) { };
@@ -527,7 +527,7 @@ namespace RAGLINKCommons.RAGLINKProxy
                 try
                 {
                     boardConnection = false;
-                    RAGLINKPlatform.Communication.communicationStateList[0] = RAGLINKPlatform.Communication.CommunicationState.STATE0;
+                    RAGLINKPlatform.CommunicationSerial.communicationStateList[0] = RAGLINKPlatform.CommunicationSerial.CommunicationState.STATE0;
                     buttonBoardConnection.Text = "主板连接保持";
                 }
                 catch (Exception) { };
@@ -596,7 +596,7 @@ namespace RAGLINKCommons.RAGLINKProxy
                     int tempValue = Convert.ToInt32(textBoxDebugStream.Text.Substring(i, 2), 16);
                     sendStream += (char)tempValue;
                 }
-                if (sendStream.Length > 0) RAGLINKPlatform.Communication.SendDataViaSerial(0, sendStream);
+                if (sendStream.Length > 0) RAGLINKPlatform.CommunicationSerial.SendDataViaSerial(0, sendStream);
             }
             catch (Exception) { };
 

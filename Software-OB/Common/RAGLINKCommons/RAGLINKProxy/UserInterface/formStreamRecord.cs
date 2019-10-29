@@ -52,9 +52,9 @@ namespace RAGLINKCommons.RAGLINKProxy
 		{
 			try
 			{
-				if (!RAGLINKPlatform.Communication.serialList[0].IsOpen)
+				if (!RAGLINKPlatform.CommunicationSerial.serialList[0].IsOpen)
 				{
-					RAGLINKPlatform.Communication.StreamRecord.Clear();
+					RAGLINKPlatform.CommunicationSerial.StreamRecord.Clear();
 					listBoxCombinedStream.Items.Clear();
 					listBoxSent.Items.Clear();
 					listBoxRecieved.Items.Clear();
@@ -75,16 +75,16 @@ namespace RAGLINKCommons.RAGLINKProxy
 				listBoxSent.BeginUpdate();
 				try
 				{
-					if (listBoxCombinedStream.Items.Count < RAGLINKPlatform.Communication.StreamRecord.boardStreamCombined.Count)
+					if (listBoxCombinedStream.Items.Count < RAGLINKPlatform.CommunicationSerial.StreamRecord.boardStreamCombined.Count)
 					{
-						for (int i = listBoxCombinedStream.Items.Count; i < RAGLINKPlatform.Communication.StreamRecord.boardStreamCombined.Count; i++)
+						for (int i = listBoxCombinedStream.Items.Count; i < RAGLINKPlatform.CommunicationSerial.StreamRecord.boardStreamCombined.Count; i++)
 						{
-							string typeString = RAGLINKPlatform.Communication.StreamRecord.boardStreamCombined[i].recordType == 0 ? "接收: " : "发送: ";
-							listBoxCombinedStream.Items.Add(typeString + RAGLINKPlatform.Communication.StreamRecord.boardStreamCombined[i].dataStream);
+							string typeString = RAGLINKPlatform.CommunicationSerial.StreamRecord.boardStreamCombined[i].recordType == 0 ? "接收: " : "发送: ";
+							listBoxCombinedStream.Items.Add(typeString + RAGLINKPlatform.CommunicationSerial.StreamRecord.boardStreamCombined[i].dataStream);
 							listBoxCombinedStream.SelectedIndex = listBoxCombinedStream.Items.Count - 1;
 						}
 					}
-					else if(listBoxCombinedStream.Items.Count > RAGLINKPlatform.Communication.StreamRecord.boardStreamCombined.Count)
+					else if(listBoxCombinedStream.Items.Count > RAGLINKPlatform.CommunicationSerial.StreamRecord.boardStreamCombined.Count)
 					{
 						listBoxCombinedStream.Items.Clear();
 					}
@@ -92,13 +92,13 @@ namespace RAGLINKCommons.RAGLINKProxy
 				catch (Exception) { };
 				try
 				{
-					if (listBoxRecieved.Items.Count < RAGLINKPlatform.Communication.StreamRecord.boardSerialStreamRecord.Count)
+					if (listBoxRecieved.Items.Count < RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSerialStreamRecord.Count)
 					{
-						for (int i = listBoxRecieved.Items.Count; i < RAGLINKPlatform.Communication.StreamRecord.boardSerialStreamRecord.Count; i++)
-							listBoxRecieved.Items.Add(RAGLINKPlatform.Communication.StreamRecord.boardSerialStreamRecord[i]);
+						for (int i = listBoxRecieved.Items.Count; i < RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSerialStreamRecord.Count; i++)
+							listBoxRecieved.Items.Add(RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSerialStreamRecord[i]);
 						listBoxRecieved.SelectedIndex = listBoxRecieved.Items.Count - 1;
 					}
-					else if (listBoxRecieved.Items.Count > RAGLINKPlatform.Communication.StreamRecord.boardSerialStreamRecord.Count)
+					else if (listBoxRecieved.Items.Count > RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSerialStreamRecord.Count)
 					{
 						listBoxRecieved.Items.Clear();
 					}
@@ -106,13 +106,13 @@ namespace RAGLINKCommons.RAGLINKProxy
 				catch (Exception) { };
 				try
 				{
-					if (listBoxSent.Items.Count < RAGLINKPlatform.Communication.StreamRecord.boardSentStreamRecord.Count)
+					if (listBoxSent.Items.Count < RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSentStreamRecord.Count)
 					{
-						for (int i = listBoxSent.Items.Count; i < RAGLINKPlatform.Communication.StreamRecord.boardSentStreamRecord.Count; i++)
-							listBoxSent.Items.Add(RAGLINKPlatform.Communication.StreamRecord.boardSentStreamRecord[i]);
+						for (int i = listBoxSent.Items.Count; i < RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSentStreamRecord.Count; i++)
+							listBoxSent.Items.Add(RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSentStreamRecord[i]);
 						listBoxSent.SelectedIndex = listBoxSent.Items.Count - 1;
 					}
-					else if (listBoxSent.Items.Count > RAGLINKPlatform.Communication.StreamRecord.boardSentStreamRecord.Count)
+					else if (listBoxSent.Items.Count > RAGLINKPlatform.CommunicationSerial.StreamRecord.boardSentStreamRecord.Count)
 					{
 						listBoxSent.Items.Clear();
 					}

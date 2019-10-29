@@ -95,7 +95,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
             private static int inTimerMain = 0;
             private static System.Threading.Timer MainTimer;
             public static bool MainTimerEnable = false;
-            private static readonly int mainTimerTick = 100;
+            private static readonly int mainTimerTick = 50;
             static public void AttachMainTimerInterrupt()
             {
                 try
@@ -255,14 +255,14 @@ namespace RAGLINKCommons.RAGLINKPlatform
             controlObjectArrange[objectID].objectIO.Clear();
             controlObjectArrange[objectID].objectIO.Add(objectIO);
             controlObjectArrange[objectID].objectIOSerialBaud = baudRate;
-            controlObjectArrange[objectID].objectIOSerialID = Communication.serialCount++;
-            Communication.SerialByControlObject serialInfo = new Communication.SerialByControlObject
+            controlObjectArrange[objectID].objectIOSerialID = CommunicationSerial.serialCount++;
+            CommunicationSerial.SerialByControlObject serialInfo = new CommunicationSerial.SerialByControlObject
             {
                 serialControlObject = objectID,
                 controlObjectSerialPort = objectIO,
                 controlObjectSerialBaud = baudRate
             };
-            Communication.serialByControlObject.Add(serialInfo);
+            CommunicationSerial.serialByControlObject.Add(serialInfo);
         }
         static public DevicesManager.DevicesIOMode GetBoardDeviceIOMode(int deviceID)
         {
@@ -344,10 +344,13 @@ namespace RAGLINKCommons.RAGLINKPlatform
         }
         static public void COMBINED_HANDLE_EVENT()
         {
+            bool zeroPaused = false;
             int objectID = (int)ControlObjectsList.COMBINED_HANDLE;
+            int tractionID = (int)ControlObjectsList.TRACTION;
+            HandleCheck:
             if ((int)DataManager.GetTrainData((int)DataManager.TrainDataMap.MASTER_KEY) == 0 ||
                 (int)DataManager.GetTrainData((int)DataManager.TrainDataMap.PANTO_UP) == 0 ||
-                (int)DataManager.GetTrainData((int)DataManager.TrainDataMap.TRACTION_ON) == 0 ||
+                ((int)DataManager.GetTrainData((int)DataManager.TrainDataMap.TRACTION_ON) == 0 && controlObjectArrange[tractionID].objectEnable) || 
                 (int)DataManager.GetTrainData((int)DataManager.TrainDataMap.EMERGENCY) == 1)
             {
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.POWER, 0);
@@ -358,36 +361,52 @@ namespace RAGLINKCommons.RAGLINKPlatform
             {
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.POWER, 1);
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.BRAKE, 0);
+                return;
             }
             else if (DevicesManager.GetDeviceValue((int)controlObjectArrange[objectID].objectIO[1]) == Int32.Parse(controlObjectsInfo[objectID].objectData[1]))
             {
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.POWER, 2);
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.BRAKE, 0);
+                return;
             }
             else if (DevicesManager.GetDeviceValue((int)controlObjectArrange[objectID].objectIO[2]) == Int32.Parse(controlObjectsInfo[objectID].objectData[1]))
             {
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.POWER, 3);
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.BRAKE, 0);
+                return;
             }
             else if (DevicesManager.GetDeviceValue((int)controlObjectArrange[objectID].objectIO[3]) == Int32.Parse(controlObjectsInfo[objectID].objectData[1]))
             {
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.POWER, 0);
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.BRAKE, 2);
+                return;
             }
             else if (DevicesManager.GetDeviceValue((int)controlObjectArrange[objectID].objectIO[4]) == Int32.Parse(controlObjectsInfo[objectID].objectData[1]))
             {
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.POWER, 0);
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.BRAKE, 4);
+                return;
             }
             else if (DevicesManager.GetDeviceValue((int)controlObjectArrange[objectID].objectIO[5]) == Int32.Parse(controlObjectsInfo[objectID].objectData[1]))
             {
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.POWER, 0);
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.BRAKE, 6);
+                return;
             }
             else
             {
+                // Hack If Last Time Not P1 or B1
+                if (((int)DataManager.GetTrainData((int)DataManager.TrainDataMap.POWER) > 1 ||
+                    (int)DataManager.GetTrainData((int)DataManager.TrainDataMap.BRAKE) > 2) && !zeroPaused)
+                {
+                    Thread.Sleep(200);
+                    zeroPaused = true;
+                    goto HandleCheck;
+                }
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.POWER, 0);
                 DataManager.SetTrainData((int)DataManager.TrainDataMap.BRAKE, 0);
+                zeroPaused = false;
+                return;
             }
         }
         static public void HORN_EVENT()
@@ -558,6 +577,8 @@ namespace RAGLINKCommons.RAGLINKPlatform
         static public void TRACTION_EVENT()
         {
             int objectID = (int)ControlObjectsList.TRACTION;
+            // Hack: If Traction Switch Doesn't Enable
+            if (!controlObjectArrange[objectID].objectEnable) return;
             if ((int)DataManager.GetTrainData((int)DataManager.TrainDataMap.MASTER_KEY) == 0 ||
                 (int)DataManager.GetTrainData((int)DataManager.TrainDataMap.PANTO_UP) == 0)
             {
@@ -643,10 +664,10 @@ namespace RAGLINKCommons.RAGLINKPlatform
             {
                 foreach (string HMIString in ((DataManager.HMIInstructions)DataManager.processData.trainData[(int)DataManager.TrainDataMap.HMI_INSTRUCTIONS]).HMIData)
                 {
-                    Communication.SendDataViaSerial(controlObjectArrange[objectID].objectIOSerialID, HMIString);
-                    Communication.SendDataViaSerial(controlObjectArrange[objectID].objectIOSerialID, 0xff);
-                    Communication.SendDataViaSerial(controlObjectArrange[objectID].objectIOSerialID, 0xff);
-                    Communication.SendDataViaSerial(controlObjectArrange[objectID].objectIOSerialID, 0xff);
+                    CommunicationSerial.SendDataViaSerial(controlObjectArrange[objectID].objectIOSerialID, HMIString);
+                    CommunicationSerial.SendDataViaSerial(controlObjectArrange[objectID].objectIOSerialID, 0xff);
+                    CommunicationSerial.SendDataViaSerial(controlObjectArrange[objectID].objectIOSerialID, 0xff);
+                    CommunicationSerial.SendDataViaSerial(controlObjectArrange[objectID].objectIOSerialID, 0xff);
                 }
             }
             catch (Exception) { };

@@ -41,6 +41,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
             public string projectAuthorWebsite;
             public string projectPlatform;
             public bool projectDebug;
+            public string projectDataServer;
             //Area board
             public int boardID;
             public string boardPort;
@@ -155,6 +156,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 				retValue.projectAuthorWebsite = settingsFileIO.ReadValue(projectSection, "project_author_website");
                 retValue.projectPlatform = settingsFileIO.ReadValue(projectSection, "project_platform");
                 retValue.projectDebug = Convert.ToBoolean(Int32.Parse(settingsFileIO.ReadValue(projectSection, "project_debug")));
+                retValue.projectDataServer = settingsFileIO.ReadValue(projectSection, "project_data_server");
                 //Load board
                 retValue.boardID = Int32.Parse(settingsFileIO.ReadValue(boardSection, "board_id"));
 				retValue.boardPort = settingsFileIO.ReadValue(boardSection, "board_port");
@@ -243,6 +245,22 @@ namespace RAGLINKCommons.RAGLINKPlatform
 			catch (Exception) { };
 			return retValue;
 		}
+        static public bool SetupDataServer()
+        {
+            bool retValue = false;
+            try
+            {
+                if (!projectInfo.fileLoaded)
+                {
+                    retValue = false;
+                    return retValue;
+                }
+                CommunicationNetwork.SetupWebSocketServer(projectInfo.projectDataServer);
+                retValue = true;
+            }
+            catch (Exception) { };
+            return retValue;
+        }
 		static public List<ProjectErrorProvider> CheckProjectContent()
 		{
 			List<ProjectErrorProvider> retValue = new List<ProjectErrorProvider>();

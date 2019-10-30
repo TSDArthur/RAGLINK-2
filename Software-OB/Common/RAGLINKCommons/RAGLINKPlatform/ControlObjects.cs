@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace RAGLINKCommons.RAGLINKPlatform
 {
@@ -118,7 +119,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
                             {
                                 if (ControlObjects.controlObjectArrange[i].objectEnable && ControlObjects.controlObjectsInfo[i].objectTimerAttached)
                                 {
-                                    ControlObjectDoEvents((ControlObjects.ControlObjectsList)i);
+                                    ControlObjectDoSingleEvents((ControlObjects.ControlObjectsList)i);
                                 }
                             }
                         }
@@ -219,7 +220,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
                 settingsFileIO.WriteValue(controlObjectSection, "object_name", currentControlObjectInfo.objectName.ToString());
                 settingsFileIO.WriteValue(controlObjectSection, "object_describle", currentControlObjectInfo.objectDescribe.ToString());
                 settingsFileIO.WriteValue(controlObjectSection, "object_set_enable", Convert.ToInt32(currentControlObjectInfo.objectSetEnable).ToString());
-                settingsFileIO.WriteValue(controlObjectSection, "object_timer_attached",Convert.ToInt32(currentControlObjectInfo.objectTimerAttached).ToString());
+                settingsFileIO.WriteValue(controlObjectSection, "object_timer_attached", Convert.ToInt32(currentControlObjectInfo.objectTimerAttached).ToString());
                 //Area object_io
                 settingsFileIO.WriteValue(objectIOSection, "object_io_count",currentControlObjectInfo.objectIOCount.ToString());
                 for (int i = 0; i < currentControlObjectInfo.objectIOCount; i++)

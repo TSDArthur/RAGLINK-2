@@ -23,8 +23,9 @@ namespace RAGLINKCommons.RAGLINKPlatform
             ROUTE_LOADED = 7,
             SIM_OPTIONS_LOADED = 8,
             ERROR_CHECKED = 9,
-            DONE = 10,
-            ERROR = 11,
+            DATA_SERVER_START = 10,
+            DONE = 11,
+            ERROR = 12,
         };
         public delegate void LoaderProcessHandler(LoadingState processValue);
         static public event LoaderProcessHandler ProcessEvent;
@@ -188,11 +189,19 @@ namespace RAGLINKCommons.RAGLINKPlatform
                         {
                             //check error
                             UserInterfaceSwap.errorContent = ProjectsManager.CheckProjectContent();
+                            ProcessEvent(LoadingState.DATA_SERVER_START);
+                            break;
+                        }
+                    case LoadingState.DATA_SERVER_START:
+                        {
+                            //starting server
+                            ProjectsManager.SetupDataServer();
                             ProcessEvent(LoadingState.DONE);
                             break;
                         }
                     case LoadingState.DONE:
                         {
+                            CommunicationNetwork.StartWebSocketServer();
                             StartSimulatorEvent();
                             break;
                         }

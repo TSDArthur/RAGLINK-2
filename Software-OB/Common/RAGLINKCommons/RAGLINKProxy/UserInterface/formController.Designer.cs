@@ -175,6 +175,7 @@
             this.pictureBoxBVE = new System.Windows.Forms.PictureBox();
             this.themeApplier = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
             this.mainTheme = new WeifenLuo.WinFormsUI.Docking.VS2015LightTheme();
+            this.labelServerAddress = new System.Windows.Forms.Label();
             this.toolStripMain.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.panelMonitor.SuspendLayout();
@@ -187,7 +188,7 @@
             this.toolStripMain.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabelMain});
-            this.toolStripMain.Location = new System.Drawing.Point(0, 760);
+            this.toolStripMain.Location = new System.Drawing.Point(0, 778);
             this.toolStripMain.Name = "toolStripMain";
             this.toolStripMain.Size = new System.Drawing.Size(565, 25);
             this.toolStripMain.TabIndex = 23;
@@ -1145,7 +1146,7 @@
             this.buttonMasterKeyOff.BackColor = System.Drawing.Color.LightCoral;
             this.buttonMasterKeyOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonMasterKeyOff.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonMasterKeyOff.Location = new System.Drawing.Point(3, 365);
+            this.buttonMasterKeyOff.Location = new System.Drawing.Point(3, 361);
             this.buttonMasterKeyOff.Name = "buttonMasterKeyOff";
             this.buttonMasterKeyOff.Size = new System.Drawing.Size(111, 41);
             this.buttonMasterKeyOff.TabIndex = 27;
@@ -1158,7 +1159,7 @@
             this.buttonPantoOff.BackColor = System.Drawing.Color.LightCoral;
             this.buttonPantoOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonPantoOff.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonPantoOff.Location = new System.Drawing.Point(115, 365);
+            this.buttonPantoOff.Location = new System.Drawing.Point(115, 361);
             this.buttonPantoOff.Name = "buttonPantoOff";
             this.buttonPantoOff.Size = new System.Drawing.Size(111, 41);
             this.buttonPantoOff.TabIndex = 29;
@@ -1171,7 +1172,7 @@
             this.buttonTractionOff.BackColor = System.Drawing.Color.LightCoral;
             this.buttonTractionOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonTractionOff.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonTractionOff.Location = new System.Drawing.Point(227, 365);
+            this.buttonTractionOff.Location = new System.Drawing.Point(227, 361);
             this.buttonTractionOff.Name = "buttonTractionOff";
             this.buttonTractionOff.Size = new System.Drawing.Size(111, 41);
             this.buttonTractionOff.TabIndex = 31;
@@ -1184,7 +1185,7 @@
             this.buttonReverserF.BackColor = System.Drawing.Color.WhiteSmoke;
             this.buttonReverserF.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonReverserF.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonReverserF.Location = new System.Drawing.Point(339, 320);
+            this.buttonReverserF.Location = new System.Drawing.Point(339, 316);
             this.buttonReverserF.Name = "buttonReverserF";
             this.buttonReverserF.Size = new System.Drawing.Size(112, 28);
             this.buttonReverserF.TabIndex = 32;
@@ -1197,7 +1198,7 @@
             this.buttonReverserIDLE.BackColor = System.Drawing.Color.WhiteSmoke;
             this.buttonReverserIDLE.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonReverserIDLE.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonReverserIDLE.Location = new System.Drawing.Point(339, 349);
+            this.buttonReverserIDLE.Location = new System.Drawing.Point(339, 345);
             this.buttonReverserIDLE.Name = "buttonReverserIDLE";
             this.buttonReverserIDLE.Size = new System.Drawing.Size(112, 28);
             this.buttonReverserIDLE.TabIndex = 33;
@@ -1210,7 +1211,7 @@
             this.buttonReverserB.BackColor = System.Drawing.Color.WhiteSmoke;
             this.buttonReverserB.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonReverserB.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonReverserB.Location = new System.Drawing.Point(339, 378);
+            this.buttonReverserB.Location = new System.Drawing.Point(339, 374);
             this.buttonReverserB.Name = "buttonReverserB";
             this.buttonReverserB.Size = new System.Drawing.Size(112, 28);
             this.buttonReverserB.TabIndex = 34;
@@ -1223,7 +1224,7 @@
             this.buttonHandleDown.BackColor = System.Drawing.Color.LightCoral;
             this.buttonHandleDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonHandleDown.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonHandleDown.Location = new System.Drawing.Point(452, 365);
+            this.buttonHandleDown.Location = new System.Drawing.Point(452, 361);
             this.buttonHandleDown.Name = "buttonHandleDown";
             this.buttonHandleDown.Size = new System.Drawing.Size(110, 41);
             this.buttonHandleDown.TabIndex = 36;
@@ -1236,7 +1237,7 @@
             this.buttonATCOff.BackColor = System.Drawing.Color.LightCoral;
             this.buttonATCOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonATCOff.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonATCOff.Location = new System.Drawing.Point(3, 455);
+            this.buttonATCOff.Location = new System.Drawing.Point(3, 451);
             this.buttonATCOff.Name = "buttonATCOff";
             this.buttonATCOff.Size = new System.Drawing.Size(111, 41);
             this.buttonATCOff.TabIndex = 38;
@@ -1249,7 +1250,7 @@
             this.buttonLeftDoorOff.BackColor = System.Drawing.Color.LightCoral;
             this.buttonLeftDoorOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLeftDoorOff.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonLeftDoorOff.Location = new System.Drawing.Point(115, 455);
+            this.buttonLeftDoorOff.Location = new System.Drawing.Point(115, 451);
             this.buttonLeftDoorOff.Name = "buttonLeftDoorOff";
             this.buttonLeftDoorOff.Size = new System.Drawing.Size(111, 41);
             this.buttonLeftDoorOff.TabIndex = 40;
@@ -1262,7 +1263,7 @@
             this.buttonRightDoorOff.BackColor = System.Drawing.Color.LightCoral;
             this.buttonRightDoorOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRightDoorOff.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonRightDoorOff.Location = new System.Drawing.Point(227, 455);
+            this.buttonRightDoorOff.Location = new System.Drawing.Point(227, 451);
             this.buttonRightDoorOff.Name = "buttonRightDoorOff";
             this.buttonRightDoorOff.Size = new System.Drawing.Size(111, 41);
             this.buttonRightDoorOff.TabIndex = 42;
@@ -1275,7 +1276,7 @@
             this.buttonEmergencyOn.BackColor = System.Drawing.Color.LightCoral;
             this.buttonEmergencyOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEmergencyOn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonEmergencyOn.Location = new System.Drawing.Point(339, 410);
+            this.buttonEmergencyOn.Location = new System.Drawing.Point(339, 406);
             this.buttonEmergencyOn.Name = "buttonEmergencyOn";
             this.buttonEmergencyOn.Size = new System.Drawing.Size(112, 41);
             this.buttonEmergencyOn.TabIndex = 44;
@@ -1288,7 +1289,7 @@
             this.buttonEmergencyOff.BackColor = System.Drawing.Color.WhiteSmoke;
             this.buttonEmergencyOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEmergencyOff.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonEmergencyOff.Location = new System.Drawing.Point(339, 455);
+            this.buttonEmergencyOff.Location = new System.Drawing.Point(339, 451);
             this.buttonEmergencyOff.Name = "buttonEmergencyOff";
             this.buttonEmergencyOff.Size = new System.Drawing.Size(112, 41);
             this.buttonEmergencyOff.TabIndex = 43;
@@ -1301,7 +1302,7 @@
             this.buttonAirconOff.BackColor = System.Drawing.Color.LightCoral;
             this.buttonAirconOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAirconOff.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonAirconOff.Location = new System.Drawing.Point(452, 455);
+            this.buttonAirconOff.Location = new System.Drawing.Point(452, 451);
             this.buttonAirconOff.Name = "buttonAirconOff";
             this.buttonAirconOff.Size = new System.Drawing.Size(110, 41);
             this.buttonAirconOff.TabIndex = 46;
@@ -1314,7 +1315,7 @@
             this.buttonDeadmanOff.BackColor = System.Drawing.Color.LightCoral;
             this.buttonDeadmanOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDeadmanOff.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonDeadmanOff.Location = new System.Drawing.Point(339, 545);
+            this.buttonDeadmanOff.Location = new System.Drawing.Point(339, 541);
             this.buttonDeadmanOff.Name = "buttonDeadmanOff";
             this.buttonDeadmanOff.Size = new System.Drawing.Size(112, 41);
             this.buttonDeadmanOff.TabIndex = 53;
@@ -1327,7 +1328,7 @@
             this.buttonHeadlightOff.BackColor = System.Drawing.Color.LightCoral;
             this.buttonHeadlightOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonHeadlightOff.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonHeadlightOff.Location = new System.Drawing.Point(227, 545);
+            this.buttonHeadlightOff.Location = new System.Drawing.Point(227, 541);
             this.buttonHeadlightOff.Name = "buttonHeadlightOff";
             this.buttonHeadlightOff.Size = new System.Drawing.Size(111, 41);
             this.buttonHeadlightOff.TabIndex = 52;
@@ -1340,7 +1341,7 @@
             this.buttonHornOff.BackColor = System.Drawing.Color.LightCoral;
             this.buttonHornOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonHornOff.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonHornOff.Location = new System.Drawing.Point(115, 545);
+            this.buttonHornOff.Location = new System.Drawing.Point(115, 541);
             this.buttonHornOff.Name = "buttonHornOff";
             this.buttonHornOff.Size = new System.Drawing.Size(111, 41);
             this.buttonHornOff.TabIndex = 50;
@@ -1353,7 +1354,7 @@
             this.buttonSandOff.BackColor = System.Drawing.Color.LightCoral;
             this.buttonSandOff.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSandOff.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSandOff.Location = new System.Drawing.Point(3, 545);
+            this.buttonSandOff.Location = new System.Drawing.Point(3, 541);
             this.buttonSandOff.Name = "buttonSandOff";
             this.buttonSandOff.Size = new System.Drawing.Size(111, 41);
             this.buttonSandOff.TabIndex = 48;
@@ -1366,7 +1367,7 @@
             this.buttonDeadmanPress.BackColor = System.Drawing.Color.Khaki;
             this.buttonDeadmanPress.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDeadmanPress.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonDeadmanPress.Location = new System.Drawing.Point(452, 500);
+            this.buttonDeadmanPress.Location = new System.Drawing.Point(452, 496);
             this.buttonDeadmanPress.Name = "buttonDeadmanPress";
             this.buttonDeadmanPress.Size = new System.Drawing.Size(112, 86);
             this.buttonDeadmanPress.TabIndex = 55;
@@ -1380,7 +1381,7 @@
             this.textBoxRecievedStream.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxRecievedStream.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxRecievedStream.ForeColor = System.Drawing.Color.White;
-            this.textBoxRecievedStream.Location = new System.Drawing.Point(4, 23);
+            this.textBoxRecievedStream.Location = new System.Drawing.Point(4, 49);
             this.textBoxRecievedStream.Multiline = true;
             this.textBoxRecievedStream.Name = "textBoxRecievedStream";
             this.textBoxRecievedStream.ReadOnly = true;
@@ -1391,14 +1392,15 @@
             // panelConnection
             // 
             this.panelConnection.BackColor = System.Drawing.Color.Gray;
+            this.panelConnection.Controls.Add(this.labelServerAddress);
             this.panelConnection.Controls.Add(this.textBoxDebugStream);
             this.panelConnection.Controls.Add(this.textBoxSentStream);
             this.panelConnection.Controls.Add(this.labelSendStreamTitle);
             this.panelConnection.Controls.Add(this.labelRecivedStreamTitle);
             this.panelConnection.Controls.Add(this.textBoxRecievedStream);
-            this.panelConnection.Location = new System.Drawing.Point(5, 602);
+            this.panelConnection.Location = new System.Drawing.Point(5, 592);
             this.panelConnection.Name = "panelConnection";
-            this.panelConnection.Size = new System.Drawing.Size(556, 126);
+            this.panelConnection.Size = new System.Drawing.Size(556, 154);
             this.panelConnection.TabIndex = 57;
             // 
             // textBoxDebugStream
@@ -1407,7 +1409,7 @@
             this.textBoxDebugStream.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxDebugStream.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxDebugStream.ForeColor = System.Drawing.Color.White;
-            this.textBoxDebugStream.Location = new System.Drawing.Point(4, 99);
+            this.textBoxDebugStream.Location = new System.Drawing.Point(3, 127);
             this.textBoxDebugStream.Multiline = true;
             this.textBoxDebugStream.Name = "textBoxDebugStream";
             this.textBoxDebugStream.Size = new System.Drawing.Size(549, 24);
@@ -1421,7 +1423,7 @@
             this.textBoxSentStream.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxSentStream.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxSentStream.ForeColor = System.Drawing.Color.White;
-            this.textBoxSentStream.Location = new System.Drawing.Point(279, 23);
+            this.textBoxSentStream.Location = new System.Drawing.Point(279, 49);
             this.textBoxSentStream.Multiline = true;
             this.textBoxSentStream.Name = "textBoxSentStream";
             this.textBoxSentStream.ReadOnly = true;
@@ -1433,7 +1435,7 @@
             // 
             this.labelSendStreamTitle.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelSendStreamTitle.ForeColor = System.Drawing.Color.White;
-            this.labelSendStreamTitle.Location = new System.Drawing.Point(275, 0);
+            this.labelSendStreamTitle.Location = new System.Drawing.Point(275, 26);
             this.labelSendStreamTitle.Name = "labelSendStreamTitle";
             this.labelSendStreamTitle.Size = new System.Drawing.Size(273, 23);
             this.labelSendStreamTitle.TabIndex = 57;
@@ -1444,7 +1446,7 @@
             // 
             this.labelRecivedStreamTitle.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelRecivedStreamTitle.ForeColor = System.Drawing.Color.White;
-            this.labelRecivedStreamTitle.Location = new System.Drawing.Point(1, 0);
+            this.labelRecivedStreamTitle.Location = new System.Drawing.Point(1, 26);
             this.labelRecivedStreamTitle.Name = "labelRecivedStreamTitle";
             this.labelRecivedStreamTitle.Size = new System.Drawing.Size(174, 23);
             this.labelRecivedStreamTitle.TabIndex = 43;
@@ -1456,7 +1458,7 @@
             this.checkBoxStreamDebugEnable.AutoSize = true;
             this.checkBoxStreamDebugEnable.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.checkBoxStreamDebugEnable.ForeColor = System.Drawing.Color.Black;
-            this.checkBoxStreamDebugEnable.Location = new System.Drawing.Point(368, 734);
+            this.checkBoxStreamDebugEnable.Location = new System.Drawing.Point(368, 752);
             this.checkBoxStreamDebugEnable.Name = "checkBoxStreamDebugEnable";
             this.checkBoxStreamDebugEnable.Size = new System.Drawing.Size(75, 21);
             this.checkBoxStreamDebugEnable.TabIndex = 65;
@@ -1469,7 +1471,7 @@
             this.buttonSendDebugStream.BackColor = System.Drawing.Color.WhiteSmoke;
             this.buttonSendDebugStream.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSendDebugStream.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSendDebugStream.Location = new System.Drawing.Point(448, 731);
+            this.buttonSendDebugStream.Location = new System.Drawing.Point(448, 749);
             this.buttonSendDebugStream.Name = "buttonSendDebugStream";
             this.buttonSendDebugStream.Size = new System.Drawing.Size(112, 26);
             this.buttonSendDebugStream.TabIndex = 64;
@@ -1522,7 +1524,7 @@
             this.buttonDataMonitor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDataMonitor.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonDataMonitor.Image = global::RAGLINKCommons.Properties.Resources.Data;
-            this.buttonDataMonitor.Location = new System.Drawing.Point(235, 731);
+            this.buttonDataMonitor.Location = new System.Drawing.Point(235, 749);
             this.buttonDataMonitor.Name = "buttonDataMonitor";
             this.buttonDataMonitor.Size = new System.Drawing.Size(112, 26);
             this.buttonDataMonitor.TabIndex = 61;
@@ -1537,7 +1539,7 @@
             this.buttonStreamRecord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonStreamRecord.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonStreamRecord.Image = global::RAGLINKCommons.Properties.Resources.Log;
-            this.buttonStreamRecord.Location = new System.Drawing.Point(121, 731);
+            this.buttonStreamRecord.Location = new System.Drawing.Point(121, 749);
             this.buttonStreamRecord.Name = "buttonStreamRecord";
             this.buttonStreamRecord.Size = new System.Drawing.Size(112, 26);
             this.buttonStreamRecord.TabIndex = 60;
@@ -1552,7 +1554,7 @@
             this.buttonBoardConnection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonBoardConnection.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonBoardConnection.Image = global::RAGLINKCommons.Properties.Resources.Board;
-            this.buttonBoardConnection.Location = new System.Drawing.Point(7, 731);
+            this.buttonBoardConnection.Location = new System.Drawing.Point(7, 749);
             this.buttonBoardConnection.Name = "buttonBoardConnection";
             this.buttonBoardConnection.Size = new System.Drawing.Size(112, 26);
             this.buttonBoardConnection.TabIndex = 58;
@@ -1567,7 +1569,7 @@
             this.buttonDeadmanOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDeadmanOn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonDeadmanOn.Image = ((System.Drawing.Image)(resources.GetObject("buttonDeadmanOn.Image")));
-            this.buttonDeadmanOn.Location = new System.Drawing.Point(339, 500);
+            this.buttonDeadmanOn.Location = new System.Drawing.Point(339, 496);
             this.buttonDeadmanOn.Name = "buttonDeadmanOn";
             this.buttonDeadmanOn.Size = new System.Drawing.Size(112, 41);
             this.buttonDeadmanOn.TabIndex = 54;
@@ -1582,7 +1584,7 @@
             this.buttonHeadlightOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonHeadlightOn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonHeadlightOn.Image = ((System.Drawing.Image)(resources.GetObject("buttonHeadlightOn.Image")));
-            this.buttonHeadlightOn.Location = new System.Drawing.Point(227, 500);
+            this.buttonHeadlightOn.Location = new System.Drawing.Point(227, 496);
             this.buttonHeadlightOn.Name = "buttonHeadlightOn";
             this.buttonHeadlightOn.Size = new System.Drawing.Size(111, 41);
             this.buttonHeadlightOn.TabIndex = 51;
@@ -1597,7 +1599,7 @@
             this.buttonHornOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonHornOn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonHornOn.Image = ((System.Drawing.Image)(resources.GetObject("buttonHornOn.Image")));
-            this.buttonHornOn.Location = new System.Drawing.Point(115, 500);
+            this.buttonHornOn.Location = new System.Drawing.Point(115, 496);
             this.buttonHornOn.Name = "buttonHornOn";
             this.buttonHornOn.Size = new System.Drawing.Size(111, 41);
             this.buttonHornOn.TabIndex = 49;
@@ -1612,7 +1614,7 @@
             this.buttonSandOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSandOn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonSandOn.Image = ((System.Drawing.Image)(resources.GetObject("buttonSandOn.Image")));
-            this.buttonSandOn.Location = new System.Drawing.Point(3, 500);
+            this.buttonSandOn.Location = new System.Drawing.Point(3, 496);
             this.buttonSandOn.Name = "buttonSandOn";
             this.buttonSandOn.Size = new System.Drawing.Size(111, 41);
             this.buttonSandOn.TabIndex = 47;
@@ -1627,7 +1629,7 @@
             this.buttonAirconOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAirconOn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonAirconOn.Image = ((System.Drawing.Image)(resources.GetObject("buttonAirconOn.Image")));
-            this.buttonAirconOn.Location = new System.Drawing.Point(452, 410);
+            this.buttonAirconOn.Location = new System.Drawing.Point(452, 406);
             this.buttonAirconOn.Name = "buttonAirconOn";
             this.buttonAirconOn.Size = new System.Drawing.Size(110, 41);
             this.buttonAirconOn.TabIndex = 45;
@@ -1642,7 +1644,7 @@
             this.buttonRightDoorOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonRightDoorOn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonRightDoorOn.Image = ((System.Drawing.Image)(resources.GetObject("buttonRightDoorOn.Image")));
-            this.buttonRightDoorOn.Location = new System.Drawing.Point(227, 410);
+            this.buttonRightDoorOn.Location = new System.Drawing.Point(227, 406);
             this.buttonRightDoorOn.Name = "buttonRightDoorOn";
             this.buttonRightDoorOn.Size = new System.Drawing.Size(111, 41);
             this.buttonRightDoorOn.TabIndex = 41;
@@ -1657,7 +1659,7 @@
             this.buttonLeftDoorOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLeftDoorOn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonLeftDoorOn.Image = ((System.Drawing.Image)(resources.GetObject("buttonLeftDoorOn.Image")));
-            this.buttonLeftDoorOn.Location = new System.Drawing.Point(115, 410);
+            this.buttonLeftDoorOn.Location = new System.Drawing.Point(115, 406);
             this.buttonLeftDoorOn.Name = "buttonLeftDoorOn";
             this.buttonLeftDoorOn.Size = new System.Drawing.Size(111, 41);
             this.buttonLeftDoorOn.TabIndex = 39;
@@ -1672,7 +1674,7 @@
             this.buttonATCOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonATCOn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonATCOn.Image = ((System.Drawing.Image)(resources.GetObject("buttonATCOn.Image")));
-            this.buttonATCOn.Location = new System.Drawing.Point(3, 410);
+            this.buttonATCOn.Location = new System.Drawing.Point(3, 406);
             this.buttonATCOn.Name = "buttonATCOn";
             this.buttonATCOn.Size = new System.Drawing.Size(111, 41);
             this.buttonATCOn.TabIndex = 37;
@@ -1687,7 +1689,7 @@
             this.buttonHandleUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonHandleUp.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonHandleUp.Image = ((System.Drawing.Image)(resources.GetObject("buttonHandleUp.Image")));
-            this.buttonHandleUp.Location = new System.Drawing.Point(452, 320);
+            this.buttonHandleUp.Location = new System.Drawing.Point(452, 316);
             this.buttonHandleUp.Name = "buttonHandleUp";
             this.buttonHandleUp.Size = new System.Drawing.Size(110, 41);
             this.buttonHandleUp.TabIndex = 35;
@@ -1702,7 +1704,7 @@
             this.buttonTractionOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonTractionOn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonTractionOn.Image = ((System.Drawing.Image)(resources.GetObject("buttonTractionOn.Image")));
-            this.buttonTractionOn.Location = new System.Drawing.Point(227, 320);
+            this.buttonTractionOn.Location = new System.Drawing.Point(227, 316);
             this.buttonTractionOn.Name = "buttonTractionOn";
             this.buttonTractionOn.Size = new System.Drawing.Size(111, 41);
             this.buttonTractionOn.TabIndex = 30;
@@ -1717,7 +1719,7 @@
             this.buttonPantoOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonPantoOn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonPantoOn.Image = ((System.Drawing.Image)(resources.GetObject("buttonPantoOn.Image")));
-            this.buttonPantoOn.Location = new System.Drawing.Point(115, 320);
+            this.buttonPantoOn.Location = new System.Drawing.Point(115, 316);
             this.buttonPantoOn.Name = "buttonPantoOn";
             this.buttonPantoOn.Size = new System.Drawing.Size(111, 41);
             this.buttonPantoOn.TabIndex = 28;
@@ -1732,7 +1734,7 @@
             this.buttonMasterKeyOn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonMasterKeyOn.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonMasterKeyOn.Image = global::RAGLINKCommons.Properties.Resources.SwitchOn;
-            this.buttonMasterKeyOn.Location = new System.Drawing.Point(3, 320);
+            this.buttonMasterKeyOn.Location = new System.Drawing.Point(3, 316);
             this.buttonMasterKeyOn.Name = "buttonMasterKeyOn";
             this.buttonMasterKeyOn.Size = new System.Drawing.Size(111, 41);
             this.buttonMasterKeyOn.TabIndex = 26;
@@ -1756,12 +1758,23 @@
             // 
             this.themeApplier.DefaultRenderer = null;
             // 
+            // labelServerAddress
+            // 
+            this.labelServerAddress.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelServerAddress.ForeColor = System.Drawing.Color.White;
+            this.labelServerAddress.Location = new System.Drawing.Point(2, 4);
+            this.labelServerAddress.Name = "labelServerAddress";
+            this.labelServerAddress.Size = new System.Drawing.Size(550, 23);
+            this.labelServerAddress.TabIndex = 60;
+            this.labelServerAddress.Text = "嵌入式数据服务器地址：";
+            this.labelServerAddress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // formController
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
-            this.ClientSize = new System.Drawing.Size(565, 785);
+            this.ClientSize = new System.Drawing.Size(565, 803);
             this.Controls.Add(this.checkBoxStreamDebugEnable);
             this.Controls.Add(this.buttonDataMonitor);
             this.Controls.Add(this.buttonSendDebugStream);
@@ -1975,5 +1988,6 @@
 		private System.Windows.Forms.Label labelCurrentTime;
         private WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender themeApplier;
         private WeifenLuo.WinFormsUI.Docking.VS2015LightTheme mainTheme;
+        private System.Windows.Forms.Label labelServerAddress;
     }
 }

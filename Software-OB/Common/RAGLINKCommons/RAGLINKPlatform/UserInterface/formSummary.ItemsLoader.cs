@@ -18,7 +18,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 			listViewDetails.BeginUpdate();
 			listViewDetails.Columns.Add("标题", 150, HorizontalAlignment.Left);
 			listViewDetails.Columns.Add("内容", 450, HorizontalAlignment.Left);
-			for (int i = 0; i < 11; i++)
+			for (int i = 0; i < 12; i++)
 			{
 				ListViewItem listViewItem = new ListViewItem();
 				switch (i)
@@ -93,6 +93,12 @@ namespace RAGLINKCommons.RAGLINKPlatform
 								+ (usedCount * 100 / boardCount).ToString() + "%)。");
 							break;
 						}
+                    case 11:
+                        {
+                            listViewItem.Text = "数据服务器地址";
+                            listViewItem.SubItems.Add(CommunicationNetwork.dataServerAddress);
+                            break;
+                        }
 				}
 				listViewDetails.Items.Add(listViewItem);
 			}

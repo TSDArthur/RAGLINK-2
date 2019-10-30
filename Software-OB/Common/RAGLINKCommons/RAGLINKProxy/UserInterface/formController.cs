@@ -256,6 +256,7 @@ namespace RAGLINKCommons.RAGLINKProxy
             timerEvents.Enabled = false;
             try
             {
+                labelServerAddress.Text = "嵌入式数据服务器地址：" + RAGLINKPlatform.CommunicationNetwork.dataServerAddress;
                 if (boardConnection)
                 {
                     buttonBoardConnection.Text = "主板强制断开";
@@ -290,7 +291,7 @@ namespace RAGLINKCommons.RAGLINKProxy
                 }
                 buttonDataMonitor.Enabled = true;
                 menItemDataMonitor.Enabled = true;
-                toolStripLabelMain.Text = "就绪.";
+                toolStripLabelMain.Text = "就绪。";
                 if (!applyDataInLoading)
                 {
                     RAGLINKPlatform.ControlObjects.ControlObjectDoEvents();

@@ -112,10 +112,20 @@ namespace RAGLINKCommons.RAGLINKPlatform
                 case ProjectLoader.LoadingState.SIM_OPTIONS_LOADED:
                     {
                         SetLabelInitTextDelegate setLabelInitTextDelegate = new SetLabelInitTextDelegate(SetLabelInitText);
+                        Invoke(setLabelInitTextDelegate, "配置嵌入式数据服务器...");
+                        SetProgressBarValueDelegate setProgressBarValueDelegate = new SetProgressBarValueDelegate(SetProgressBarValue);
+                        Invoke(setProgressBarValueDelegate, 85);
+                        currentLoadingState = ProjectLoader.LoadingState.SIM_OPTIONS_LOADED;
+                        loadingInBusy = false;
+                        break;
+                    }
+                case ProjectLoader.LoadingState.DATA_SERVER_START:
+                    {
+                        SetLabelInitTextDelegate setLabelInitTextDelegate = new SetLabelInitTextDelegate(SetLabelInitText);
                         Invoke(setLabelInitTextDelegate, "校验行车计划...");
                         SetProgressBarValueDelegate setProgressBarValueDelegate = new SetProgressBarValueDelegate(SetProgressBarValue);
                         Invoke(setProgressBarValueDelegate, 90);
-                        currentLoadingState = ProjectLoader.LoadingState.SIM_OPTIONS_LOADED;
+                        currentLoadingState = ProjectLoader.LoadingState.DATA_SERVER_START;
                         loadingInBusy = false;
                         break;
                     }

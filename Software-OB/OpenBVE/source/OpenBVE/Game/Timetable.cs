@@ -153,15 +153,18 @@ namespace OpenBve {
 									x -= 60.0 * (double)minutes;
 									int seconds = (int)Math.Floor(x);
 									Table.Tracks[m].Time.Hour = hours != 0 ? hours.ToString("0", Culture) : "";
+									Table.Tracks[m].Time._Hour = hours.ToString("00", Culture);
 									Table.Tracks[m].Time.Minute = minutes != 0 ? minutes.ToString("00", Culture) : "";
 									Table.Tracks[m].Time.Second = seconds != 0 ? seconds.ToString("00", Culture) : "";
 								} else {
 									Table.Tracks[m].Time.Hour = "";
+									Table.Tracks[m].Time._Hour = "";
 									Table.Tracks[m].Time.Minute = "";
 									Table.Tracks[m].Time.Second = "";
 								}
 							} else {
 								Table.Tracks[m].Time.Hour = "";
+								Table.Tracks[m].Time._Hour = "";
 								Table.Tracks[m].Time.Minute = "";
 								Table.Tracks[m].Time.Second = "";
 							}

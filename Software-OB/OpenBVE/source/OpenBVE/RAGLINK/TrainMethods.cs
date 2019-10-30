@@ -11,7 +11,7 @@ namespace OpenBve
 	{
 		static private TrainManager.Train currentTrainInControl;
 		//for ATC
-		static int mainTimerTick = 100;
+		static int mainTimerTick = 200;
 		private static bool ATCEnable = false;
 		//for master key
 		private static bool masterKeyEnable = false;

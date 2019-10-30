@@ -294,7 +294,7 @@
             // 
             this.menItemDataMonitor.Image = global::RAGLINKCommons.Properties.Resources.Data;
             this.menItemDataMonitor.Name = "menItemDataMonitor";
-            this.menItemDataMonitor.Size = new System.Drawing.Size(180, 22);
+            this.menItemDataMonitor.Size = new System.Drawing.Size(136, 22);
             this.menItemDataMonitor.Text = "数据监视器";
             this.menItemDataMonitor.Click += new System.EventHandler(this.ButtonDataMonitor_Click);
             // 
@@ -770,7 +770,7 @@
             // labelSpeed
             // 
             this.labelSpeed.BackColor = System.Drawing.Color.Gray;
-            this.labelSpeed.Font = new System.Drawing.Font("Courier New", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelSpeed.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelSpeed.ForeColor = System.Drawing.Color.White;
             this.labelSpeed.Location = new System.Drawing.Point(4, 24);
             this.labelSpeed.Name = "labelSpeed";
@@ -815,7 +815,7 @@
             // labelLimit
             // 
             this.labelLimit.BackColor = System.Drawing.Color.Gray;
-            this.labelLimit.Font = new System.Drawing.Font("Courier New", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelLimit.Font = new System.Drawing.Font("Courier New", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelLimit.ForeColor = System.Drawing.Color.White;
             this.labelLimit.Location = new System.Drawing.Point(212, 26);
             this.labelLimit.Name = "labelLimit";

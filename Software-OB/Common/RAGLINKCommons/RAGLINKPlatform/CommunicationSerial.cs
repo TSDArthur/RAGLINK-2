@@ -241,12 +241,16 @@ namespace RAGLINKCommons.RAGLINKPlatform
 					{
 						serialList[i].BaudRate = serialByControlObject[i - 1].controlObjectSerialBaud;
 						serialList[i].PortName = serialByControlObject[i - 1].controlObjectSerialPort;
-					}
+                        serialList[i].WriteBufferSize = 32767;
+                        serialList[i].ReadBufferSize = 32767;
+                    }
 					else
 					{
 						serialList[i].BaudRate = BoardsManager.boardInfo.boardBaud;
 						serialList[i].PortName = ProjectsManager.projectInfo.boardPort;
-					}
+                        serialList[i].WriteBufferSize = 32767;
+                        serialList[i].ReadBufferSize = 32767;
+                    }
 					serialList[i].ReadBufferSize = serialBufferSize;
 					serialList[i].WriteBufferSize = serialBufferSize;
 					communicationStateList[i] = CommunicationState.STATE0;
@@ -435,12 +439,12 @@ namespace RAGLINKCommons.RAGLINKPlatform
 				//Get board devices value
 				if (BoardStreamCommonFunctions.SpecialSymbolRepeatTime(dataStream, BoardsManager.boardInfo.COMM_TRANSEND_SPEC_NUM))
 				{
-					DevicesManager.BoardStreamToDevicesApply();
 					communicationStateList[0] = CommunicationState.STATE2;
 					goto startPoint;
 				}
 				DevicesManager.BoardStreamToDevicesValue(dataStream);
-				BoardStreamCommonFunctions.SendSpecialData(BoardsManager.boardInfo.COMM_CONTINUE_SPEC_NUM);
+                DevicesManager.BoardStreamToDevicesApply();
+                BoardStreamCommonFunctions.SendSpecialData(BoardsManager.boardInfo.COMM_CONTINUE_SPEC_NUM);
 				return;
 			}
 		}
@@ -454,7 +458,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 					retValue = false;
 					return retValue;
 				}
-				while (serialList[serialID].BytesToWrite > 0) { };
+				while (serialList[serialID].BytesToWrite + dataValue.Length > serialList[serialID].WriteBufferSize) { };
 				serialList[serialID].Write(dataValue);
 				if (serialID == 0)
 				{
@@ -477,8 +481,8 @@ namespace RAGLINKCommons.RAGLINKPlatform
 					retValue = false;
 					return retValue;
 				}
-				while (serialList[serialID].BytesToWrite > 0) { };
-				List<byte> dataValueByteArray = new List<byte>();
+                while (serialList[serialID].BytesToWrite + 1 > serialList[serialID].WriteBufferSize) { };
+                List<byte> dataValueByteArray = new List<byte>();
 				dataValueByteArray.Clear();
 				dataValueByteArray.Add(dataValue);
 				serialList[serialID].Write(dataValueByteArray.ToArray(), 0, 1);
@@ -503,8 +507,8 @@ namespace RAGLINKCommons.RAGLINKPlatform
 					retValue = false;
 					return retValue;
 				}
-				while (serialList[serialID].BytesToWrite > 0) { };
-				serialList[serialID].Write(dataValue.ToArray(), 0, dataValue.Count);
+                while (serialList[serialID].BytesToWrite + dataValue.Count > serialList[serialID].WriteBufferSize) { };
+                serialList[serialID].Write(dataValue.ToArray(), 0, dataValue.Count);
 				if (serialID == 0)
 				{
 					boardSentStream = ByteToHexStr(dataValue);

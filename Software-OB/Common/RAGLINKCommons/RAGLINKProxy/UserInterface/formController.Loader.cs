@@ -121,8 +121,8 @@ namespace RAGLINKCommons.RAGLINKProxy
 			try
 			{
 				//Update monitor
-				string labelSpeedTextPart0 = ((int)RAGLINKPlatform.DataManager.GetTrainData((int)RAGLINKPlatform.DataManager.TrainDataMap.SPEED_HMI) / 10).ToString();
-				string labelSpeedTextPart1 = ((int)RAGLINKPlatform.DataManager.GetTrainData((int)RAGLINKPlatform.DataManager.TrainDataMap.SPEED_HMI) % 10).ToString();
+				string labelSpeedTextPart0 = (Math.Abs((int)RAGLINKPlatform.DataManager.GetTrainData((int)RAGLINKPlatform.DataManager.TrainDataMap.SPEED_HMI) / 10)).ToString();
+				string labelSpeedTextPart1 = (Math.Abs((int)RAGLINKPlatform.DataManager.GetTrainData((int)RAGLINKPlatform.DataManager.TrainDataMap.SPEED_HMI)) % 10).ToString();
 				labelSpeed.Text = labelSpeedTextPart0 + "." + labelSpeedTextPart1 + " KM/H";
 				string labelLimitText = ((int)RAGLINKPlatform.DataManager.GetTrainData((int)RAGLINKPlatform.DataManager.TrainDataMap.SPEED_LIMIT)).ToString();
 				labelLimit.Text = labelLimitText + " KM/H";

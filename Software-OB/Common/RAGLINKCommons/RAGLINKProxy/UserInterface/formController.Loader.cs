@@ -144,6 +144,11 @@ namespace RAGLINKCommons.RAGLINKProxy
 							labelSignalText = "通过";
 							break;
 						}
+                    case 3:
+                        {
+                            labelSignalText = "通过";
+                            break;
+                        }
 				}
 				labelSignal.Text = labelSignalText;
 				string labelReverserText = "N";

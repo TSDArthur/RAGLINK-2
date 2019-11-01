@@ -505,6 +505,7 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>AssemblyInfo.cs</LastGenOutput>
     </Content>
+    <None Include="Resources\banner.jpg" />
     <None Include="Resources\Data.png" />
     <None Include="Resources\control.png" />
     <None Include="Resources\Connection.png" />

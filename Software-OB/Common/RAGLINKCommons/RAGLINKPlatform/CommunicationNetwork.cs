@@ -137,6 +137,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
                                         SetSocketDataProvider(clientUrl, clientType);
                                         socketReadBuffer[socketIndex] = string.Empty;
                                         socketState[socketIndex] = StateManager.READY;
+                                        MessageBox.Show("进入设定模式，设定为：" + clientType.ToString());
                                         trainDataJSON.dataRequestList.Clear();
                                         trainDataJSON.dataRespondList.Clear();
                                         trainDataJSON.requestClientType = string.Empty;

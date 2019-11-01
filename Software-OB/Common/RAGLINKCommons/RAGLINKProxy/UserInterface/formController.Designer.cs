@@ -157,7 +157,6 @@
             this.labelPlanName = new System.Windows.Forms.Label();
             this.timerEvents = new System.Windows.Forms.Timer(this.components);
             this.timerStreamTextUpdater = new System.Windows.Forms.Timer(this.components);
-            this.labelTitleName = new System.Windows.Forms.Label();
             this.buttonDataMonitor = new System.Windows.Forms.Button();
             this.buttonStreamRecord = new System.Windows.Forms.Button();
             this.buttonBoardConnection = new System.Windows.Forms.Button();
@@ -173,14 +172,14 @@
             this.buttonTractionOn = new System.Windows.Forms.Button();
             this.buttonPantoOn = new System.Windows.Forms.Button();
             this.buttonMasterKeyOn = new System.Windows.Forms.Button();
-            this.pictureBoxBVE = new System.Windows.Forms.PictureBox();
             this.themeApplier = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
             this.mainTheme = new WeifenLuo.WinFormsUI.Docking.VS2015LightTheme();
+            this.pictureBoxBanner = new System.Windows.Forms.PictureBox();
             this.toolStripMain.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.panelMonitor.SuspendLayout();
             this.panelConnection.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBVE)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripMain
@@ -1516,21 +1515,6 @@
             this.timerStreamTextUpdater.Interval = 50;
             this.timerStreamTextUpdater.Tick += new System.EventHandler(this.TimerStreamTextUpdater_Tick);
             // 
-            // labelTitleName
-            // 
-            this.labelTitleName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelTitleName.AutoEllipsis = true;
-            this.labelTitleName.BackColor = System.Drawing.SystemColors.Window;
-            this.labelTitleName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelTitleName.ForeColor = System.Drawing.Color.Black;
-            this.labelTitleName.Location = new System.Drawing.Point(37, 6);
-            this.labelTitleName.Name = "labelTitleName";
-            this.labelTitleName.Size = new System.Drawing.Size(169, 24);
-            this.labelTitleName.TabIndex = 17;
-            this.labelTitleName.Text = "调试控制面板";
-            this.labelTitleName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // buttonDataMonitor
             // 
             this.buttonDataMonitor.BackColor = System.Drawing.SystemColors.Window;
@@ -1756,20 +1740,18 @@
             this.buttonMasterKeyOn.UseVisualStyleBackColor = false;
             this.buttonMasterKeyOn.Click += new System.EventHandler(this.ButtonMasterKeyOn_Click);
             // 
-            // pictureBoxBVE
-            // 
-            this.pictureBoxBVE.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBoxBVE.Image = global::RAGLINKCommons.Properties.Resources.icon;
-            this.pictureBoxBVE.Location = new System.Drawing.Point(6, 5);
-            this.pictureBoxBVE.Name = "pictureBoxBVE";
-            this.pictureBoxBVE.Size = new System.Drawing.Size(30, 28);
-            this.pictureBoxBVE.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxBVE.TabIndex = 16;
-            this.pictureBoxBVE.TabStop = false;
-            // 
             // themeApplier
             // 
             this.themeApplier.DefaultRenderer = null;
+            // 
+            // pictureBoxBanner
+            // 
+            this.pictureBoxBanner.Image = global::RAGLINKCommons.Properties.Resources.banner;
+            this.pictureBoxBanner.Location = new System.Drawing.Point(0, -1);
+            this.pictureBoxBanner.Name = "pictureBoxBanner";
+            this.pictureBoxBanner.Size = new System.Drawing.Size(260, 38);
+            this.pictureBoxBanner.TabIndex = 66;
+            this.pictureBoxBanner.TabStop = false;
             // 
             // formController
             // 
@@ -1777,6 +1759,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(565, 803);
+            this.Controls.Add(this.pictureBoxBanner);
             this.Controls.Add(this.checkBoxStreamDebugEnable);
             this.Controls.Add(this.buttonDataMonitor);
             this.Controls.Add(this.buttonSendDebugStream);
@@ -1817,8 +1800,6 @@
             this.Controls.Add(this.panelMonitor);
             this.Controls.Add(this.toolStripMain);
             this.Controls.Add(this.menuStripMain);
-            this.Controls.Add(this.labelTitleName);
-            this.Controls.Add(this.pictureBoxBVE);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1838,7 +1819,7 @@
             this.panelMonitor.ResumeLayout(false);
             this.panelConnection.ResumeLayout(false);
             this.panelConnection.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBVE)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1985,11 +1966,10 @@
 		private System.Windows.Forms.CheckBox checkBoxStreamDebugEnable;
 		private System.Windows.Forms.Timer timerEvents;
 		private System.Windows.Forms.Timer timerStreamTextUpdater;
-		private System.Windows.Forms.PictureBox pictureBoxBVE;
-		private System.Windows.Forms.Label labelTitleName;
 		private System.Windows.Forms.Label labelCurrentTime;
         private WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender themeApplier;
         private WeifenLuo.WinFormsUI.Docking.VS2015LightTheme mainTheme;
         private System.Windows.Forms.Label labelServerAddress;
+        private System.Windows.Forms.PictureBox pictureBoxBanner;
     }
 }

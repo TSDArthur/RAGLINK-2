@@ -39,7 +39,6 @@
             "设备连接"}, 3, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134))));
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formSummary));
             this.labelPlanName = new System.Windows.Forms.Label();
-            this.labelTitleName = new System.Windows.Forms.Label();
             this.panelProjectSummary = new System.Windows.Forms.Panel();
             this.labelDetailsLoading = new System.Windows.Forms.Label();
             this.listViewDetails = new System.Windows.Forms.ListView();
@@ -60,13 +59,13 @@
             this.columnHeaderDesc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.imageListError = new System.Windows.Forms.ImageList(this.components);
             this.timerEvents = new System.Windows.Forms.Timer(this.components);
-            this.pictureBoxBVE = new System.Windows.Forms.PictureBox();
             this.timerTopMost = new System.Windows.Forms.Timer(this.components);
+            this.pictureBoxBanner = new System.Windows.Forms.PictureBox();
             this.panelProjectSummary.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPlanName)).BeginInit();
             this.panelError.SuspendLayout();
             this.toolStripMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBVE)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).BeginInit();
             this.SuspendLayout();
             // 
             // labelPlanName
@@ -82,19 +81,6 @@
             this.labelPlanName.TabIndex = 62;
             this.labelPlanName.Text = "已加载的行车计划：无";
             this.labelPlanName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // labelTitleName
-            // 
-            this.labelTitleName.AutoEllipsis = true;
-            this.labelTitleName.BackColor = System.Drawing.SystemColors.Window;
-            this.labelTitleName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelTitleName.ForeColor = System.Drawing.Color.Black;
-            this.labelTitleName.Location = new System.Drawing.Point(34, 5);
-            this.labelTitleName.Name = "labelTitleName";
-            this.labelTitleName.Size = new System.Drawing.Size(169, 24);
-            this.labelTitleName.TabIndex = 61;
-            this.labelTitleName.Text = "RAGLINK Simulator OB";
-            this.labelTitleName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panelProjectSummary
             // 
@@ -341,21 +327,19 @@
             this.timerEvents.Enabled = true;
             this.timerEvents.Tick += new System.EventHandler(this.TimerEvents_Tick);
             // 
-            // pictureBoxBVE
-            // 
-            this.pictureBoxBVE.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBoxBVE.Image = global::RAGLINKCommons.Properties.Resources.icon;
-            this.pictureBoxBVE.Location = new System.Drawing.Point(3, 3);
-            this.pictureBoxBVE.Name = "pictureBoxBVE";
-            this.pictureBoxBVE.Size = new System.Drawing.Size(30, 28);
-            this.pictureBoxBVE.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxBVE.TabIndex = 60;
-            this.pictureBoxBVE.TabStop = false;
-            // 
             // timerTopMost
             // 
             this.timerTopMost.Enabled = true;
             this.timerTopMost.Tick += new System.EventHandler(this.TimerTopMost_Tick);
+            // 
+            // pictureBoxBanner
+            // 
+            this.pictureBoxBanner.Image = global::RAGLINKCommons.Properties.Resources.banner;
+            this.pictureBoxBanner.Location = new System.Drawing.Point(0, -1);
+            this.pictureBoxBanner.Name = "pictureBoxBanner";
+            this.pictureBoxBanner.Size = new System.Drawing.Size(650, 38);
+            this.pictureBoxBanner.TabIndex = 65;
+            this.pictureBoxBanner.TabStop = false;
             // 
             // formSummary
             // 
@@ -363,11 +347,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1059, 719);
+            this.Controls.Add(this.labelPlanName);
+            this.Controls.Add(this.pictureBoxBanner);
             this.Controls.Add(this.panelError);
             this.Controls.Add(this.panelProjectSummary);
-            this.Controls.Add(this.labelPlanName);
-            this.Controls.Add(this.labelTitleName);
-            this.Controls.Add(this.pictureBoxBVE);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(810, 617);
@@ -383,7 +366,7 @@
             this.panelError.PerformLayout();
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBVE)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -391,8 +374,6 @@
 		#endregion
 
 		private System.Windows.Forms.Label labelPlanName;
-		private System.Windows.Forms.Label labelTitleName;
-		private System.Windows.Forms.PictureBox pictureBoxBVE;
 		private System.Windows.Forms.Panel panelProjectSummary;
 		private System.Windows.Forms.Panel panelError;
 		private System.Windows.Forms.Button buttonLaunch;
@@ -414,5 +395,6 @@
 		private System.Windows.Forms.Label labelDetailsLoading;
 		private System.Windows.Forms.Timer timerEvents;
         private System.Windows.Forms.Timer timerTopMost;
+        private System.Windows.Forms.PictureBox pictureBoxBanner;
     }
 }

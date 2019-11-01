@@ -30,7 +30,6 @@
 		{
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formDataMonitor));
-            this.labelTitleName = new System.Windows.Forms.Label();
             this.buttonClose = new System.Windows.Forms.Button();
             this.timerUpdate = new System.Windows.Forms.Timer(this.components);
             this.labelDataMonitorTitle = new System.Windows.Forms.Label();
@@ -43,24 +42,11 @@
             this.columnHeaderUpdateType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderValue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pictureBoxDataMonitor = new System.Windows.Forms.PictureBox();
-            this.pictureBoxBVE = new System.Windows.Forms.PictureBox();
+            this.pictureBoxBanner = new System.Windows.Forms.PictureBox();
             this.panelDataMonitor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDataMonitor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBVE)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).BeginInit();
             this.SuspendLayout();
-            // 
-            // labelTitleName
-            // 
-            this.labelTitleName.AutoEllipsis = true;
-            this.labelTitleName.BackColor = System.Drawing.SystemColors.Window;
-            this.labelTitleName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelTitleName.ForeColor = System.Drawing.Color.Black;
-            this.labelTitleName.Location = new System.Drawing.Point(33, 5);
-            this.labelTitleName.Name = "labelTitleName";
-            this.labelTitleName.Size = new System.Drawing.Size(169, 24);
-            this.labelTitleName.TabIndex = 19;
-            this.labelTitleName.Text = "数据监视器面板";
-            this.labelTitleName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // buttonClose
             // 
@@ -178,16 +164,14 @@
             this.pictureBoxDataMonitor.TabIndex = 26;
             this.pictureBoxDataMonitor.TabStop = false;
             // 
-            // pictureBoxBVE
+            // pictureBoxBanner
             // 
-            this.pictureBoxBVE.BackColor = System.Drawing.SystemColors.Window;
-            this.pictureBoxBVE.Image = global::RAGLINKCommons.Properties.Resources.icon;
-            this.pictureBoxBVE.Location = new System.Drawing.Point(2, 3);
-            this.pictureBoxBVE.Name = "pictureBoxBVE";
-            this.pictureBoxBVE.Size = new System.Drawing.Size(30, 28);
-            this.pictureBoxBVE.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxBVE.TabIndex = 18;
-            this.pictureBoxBVE.TabStop = false;
+            this.pictureBoxBanner.Image = global::RAGLINKCommons.Properties.Resources.banner;
+            this.pictureBoxBanner.Location = new System.Drawing.Point(0, -1);
+            this.pictureBoxBanner.Name = "pictureBoxBanner";
+            this.pictureBoxBanner.Size = new System.Drawing.Size(269, 38);
+            this.pictureBoxBanner.TabIndex = 66;
+            this.pictureBoxBanner.TabStop = false;
             // 
             // formDataMonitor
             // 
@@ -195,10 +179,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(669, 581);
+            this.Controls.Add(this.pictureBoxBanner);
             this.Controls.Add(this.panelDataMonitor);
             this.Controls.Add(this.buttonClose);
-            this.Controls.Add(this.labelTitleName);
-            this.Controls.Add(this.pictureBoxBVE);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -215,15 +198,12 @@
             this.panelDataMonitor.ResumeLayout(false);
             this.panelDataMonitor.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDataMonitor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBVE)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).EndInit();
             this.ResumeLayout(false);
 
 		}
 
 		#endregion
-
-		private System.Windows.Forms.Label labelTitleName;
-		private System.Windows.Forms.PictureBox pictureBoxBVE;
 		private System.Windows.Forms.Button buttonClose;
 		private System.Windows.Forms.Timer timerUpdate;
 		private System.Windows.Forms.Label labelDataMonitorTitle;
@@ -236,5 +216,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeaderDesc;
 		private System.Windows.Forms.Button buttonRefresh;
 		private ListViewDoubleBuffered.ListViewNF listViewDataMonitor;
-	}
+        private System.Windows.Forms.PictureBox pictureBoxBanner;
+    }
 }

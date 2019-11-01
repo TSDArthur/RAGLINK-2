@@ -73,7 +73,7 @@
             // 
             this.labelPlanName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.labelPlanName.AutoEllipsis = true;
-            this.labelPlanName.BackColor = System.Drawing.Color.Gainsboro;
+            this.labelPlanName.BackColor = System.Drawing.SystemColors.Window;
             this.labelPlanName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelPlanName.ForeColor = System.Drawing.Color.Black;
             this.labelPlanName.Location = new System.Drawing.Point(468, 4);
@@ -86,7 +86,7 @@
             // labelTitleName
             // 
             this.labelTitleName.AutoEllipsis = true;
-            this.labelTitleName.BackColor = System.Drawing.Color.Gainsboro;
+            this.labelTitleName.BackColor = System.Drawing.SystemColors.Window;
             this.labelTitleName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelTitleName.ForeColor = System.Drawing.Color.Black;
             this.labelTitleName.Location = new System.Drawing.Point(34, 5);
@@ -121,9 +121,9 @@
             this.labelDetailsLoading.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.labelDetailsLoading.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelDetailsLoading.ForeColor = System.Drawing.Color.Black;
-            this.labelDetailsLoading.Location = new System.Drawing.Point(170, 185);
+            this.labelDetailsLoading.Location = new System.Drawing.Point(377, 248);
             this.labelDetailsLoading.Name = "labelDetailsLoading";
-            this.labelDetailsLoading.Size = new System.Drawing.Size(844, 184);
+            this.labelDetailsLoading.Size = new System.Drawing.Size(405, 29);
             this.labelDetailsLoading.TabIndex = 65;
             this.labelDetailsLoading.Text = "载入中...";
             this.labelDetailsLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -243,30 +243,30 @@
             // 
             this.buttonQuit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonQuit.AutoEllipsis = true;
-            this.buttonQuit.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonQuit.BackColor = System.Drawing.SystemColors.Window;
             this.buttonQuit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonQuit.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonQuit.Location = new System.Drawing.Point(812, 154);
+            this.buttonQuit.Location = new System.Drawing.Point(810, 153);
             this.buttonQuit.Name = "buttonQuit";
             this.buttonQuit.Size = new System.Drawing.Size(120, 24);
             this.buttonQuit.TabIndex = 13;
             this.buttonQuit.Text = "取消模拟";
-            this.buttonQuit.UseVisualStyleBackColor = true;
+            this.buttonQuit.UseVisualStyleBackColor = false;
             this.buttonQuit.Click += new System.EventHandler(this.ButtonQuit_Click);
             // 
             // buttonLaunch
             // 
             this.buttonLaunch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonLaunch.AutoEllipsis = true;
-            this.buttonLaunch.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonLaunch.BackColor = System.Drawing.SystemColors.Window;
             this.buttonLaunch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLaunch.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonLaunch.Location = new System.Drawing.Point(933, 154);
+            this.buttonLaunch.Location = new System.Drawing.Point(932, 153);
             this.buttonLaunch.Name = "buttonLaunch";
             this.buttonLaunch.Size = new System.Drawing.Size(120, 24);
             this.buttonLaunch.TabIndex = 14;
             this.buttonLaunch.Text = "确认并进入模拟";
-            this.buttonLaunch.UseVisualStyleBackColor = true;
+            this.buttonLaunch.UseVisualStyleBackColor = false;
             this.buttonLaunch.Click += new System.EventHandler(this.ButtonLaunch_Click);
             // 
             // toolStripMain
@@ -291,7 +291,7 @@
             // 
             this.listViewErrors.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listViewErrors.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.listViewErrors.BackColor = System.Drawing.SystemColors.Window;
             this.listViewErrors.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderType,
             this.columnHeaderCode,
@@ -343,7 +343,7 @@
             // 
             // pictureBoxBVE
             // 
-            this.pictureBoxBVE.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBoxBVE.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBoxBVE.Image = global::RAGLINKCommons.Properties.Resources.icon;
             this.pictureBoxBVE.Location = new System.Drawing.Point(3, 3);
             this.pictureBoxBVE.Name = "pictureBoxBVE";
@@ -361,7 +361,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gainsboro;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(1059, 719);
             this.Controls.Add(this.panelError);
             this.Controls.Add(this.panelProjectSummary);

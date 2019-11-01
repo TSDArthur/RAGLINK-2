@@ -36,8 +36,6 @@
             this.tabPageStart = new System.Windows.Forms.TabPage();
             this.labelReviewLoading = new System.Windows.Forms.Label();
             this.labelRespackName = new System.Windows.Forms.Label();
-            this.labelRouteTitle = new System.Windows.Forms.Label();
-            this.labelTrainTitle = new System.Windows.Forms.Label();
             this.tabPageOptions = new System.Windows.Forms.TabPage();
             this.labelOptionsLoading = new System.Windows.Forms.Label();
             this.buttonSaveOptions = new System.Windows.Forms.Button();
@@ -84,12 +82,12 @@
             // 
             this.textboxRouteDescription.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.textboxRouteDescription.BackColor = System.Drawing.Color.White;
-            this.textboxRouteDescription.Location = new System.Drawing.Point(145, 29);
+            this.textboxRouteDescription.Location = new System.Drawing.Point(156, 7);
             this.textboxRouteDescription.Multiline = true;
             this.textboxRouteDescription.Name = "textboxRouteDescription";
             this.textboxRouteDescription.ReadOnly = true;
             this.textboxRouteDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textboxRouteDescription.Size = new System.Drawing.Size(247, 140);
+            this.textboxRouteDescription.Size = new System.Drawing.Size(236, 152);
             this.textboxRouteDescription.TabIndex = 0;
             this.textboxRouteDescription.Text = "线路描述";
             // 
@@ -98,10 +96,10 @@
             this.pictureboxRouteImage.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureboxRouteImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureboxRouteImage.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureboxRouteImage.Location = new System.Drawing.Point(3, 29);
+            this.pictureboxRouteImage.Location = new System.Drawing.Point(3, 7);
             this.pictureboxRouteImage.Name = "pictureboxRouteImage";
-            this.pictureboxRouteImage.Size = new System.Drawing.Size(140, 140);
-            this.pictureboxRouteImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureboxRouteImage.Size = new System.Drawing.Size(152, 152);
+            this.pictureboxRouteImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureboxRouteImage.TabIndex = 0;
             this.pictureboxRouteImage.TabStop = false;
             // 
@@ -109,10 +107,9 @@
             // 
             this.pictureboxRouteMap.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureboxRouteMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureboxRouteMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureboxRouteMap.Location = new System.Drawing.Point(394, 29);
+            this.pictureboxRouteMap.Location = new System.Drawing.Point(393, 7);
             this.pictureboxRouteMap.Name = "pictureboxRouteMap";
-            this.pictureboxRouteMap.Size = new System.Drawing.Size(207, 289);
+            this.pictureboxRouteMap.Size = new System.Drawing.Size(246, 305);
             this.pictureboxRouteMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureboxRouteMap.TabIndex = 0;
             this.pictureboxRouteMap.TabStop = false;
@@ -122,10 +119,9 @@
             this.pictureboxRouteGradient.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureboxRouteGradient.BackColor = System.Drawing.Color.Transparent;
             this.pictureboxRouteGradient.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureboxRouteGradient.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureboxRouteGradient.Location = new System.Drawing.Point(3, 171);
+            this.pictureboxRouteGradient.Location = new System.Drawing.Point(3, 313);
             this.pictureboxRouteGradient.Name = "pictureboxRouteGradient";
-            this.pictureboxRouteGradient.Size = new System.Drawing.Size(389, 147);
+            this.pictureboxRouteGradient.Size = new System.Drawing.Size(636, 199);
             this.pictureboxRouteGradient.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureboxRouteGradient.TabIndex = 1;
             this.pictureboxRouteGradient.TabStop = false;
@@ -134,27 +130,27 @@
             // 
             this.buttonStart.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonStart.AutoEllipsis = true;
-            this.buttonStart.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonStart.BackColor = System.Drawing.SystemColors.Window;
             this.buttonStart.Enabled = false;
             this.buttonStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonStart.Location = new System.Drawing.Point(493, 679);
+            this.buttonStart.Location = new System.Drawing.Point(537, 717);
             this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(120, 24);
+            this.buttonStart.Size = new System.Drawing.Size(112, 29);
             this.buttonStart.TabIndex = 12;
             this.buttonStart.Text = "启动";
-            this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.UseVisualStyleBackColor = false;
             this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
             // textboxTrainDescription
             // 
             this.textboxTrainDescription.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.textboxTrainDescription.BackColor = System.Drawing.SystemColors.Window;
-            this.textboxTrainDescription.Location = new System.Drawing.Point(145, 347);
+            this.textboxTrainDescription.Location = new System.Drawing.Point(156, 160);
             this.textboxTrainDescription.Multiline = true;
             this.textboxTrainDescription.Name = "textboxTrainDescription";
             this.textboxTrainDescription.ReadOnly = true;
             this.textboxTrainDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textboxTrainDescription.Size = new System.Drawing.Size(457, 140);
+            this.textboxTrainDescription.Size = new System.Drawing.Size(236, 152);
             this.textboxTrainDescription.TabIndex = 0;
             this.textboxTrainDescription.Text = "机车车辆描述";
             // 
@@ -163,10 +159,10 @@
             this.pictureboxTrainImage.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureboxTrainImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pictureboxTrainImage.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureboxTrainImage.Location = new System.Drawing.Point(3, 347);
+            this.pictureboxTrainImage.Location = new System.Drawing.Point(3, 160);
             this.pictureboxTrainImage.Name = "pictureboxTrainImage";
-            this.pictureboxTrainImage.Size = new System.Drawing.Size(140, 140);
-            this.pictureboxTrainImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureboxTrainImage.Size = new System.Drawing.Size(152, 152);
+            this.pictureboxTrainImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureboxTrainImage.TabIndex = 0;
             this.pictureboxTrainImage.TabStop = false;
             // 
@@ -175,13 +171,13 @@
             this.panelStart.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelStart.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.panelStart.BackColor = System.Drawing.SystemColors.Window;
             this.panelStart.Controls.Add(this.tabControlMain);
             this.panelStart.Controls.Add(this.listViewPlanFile);
             this.panelStart.Controls.Add(this.buttonStart);
             this.panelStart.Location = new System.Drawing.Point(0, 32);
             this.panelStart.Name = "panelStart";
-            this.panelStart.Size = new System.Drawing.Size(616, 707);
+            this.panelStart.Size = new System.Drawing.Size(653, 752);
             this.panelStart.TabIndex = 7;
             // 
             // tabControlMain
@@ -191,16 +187,13 @@
             this.tabControlMain.Location = new System.Drawing.Point(3, 3);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(613, 525);
+            this.tabControlMain.Size = new System.Drawing.Size(650, 542);
             this.tabControlMain.TabIndex = 14;
             // 
             // tabPageStart
             // 
             this.tabPageStart.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tabPageStart.Controls.Add(this.labelReviewLoading);
-            this.tabPageStart.Controls.Add(this.labelRespackName);
-            this.tabPageStart.Controls.Add(this.labelRouteTitle);
-            this.tabPageStart.Controls.Add(this.labelTrainTitle);
             this.tabPageStart.Controls.Add(this.pictureboxRouteGradient);
             this.tabPageStart.Controls.Add(this.pictureboxRouteMap);
             this.tabPageStart.Controls.Add(this.pictureboxRouteImage);
@@ -210,51 +203,30 @@
             this.tabPageStart.Location = new System.Drawing.Point(4, 26);
             this.tabPageStart.Name = "tabPageStart";
             this.tabPageStart.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageStart.Size = new System.Drawing.Size(605, 495);
+            this.tabPageStart.Size = new System.Drawing.Size(642, 512);
             this.tabPageStart.TabIndex = 0;
             this.tabPageStart.Text = "起始页";
             // 
             // labelReviewLoading
             // 
-            this.labelReviewLoading.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.labelReviewLoading.BackColor = System.Drawing.SystemColors.Window;
             this.labelReviewLoading.Location = new System.Drawing.Point(0, 0);
             this.labelReviewLoading.Name = "labelReviewLoading";
-            this.labelReviewLoading.Size = new System.Drawing.Size(606, 495);
+            this.labelReviewLoading.Size = new System.Drawing.Size(642, 512);
             this.labelReviewLoading.TabIndex = 16;
             this.labelReviewLoading.Text = "未选中行车计划，无预览。";
             this.labelReviewLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelRespackName
             // 
+            this.labelRespackName.BackColor = System.Drawing.SystemColors.Window;
             this.labelRespackName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelRespackName.Location = new System.Drawing.Point(145, 5);
+            this.labelRespackName.Location = new System.Drawing.Point(137, 37);
             this.labelRespackName.Name = "labelRespackName";
-            this.labelRespackName.Size = new System.Drawing.Size(456, 19);
+            this.labelRespackName.Size = new System.Drawing.Size(513, 19);
             this.labelRespackName.TabIndex = 15;
-            this.labelRespackName.Text = "加载的资源包：111";
+            this.labelRespackName.Text = "加载的资源包：无";
             this.labelRespackName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // labelRouteTitle
-            // 
-            this.labelRouteTitle.AutoSize = true;
-            this.labelRouteTitle.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelRouteTitle.Location = new System.Drawing.Point(-1, 5);
-            this.labelRouteTitle.Name = "labelRouteTitle";
-            this.labelRouteTitle.Size = new System.Drawing.Size(37, 19);
-            this.labelRouteTitle.TabIndex = 14;
-            this.labelRouteTitle.Text = "线路";
-            this.labelRouteTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelTrainTitle
-            // 
-            this.labelTrainTitle.AutoSize = true;
-            this.labelTrainTitle.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelTrainTitle.Location = new System.Drawing.Point(0, 322);
-            this.labelTrainTitle.Name = "labelTrainTitle";
-            this.labelTrainTitle.Size = new System.Drawing.Size(37, 19);
-            this.labelTrainTitle.TabIndex = 13;
-            this.labelTrainTitle.Text = "车辆";
-            this.labelTrainTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // tabPageOptions
             // 
@@ -286,16 +258,16 @@
             this.tabPageOptions.Location = new System.Drawing.Point(4, 26);
             this.tabPageOptions.Name = "tabPageOptions";
             this.tabPageOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOptions.Size = new System.Drawing.Size(605, 495);
+            this.tabPageOptions.Size = new System.Drawing.Size(642, 512);
             this.tabPageOptions.TabIndex = 1;
             this.tabPageOptions.Text = "图形设置";
             // 
             // labelOptionsLoading
             // 
-            this.labelOptionsLoading.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.labelOptionsLoading.BackColor = System.Drawing.SystemColors.Window;
             this.labelOptionsLoading.Location = new System.Drawing.Point(0, 0);
             this.labelOptionsLoading.Name = "labelOptionsLoading";
-            this.labelOptionsLoading.Size = new System.Drawing.Size(602, 495);
+            this.labelOptionsLoading.Size = new System.Drawing.Size(642, 512);
             this.labelOptionsLoading.TabIndex = 17;
             this.labelOptionsLoading.Text = "未选中行车计划。";
             this.labelOptionsLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -304,15 +276,15 @@
             // 
             this.buttonSaveOptions.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonSaveOptions.AutoEllipsis = true;
-            this.buttonSaveOptions.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonSaveOptions.BackColor = System.Drawing.SystemColors.Window;
             this.buttonSaveOptions.Enabled = false;
             this.buttonSaveOptions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSaveOptions.Location = new System.Drawing.Point(3, 465);
+            this.buttonSaveOptions.Location = new System.Drawing.Point(3, 482);
             this.buttonSaveOptions.Name = "buttonSaveOptions";
             this.buttonSaveOptions.Size = new System.Drawing.Size(120, 24);
             this.buttonSaveOptions.TabIndex = 15;
             this.buttonSaveOptions.Text = "保存设置";
-            this.buttonSaveOptions.UseVisualStyleBackColor = true;
+            this.buttonSaveOptions.UseVisualStyleBackColor = false;
             this.buttonSaveOptions.Click += new System.EventHandler(this.ButtonSaveOptions_Click);
             // 
             // checkBoxVSync
@@ -552,8 +524,9 @@
             // listViewPlanFile
             // 
             this.listViewPlanFile.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.listViewPlanFile.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.listViewPlanFile.BackColor = System.Drawing.SystemColors.Window;
             this.listViewPlanFile.BackgroundImageTiled = true;
+            this.listViewPlanFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listViewPlanFile.CheckBoxes = true;
             this.listViewPlanFile.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeaderName,
@@ -564,11 +537,11 @@
             this.listViewPlanFile.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewPlanFile.HideSelection = false;
             this.listViewPlanFile.LabelWrap = false;
-            this.listViewPlanFile.Location = new System.Drawing.Point(4, 528);
+            this.listViewPlanFile.Location = new System.Drawing.Point(3, 547);
             this.listViewPlanFile.MultiSelect = false;
             this.listViewPlanFile.Name = "listViewPlanFile";
             this.listViewPlanFile.ShowGroups = false;
-            this.listViewPlanFile.Size = new System.Drawing.Size(609, 149);
+            this.listViewPlanFile.Size = new System.Drawing.Size(647, 164);
             this.listViewPlanFile.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listViewPlanFile.TabIndex = 2;
             this.listViewPlanFile.UseCompatibleStateImageBehavior = false;
@@ -579,7 +552,7 @@
             // columnHeaderName
             // 
             this.columnHeaderName.Text = "行车计划名称";
-            this.columnHeaderName.Width = 140;
+            this.columnHeaderName.Width = 180;
             // 
             // columnHeaderGUID
             // 
@@ -589,12 +562,12 @@
             // columnHeaderDescribe
             // 
             this.columnHeaderDescribe.Text = "简述";
-            this.columnHeaderDescribe.Width = 190;
+            this.columnHeaderDescribe.Width = 217;
             // 
             // labelTitle
             // 
             this.labelTitle.AutoEllipsis = true;
-            this.labelTitle.BackColor = System.Drawing.Color.Gainsboro;
+            this.labelTitle.BackColor = System.Drawing.SystemColors.Window;
             this.labelTitle.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelTitle.ForeColor = System.Drawing.Color.Black;
             this.labelTitle.Location = new System.Drawing.Point(35, 3);
@@ -606,7 +579,7 @@
             // 
             // pictureboxLogo
             // 
-            this.pictureboxLogo.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureboxLogo.BackColor = System.Drawing.SystemColors.Window;
             this.pictureboxLogo.Image = global::OpenBve.Properties.Resources.icon;
             this.pictureboxLogo.Location = new System.Drawing.Point(3, 2);
             this.pictureboxLogo.Name = "pictureboxLogo";
@@ -619,20 +592,21 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.BackColor = System.Drawing.Color.Gainsboro;
-            this.ClientSize = new System.Drawing.Size(616, 738);
+            this.BackColor = System.Drawing.SystemColors.Window;
+            this.ClientSize = new System.Drawing.Size(653, 783);
+            this.Controls.Add(this.labelRespackName);
             this.Controls.Add(this.panelStart);
             this.Controls.Add(this.labelTitle);
             this.Controls.Add(this.pictureboxLogo);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "formMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = " ";
+            this.Text = " RAGLINK+ 2 OB";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formMain_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormMain_FormClosed);
@@ -671,8 +645,6 @@
 		private System.Windows.Forms.TabControl tabControlMain;
 		private System.Windows.Forms.TabPage tabPageStart;
 		private System.Windows.Forms.TabPage tabPageOptions;
-		private System.Windows.Forms.Label labelTrainTitle;
-		private System.Windows.Forms.Label labelRouteTitle;
 		private System.Windows.Forms.Label labelRespackName;
 		private System.Windows.Forms.Label labelReviewLoading;
 		private System.Windows.Forms.Label labelOptionsLoading;

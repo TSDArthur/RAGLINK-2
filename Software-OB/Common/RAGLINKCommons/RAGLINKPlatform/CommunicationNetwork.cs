@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Fleck;
+using Newtonsoft.Json;
 
 namespace RAGLINKCommons.RAGLINKPlatform
 {
@@ -13,7 +14,8 @@ namespace RAGLINKCommons.RAGLINKPlatform
         public enum ClientType
         {
             UNKNOW = 0,
-            TRAIN_DATA_HANDLER = 1
+            TRAIN_DATA_HANDLER_STR = 1,
+            TRAIN_DATA_HANDLER_JSON = 2
         };
 
         public enum StateManager
@@ -42,6 +44,242 @@ namespace RAGLINKCommons.RAGLINKPlatform
         static public string transSucc = "sc";
         static public int dataPackMaxsize = 64;
         static public string dataServerAddress = string.Empty;
+
+        static public class JsonDataExchanger
+        {
+            public enum Request
+            {
+                SET_MODE = 1,
+                REQUEST_DATA_LIST = 2,
+                REQUEST_ALL_DATA = 3,
+                REQUEST_DATA = 4,
+                SET_DATA = 5,
+                RESPONDE = 6
+            };
+
+            public struct TrainData
+            {
+                public string trainDataType;
+                public string trainDataClassify;
+                public int trainDataID;
+                public string trainData;
+            }
+
+            public class TrainDataJson
+            {
+                public bool deserialized;
+                public bool operateReport;
+                public string requestMode;
+                public string requestClientType;
+                public List<int> dataRequestList;
+                public List<TrainData> dataRespondList;
+                public TrainDataJson()
+                {
+                    deserialized = false;
+                    operateReport = false;
+                    requestMode = string.Empty;
+                    requestClientType = string.Empty;
+                    dataRequestList = new List<int>();
+                    dataRespondList = new List<TrainData>();
+                }
+            };
+
+            static public string Serialize(TrainDataJson trainDataJson)
+            {
+                string retValue = string.Empty;
+                try
+                {
+                    retValue = JsonConvert.SerializeObject(trainDataJson);
+                }
+                catch (Exception) { };
+                return retValue;
+            }
+
+            static public TrainDataJson Deserialize(string trainDataJsonStr)
+            {
+                TrainDataJson trainDataJSON = new TrainDataJson();
+                try
+                {
+                    trainDataJSON = JsonConvert.DeserializeObject<TrainDataJson>(trainDataJsonStr);
+                    trainDataJSON.deserialized = true;
+                }
+                catch(Exception)
+                {
+                    trainDataJSON.deserialized = false;
+                }
+                return trainDataJSON;
+            }
+
+            static public bool DealWithJson(string clientUrl, string trainDataJsonStr)
+            {
+                bool retValue = false;
+                TrainDataJson trainDataJSON = new TrainDataJson();
+                int socketIndex = socketUrlList.IndexOf(clientUrl);
+                try
+                {
+                    trainDataJSON = Deserialize(trainDataJsonStr);
+                    trainDataJSON.operateReport = false;
+                    Request currentRequest = (Request)Enum.Parse(typeof(Request), trainDataJSON.requestMode, true);
+                    trainDataJSON.requestMode = Request.RESPONDE.ToString();
+                    if (trainDataJSON.deserialized)
+                    {
+                        switch(currentRequest)
+                        {
+                            case Request.RESPONDE:
+                                {
+                                    socketState[socketIndex] = StateManager.READY;
+                                    break;
+                                }
+                            case Request.SET_MODE:
+                                {
+                                    ClientType clientType = (ClientType)Enum.Parse(typeof(ClientType), trainDataJSON.requestClientType, true);
+                                    SetSocketDataProvider(clientUrl, clientType);
+                                    socketReadBuffer[socketIndex] = string.Empty;
+                                    socketState[socketIndex] = StateManager.READY;
+                                    trainDataJSON.dataRequestList.Clear();
+                                    trainDataJSON.dataRespondList.Clear();
+                                    trainDataJSON.requestClientType = string.Empty;
+                                    break;
+                                }
+                            case Request.REQUEST_DATA_LIST:
+                                {
+                                    trainDataJSON.requestClientType = string.Empty;
+                                    trainDataJSON.dataRespondList.Clear();
+                                    trainDataJSON.dataRequestList.Clear();
+                                    for(int i = 0; i < DataManager.processData.GetTrainDataCount(); i++)
+                                    {
+                                        TrainData trainData = new TrainData();
+                                        trainData.trainData = string.Empty;
+                                        trainData.trainDataID = i;
+                                        trainData.trainDataType = DataManager.processData.trainDataType[i].ToString();
+                                        trainData.trainDataClassify = DataManager.processData.trainDataClassify[i].ToString();
+                                        trainDataJSON.dataRespondList.Add(trainData);
+                                    }
+                                    socketState[socketIndex] = StateManager.WAITTING_SUCC;
+                                    break;
+                                }
+                            case Request.REQUEST_DATA:
+                                {
+                                    trainDataJSON.requestClientType = string.Empty;
+                                    trainDataJSON.dataRespondList.Clear();
+                                    foreach(int dataIndex in trainDataJSON.dataRequestList)
+                                    {
+                                        TrainData trainData = new TrainData();
+                                        trainData.trainDataID = dataIndex;
+                                        trainData.trainDataType = DataManager.processData.trainDataType[dataIndex].ToString();
+                                        trainData.trainDataClassify = DataManager.processData.trainDataClassify[dataIndex].ToString();
+                                        trainData.trainData = TrainData2Str(dataIndex);
+                                        trainDataJSON.dataRespondList.Add(trainData);
+                                    }
+                                    trainDataJSON.dataRequestList.Clear();
+                                    socketState[socketIndex] = StateManager.WAITTING_SUCC;
+                                    break;
+                                }
+                            case Request.REQUEST_ALL_DATA:
+                                {
+                                    trainDataJSON.requestClientType = string.Empty;
+                                    trainDataJSON.dataRespondList.Clear();
+                                    for(int dataIndex = 0; dataIndex < DataManager.processData.GetTrainDataCount(); dataIndex++)
+                                    {
+                                        TrainData trainData = new TrainData();
+                                        trainData.trainDataID = dataIndex;
+                                        trainData.trainDataType = DataManager.processData.trainDataType[dataIndex].ToString();
+                                        trainData.trainDataClassify = DataManager.processData.trainDataClassify[dataIndex].ToString();
+                                        trainData.trainData = TrainData2Str(dataIndex);
+                                        trainDataJSON.dataRespondList.Add(trainData);
+                                    }
+                                    trainDataJSON.dataRequestList.Clear();
+                                    socketState[socketIndex] = StateManager.WAITTING_SUCC;
+                                    break;
+                                }
+                            case Request.SET_DATA:
+                                {
+                                    foreach(int dataListIndex in trainDataJSON.dataRequestList)
+                                    {
+                                        try
+                                        {
+                                            int dataIndex = trainDataJSON.dataRespondList[dataListIndex].trainDataID;
+                                            ApplyTrainData(dataIndex, trainDataJSON.dataRespondList[dataListIndex].trainData);
+                                        }
+                                        catch (Exception) { };
+                                    }
+                                    socketState[socketIndex] = StateManager.READY;
+                                    trainDataJSON.dataRequestList.Clear();
+                                    trainDataJSON.dataRespondList.Clear();
+                                    trainDataJSON.requestClientType = string.Empty;
+                                    break;
+                                }
+                        }
+                        trainDataJSON.operateReport = true;
+                    }
+                }
+                catch (Exception) { };
+                socketList[socketIndex].Send(Serialize(trainDataJSON));
+                retValue = true;
+                return retValue;
+            }
+        };
+
+        static public void ApplyTrainData(int dataIndex, string trainDataValue)
+        {
+            switch (DataManager.processData.trainDataType[dataIndex])
+            {
+                case DataManager.TrainDataType.STRING:
+                    {
+                        DataManager.SetTrainData(dataIndex, trainDataValue);
+                        DataManager.ApplyTrainData();
+                        break;
+                    }
+                case DataManager.TrainDataType.INT:
+                    {
+                        DataManager.SetTrainData(dataIndex, Int32.Parse(trainDataValue));
+                        DataManager.ApplyTrainData();
+                        break;
+                    }
+                case DataManager.TrainDataType.DOUBLE:
+                    {
+                        DataManager.SetTrainData(dataIndex, Double.Parse(trainDataValue));
+                        DataManager.ApplyTrainData();
+                        break;
+                    }
+            }
+        }
+
+        static public string TrainData2Str(int dataIndex)
+        {
+            string retValue = string.Empty;
+            try
+            {
+                object trainDataValue = DataManager.processData.trainData[dataIndex];
+                switch (DataManager.processData.trainDataType[dataIndex])
+                {
+                    case DataManager.TrainDataType.STRING:
+                        {
+                            retValue = trainDataValue.ToString();
+                            break;
+                        }
+                    case DataManager.TrainDataType.INT:
+                        {
+                            retValue = ((int)trainDataValue).ToString();
+                            break;
+                        }
+                    case DataManager.TrainDataType.DOUBLE:
+                        {
+                            retValue = Math.Round((double)trainDataValue, 2).ToString();
+                            break;
+                        }
+                }
+            }
+            catch (Exception) { };
+            return retValue;
+        }
+
+        static public int GetClientSocketCount()
+        {
+            int retValue;
+            retValue = socketList.Count;
+            return retValue;
+        }
 
         static public void SetupWebSocketServer(string serverAddress)
         {
@@ -96,15 +334,28 @@ namespace RAGLINKCommons.RAGLINKPlatform
                     int socketIndex = socketUrlList.IndexOf(clientUrl);
                     if (socketIndex != -1)
                     {
-                        socketReadBuffer[socketIndex] += message;
-                        if(!MessageDealerInBusy())
+                        if (JsonDataExchanger.Deserialize(message).deserialized || 
+                        (socketClientTypeList[socketIndex] == ClientType.TRAIN_DATA_HANDLER_JSON && 
+                        JsonDataExchanger.Deserialize(message).deserialized))
                         {
-                            int endSymbolPos = socketReadBuffer[socketIndex].LastIndexOf(endSymbol);
-                            int startSymbolPos = socketReadBuffer[socketIndex].LastIndexOf(startSymbol);
-                            if(endSymbolPos > startSymbolPos)
+                            JsonDataExchanger.DealWithJson(clientUrl, message);
+                        }
+                        else
+                        {
+                            socketReadBuffer[socketIndex] += message;
+                            if (!MessageDealerInBusy())
                             {
-                                DealwithMessage(clientUrl, socketReadBuffer[socketIndex].Substring(startSymbolPos + 1, endSymbolPos - startSymbolPos - 1));
-                                socketReadBuffer[socketIndex] = socketReadBuffer[socketIndex].Substring(endSymbolPos + 1);
+                                int endSymbolPos = socketReadBuffer[socketIndex].LastIndexOf(endSymbol);
+                                int startSymbolPos = socketReadBuffer[socketIndex].LastIndexOf(startSymbol);
+                                if (endSymbolPos > startSymbolPos)
+                                {
+                                    try
+                                    {
+                                        DealwithMessageStrMode(clientUrl, socketReadBuffer[socketIndex].Substring(startSymbolPos + 1, endSymbolPos - startSymbolPos - 1));
+                                        socketReadBuffer[socketIndex] = socketReadBuffer[socketIndex].Substring(endSymbolPos + 1);
+                                    }
+                                    catch (Exception) { };
+                                }
                             }
                         }
                     }
@@ -132,7 +383,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
             return retValue;
         }
 
-        static public void DealwithMessage(string clientUrl, string streamData)
+        static public void DealwithMessageStrMode(string clientUrl, string streamData)
         {
             dealerInBusy = true;
             try
@@ -149,8 +400,10 @@ namespace RAGLINKCommons.RAGLINKPlatform
                         SetSocketDataProvider(clientUrl, (ClientType)dataValue);
                         string sendStream = startSymbol.ToString() + transSucc + endSymbol.ToString();
                         socketList[socketIndex].Send(sendStream);
+                        socketReadBuffer[socketIndex] = string.Empty;
+                        socketState[socketIndex] = StateManager.READY;
                     }
-                    else if(socketClientTypeList[socketIndex] == ClientType.TRAIN_DATA_HANDLER)
+                    else if(socketClientTypeList[socketIndex] == ClientType.TRAIN_DATA_HANDLER_STR)
                     {
                         if (streamData.IndexOf(transRequestData + transLeftIndexBracket.ToString()) != -1)
                         {
@@ -162,33 +415,10 @@ namespace RAGLINKCommons.RAGLINKPlatform
                                 try
                                 {
                                     if (indexEndPos - indexStartPos > 0) dataIndex = Int32.Parse(streamData.Substring(indexStartPos + 1, indexEndPos - indexStartPos - 1));
-                                    switch (DataManager.processData.trainDataType[dataIndex])
-                                    {
-                                        case DataManager.TrainDataType.STRING:
-                                            {
-                                                string sendStream = startSymbol.ToString() + transSetData + transLeftIndexBracket.ToString() + dataIndex.ToString() +
-                                                    transRightIndexBracket.ToString() + transLeftValueBracket.ToString() + DataManager.processData.trainData[dataIndex].ToString() +
+                                    string sendStream = startSymbol.ToString() + transSetData + transLeftIndexBracket.ToString() + dataIndex.ToString() +
+                                                    transRightIndexBracket.ToString() + transLeftValueBracket.ToString() + TrainData2Str(dataIndex) +
                                                     transRightValueBracket.ToString() + endSymbol.ToString();
-                                                socketList[socketIndex].Send(sendStream);
-                                                break;
-                                            }
-                                        case DataManager.TrainDataType.INT:
-                                            {
-                                                string sendStream = startSymbol.ToString() + transSetData + transLeftIndexBracket.ToString() + dataIndex.ToString() +
-                                                    transRightIndexBracket.ToString() + transLeftValueBracket.ToString() + ((int)DataManager.processData.trainData[dataIndex]).ToString() +
-                                                    transRightValueBracket.ToString() + endSymbol.ToString();
-                                                    socketList[socketIndex].Send(sendStream);
-                                                break;
-                                            }
-                                        case DataManager.TrainDataType.DOUBLE:
-                                            {
-                                                string sendStream = startSymbol.ToString() + transSetData + transLeftIndexBracket.ToString() + dataIndex.ToString() +
-                                                    transRightIndexBracket.ToString() + transLeftValueBracket.ToString() + Math.Round((double)DataManager.processData.trainData[dataIndex], 2).ToString() +
-                                                    transRightValueBracket.ToString() + endSymbol.ToString();
-                                                    socketList[socketIndex].Send(sendStream);
-                                                break;
-                                            }
-                                    }
+                                    socketList[socketIndex].Send(sendStream);
                                     socketState[socketIndex] = StateManager.WAITTING_SUCC;
                                 }
                                 catch (Exception)
@@ -211,27 +441,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
                                 if (valueEndPos > valueStartPos) dataValue = streamData.Substring(valueStartPos + 1, valueEndPos - valueStartPos - 1);
                                 try
                                 {
-                                    switch (DataManager.processData.trainDataType[dataIndex])
-                                    {
-                                        case DataManager.TrainDataType.STRING:
-                                            {
-                                                DataManager.SetTrainData(dataIndex, dataValue);
-                                                DataManager.ApplyTrainData();
-                                                break;
-                                            }
-                                        case DataManager.TrainDataType.INT:
-                                            {
-                                                DataManager.SetTrainData(dataIndex, Int32.Parse(dataValue));
-                                                DataManager.ApplyTrainData();
-                                                break;
-                                            }
-                                        case DataManager.TrainDataType.DOUBLE:
-                                            {
-                                                DataManager.SetTrainData(dataIndex, Double.Parse(dataValue));
-                                                DataManager.ApplyTrainData();
-                                                break;
-                                            }
-                                    }
+                                    ApplyTrainData(dataIndex, dataValue);
                                     string sendStream = startSymbol.ToString() + transSucc + endSymbol.ToString();
                                     socketList[socketIndex].Send(sendStream);
                                     socketState[socketIndex] = StateManager.READY;

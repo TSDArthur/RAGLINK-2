@@ -52,7 +52,7 @@
             // labelTitleName
             // 
             this.labelTitleName.AutoEllipsis = true;
-            this.labelTitleName.BackColor = System.Drawing.Color.Gainsboro;
+            this.labelTitleName.BackColor = System.Drawing.SystemColors.Window;
             this.labelTitleName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelTitleName.ForeColor = System.Drawing.Color.Black;
             this.labelTitleName.Location = new System.Drawing.Point(33, 5);
@@ -66,15 +66,15 @@
             // 
             this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonClose.AutoEllipsis = true;
-            this.buttonClose.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonClose.BackColor = System.Drawing.SystemColors.Window;
             this.buttonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonClose.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonClose.Location = new System.Drawing.Point(543, 553);
+            this.buttonClose.Location = new System.Drawing.Point(543, 552);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(120, 24);
             this.buttonClose.TabIndex = 20;
             this.buttonClose.Text = "关闭";
-            this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.UseVisualStyleBackColor = false;
             this.buttonClose.Click += new System.EventHandler(this.ButtonClose_Click);
             // 
             // timerUpdate
@@ -180,7 +180,7 @@
             // 
             // pictureBoxBVE
             // 
-            this.pictureBoxBVE.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBoxBVE.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBoxBVE.Image = global::RAGLINKCommons.Properties.Resources.icon;
             this.pictureBoxBVE.Location = new System.Drawing.Point(2, 3);
             this.pictureBoxBVE.Name = "pictureBoxBVE";
@@ -193,7 +193,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gainsboro;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(669, 581);
             this.Controls.Add(this.panelDataMonitor);
             this.Controls.Add(this.buttonClose);

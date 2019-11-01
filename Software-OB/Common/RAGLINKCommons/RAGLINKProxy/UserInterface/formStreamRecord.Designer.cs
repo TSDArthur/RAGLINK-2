@@ -40,6 +40,7 @@
             this.timerUpdate = new System.Windows.Forms.Timer(this.components);
             this.tabControlShowType = new System.Windows.Forms.TabControl();
             this.tabPageCombined = new System.Windows.Forms.TabPage();
+            this.labelNoConnection = new System.Windows.Forms.Label();
             this.labelCombinedTitle = new System.Windows.Forms.Label();
             this.listBoxCombinedStream = new ListBoxDoubleBuffered.ListBoxNF();
             this.pictureBoxCombined = new System.Windows.Forms.PictureBox();
@@ -47,7 +48,6 @@
             this.listBoxRecieved = new ListBoxDoubleBuffered.ListBoxNF();
             this.listBoxSent = new ListBoxDoubleBuffered.ListBoxNF();
             this.buttonRefreshEnable = new System.Windows.Forms.Button();
-            this.labelNoConnection = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBVE)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInfo0)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInfo1)).BeginInit();
@@ -60,7 +60,7 @@
             // labelTitleName
             // 
             this.labelTitleName.AutoEllipsis = true;
-            this.labelTitleName.BackColor = System.Drawing.Color.Gainsboro;
+            this.labelTitleName.BackColor = System.Drawing.SystemColors.Window;
             this.labelTitleName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelTitleName.ForeColor = System.Drawing.Color.Black;
             this.labelTitleName.Location = new System.Drawing.Point(33, 4);
@@ -72,7 +72,7 @@
             // 
             // pictureBoxBVE
             // 
-            this.pictureBoxBVE.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBoxBVE.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBoxBVE.Image = global::RAGLINKCommons.Properties.Resources.icon;
             this.pictureBoxBVE.Location = new System.Drawing.Point(2, 3);
             this.pictureBoxBVE.Name = "pictureBoxBVE";
@@ -85,15 +85,15 @@
             // 
             this.buttonClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonClose.AutoEllipsis = true;
-            this.buttonClose.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.buttonClose.BackColor = System.Drawing.SystemColors.Window;
             this.buttonClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonClose.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonClose.Location = new System.Drawing.Point(543, 553);
+            this.buttonClose.Location = new System.Drawing.Point(543, 552);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(120, 24);
             this.buttonClose.TabIndex = 20;
             this.buttonClose.Text = "关闭";
-            this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.UseVisualStyleBackColor = false;
             this.buttonClose.Click += new System.EventHandler(this.ButtonClose_Click);
             // 
             // pictureBoxInfo0
@@ -170,6 +170,7 @@
             // tabPageCombined
             // 
             this.tabPageCombined.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPageCombined.Controls.Add(this.labelNoConnection);
             this.tabPageCombined.Controls.Add(this.labelCombinedTitle);
             this.tabPageCombined.Controls.Add(this.listBoxCombinedStream);
             this.tabPageCombined.Controls.Add(this.pictureBoxCombined);
@@ -179,6 +180,22 @@
             this.tabPageCombined.Size = new System.Drawing.Size(656, 482);
             this.tabPageCombined.TabIndex = 0;
             this.tabPageCombined.Text = "归并查看";
+            // 
+            // labelNoConnection
+            // 
+            this.labelNoConnection.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelNoConnection.AutoEllipsis = true;
+            this.labelNoConnection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.labelNoConnection.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelNoConnection.ForeColor = System.Drawing.Color.Black;
+            this.labelNoConnection.Location = new System.Drawing.Point(194, 223);
+            this.labelNoConnection.Name = "labelNoConnection";
+            this.labelNoConnection.Size = new System.Drawing.Size(260, 24);
+            this.labelNoConnection.TabIndex = 66;
+            this.labelNoConnection.Text = "未连接主控板";
+            this.labelNoConnection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelCombinedTitle
             // 
@@ -205,7 +222,7 @@
             this.listBoxCombinedStream.ItemHeight = 17;
             this.listBoxCombinedStream.Location = new System.Drawing.Point(3, 29);
             this.listBoxCombinedStream.Name = "listBoxCombinedStream";
-            this.listBoxCombinedStream.Size = new System.Drawing.Size(649, 429);
+            this.listBoxCombinedStream.Size = new System.Drawing.Size(649, 412);
             this.listBoxCombinedStream.TabIndex = 27;
             // 
             // pictureBoxCombined
@@ -265,7 +282,7 @@
             this.buttonRefreshEnable.AutoEllipsis = true;
             this.buttonRefreshEnable.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.buttonRefreshEnable.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonRefreshEnable.Location = new System.Drawing.Point(572, 38);
+            this.buttonRefreshEnable.Location = new System.Drawing.Point(572, 36);
             this.buttonRefreshEnable.Name = "buttonRefreshEnable";
             this.buttonRefreshEnable.Size = new System.Drawing.Size(91, 24);
             this.buttonRefreshEnable.TabIndex = 26;
@@ -273,29 +290,12 @@
             this.buttonRefreshEnable.UseVisualStyleBackColor = true;
             this.buttonRefreshEnable.Click += new System.EventHandler(this.ButtonRefreshEnable_Click);
             // 
-            // labelNoConnection
-            // 
-            this.labelNoConnection.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelNoConnection.AutoEllipsis = true;
-            this.labelNoConnection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.labelNoConnection.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelNoConnection.ForeColor = System.Drawing.Color.Black;
-            this.labelNoConnection.Location = new System.Drawing.Point(45, 270);
-            this.labelNoConnection.Name = "labelNoConnection";
-            this.labelNoConnection.Size = new System.Drawing.Size(579, 43);
-            this.labelNoConnection.TabIndex = 66;
-            this.labelNoConnection.Text = "未连接主控板";
-            this.labelNoConnection.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // formStreamRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gainsboro;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(669, 581);
-            this.Controls.Add(this.labelNoConnection);
             this.Controls.Add(this.buttonRefreshEnable);
             this.Controls.Add(this.tabControlShowType);
             this.Controls.Add(this.buttonClose);

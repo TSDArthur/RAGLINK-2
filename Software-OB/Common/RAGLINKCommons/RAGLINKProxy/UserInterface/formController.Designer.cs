@@ -147,6 +147,7 @@
             this.buttonDeadmanPress = new System.Windows.Forms.Button();
             this.textBoxRecievedStream = new System.Windows.Forms.TextBox();
             this.panelConnection = new System.Windows.Forms.Panel();
+            this.labelServerAddress = new System.Windows.Forms.Label();
             this.textBoxDebugStream = new System.Windows.Forms.TextBox();
             this.textBoxSentStream = new System.Windows.Forms.TextBox();
             this.labelSendStreamTitle = new System.Windows.Forms.Label();
@@ -175,7 +176,6 @@
             this.pictureBoxBVE = new System.Windows.Forms.PictureBox();
             this.themeApplier = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
             this.mainTheme = new WeifenLuo.WinFormsUI.Docking.VS2015LightTheme();
-            this.labelServerAddress = new System.Windows.Forms.Label();
             this.toolStripMain.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.panelMonitor.SuspendLayout();
@@ -204,7 +204,7 @@
             // menuStripMain
             // 
             this.menuStripMain.AutoSize = false;
-            this.menuStripMain.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.menuStripMain.BackColor = System.Drawing.SystemColors.Window;
             this.menuStripMain.Dock = System.Windows.Forms.DockStyle.None;
             this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menItemFile,
@@ -1398,10 +1398,21 @@
             this.panelConnection.Controls.Add(this.labelSendStreamTitle);
             this.panelConnection.Controls.Add(this.labelRecivedStreamTitle);
             this.panelConnection.Controls.Add(this.textBoxRecievedStream);
-            this.panelConnection.Location = new System.Drawing.Point(5, 592);
+            this.panelConnection.Location = new System.Drawing.Point(5, 588);
             this.panelConnection.Name = "panelConnection";
             this.panelConnection.Size = new System.Drawing.Size(556, 154);
             this.panelConnection.TabIndex = 57;
+            // 
+            // labelServerAddress
+            // 
+            this.labelServerAddress.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelServerAddress.ForeColor = System.Drawing.Color.White;
+            this.labelServerAddress.Location = new System.Drawing.Point(2, 4);
+            this.labelServerAddress.Name = "labelServerAddress";
+            this.labelServerAddress.Size = new System.Drawing.Size(550, 23);
+            this.labelServerAddress.TabIndex = 60;
+            this.labelServerAddress.Text = "嵌入式数据服务器地址：";
+            this.labelServerAddress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxDebugStream
             // 
@@ -1456,22 +1467,23 @@
             // checkBoxStreamDebugEnable
             // 
             this.checkBoxStreamDebugEnable.AutoSize = true;
+            this.checkBoxStreamDebugEnable.BackColor = System.Drawing.SystemColors.Window;
             this.checkBoxStreamDebugEnable.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.checkBoxStreamDebugEnable.ForeColor = System.Drawing.Color.Black;
-            this.checkBoxStreamDebugEnable.Location = new System.Drawing.Point(368, 752);
+            this.checkBoxStreamDebugEnable.Location = new System.Drawing.Point(368, 749);
             this.checkBoxStreamDebugEnable.Name = "checkBoxStreamDebugEnable";
             this.checkBoxStreamDebugEnable.Size = new System.Drawing.Size(75, 21);
             this.checkBoxStreamDebugEnable.TabIndex = 65;
             this.checkBoxStreamDebugEnable.Text = "指令调试";
-            this.checkBoxStreamDebugEnable.UseVisualStyleBackColor = true;
+            this.checkBoxStreamDebugEnable.UseVisualStyleBackColor = false;
             this.checkBoxStreamDebugEnable.CheckedChanged += new System.EventHandler(this.CheckBoxStreamDebugEnable_CheckedChanged);
             // 
             // buttonSendDebugStream
             // 
-            this.buttonSendDebugStream.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonSendDebugStream.BackColor = System.Drawing.SystemColors.Window;
             this.buttonSendDebugStream.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSendDebugStream.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonSendDebugStream.Location = new System.Drawing.Point(448, 749);
+            this.buttonSendDebugStream.Location = new System.Drawing.Point(448, 746);
             this.buttonSendDebugStream.Name = "buttonSendDebugStream";
             this.buttonSendDebugStream.Size = new System.Drawing.Size(112, 26);
             this.buttonSendDebugStream.TabIndex = 64;
@@ -1484,7 +1496,7 @@
             this.labelPlanName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelPlanName.AutoEllipsis = true;
-            this.labelPlanName.BackColor = System.Drawing.Color.Gainsboro;
+            this.labelPlanName.BackColor = System.Drawing.SystemColors.Window;
             this.labelPlanName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelPlanName.ForeColor = System.Drawing.Color.Black;
             this.labelPlanName.Location = new System.Drawing.Point(212, 6);
@@ -1496,6 +1508,7 @@
             // 
             // timerEvents
             // 
+            this.timerEvents.Interval = 200;
             this.timerEvents.Tick += new System.EventHandler(this.TimerEvents_Tick);
             // 
             // timerStreamTextUpdater
@@ -1508,7 +1521,7 @@
             this.labelTitleName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelTitleName.AutoEllipsis = true;
-            this.labelTitleName.BackColor = System.Drawing.Color.Gainsboro;
+            this.labelTitleName.BackColor = System.Drawing.SystemColors.Window;
             this.labelTitleName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelTitleName.ForeColor = System.Drawing.Color.Black;
             this.labelTitleName.Location = new System.Drawing.Point(37, 6);
@@ -1520,11 +1533,11 @@
             // 
             // buttonDataMonitor
             // 
-            this.buttonDataMonitor.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonDataMonitor.BackColor = System.Drawing.SystemColors.Window;
             this.buttonDataMonitor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDataMonitor.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonDataMonitor.Image = global::RAGLINKCommons.Properties.Resources.Data;
-            this.buttonDataMonitor.Location = new System.Drawing.Point(235, 749);
+            this.buttonDataMonitor.Location = new System.Drawing.Point(235, 746);
             this.buttonDataMonitor.Name = "buttonDataMonitor";
             this.buttonDataMonitor.Size = new System.Drawing.Size(112, 26);
             this.buttonDataMonitor.TabIndex = 61;
@@ -1535,11 +1548,11 @@
             // 
             // buttonStreamRecord
             // 
-            this.buttonStreamRecord.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonStreamRecord.BackColor = System.Drawing.SystemColors.Window;
             this.buttonStreamRecord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonStreamRecord.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonStreamRecord.Image = global::RAGLINKCommons.Properties.Resources.Log;
-            this.buttonStreamRecord.Location = new System.Drawing.Point(121, 749);
+            this.buttonStreamRecord.Location = new System.Drawing.Point(121, 746);
             this.buttonStreamRecord.Name = "buttonStreamRecord";
             this.buttonStreamRecord.Size = new System.Drawing.Size(112, 26);
             this.buttonStreamRecord.TabIndex = 60;
@@ -1550,11 +1563,11 @@
             // 
             // buttonBoardConnection
             // 
-            this.buttonBoardConnection.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonBoardConnection.BackColor = System.Drawing.SystemColors.Window;
             this.buttonBoardConnection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonBoardConnection.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonBoardConnection.Image = global::RAGLINKCommons.Properties.Resources.Board;
-            this.buttonBoardConnection.Location = new System.Drawing.Point(7, 749);
+            this.buttonBoardConnection.Location = new System.Drawing.Point(7, 746);
             this.buttonBoardConnection.Name = "buttonBoardConnection";
             this.buttonBoardConnection.Size = new System.Drawing.Size(112, 26);
             this.buttonBoardConnection.TabIndex = 58;
@@ -1745,7 +1758,7 @@
             // 
             // pictureBoxBVE
             // 
-            this.pictureBoxBVE.BackColor = System.Drawing.Color.Gainsboro;
+            this.pictureBoxBVE.BackColor = System.Drawing.SystemColors.Window;
             this.pictureBoxBVE.Image = global::RAGLINKCommons.Properties.Resources.icon;
             this.pictureBoxBVE.Location = new System.Drawing.Point(6, 5);
             this.pictureBoxBVE.Name = "pictureBoxBVE";
@@ -1758,22 +1771,11 @@
             // 
             this.themeApplier.DefaultRenderer = null;
             // 
-            // labelServerAddress
-            // 
-            this.labelServerAddress.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelServerAddress.ForeColor = System.Drawing.Color.White;
-            this.labelServerAddress.Location = new System.Drawing.Point(2, 4);
-            this.labelServerAddress.Name = "labelServerAddress";
-            this.labelServerAddress.Size = new System.Drawing.Size(550, 23);
-            this.labelServerAddress.TabIndex = 60;
-            this.labelServerAddress.Text = "嵌入式数据服务器地址：";
-            this.labelServerAddress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // formController
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gainsboro;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(565, 803);
             this.Controls.Add(this.checkBoxStreamDebugEnable);
             this.Controls.Add(this.buttonDataMonitor);

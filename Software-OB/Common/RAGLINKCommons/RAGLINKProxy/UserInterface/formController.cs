@@ -256,7 +256,8 @@ namespace RAGLINKCommons.RAGLINKProxy
             timerEvents.Enabled = false;
             try
             {
-                labelServerAddress.Text = "嵌入式数据服务器地址：" + RAGLINKPlatform.CommunicationNetwork.dataServerAddress;
+                labelServerAddress.Text = "嵌入式数据服务器地址：" + RAGLINKPlatform.CommunicationNetwork.dataServerAddress + " 已连接客户端数量：" + 
+                    RAGLINKPlatform.CommunicationNetwork.GetClientSocketCount().ToString();
                 if (boardConnection)
                 {
                     buttonBoardConnection.Text = "主板强制断开";

@@ -118,6 +118,7 @@
     <Reference Include="Fleck, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fleck.1.1.0\lib\net45\Fleck.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Design" />

@@ -118,7 +118,8 @@ namespace OpenBve
 				labelReviewLoading.Visible = true;
 				labelReviewLoading.Text = "未选中行车计划，无预览。";
 				labelOptionsLoading.Visible = true;
-				labelOptionsLoading.Text = "未选中行车计划。";
+				labelOptionsLoading.Text = "未选中行车计划，无设置项。";
+				labelRespackName.Visible = false;
 				buttonStart.Enabled = false & startButtonCondition;
 			}
 			else if (reviewMode == 1)
@@ -133,6 +134,7 @@ namespace OpenBve
 			{
 				LoadOptionsOnForm();
 				labelRespackName.Text = "加载的资源包：" + RAGLINKCommons.RAGLINKPlatform.PackagesManager.packageInfo.packageName;
+				labelRespackName.Visible = true;
 				buttonStart.Enabled = true & startButtonCondition;
 				labelReviewLoading.Visible = false;
 				labelOptionsLoading.Visible = false;

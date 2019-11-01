@@ -123,99 +123,101 @@ namespace RAGLINKCommons.RAGLINKPlatform
                     trainDataJSON.requestMode = Request.RESPONDE.ToString();
                     if (trainDataJSON.deserialized)
                     {
-                        switch(currentRequest)
+                        if (currentRequest == Request.RESPONDE)
                         {
-                            case Request.RESPONDE:
-                                {
-                                    socketState[socketIndex] = StateManager.READY;
-                                    break;
-                                }
-                            case Request.SET_MODE:
-                                {
-                                    ClientType clientType = (ClientType)Enum.Parse(typeof(ClientType), trainDataJSON.requestClientType, true);
-                                    SetSocketDataProvider(clientUrl, clientType);
-                                    socketReadBuffer[socketIndex] = string.Empty;
-                                    socketState[socketIndex] = StateManager.READY;
-                                    trainDataJSON.dataRequestList.Clear();
-                                    trainDataJSON.dataRespondList.Clear();
-                                    trainDataJSON.requestClientType = string.Empty;
-                                    break;
-                                }
-                            case Request.REQUEST_DATA_LIST:
-                                {
-                                    trainDataJSON.requestClientType = string.Empty;
-                                    trainDataJSON.dataRespondList.Clear();
-                                    trainDataJSON.dataRequestList.Clear();
-                                    for(int i = 0; i < DataManager.processData.GetTrainDataCount(); i++)
-                                    {
-                                        TrainData trainData = new TrainData();
-                                        trainData.trainData = string.Empty;
-                                        trainData.trainDataID = i;
-                                        trainData.trainDataType = DataManager.processData.trainDataType[i].ToString();
-                                        trainData.trainDataClassify = DataManager.processData.trainDataClassify[i].ToString();
-                                        trainDataJSON.dataRespondList.Add(trainData);
-                                    }
-                                    socketState[socketIndex] = StateManager.WAITTING_SUCC;
-                                    break;
-                                }
-                            case Request.REQUEST_DATA:
-                                {
-                                    trainDataJSON.requestClientType = string.Empty;
-                                    trainDataJSON.dataRespondList.Clear();
-                                    foreach(int dataIndex in trainDataJSON.dataRequestList)
-                                    {
-                                        TrainData trainData = new TrainData();
-                                        trainData.trainDataID = dataIndex;
-                                        trainData.trainDataType = DataManager.processData.trainDataType[dataIndex].ToString();
-                                        trainData.trainDataClassify = DataManager.processData.trainDataClassify[dataIndex].ToString();
-                                        trainData.trainData = TrainData2Str(dataIndex);
-                                        trainDataJSON.dataRespondList.Add(trainData);
-                                    }
-                                    trainDataJSON.dataRequestList.Clear();
-                                    socketState[socketIndex] = StateManager.WAITTING_SUCC;
-                                    break;
-                                }
-                            case Request.REQUEST_ALL_DATA:
-                                {
-                                    trainDataJSON.requestClientType = string.Empty;
-                                    trainDataJSON.dataRespondList.Clear();
-                                    for(int dataIndex = 0; dataIndex < DataManager.processData.GetTrainDataCount(); dataIndex++)
-                                    {
-                                        TrainData trainData = new TrainData();
-                                        trainData.trainDataID = dataIndex;
-                                        trainData.trainDataType = DataManager.processData.trainDataType[dataIndex].ToString();
-                                        trainData.trainDataClassify = DataManager.processData.trainDataClassify[dataIndex].ToString();
-                                        trainData.trainData = TrainData2Str(dataIndex);
-                                        trainDataJSON.dataRespondList.Add(trainData);
-                                    }
-                                    trainDataJSON.dataRequestList.Clear();
-                                    socketState[socketIndex] = StateManager.WAITTING_SUCC;
-                                    break;
-                                }
-                            case Request.SET_DATA:
-                                {
-                                    foreach(int dataListIndex in trainDataJSON.dataRequestList)
-                                    {
-                                        try
-                                        {
-                                            int dataIndex = trainDataJSON.dataRespondList[dataListIndex].trainDataID;
-                                            ApplyTrainData(dataIndex, trainDataJSON.dataRespondList[dataListIndex].trainData);
-                                        }
-                                        catch (Exception) { };
-                                    }
-                                    socketState[socketIndex] = StateManager.READY;
-                                    trainDataJSON.dataRequestList.Clear();
-                                    trainDataJSON.dataRespondList.Clear();
-                                    trainDataJSON.requestClientType = string.Empty;
-                                    break;
-                                }
+                            socketState[socketIndex] = StateManager.READY;
                         }
-                        trainDataJSON.operateReport = true;
+                        else if(socketState[socketIndex] == StateManager.READY)
+                        {
+                            switch (currentRequest)
+                            {
+                                case Request.SET_MODE:
+                                    {
+                                        ClientType clientType = (ClientType)Enum.Parse(typeof(ClientType), trainDataJSON.requestClientType, true);
+                                        SetSocketDataProvider(clientUrl, clientType);
+                                        socketReadBuffer[socketIndex] = string.Empty;
+                                        socketState[socketIndex] = StateManager.READY;
+                                        trainDataJSON.dataRequestList.Clear();
+                                        trainDataJSON.dataRespondList.Clear();
+                                        trainDataJSON.requestClientType = string.Empty;
+                                        break;
+                                    }
+                                case Request.REQUEST_DATA_LIST:
+                                    {
+                                        trainDataJSON.requestClientType = string.Empty;
+                                        trainDataJSON.dataRespondList.Clear();
+                                        trainDataJSON.dataRequestList.Clear();
+                                        for (int i = 0; i < DataManager.processData.GetTrainDataCount(); i++)
+                                        {
+                                            TrainData trainData = new TrainData();
+                                            trainData.trainData = string.Empty;
+                                            trainData.trainDataID = i;
+                                            trainData.trainDataType = DataManager.processData.trainDataType[i].ToString();
+                                            trainData.trainDataClassify = DataManager.processData.trainDataClassify[i].ToString();
+                                            trainDataJSON.dataRespondList.Add(trainData);
+                                        }
+                                        socketState[socketIndex] = StateManager.WAITTING_SUCC;
+                                        break;
+                                    }
+                                case Request.REQUEST_DATA:
+                                    {
+                                        trainDataJSON.requestClientType = string.Empty;
+                                        trainDataJSON.dataRespondList.Clear();
+                                        foreach (int dataIndex in trainDataJSON.dataRequestList)
+                                        {
+                                            TrainData trainData = new TrainData();
+                                            trainData.trainDataID = dataIndex;
+                                            trainData.trainDataType = DataManager.processData.trainDataType[dataIndex].ToString();
+                                            trainData.trainDataClassify = DataManager.processData.trainDataClassify[dataIndex].ToString();
+                                            trainData.trainData = TrainData2Str(dataIndex);
+                                            trainDataJSON.dataRespondList.Add(trainData);
+                                        }
+                                        trainDataJSON.dataRequestList.Clear();
+                                        socketState[socketIndex] = StateManager.WAITTING_SUCC;
+                                        break;
+                                    }
+                                case Request.REQUEST_ALL_DATA:
+                                    {
+                                        trainDataJSON.requestClientType = string.Empty;
+                                        trainDataJSON.dataRespondList.Clear();
+                                        for (int dataIndex = 0; dataIndex < DataManager.processData.GetTrainDataCount(); dataIndex++)
+                                        {
+                                            TrainData trainData = new TrainData();
+                                            trainData.trainDataID = dataIndex;
+                                            trainData.trainDataType = DataManager.processData.trainDataType[dataIndex].ToString();
+                                            trainData.trainDataClassify = DataManager.processData.trainDataClassify[dataIndex].ToString();
+                                            trainData.trainData = TrainData2Str(dataIndex);
+                                            trainDataJSON.dataRespondList.Add(trainData);
+                                        }
+                                        trainDataJSON.dataRequestList.Clear();
+                                        socketState[socketIndex] = StateManager.WAITTING_SUCC;
+                                        break;
+                                    }
+                                case Request.SET_DATA:
+                                    {
+                                        foreach (int dataListIndex in trainDataJSON.dataRequestList)
+                                        {
+                                            try
+                                            {
+                                                int dataIndex = trainDataJSON.dataRespondList[dataListIndex].trainDataID;
+                                                ApplyTrainData(dataIndex, trainDataJSON.dataRespondList[dataListIndex].trainData);
+                                            }
+                                            catch (Exception) { };
+                                        }
+                                        socketState[socketIndex] = StateManager.READY;
+                                        trainDataJSON.dataRequestList.Clear();
+                                        trainDataJSON.dataRespondList.Clear();
+                                        trainDataJSON.requestClientType = string.Empty;
+                                        break;
+                                    }
+                            }
+                            trainDataJSON.operateReport = true;
+                            socketList[socketIndex].Send(Serialize(trainDataJSON));
+                            retValue = true;
+                        }
                     }
                 }
                 catch (Exception) { };
-                socketList[socketIndex].Send(Serialize(trainDataJSON));
-                retValue = true;
                 return retValue;
             }
         };

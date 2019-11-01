@@ -282,6 +282,16 @@ namespace RAGLINKCommons.RAGLINKProxy
                     }
                 }
                 catch (Exception) { };
+                //Main-form Monitor Inv:3s
+                findSimualtorWindowTick++;
+                if (findSimualtorWindowTick > 10)
+                {
+                    findSimualtorWindowTick = 0;
+                    IntPtr ParenthWnd = new IntPtr(0);
+                    ParenthWnd = FindWindow(null, "RAGLINK+");
+                    if (ParenthWnd == IntPtr.Zero) this.Close();
+                }
+                timerEvents.Enabled = true;
                 if (!TrainMethodsClient.GetSimulatorState())
                 {
                     buttonDataMonitor.Enabled = false;
@@ -319,16 +329,6 @@ namespace RAGLINKCommons.RAGLINKProxy
                 for (int i = 1; i < RAGLINKPlatform.CommunicationSerial.serialList.Count; i++) RAGLINKPlatform.CommunicationSerial.SerialConnect(i);
             }
             catch (Exception) { };
-            //Main-form Monitor Inv:3s
-            findSimualtorWindowTick++;
-            if (findSimualtorWindowTick > 20)
-            {
-                findSimualtorWindowTick = 0;
-                IntPtr ParenthWnd = new IntPtr(0);
-                ParenthWnd = FindWindow(null, "RAGLINK+");
-                if (ParenthWnd == IntPtr.Zero) this.Close();
-            }
-            timerEvents.Enabled = true;
         }
         private void ButtonHandleUp_Click(object sender, EventArgs e)
         {
@@ -628,7 +628,7 @@ namespace RAGLINKCommons.RAGLINKProxy
 
         private void MenItemRestart_Click(object sender, EventArgs e)
         {
-            TrainMethodsClient.RestartSimulator("-ui");
+            TrainMethodsClient.RestartSimulator(RAGLINKPlatform.SettingsContent.simulatorExcuteFileName, RAGLINKPlatform.SettingsContent.simulatorUIMode);
         }
     }
 }

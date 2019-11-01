@@ -85,7 +85,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 						}
 					case 10:
 						{
-							listViewItem.Text = "主控板资源使用";
+							listViewItem.Text = "主控板资源使用情况";
 							int usedCount = ProjectsManager.projectInfo.deviceUsedCount;
 							int boardCount = BoardsManager.boardInfo.boardIOCount;
 							listViewItem.SubItems.Add("共 " + boardCount.ToString() + " 个IO资源，已使用 "
@@ -116,7 +116,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 			listViewDetails.BeginUpdate();
 			listViewDetails.Columns.Add("标题", 150, HorizontalAlignment.Left);
 			listViewDetails.Columns.Add("内容", 450, HorizontalAlignment.Left);
-			for (int i = 0; i < 4; i++)
+			for (int i = 0; i < 5; i++)
 			{
 				ListViewItem listViewItem = new ListViewItem();
 				switch (i)
@@ -135,7 +135,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 						}
 					case 2:
 						{
-							listViewItem.Text = "主控板提供者";
+							listViewItem.Text = "主控板提供商";
 							listViewItem.SubItems.Add(BoardsManager.boardInfo.boardSupplier);
 							break;
 						}
@@ -145,7 +145,13 @@ namespace RAGLINKCommons.RAGLINKPlatform
 							listViewItem.SubItems.Add(BoardsManager.boardInfo.boardDescribe);
 							break;
 						}
-				}
+                    case 4:
+                        {
+                            listViewItem.Text = "主控板最低模拟器兼容版本";
+                            listViewItem.SubItems.Add(BoardsManager.boardInfo.boardSupprtVersion.ToString());
+                            break;
+                        }
+                }
 				listViewDetails.Items.Add(listViewItem);   
 			}
 			listViewDetails.EndUpdate();
@@ -204,44 +210,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 							ListViewItem listViewItem = new ListViewItem();
 							listViewItem.Text = ControlObjects.controlObjectsInfo[i].objectIODescrible[j];
 							string ioModeDescribe = string.Empty;
-							switch (ControlObjects.controlObjectsInfo[i].objectIOMode[j])
-							{
-								case DevicesManager.DevicesIOMode.DEVICE_ANALOG_INPUT:
-									{
-										ioModeDescribe = "AIN";
-										break;
-									}
-								case DevicesManager.DevicesIOMode.DEVICE_ANALOG_OUTPUT:
-									{
-										ioModeDescribe = "AOUT";
-										break;
-									}
-								case DevicesManager.DevicesIOMode.DEVICE_BUTTON_AUTOLOCK:
-									{
-										ioModeDescribe = "BUTTON_TYPE1";
-										break;
-									}
-								case DevicesManager.DevicesIOMode.DEVICE_BUTTON_AUTORESET:
-									{
-										ioModeDescribe = "BUTTON_TYPE2";
-										break;
-									}
-								case DevicesManager.DevicesIOMode.DEVICE_DIGITAL_INPUT:
-									{
-										ioModeDescribe = "DIN";
-										break;
-									}
-								case DevicesManager.DevicesIOMode.DEVICE_DIGITAL_OUTPUT:
-									{
-										ioModeDescribe = "DOUT";
-										break;
-									}
-								case DevicesManager.DevicesIOMode.DEVICE_SERIAL:
-									{
-										ioModeDescribe = "SERIAL";
-										break;
-									}
-							}
+                            ioModeDescribe = ControlObjects.controlObjectsInfo[i].objectIOMode[j].ToString();
 							listViewItem.SubItems.Add(ioModeDescribe);
 							if (ControlObjects.controlObjectsInfo[i].objectIOMode[j] == DevicesManager.DevicesIOMode.DEVICE_SERIAL)
 							{

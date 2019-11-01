@@ -81,6 +81,7 @@ namespace OpenBve
 			RAGLINKCommons.RAGLINKPlatform.ProjectLoader.GraphicOptionsLoaderEvent += ApplyGraphicOptions;
 			RAGLINKCommons.RAGLINKPlatform.ProjectLoader.StartSimulatorEvent += StartSimulator;
 			UpdatePlanFileList();
+			labelVersion.Text = "API 版本：" + RAGLINKCommons.RAGLINKPlatform.SettingsContent.simulatorVersion.ToString();
 			RAGLINKCommons.RAGLINKPlatform.PackagesManager.UpdatePackageList();
 		}
 		private bool LoadRoute(string routeFile)

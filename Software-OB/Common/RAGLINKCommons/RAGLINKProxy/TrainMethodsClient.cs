@@ -13,7 +13,7 @@ namespace RAGLINKCommons.RAGLINKProxy
         static public event TimerAttachHandler TimerAttachEvent;
         public delegate bool GetSimulatorStateHandler();
         static public event GetSimulatorStateHandler GetSimulatorStateEvent;
-        public delegate bool RestartSimulatorStateHandler(string Args);
+        public delegate bool RestartSimulatorStateHandler(string excuteFileName, string Args);
         static public event RestartSimulatorStateHandler RestartSimulatorStateEvent;
         static public void AttachMainTimerInterrupt()
         {
@@ -33,10 +33,10 @@ namespace RAGLINKCommons.RAGLINKProxy
             catch (Exception) { };
             return retValue;
         }
-        static public bool RestartSimulator(string Args)
+        static public bool RestartSimulator(string excuteFileName, string Args)
         {
             bool retValue = false;
-            retValue = RestartSimulatorStateEvent(Args);
+            retValue = RestartSimulatorStateEvent(excuteFileName, Args);
             return retValue;
         }
     }

@@ -88,6 +88,10 @@
     <Reference Include="CSScriptLibrary">
       <HintPath>..\..\dependencies\CSScriptLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="FastColoredTextBox, Version=2.16.23.0, Culture=neutral, PublicKeyToken=fb8aa12b994ef61b, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Program\RAGLINK-OB\FastColoredTextBox.dll</HintPath>
+    </Reference>
     <Reference Include="NUniversalCharDet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\dependencies\NUniversalCharDet.dll</HintPath>
@@ -521,7 +525,6 @@
     <None Include="Resources\Refresh.png" />
     <None Include="Resources\Record.png" />
     <None Include="Resources\Prop.png" />
-    <None Include="Resources\PlanReaderBackground.jpg" />
     <None Include="Resources\option.png" />
     <None Include="Resources\New.png" />
     <None Include="Resources\Modify.png" />

@@ -29,13 +29,13 @@
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "总概览"}, 0, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134))));
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "主控板"}, 1, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134))));
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "操作对象"}, 2, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134))));
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "设备连接"}, 3, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134))));
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formSummary));
             this.labelPlanName = new System.Windows.Forms.Label();
@@ -75,7 +75,7 @@
             this.labelPlanName.BackColor = System.Drawing.SystemColors.Window;
             this.labelPlanName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelPlanName.ForeColor = System.Drawing.Color.Black;
-            this.labelPlanName.Location = new System.Drawing.Point(351, 4);
+            this.labelPlanName.Location = new System.Drawing.Point(408, 4);
             this.labelPlanName.Name = "labelPlanName";
             this.labelPlanName.Size = new System.Drawing.Size(696, 24);
             this.labelPlanName.TabIndex = 62;
@@ -95,7 +95,7 @@
             this.panelProjectSummary.Controls.Add(this.labelSummary);
             this.panelProjectSummary.Location = new System.Drawing.Point(3, 37);
             this.panelProjectSummary.Name = "panelProjectSummary";
-            this.panelProjectSummary.Size = new System.Drawing.Size(1056, 503);
+            this.panelProjectSummary.Size = new System.Drawing.Size(1113, 520);
             this.panelProjectSummary.TabIndex = 63;
             // 
             // labelDetailsLoading
@@ -107,9 +107,9 @@
             this.labelDetailsLoading.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.labelDetailsLoading.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelDetailsLoading.ForeColor = System.Drawing.Color.Black;
-            this.labelDetailsLoading.Location = new System.Drawing.Point(377, 248);
+            this.labelDetailsLoading.Location = new System.Drawing.Point(530, 260);
             this.labelDetailsLoading.Name = "labelDetailsLoading";
-            this.labelDetailsLoading.Size = new System.Drawing.Size(405, 29);
+            this.labelDetailsLoading.Size = new System.Drawing.Size(175, 19);
             this.labelDetailsLoading.TabIndex = 65;
             this.labelDetailsLoading.Text = "载入中...";
             this.labelDetailsLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -129,10 +129,10 @@
             this.listViewDetails.GridLines = true;
             this.listViewDetails.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewDetails.HideSelection = false;
-            this.listViewDetails.Location = new System.Drawing.Point(123, 29);
+            this.listViewDetails.Location = new System.Drawing.Point(123, 30);
             this.listViewDetails.MultiSelect = false;
             this.listViewDetails.Name = "listViewDetails";
-            this.listViewDetails.Size = new System.Drawing.Size(929, 470);
+            this.listViewDetails.Size = new System.Drawing.Size(986, 487);
             this.listViewDetails.TabIndex = 17;
             this.listViewDetails.UseCompatibleStateImageBehavior = false;
             this.listViewDetails.View = System.Windows.Forms.View.Details;
@@ -160,14 +160,14 @@
             this.listViewSummaryItem.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listViewSummaryItem.HideSelection = false;
             this.listViewSummaryItem.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
-            this.listViewSummaryItem.Location = new System.Drawing.Point(4, 29);
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
+            this.listViewSummaryItem.Location = new System.Drawing.Point(4, 30);
             this.listViewSummaryItem.MultiSelect = false;
             this.listViewSummaryItem.Name = "listViewSummaryItem";
-            this.listViewSummaryItem.Size = new System.Drawing.Size(118, 470);
+            this.listViewSummaryItem.Size = new System.Drawing.Size(118, 487);
             this.listViewSummaryItem.SmallImageList = this.imageListSummaryItem;
             this.listViewSummaryItem.TabIndex = 17;
             this.listViewSummaryItem.UseCompatibleStateImageBehavior = false;
@@ -206,7 +206,7 @@
             this.labelSummary.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelSummary.Location = new System.Drawing.Point(23, 3);
             this.labelSummary.Name = "labelSummary";
-            this.labelSummary.Size = new System.Drawing.Size(1025, 24);
+            this.labelSummary.Size = new System.Drawing.Size(1082, 24);
             this.labelSummary.TabIndex = 4;
             this.labelSummary.Text = "行车计划概述";
             this.labelSummary.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -220,9 +220,9 @@
             this.panelError.Controls.Add(this.buttonLaunch);
             this.panelError.Controls.Add(this.toolStripMain);
             this.panelError.Controls.Add(this.listViewErrors);
-            this.panelError.Location = new System.Drawing.Point(2, 537);
+            this.panelError.Location = new System.Drawing.Point(2, 557);
             this.panelError.Name = "panelError";
-            this.panelError.Size = new System.Drawing.Size(1056, 182);
+            this.panelError.Size = new System.Drawing.Size(1113, 199);
             this.panelError.TabIndex = 64;
             // 
             // buttonQuit
@@ -232,9 +232,9 @@
             this.buttonQuit.BackColor = System.Drawing.SystemColors.Window;
             this.buttonQuit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonQuit.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonQuit.Location = new System.Drawing.Point(810, 153);
+            this.buttonQuit.Location = new System.Drawing.Point(867, 171);
             this.buttonQuit.Name = "buttonQuit";
-            this.buttonQuit.Size = new System.Drawing.Size(120, 24);
+            this.buttonQuit.Size = new System.Drawing.Size(120, 26);
             this.buttonQuit.TabIndex = 13;
             this.buttonQuit.Text = "取消模拟";
             this.buttonQuit.UseVisualStyleBackColor = false;
@@ -247,11 +247,11 @@
             this.buttonLaunch.BackColor = System.Drawing.SystemColors.Window;
             this.buttonLaunch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLaunch.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonLaunch.Location = new System.Drawing.Point(932, 153);
+            this.buttonLaunch.Location = new System.Drawing.Point(989, 171);
             this.buttonLaunch.Name = "buttonLaunch";
-            this.buttonLaunch.Size = new System.Drawing.Size(120, 24);
+            this.buttonLaunch.Size = new System.Drawing.Size(120, 26);
             this.buttonLaunch.TabIndex = 14;
-            this.buttonLaunch.Text = "确认并进入模拟";
+            this.buttonLaunch.Text = "启动模拟";
             this.buttonLaunch.UseVisualStyleBackColor = false;
             this.buttonLaunch.Click += new System.EventHandler(this.ButtonLaunch_Click);
             // 
@@ -260,9 +260,9 @@
             this.toolStripMain.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabelMain});
-            this.toolStripMain.Location = new System.Drawing.Point(0, 157);
+            this.toolStripMain.Location = new System.Drawing.Point(0, 174);
             this.toolStripMain.Name = "toolStripMain";
-            this.toolStripMain.Size = new System.Drawing.Size(1056, 25);
+            this.toolStripMain.Size = new System.Drawing.Size(1113, 25);
             this.toolStripMain.TabIndex = 16;
             this.toolStripMain.Text = "toolStrip1";
             // 
@@ -288,10 +288,10 @@
             this.listViewErrors.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewErrors.HideSelection = false;
             this.listViewErrors.LargeImageList = this.imageListError;
-            this.listViewErrors.Location = new System.Drawing.Point(5, 0);
+            this.listViewErrors.Location = new System.Drawing.Point(5, 3);
             this.listViewErrors.MultiSelect = false;
             this.listViewErrors.Name = "listViewErrors";
-            this.listViewErrors.Size = new System.Drawing.Size(1048, 150);
+            this.listViewErrors.Size = new System.Drawing.Size(1105, 166);
             this.listViewErrors.SmallImageList = this.imageListError;
             this.listViewErrors.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listViewErrors.StateImageList = this.imageListError;
@@ -312,7 +312,7 @@
             // columnHeaderDesc
             // 
             this.columnHeaderDesc.Text = "描述";
-            this.columnHeaderDesc.Width = 400;
+            this.columnHeaderDesc.Width = 600;
             // 
             // imageListError
             // 
@@ -343,17 +343,18 @@
             // 
             // formSummary
             // 
+            this.AcceptButton = this.buttonLaunch;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(1059, 719);
+            this.ClientSize = new System.Drawing.Size(1116, 757);
             this.Controls.Add(this.labelPlanName);
             this.Controls.Add(this.pictureBoxBanner);
             this.Controls.Add(this.panelError);
             this.Controls.Add(this.panelProjectSummary);
             this.DoubleBuffered = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(810, 617);
+            this.MinimumSize = new System.Drawing.Size(1075, 758);
             this.Name = "formSummary";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "行车计划概述";

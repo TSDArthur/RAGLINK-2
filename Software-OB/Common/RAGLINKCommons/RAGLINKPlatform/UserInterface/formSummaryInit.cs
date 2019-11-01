@@ -20,6 +20,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 		private void FormSummaryInit_Load(object sender, EventArgs e)
 		{
 			this.TopMost = true;
+            labelInit.Parent = pictureBoxBackground;
 			UserInterfaceSwap.simulatorLaunchTrig = false;
             ProjectLoader.ProcessEvent += LoadingProcessManage;
             ProjectLoader.ProjectLoaderSetup(UserInterfaceSwap.projectGUID);

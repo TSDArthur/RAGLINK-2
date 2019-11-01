@@ -17,10 +17,10 @@ namespace OpenBve
 		// the components of the screen background colour
 		private const float bkgR = 0.5f;
 		private const float bkgG = 0.5f;
-		private const float bkgB = 0.5f;
+		private const float bkgB = 1.00f;
 		private const float bkgA = 1.00f;
 		// the openBVE yellow
-		private static Color128 ColourProgressBar = new Color128(1.00f, 0.69f, 0.00f, 1.00f);
+		private static Color128 ColourProgressBar = new Color128(37 / 255, 143 / 255, 255 / 255);
 		// the percentage to lower the logo centre from the screen top (currently set at the golden ratio)
 		private const double logoCentreYFactor = 0.381966;
 		private const int progrBorder = 1;

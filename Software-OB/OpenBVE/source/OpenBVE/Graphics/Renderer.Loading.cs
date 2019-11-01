@@ -14,14 +14,14 @@ namespace OpenBve {
 		 * -------------------------------------------------------------- */
 
 		// the components of the screen background colour
-		private const float		bkgR				= 0.5f;
-		private const float		bkgG				= 0.5f;
-		private const float		bkgB				= 0.5f;
+		private const float		bkgR				= 0.00f;
+		private const float		bkgG				= 0.00f;
+		private const float		bkgB				= 0.00f;
 		private const float		bkgA				= 1.00f;
 		// the openBVE yellow
-		private static readonly Color128 ColourProgressBar = new Color128(1.00f, 0.69f, 0.00f, 1.00f);
+		private static readonly Color128 ColourProgressBar = new Color128(37 / 255.0f, 143 / 255.0f, 255 / 255.0f);
 		// the percentage to lower the logo centre from the screen top (currently set at the golden ratio)
-		private const double	logoCentreYFactor	= 0.381966;
+		private const double	logoCentreYFactor	= 0.45;
 		private const int		progrBorder			= 1;
 		private const int		progrMargin			= 24;
 		private const int		numOfLoadingBkgs	= 7;
@@ -52,9 +52,10 @@ namespace OpenBve {
 			{
 				// choose logo size according to screen width
 				string	fName;
-				if (Screen.Width > 2048)		fName	= LogoFileName[2];
+				/*if (Screen.Width > 2048)		fName	= LogoFileName[2];
 				else if (Screen.Width > 1024)	fName	= LogoFileName[1];
-				else							fName	= LogoFileName[0];
+				else							fName	= LogoFileName[0];*/
+				fName = "logo.png";
 				string logoFile = OpenBveApi.Path.CombineFile(Path, fName);
 				if (System.IO.File.Exists(logoFile))
 				{
@@ -142,38 +143,40 @@ namespace OpenBve {
 			// VERSION NUMBER
 			// place the version above the first division
 			int	versionTop	= logoBottom + blankHeight - fontHeight;
-			DrawString(Fonts.SmallFont, "Version " + typeof(Renderer).Assembly.GetName().Version,
-				new Point(halfWidth, versionTop), TextAlignment.TopMiddle, Color128.White);
+			DrawString(Fonts.NormalFont, "API Version: " + RAGLINKCommons.RAGLINKPlatform.SettingsContent.simulatorVersion.ToString(),
+				new Point(65, 5), TextAlignment.TopMiddle, Color128.White);
 			// for the moment, do not show any URL; would go right below the first division
-//			DrawString(Fonts.SmallFont, "https://sites.google.com/site/openbvesim/home",
-//				new Point(halfWidth, versionTop + fontHeight+2),
-//				TextAlignment.TopMiddle, Color128.White);
+			//			DrawString(Fonts.SmallFont, "https://sites.google.com/site/openbvesim/home",
+			//				new Point(halfWidth, versionTop + fontHeight+2),
+			//				TextAlignment.TopMiddle, Color128.White);
 
 			// PROGRESS MESSAGE AND BAR
 			// place progress bar right below the second division
-			int		progressTop		= Screen.Height - blankHeight;
-			int		progressWidth	= Screen.Width - progrMargin * 2;
+			//int		progressTop		= Screen.Height - blankHeight;
+			int progressTop = Screen.Height - 6;
+			//int		progressWidth	= Screen.Width - progrMargin * 2;
+			int progressWidth = Screen.Width;
 			double	routeProgress	= Math.Max(0.0, Math.Min(1.0, Loading.RouteProgress));
 			double	trainProgress	= Math.Max(0.0, Math.Min(1.0, Loading.TrainProgress));
+			// sum of route progress and train progress arrives up to 2.0:
+			// => times 50.0 to convert to %
+			double percent = 50.0 * (routeProgress + trainProgress);
+			string percStr = percent.ToString("0") + "%";
 			// draw progress message right above the second division
 			string	text			= Translations.GetInterfaceString(
 				routeProgress < 1.0 ? "loading_loading_route" :
-				(trainProgress < 1.0 ? "loading_loading_train" : "message_loading") );
-			DrawString(Fonts.SmallFont, text, new Point(halfWidth, progressTop - fontHeight - 6),
+				(trainProgress < 1.0 ? "loading_loading_train" : "message_loading") ) + " (" + percStr + ")";
+			DrawString(Fonts.NormalFont, text, new Point(halfWidth, progressTop - fontHeight - 8),
 				TextAlignment.TopMiddle, Color128.White);
-			// sum of route progress and train progress arrives up to 2.0:
-			// => times 50.0 to convert to %
-			double	percent	= 50.0 * (routeProgress + trainProgress);
-			string	percStr	= percent.ToString("0") + "%";
 			// progress frame
-			DrawRectangle(null, new Point(progrMargin-progrBorder, progressTop-progrBorder),
-				new Size(progressWidth+progrBorder*2, fontHeight+6), Color128.White);
+			//DrawRectangle(null, new Point(progrMargin-progrBorder, progressTop-progrBorder),
+			//	new Size(progressWidth+progrBorder*2, fontHeight+6), Color128.White);
 			// progress bar
-			DrawRectangle(null, new Point(progrMargin, progressTop),
+			DrawRectangle(null, new Point(0, progressTop),
 				new Size(progressWidth * (int)percent / 100, fontHeight+4), ColourProgressBar);
 			// progress percent
-			DrawString(Fonts.SmallFont, percStr, new Point(halfWidth, progressTop),
-				TextAlignment.TopMiddle, Color128.Black);
+			//DrawString(Fonts.SmallFont, percStr, new Point(halfWidth, progressTop),
+			//	TextAlignment.TopMiddle, Color128.Black);
 			GL.PopMatrix();
 		}
 

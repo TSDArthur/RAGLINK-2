@@ -45,14 +45,14 @@ namespace OpenBve
 			TrainMethodsClient.GetSimulatorStateEvent += GetSimulatorState;
 			TrainMethodsClient.RestartSimulatorStateEvent += RestartSimulator;
 		}
-		static public bool RestartSimulator(string Args)
+		static public bool RestartSimulator(string executeFileName, string Args)
 		{
 			bool retValue = false;
 			//try
 			{
 				System.Diagnostics.Process processManager;
 				processManager = new System.Diagnostics.Process();
-				processManager.StartInfo.FileName = RAGLINKCommons.RAGLINKPlatform.SettingsContent.platformPath + "\\OpenBVE.exe";
+				processManager.StartInfo.FileName = RAGLINKCommons.RAGLINKPlatform.SettingsContent.platformPath + "\\" + executeFileName;
 				processManager.StartInfo.Arguments = Args;
 				processManager.Start();
 				System.Environment.Exit(0);

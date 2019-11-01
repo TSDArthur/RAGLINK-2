@@ -35,8 +35,8 @@ namespace RAGLINKCommons.RAGLINKPlatform
             public string projectName;
             public string projectID;
             public string projectDescribe;
-            public int projectVersion;
-            public int projectSimulatorSupportVersion;
+            public Version projectVersion;
+            public Version projectSimulatorSupportVersion;
             public string projectAuthor;
             public string projectAuthorWebsite;
             public string projectPlatform;
@@ -150,8 +150,8 @@ namespace RAGLINKCommons.RAGLINKPlatform
 				retValue.projectName = settingsFileIO.ReadValue(projectSection, "project_name");
 				retValue.projectID = settingsFileIO.ReadValue(projectSection, "project_id");
 				retValue.projectDescribe = settingsFileIO.ReadValue(projectSection, "project_describle");
-				retValue.projectVersion = Int32.Parse(settingsFileIO.ReadValue(projectSection, "project_version"));
-				retValue.projectSimulatorSupportVersion = Int32.Parse(settingsFileIO.ReadValue(projectSection, "project_simulator_support_version"));
+				retValue.projectVersion = new Version(settingsFileIO.ReadValue(projectSection, "project_version"));
+				retValue.projectSimulatorSupportVersion = new Version(settingsFileIO.ReadValue(projectSection, "project_simulator_support_version"));
 				retValue.projectAuthor = settingsFileIO.ReadValue(projectSection, "project_author");
 				retValue.projectAuthorWebsite = settingsFileIO.ReadValue(projectSection, "project_author_website");
                 retValue.projectPlatform = settingsFileIO.ReadValue(projectSection, "project_platform");
@@ -279,8 +279,47 @@ namespace RAGLINKCommons.RAGLINKPlatform
 					};
 					retValue.Add(tempError);
 				}
-				//Check serial
-				foreach (SerialPort serialPort in CommunicationSerial.serialList)
+                //Check board version
+                if (BoardsManager.boardInfo.boardSupprtVersion > SettingsContent.simulatorVersion)
+                {
+                    ProjectErrorProvider tempError = new ProjectErrorProvider
+                    {
+                        errorType = ErrorType.WARNING,
+                        errorTitle = "当前主控板支持模拟器版本（" +
+                            BoardsManager.boardInfo.boardSupprtVersion.ToString() +
+                            "）,可能不兼容当前模拟器版本（" + SettingsContent.simulatorVersion.ToString() + "）。",
+                        errorCode = 101
+                    };
+                    retValue.Add(tempError);
+                }
+                //Check project support version
+                if (ProjectsManager.projectInfo.projectSimulatorSupportVersion != SettingsContent.simulatorVersion)
+                {
+                    ProjectErrorProvider tempError = new ProjectErrorProvider
+                    {
+                        errorType = ErrorType.WARNING,
+                        errorTitle = "当前行车计划支持模拟器版本（" +
+                            ProjectsManager.projectInfo.projectSimulatorSupportVersion.ToString() +
+                            "）,可能不兼容当前模拟器版本（" + SettingsContent.simulatorVersion.ToString() + "）。",
+                        errorCode = 102
+                    };
+                    retValue.Add(tempError);
+                }
+                //Check platform
+                if (ProjectsManager.projectInfo.projectPlatform.ToUpper() != SettingsContent.simulatorVerification.ToUpper())
+                {
+                    ProjectErrorProvider tempError = new ProjectErrorProvider
+                    {
+                        errorType = ErrorType.ERROR,
+                        errorTitle = "当前行车计划模拟器平台（" +
+                            ProjectsManager.projectInfo.projectPlatform +
+                            "）,不兼容当前模拟器平台（" + SettingsContent.simulatorVerification + "）。",
+                        errorCode = 103
+                    };
+                    retValue.Add(tempError);
+                }
+                //Check serial
+                foreach (SerialPort serialPort in CommunicationSerial.serialList)
 				{
 					if (CommunicationSerial.GetSerialPortNames().IndexOf(serialPort.PortName) == -1)
 					{
@@ -288,7 +327,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 						{
 							errorType = ErrorType.ERROR,
 							errorTitle = "当前系统未与端口为“" + serialPort.PortName + "”的设备建立硬件连接。",
-							errorCode = 101
+							errorCode = 104
 						};
 						retValue.Add(tempError);
 					}
@@ -302,7 +341,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 						{
 							errorType = ErrorType.ERROR,
 							errorTitle = "必要操作对象“" + ControlObjects.controlObjectsInfo[i].objectName + "”未在项目中定义。",
-							errorCode = 102
+							errorCode = 105
 						};
 						retValue.Add(tempError);
 					}
@@ -314,7 +353,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 							{
 								errorType = ErrorType.ERROR,
 								errorTitle = "操作对象“" + ControlObjects.controlObjectsInfo[i].objectName + "”未完全配置。",
-								errorCode = 103
+								errorCode = 106
 							};
 							retValue.Add(tempError);
 						}
@@ -328,7 +367,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 								{
 									errorType = ErrorType.ERROR,
 									errorTitle = "操作对象“" + ControlObjects.controlObjectsInfo[i].objectName + "”存在配置错误。",
-									errorCode = 104
+									errorCode = 107
 								};
 								retValue.Add(tempError);
 							}

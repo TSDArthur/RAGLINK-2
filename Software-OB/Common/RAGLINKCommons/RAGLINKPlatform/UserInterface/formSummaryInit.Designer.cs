@@ -33,8 +33,8 @@
             this.labelInit = new System.Windows.Forms.Label();
             this.timerLoader = new System.Windows.Forms.Timer(this.components);
             this.progressBarLoading = new System.Windows.Forms.ProgressBar();
-            this.pictureBoxBackground = new System.Windows.Forms.PictureBox();
             this.timerTopMost = new System.Windows.Forms.Timer(this.components);
+            this.pictureBoxBackground = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBackground)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,9 +43,10 @@
             this.labelInit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelInit.AutoSize = true;
+            this.labelInit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.labelInit.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelInit.ForeColor = System.Drawing.Color.Black;
-            this.labelInit.Location = new System.Drawing.Point(2, 196);
+            this.labelInit.ForeColor = System.Drawing.Color.White;
+            this.labelInit.Location = new System.Drawing.Point(3, 193);
             this.labelInit.Name = "labelInit";
             this.labelInit.Size = new System.Drawing.Size(53, 17);
             this.labelInit.TabIndex = 1;
@@ -60,33 +61,35 @@
             // 
             this.progressBarLoading.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBarLoading.Location = new System.Drawing.Point(5, 216);
+            this.progressBarLoading.Location = new System.Drawing.Point(-1, 187);
+            this.progressBarLoading.MarqueeAnimationSpeed = 20;
             this.progressBarLoading.Name = "progressBarLoading";
-            this.progressBarLoading.Size = new System.Drawing.Size(367, 17);
+            this.progressBarLoading.Size = new System.Drawing.Size(381, 4);
+            this.progressBarLoading.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.progressBarLoading.TabIndex = 2;
+            // 
+            // timerTopMost
+            // 
+            this.timerTopMost.Tick += new System.EventHandler(this.TimerTopMost_Tick);
             // 
             // pictureBoxBackground
             // 
             this.pictureBoxBackground.Image = global::RAGLINKCommons.Properties.Resources.Background;
             this.pictureBoxBackground.Location = new System.Drawing.Point(-1, 0);
             this.pictureBoxBackground.Name = "pictureBoxBackground";
-            this.pictureBoxBackground.Size = new System.Drawing.Size(381, 189);
+            this.pictureBoxBackground.Size = new System.Drawing.Size(381, 237);
             this.pictureBoxBackground.TabIndex = 3;
             this.pictureBoxBackground.TabStop = false;
-            // 
-            // timerTopMost
-            // 
-            this.timerTopMost.Tick += new System.EventHandler(this.TimerTopMost_Tick);
             // 
             // formSummaryInit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
-            this.ClientSize = new System.Drawing.Size(379, 239);
-            this.Controls.Add(this.pictureBoxBackground);
+            this.ClientSize = new System.Drawing.Size(379, 213);
             this.Controls.Add(this.progressBarLoading);
             this.Controls.Add(this.labelInit);
+            this.Controls.Add(this.pictureBoxBackground);
             this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

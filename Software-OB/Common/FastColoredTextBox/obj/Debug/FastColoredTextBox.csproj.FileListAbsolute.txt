@@ -63,6 +63,7 @@ C:\Documents\RAGLINKPro\Software-OB\Common\FastColoredTextBox\obj\Debug\FastColo
 C:\Documents\RAGLINKProject\RAGLINK\Program\RAGLINK-OB\FastColoredTextBox.XML
 C:\Documents\RAGLINKProject\RAGLINK\Program\RAGLINK-OB\FastColoredTextBox.dll
 C:\Documents\RAGLINKProject\RAGLINK\Program\RAGLINK-OB\FastColoredTextBox.pdb
+C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\FastColoredTextBox\obj\Debug\FastColoredTextBox.csprojAssemblyReference.cache
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\FastColoredTextBox\obj\Debug\FastColoredTextBoxNS.FastColoredTextBox.resources
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\FastColoredTextBox\obj\Debug\FastColoredTextBoxNS.FindForm.resources
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\FastColoredTextBox\obj\Debug\FastColoredTextBoxNS.GoToForm.resources

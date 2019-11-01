@@ -47,8 +47,8 @@ namespace RAGLINKCommons.RAGLINKPlatform
 						{
 							itemAdded.ImageIndex = 1;
 							itemAdded.Text = "警告";
-							itemAdded.ForeColor = Color.Yellow;
-							errorCount++;
+							itemAdded.ForeColor = Color.Orange;
+                            warningCount++;
 							break;
 						}
 					case ProjectsManager.ErrorType.INFORMATION:
@@ -56,7 +56,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 							itemAdded.ImageIndex = 0;
 							itemAdded.Text = "消息";
 							itemAdded.ForeColor = Color.Black;
-							errorCount++;
+                            infoCount++;
 							break;
 						}
 				}
@@ -73,6 +73,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
 					errorCount.ToString() + "个错误，" +
 					warningCount.ToString() + "个警告，" +
 					infoCount.ToString() + "个消息。请联系系统管理员获得技术支持。";
+                if (!RAGLINKPlatform.ProjectsManager.projectInfo.projectDebug) buttonLaunch.Enabled = false;
 			}
 			else if (warningCount > 0)
 			{
@@ -80,7 +81,8 @@ namespace RAGLINKCommons.RAGLINKPlatform
 				toolStripLabelMain.Text = "加载成功，存在" +
 					warningCount.ToString() + "个警告，" +
 					infoCount.ToString() + "个消息。可能存在不可预见的错误。";
-			}
+                if (!RAGLINKPlatform.ProjectsManager.projectInfo.projectDebug) buttonLaunch.Enabled = false;
+            }
 			else
 			{
 				toolStripLabelMain.Image = imageListError.Images[0];
@@ -92,6 +94,13 @@ namespace RAGLINKCommons.RAGLINKPlatform
 
 		private void ButtonLaunch_Click(object sender, EventArgs e)
 		{
+            timerTopMost.Enabled = false;
+            if (listViewErrors.Items.Count > 0 && MessageBox.Show(
+                "调试模式下可以忽略错误与警告并进入模拟，但可能产生无法预料的后果（如强制退出、功能失效等），是否继续？", "调试模式", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+            {
+                timerTopMost.Enabled = true;
+                return;
+            }
             RAGLINKProxy.UserInterfaceSwap.debugMode = RAGLINKPlatform.ProjectsManager.projectInfo.projectDebug;
             RAGLINKProxy.UserInterfaceSwap.showFormController = RAGLINKPlatform.ProjectsManager.projectInfo.projectDebug;
             new System.Threading.Thread((System.Threading.ThreadStart)delegate

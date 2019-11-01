@@ -33,12 +33,16 @@ namespace RAGLINKCommons.RAGLINKPlatform
 		static public string recorderPath;
         static public string packagePath;
         static public string simulatorDefaultSettingsPath;
+        static public string simulatorPlatformDefineFilePath;
         //File Ext-Names
 		static public string projectFileExtName = ".prj";
 		static public string universalFileExtName = ".re";
         //Simulator Args
         static public string simulatorUIMode = "-ui";
         static public string simualatorCompilerMode = "-o";
+        static public Version simulatorVersion = new Version("0.0");
+        static public string simulatorExcuteFileName = string.Empty;
+        static public string simulatorVerification = string.Empty;
         //File encrypt key
 		static public string encryptKey = @"WNyA6SmzQ7EL82UXxMK17CjVhhHSi8LMXno2h1CuZUSO22PRslxaKbgRiX2WIQb7";
 		static public void UpdateSettingsPath()
@@ -54,8 +58,27 @@ namespace RAGLINKCommons.RAGLINKPlatform
 			tempFilePath = Path.GetFullPath(platformPath + "\\" + settingsFileIO.ReadValue("path", "temp_file_path"));
 			recorderPath = Path.GetFullPath(platformPath + "\\" + settingsFileIO.ReadValue("path", "recorder_path"));
             simulatorDefaultSettingsPath = Path.GetFullPath(platformPath + "\\" + settingsFileIO.ReadValue("path", "settings_path"));
+            simulatorPlatformDefineFilePath = Path.GetFullPath(platformPath + "\\" + settingsFileIO.ReadValue("path", "platform_define"));
             settingsFileIO.Dispose();
-			return;
+            GetSimulatorPlatformDefine();
+            return;
 		}
+
+        static public void GetSimulatorPlatformDefine()
+        {
+            try
+            {
+                SettingsFileIO settingsFileIO = new SettingsFileIO();
+                settingsFileIO.SetSettingsFilePath(simulatorPlatformDefineFilePath);
+                string versionStr = settingsFileIO.ReadValue("platform_define", "platform_version");
+                simulatorVersion = new Version(versionStr);
+                simulatorUIMode = settingsFileIO.ReadValue("platform_define", "ui_mode_args");
+                simualatorCompilerMode = settingsFileIO.ReadValue("platform_define", "compile_mode_args");
+                simulatorExcuteFileName = settingsFileIO.ReadValue("platform_define", "complier_excute");
+                simulatorVerification = settingsFileIO.ReadValue("platform_define", "platform_verification");
+                settingsFileIO.Dispose();
+            }
+            catch (Exception) { };
+        }
 	}
 }

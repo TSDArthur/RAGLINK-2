@@ -29,7 +29,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
             public string boardSupplier;
             public string boardDescribe;
             public string boardWebsite;
-            public int boardSupprtVersion;
+            public Version boardSupprtVersion;
             public int boardIOCount;
             public List<int> boardAnalogInput;
             public List<int> boardAnalogOutput;
@@ -124,7 +124,7 @@ namespace RAGLINKCommons.RAGLINKPlatform
                 boardFileInfo.boardSupplier = settingsFileIO.ReadValue(boardInfoSection, "board_supplier");
                 boardFileInfo.boardDescribe = settingsFileIO.ReadValue(boardInfoSection, "board_describe");
                 boardFileInfo.boardWebsite = settingsFileIO.ReadValue(boardInfoSection, "board_website");
-                boardFileInfo.boardSupprtVersion = Int32.Parse(settingsFileIO.ReadValue(boardInfoSection, "board_support_version"));
+                boardFileInfo.boardSupprtVersion = new Version(settingsFileIO.ReadValue(boardInfoSection, "board_support_version"));
                 boardFileInfo.boardIOCount = Int32.Parse(settingsFileIO.ReadValue(boardInfoSection, "board_io_count"));
                 boardFileInfo.boardAnalogInput = settingsFileIO.ReadVectorValue(boardInfoSection, "board_analog_input");
                 boardFileInfo.boardAnalogOutput = settingsFileIO.ReadVectorValue(boardInfoSection, "board_analog_output");

@@ -23,14 +23,20 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formMain));
             this.textboxRouteDescription = new System.Windows.Forms.TextBox();
             this.buttonStart = new System.Windows.Forms.Button();
             this.textboxTrainDescription = new System.Windows.Forms.TextBox();
             this.panelStart = new System.Windows.Forms.Panel();
+            this.labelVersion = new System.Windows.Forms.Label();
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageStart = new System.Windows.Forms.TabPage();
             this.labelReviewLoading = new System.Windows.Forms.Label();
+            this.pictureboxRouteGradient = new System.Windows.Forms.PictureBox();
+            this.pictureboxRouteMap = new System.Windows.Forms.PictureBox();
+            this.pictureboxRouteImage = new System.Windows.Forms.PictureBox();
+            this.pictureboxTrainImage = new System.Windows.Forms.PictureBox();
             this.tabPageOptions = new System.Windows.Forms.TabPage();
             this.labelOptionsLoading = new System.Windows.Forms.Label();
             this.buttonSaveOptions = new System.Windows.Forms.Button();
@@ -62,31 +68,29 @@
             this.columnHeaderDescribe = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.labelRespackName = new System.Windows.Forms.Label();
             this.pictureBoxBanner = new System.Windows.Forms.PictureBox();
-            this.pictureboxRouteGradient = new System.Windows.Forms.PictureBox();
-            this.pictureboxRouteMap = new System.Windows.Forms.PictureBox();
-            this.pictureboxRouteImage = new System.Windows.Forms.PictureBox();
-            this.pictureboxTrainImage = new System.Windows.Forms.PictureBox();
+            this.imageListTabs = new System.Windows.Forms.ImageList(this.components);
             this.panelStart.SuspendLayout();
             this.tabControlMain.SuspendLayout();
             this.tabPageStart.SuspendLayout();
-            this.tabPageOptions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureboxRouteGradient)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureboxRouteMap)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureboxRouteImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureboxTrainImage)).BeginInit();
+            this.tabPageOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).BeginInit();
             this.SuspendLayout();
             // 
             // textboxRouteDescription
             // 
             this.textboxRouteDescription.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.textboxRouteDescription.BackColor = System.Drawing.Color.White;
-            this.textboxRouteDescription.Location = new System.Drawing.Point(156, 5);
+            this.textboxRouteDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textboxRouteDescription.Location = new System.Drawing.Point(161, 9);
             this.textboxRouteDescription.Multiline = true;
             this.textboxRouteDescription.Name = "textboxRouteDescription";
             this.textboxRouteDescription.ReadOnly = true;
             this.textboxRouteDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textboxRouteDescription.Size = new System.Drawing.Size(236, 152);
+            this.textboxRouteDescription.Size = new System.Drawing.Size(230, 158);
             this.textboxRouteDescription.TabIndex = 0;
             this.textboxRouteDescription.Text = "线路描述";
             // 
@@ -109,18 +113,20 @@
             // 
             this.textboxTrainDescription.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.textboxTrainDescription.BackColor = System.Drawing.SystemColors.Window;
-            this.textboxTrainDescription.Location = new System.Drawing.Point(156, 158);
+            this.textboxTrainDescription.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textboxTrainDescription.Location = new System.Drawing.Point(161, 169);
             this.textboxTrainDescription.Multiline = true;
             this.textboxTrainDescription.Name = "textboxTrainDescription";
             this.textboxTrainDescription.ReadOnly = true;
             this.textboxTrainDescription.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textboxTrainDescription.Size = new System.Drawing.Size(236, 152);
+            this.textboxTrainDescription.Size = new System.Drawing.Size(230, 158);
             this.textboxTrainDescription.TabIndex = 0;
             this.textboxTrainDescription.Text = "机车车辆描述";
             // 
             // panelStart
             // 
             this.panelStart.BackColor = System.Drawing.SystemColors.Window;
+            this.panelStart.Controls.Add(this.labelVersion);
             this.panelStart.Controls.Add(this.tabControlMain);
             this.panelStart.Controls.Add(this.listViewPlanFile);
             this.panelStart.Controls.Add(this.buttonStart);
@@ -129,14 +135,26 @@
             this.panelStart.Size = new System.Drawing.Size(653, 740);
             this.panelStart.TabIndex = 7;
             // 
+            // labelVersion
+            // 
+            this.labelVersion.BackColor = System.Drawing.SystemColors.Window;
+            this.labelVersion.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.labelVersion.Location = new System.Drawing.Point(5, 714);
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Size = new System.Drawing.Size(192, 19);
+            this.labelVersion.TabIndex = 17;
+            this.labelVersion.Text = "版本：1.0";
+            this.labelVersion.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // tabControlMain
             // 
             this.tabControlMain.Controls.Add(this.tabPageStart);
             this.tabControlMain.Controls.Add(this.tabPageOptions);
+            this.tabControlMain.ImageList = this.imageListTabs;
             this.tabControlMain.Location = new System.Drawing.Point(3, 3);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(650, 542);
+            this.tabControlMain.Size = new System.Drawing.Size(650, 560);
             this.tabControlMain.TabIndex = 14;
             // 
             // tabPageStart
@@ -149,10 +167,11 @@
             this.tabPageStart.Controls.Add(this.textboxRouteDescription);
             this.tabPageStart.Controls.Add(this.textboxTrainDescription);
             this.tabPageStart.Controls.Add(this.pictureboxTrainImage);
+            this.tabPageStart.ImageIndex = 0;
             this.tabPageStart.Location = new System.Drawing.Point(4, 26);
             this.tabPageStart.Name = "tabPageStart";
             this.tabPageStart.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageStart.Size = new System.Drawing.Size(642, 512);
+            this.tabPageStart.Size = new System.Drawing.Size(642, 530);
             this.tabPageStart.TabIndex = 0;
             this.tabPageStart.Text = "起始页";
             // 
@@ -161,10 +180,60 @@
             this.labelReviewLoading.BackColor = System.Drawing.SystemColors.Window;
             this.labelReviewLoading.Location = new System.Drawing.Point(0, 0);
             this.labelReviewLoading.Name = "labelReviewLoading";
-            this.labelReviewLoading.Size = new System.Drawing.Size(642, 512);
+            this.labelReviewLoading.Size = new System.Drawing.Size(642, 530);
             this.labelReviewLoading.TabIndex = 16;
             this.labelReviewLoading.Text = "未选中行车计划，无预览。";
             this.labelReviewLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pictureboxRouteGradient
+            // 
+            this.pictureboxRouteGradient.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureboxRouteGradient.BackColor = System.Drawing.SystemColors.Window;
+            this.pictureboxRouteGradient.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureboxRouteGradient.Location = new System.Drawing.Point(2, 329);
+            this.pictureboxRouteGradient.Name = "pictureboxRouteGradient";
+            this.pictureboxRouteGradient.Size = new System.Drawing.Size(636, 199);
+            this.pictureboxRouteGradient.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureboxRouteGradient.TabIndex = 1;
+            this.pictureboxRouteGradient.TabStop = false;
+            // 
+            // pictureboxRouteMap
+            // 
+            this.pictureboxRouteMap.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureboxRouteMap.BackColor = System.Drawing.SystemColors.Window;
+            this.pictureboxRouteMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureboxRouteMap.Location = new System.Drawing.Point(392, 9);
+            this.pictureboxRouteMap.Name = "pictureboxRouteMap";
+            this.pictureboxRouteMap.Size = new System.Drawing.Size(246, 318);
+            this.pictureboxRouteMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureboxRouteMap.TabIndex = 0;
+            this.pictureboxRouteMap.TabStop = false;
+            // 
+            // pictureboxRouteImage
+            // 
+            this.pictureboxRouteImage.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureboxRouteImage.BackColor = System.Drawing.SystemColors.Window;
+            this.pictureboxRouteImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureboxRouteImage.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureboxRouteImage.Location = new System.Drawing.Point(2, 9);
+            this.pictureboxRouteImage.Name = "pictureboxRouteImage";
+            this.pictureboxRouteImage.Size = new System.Drawing.Size(158, 158);
+            this.pictureboxRouteImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureboxRouteImage.TabIndex = 0;
+            this.pictureboxRouteImage.TabStop = false;
+            // 
+            // pictureboxTrainImage
+            // 
+            this.pictureboxTrainImage.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureboxTrainImage.BackColor = System.Drawing.SystemColors.Window;
+            this.pictureboxTrainImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureboxTrainImage.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureboxTrainImage.Location = new System.Drawing.Point(2, 169);
+            this.pictureboxTrainImage.Name = "pictureboxTrainImage";
+            this.pictureboxTrainImage.Size = new System.Drawing.Size(158, 158);
+            this.pictureboxTrainImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureboxTrainImage.TabIndex = 0;
+            this.pictureboxTrainImage.TabStop = false;
             // 
             // tabPageOptions
             // 
@@ -193,10 +262,11 @@
             this.tabPageOptions.Controls.Add(this.checkBoxWindowsState);
             this.tabPageOptions.Controls.Add(this.checkBoxFullScreen);
             this.tabPageOptions.Controls.Add(this.labelGraphicTitle);
+            this.tabPageOptions.ImageIndex = 1;
             this.tabPageOptions.Location = new System.Drawing.Point(4, 26);
             this.tabPageOptions.Name = "tabPageOptions";
             this.tabPageOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOptions.Size = new System.Drawing.Size(642, 512);
+            this.tabPageOptions.Size = new System.Drawing.Size(642, 530);
             this.tabPageOptions.TabIndex = 1;
             this.tabPageOptions.Text = "图形设置";
             // 
@@ -205,7 +275,7 @@
             this.labelOptionsLoading.BackColor = System.Drawing.SystemColors.Window;
             this.labelOptionsLoading.Location = new System.Drawing.Point(0, 0);
             this.labelOptionsLoading.Name = "labelOptionsLoading";
-            this.labelOptionsLoading.Size = new System.Drawing.Size(642, 512);
+            this.labelOptionsLoading.Size = new System.Drawing.Size(642, 530);
             this.labelOptionsLoading.TabIndex = 17;
             this.labelOptionsLoading.Text = "未选中行车计划。";
             this.labelOptionsLoading.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -217,7 +287,7 @@
             this.buttonSaveOptions.BackColor = System.Drawing.SystemColors.Window;
             this.buttonSaveOptions.Enabled = false;
             this.buttonSaveOptions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSaveOptions.Location = new System.Drawing.Point(3, 482);
+            this.buttonSaveOptions.Location = new System.Drawing.Point(3, 491);
             this.buttonSaveOptions.Name = "buttonSaveOptions";
             this.buttonSaveOptions.Size = new System.Drawing.Size(120, 24);
             this.buttonSaveOptions.TabIndex = 15;
@@ -471,15 +541,14 @@
             this.columnHeaderGUID,
             this.columnHeaderDescribe});
             this.listViewPlanFile.FullRowSelect = true;
-            this.listViewPlanFile.GridLines = true;
             this.listViewPlanFile.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewPlanFile.HideSelection = false;
             this.listViewPlanFile.LabelWrap = false;
-            this.listViewPlanFile.Location = new System.Drawing.Point(3, 545);
+            this.listViewPlanFile.Location = new System.Drawing.Point(3, 562);
             this.listViewPlanFile.MultiSelect = false;
             this.listViewPlanFile.Name = "listViewPlanFile";
             this.listViewPlanFile.ShowGroups = false;
-            this.listViewPlanFile.Size = new System.Drawing.Size(647, 154);
+            this.listViewPlanFile.Size = new System.Drawing.Size(647, 137);
             this.listViewPlanFile.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.listViewPlanFile.TabIndex = 2;
             this.listViewPlanFile.UseCompatibleStateImageBehavior = false;
@@ -506,9 +575,9 @@
             // 
             this.labelRespackName.BackColor = System.Drawing.SystemColors.Window;
             this.labelRespackName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelRespackName.Location = new System.Drawing.Point(137, 47);
+            this.labelRespackName.Location = new System.Drawing.Point(181, 49);
             this.labelRespackName.Name = "labelRespackName";
-            this.labelRespackName.Size = new System.Drawing.Size(513, 19);
+            this.labelRespackName.Size = new System.Drawing.Size(469, 19);
             this.labelRespackName.TabIndex = 15;
             this.labelRespackName.Text = "加载的资源包：无";
             this.labelRespackName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -522,52 +591,12 @@
             this.pictureBoxBanner.TabIndex = 16;
             this.pictureBoxBanner.TabStop = false;
             // 
-            // pictureboxRouteGradient
+            // imageListTabs
             // 
-            this.pictureboxRouteGradient.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pictureboxRouteGradient.BackColor = System.Drawing.Color.Transparent;
-            this.pictureboxRouteGradient.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureboxRouteGradient.Location = new System.Drawing.Point(3, 311);
-            this.pictureboxRouteGradient.Name = "pictureboxRouteGradient";
-            this.pictureboxRouteGradient.Size = new System.Drawing.Size(636, 199);
-            this.pictureboxRouteGradient.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureboxRouteGradient.TabIndex = 1;
-            this.pictureboxRouteGradient.TabStop = false;
-            // 
-            // pictureboxRouteMap
-            // 
-            this.pictureboxRouteMap.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pictureboxRouteMap.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureboxRouteMap.Location = new System.Drawing.Point(393, 5);
-            this.pictureboxRouteMap.Name = "pictureboxRouteMap";
-            this.pictureboxRouteMap.Size = new System.Drawing.Size(246, 305);
-            this.pictureboxRouteMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureboxRouteMap.TabIndex = 0;
-            this.pictureboxRouteMap.TabStop = false;
-            // 
-            // pictureboxRouteImage
-            // 
-            this.pictureboxRouteImage.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pictureboxRouteImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureboxRouteImage.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureboxRouteImage.Location = new System.Drawing.Point(3, 5);
-            this.pictureboxRouteImage.Name = "pictureboxRouteImage";
-            this.pictureboxRouteImage.Size = new System.Drawing.Size(152, 152);
-            this.pictureboxRouteImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureboxRouteImage.TabIndex = 0;
-            this.pictureboxRouteImage.TabStop = false;
-            // 
-            // pictureboxTrainImage
-            // 
-            this.pictureboxTrainImage.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.pictureboxTrainImage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureboxTrainImage.Cursor = System.Windows.Forms.Cursors.Default;
-            this.pictureboxTrainImage.Location = new System.Drawing.Point(3, 158);
-            this.pictureboxTrainImage.Name = "pictureboxTrainImage";
-            this.pictureboxTrainImage.Size = new System.Drawing.Size(152, 152);
-            this.pictureboxTrainImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureboxTrainImage.TabIndex = 0;
-            this.pictureboxTrainImage.TabStop = false;
+            this.imageListTabs.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTabs.ImageStream")));
+            this.imageListTabs.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListTabs.Images.SetKeyName(0, "index_page.png");
+            this.imageListTabs.Images.SetKeyName(1, "option_page.png");
             // 
             // formMain
             // 
@@ -596,13 +625,13 @@
             this.tabControlMain.ResumeLayout(false);
             this.tabPageStart.ResumeLayout(false);
             this.tabPageStart.PerformLayout();
-            this.tabPageOptions.ResumeLayout(false);
-            this.tabPageOptions.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureboxRouteGradient)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureboxRouteMap)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureboxRouteImage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureboxTrainImage)).EndInit();
+            this.tabPageOptions.ResumeLayout(false);
+            this.tabPageOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -650,5 +679,7 @@
 		private System.Windows.Forms.CheckBox checkBoxVSync;
 		private System.Windows.Forms.Button buttonSaveOptions;
 		private System.Windows.Forms.PictureBox pictureBoxBanner;
+		private System.Windows.Forms.Label labelVersion;
+		private System.Windows.Forms.ImageList imageListTabs;
 	}
 }

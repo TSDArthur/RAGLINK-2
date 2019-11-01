@@ -1498,9 +1498,9 @@
             this.labelPlanName.BackColor = System.Drawing.SystemColors.Window;
             this.labelPlanName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelPlanName.ForeColor = System.Drawing.Color.Black;
-            this.labelPlanName.Location = new System.Drawing.Point(212, 6);
+            this.labelPlanName.Location = new System.Drawing.Point(266, 6);
             this.labelPlanName.Name = "labelPlanName";
-            this.labelPlanName.Size = new System.Drawing.Size(341, 24);
+            this.labelPlanName.Size = new System.Drawing.Size(287, 24);
             this.labelPlanName.TabIndex = 59;
             this.labelPlanName.Text = "已加载的行车计划：无";
             this.labelPlanName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -1759,12 +1759,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.ClientSize = new System.Drawing.Size(565, 803);
+            this.Controls.Add(this.labelPlanName);
             this.Controls.Add(this.pictureBoxBanner);
             this.Controls.Add(this.checkBoxStreamDebugEnable);
             this.Controls.Add(this.buttonDataMonitor);
             this.Controls.Add(this.buttonSendDebugStream);
             this.Controls.Add(this.buttonStreamRecord);
-            this.Controls.Add(this.labelPlanName);
             this.Controls.Add(this.buttonBoardConnection);
             this.Controls.Add(this.panelConnection);
             this.Controls.Add(this.buttonDeadmanPress);

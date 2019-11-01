@@ -29,13 +29,13 @@
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
             "总概览"}, 0, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134))));
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
             "主控板"}, 1, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134))));
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
             "操作对象"}, 2, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134))));
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
             "设备连接"}, 3, System.Drawing.Color.Empty, System.Drawing.Color.Empty, new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134))));
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formSummary));
             this.labelPlanName = new System.Windows.Forms.Label();
@@ -75,9 +75,9 @@
             this.labelPlanName.BackColor = System.Drawing.SystemColors.Window;
             this.labelPlanName.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelPlanName.ForeColor = System.Drawing.Color.Black;
-            this.labelPlanName.Location = new System.Drawing.Point(468, 4);
+            this.labelPlanName.Location = new System.Drawing.Point(351, 4);
             this.labelPlanName.Name = "labelPlanName";
-            this.labelPlanName.Size = new System.Drawing.Size(579, 24);
+            this.labelPlanName.Size = new System.Drawing.Size(696, 24);
             this.labelPlanName.TabIndex = 62;
             this.labelPlanName.Text = "已加载的行车计划：无";
             this.labelPlanName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -160,10 +160,10 @@
             this.listViewSummaryItem.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.listViewSummaryItem.HideSelection = false;
             this.listViewSummaryItem.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem5,
+            listViewItem6,
+            listViewItem7,
+            listViewItem8});
             this.listViewSummaryItem.Location = new System.Drawing.Point(4, 29);
             this.listViewSummaryItem.MultiSelect = false;
             this.listViewSummaryItem.Name = "listViewSummaryItem";
@@ -337,7 +337,7 @@
             this.pictureBoxBanner.Image = global::RAGLINKCommons.Properties.Resources.banner;
             this.pictureBoxBanner.Location = new System.Drawing.Point(0, -1);
             this.pictureBoxBanner.Name = "pictureBoxBanner";
-            this.pictureBoxBanner.Size = new System.Drawing.Size(650, 38);
+            this.pictureBoxBanner.Size = new System.Drawing.Size(267, 38);
             this.pictureBoxBanner.TabIndex = 65;
             this.pictureBoxBanner.TabStop = false;
             // 

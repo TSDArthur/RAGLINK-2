@@ -61,6 +61,7 @@ namespace OpenBve
 							string projectGUID = RAGLINKCommons.RAGLINKPlatform.ProjectsManager.projectList.projectID[projectIndex];
 							if (projectGUID == string.Empty) break;
 							LaunchProject(projectGUID);
+							this.Hide();
 							return;
 						}
 					}
@@ -264,6 +265,7 @@ namespace OpenBve
 			listViewPlanFile.Enabled = dataValue;
 			buttonStart.Enabled = dataValue;
 			startButtonCondition = dataValue;
+			if (dataValue) LoadOptionsOnForm();
 		}
 		private void LaunchProject(string projectGUID)
 		{

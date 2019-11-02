@@ -106,11 +106,10 @@ namespace RAGLINKCommons.RAGLINKPlatform
 			{
 				Application.Run(new RAGLINKProxy.formController());
 			}).Start();
-			UserInterfaceSwap.simulatorLaunchTrig = true;
             ProjectLoader.ProjectLoaderProcess(ProjectLoader.LoadingState.DONE);
             toLaunchSimualtor = true;
             this.Close();
-		}
+        }
 
 		private void ButtonQuit_Click(object sender, EventArgs e)
 		{
@@ -167,7 +166,12 @@ namespace RAGLINKCommons.RAGLINKPlatform
 
         private void FormSummary_FormClosed(object sender, FormClosedEventArgs e)
         {
-            FormMainStartButtonEvent(true);
+            try
+            {
+                FormMainStartButtonEvent(true);
+                if (toLaunchSimualtor) UserInterfaceSwap.simulatorLaunchTrig = true;
+            }
+            catch (Exception) { };
         }
 
         private void TimerTopMost_Tick(object sender, EventArgs e)

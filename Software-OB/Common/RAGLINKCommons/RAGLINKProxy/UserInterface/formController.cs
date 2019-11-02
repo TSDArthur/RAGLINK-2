@@ -251,6 +251,7 @@ namespace RAGLINKCommons.RAGLINKProxy
         }
 
         private int findSimualtorWindowTick = 0;
+        private bool simulatorWindowHasOpened = false;
         private void TimerEvents_Tick(object sender, EventArgs e)
         {
             timerEvents.Enabled = false;
@@ -282,14 +283,15 @@ namespace RAGLINKCommons.RAGLINKProxy
                     }
                 }
                 catch (Exception) { };
-                //Main-form Monitor Inv:3s
+                //Main-form Monitor 240ms
                 findSimualtorWindowTick++;
-                if (findSimualtorWindowTick > 10)
+                if (findSimualtorWindowTick > 2)
                 {
                     findSimualtorWindowTick = 0;
                     IntPtr ParenthWnd = new IntPtr(0);
                     ParenthWnd = FindWindow(null, "RAGLINK+");
-                    if (ParenthWnd == IntPtr.Zero) this.Close();
+                    if (ParenthWnd == IntPtr.Zero && simulatorWindowHasOpened) this.Close();
+                    else if (ParenthWnd != IntPtr.Zero) simulatorWindowHasOpened = true;
                 }
                 timerEvents.Enabled = true;
                 if (!TrainMethodsClient.GetSimulatorState())

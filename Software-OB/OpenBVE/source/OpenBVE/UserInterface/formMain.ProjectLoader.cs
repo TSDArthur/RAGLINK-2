@@ -263,7 +263,7 @@ namespace OpenBve
 			tabControlMain.Enabled = dataValue;
 			listViewPlanFile.Enabled = dataValue;
 			buttonStart.Enabled = dataValue;
-			startButtonCondition = false;
+			startButtonCondition = dataValue;
 		}
 		private void LaunchProject(string projectGUID)
 		{

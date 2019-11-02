@@ -43,6 +43,7 @@ namespace OpenBve
 		}
 
 		private void buttonStart_Click(object sender, EventArgs e) {
+			tabControlMain.SelectedIndex = 0;
 			LaunchProject(listViewPlanFile.Items[selectedPlanID].SubItems[1].Text);
 		}
 		

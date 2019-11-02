@@ -63,10 +63,14 @@ namespace OpenBve
 				}).Start();
 				while (!formCloseTrig) ;
 				MainDialogResult result = Dialog.Result;
-				//Dispose of the worker thread when closing the form
-				//If it's still running, it attempts to update a non-existant form and crashes nastily
-				Dialog.routeWorkerThread.Dispose();
-				Dialog.Dispose();
+				try
+				{
+					//Dispose of the worker thread when closing the form
+					//If it's still running, it attempts to update a non-existant form and crashes nastily
+					Dialog.routeWorkerThread.Dispose();
+					Dialog.Dispose();
+				}
+				catch (Exception) { };
 				return result;
 			}
 		}
@@ -418,8 +422,12 @@ namespace OpenBve
 
 		private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			if (e.CloseReason == CloseReason.UserClosing)
-				formCloseTrig = true;
+			try
+			{
+				if (e.CloseReason == CloseReason.UserClosing)
+					formCloseTrig = true;
+			}
+			catch (Exception) { };
 		}
 		private void FormMain_Shown(object sender, EventArgs e)
 		{

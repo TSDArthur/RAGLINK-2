@@ -22,7 +22,6 @@ namespace RAGLINKCommons.RAGLINKPlatform
 		private void FormPlatform_Load(object sender, EventArgs e)
 		{
             FormMainStartButtonEvent(false);
-
             this.TopMost = true;
             labelPlanName.Text = "已加载的行车计划：" + ProjectsManager.projectInfo.projectName + (ProjectsManager.projectInfo.projectDebug ? "[调试模式]" : "[运转模式]");
 			errorCount = 0;

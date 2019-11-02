@@ -29,7 +29,7 @@ namespace OpenBve
 					Result.Start = true;
 					formCloseTrig = true;
 					Sounds.Deinitialize();
-					routeWorkerThread.Dispose();
+					if (routeWorkerThread != null) routeWorkerThread.Dispose();
 					//HACK: Call Application.DoEvents() to force the message pump to process all pending messages when the form closes
 					//This fixes the main form failing to close on Linux
 					Application.DoEvents();
@@ -75,7 +75,7 @@ namespace OpenBve
 				pictureboxRouteGradient.Image = null;
 				Result.ErrorFile = Result.RouteFile;
 				Result.RouteFile = null;
-				routeWorkerThread.Dispose();
+				if (routeWorkerThread != null) routeWorkerThread.Dispose();
 				this.Cursor = System.Windows.Forms.Cursors.Default;
 				return;
 			}

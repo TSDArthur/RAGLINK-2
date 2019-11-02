@@ -284,15 +284,19 @@ namespace RAGLINKCommons.RAGLINKProxy
                 }
                 catch (Exception) { };
                 //Main-form Monitor 240ms
-                findSimualtorWindowTick++;
-                if (findSimualtorWindowTick > 2)
+                try
                 {
-                    findSimualtorWindowTick = 0;
-                    IntPtr ParenthWnd = new IntPtr(0);
-                    ParenthWnd = FindWindow(null, "RAGLINK+");
-                    if (ParenthWnd == IntPtr.Zero && simulatorWindowHasOpened) this.Close();
-                    else if (ParenthWnd != IntPtr.Zero) simulatorWindowHasOpened = true;
+                    findSimualtorWindowTick++;
+                    if (findSimualtorWindowTick > 2)
+                    {
+                        findSimualtorWindowTick = 0;
+                        IntPtr ParenthWnd = new IntPtr(0);
+                        ParenthWnd = FindWindow(null, "RAGLINK+");
+                        if (ParenthWnd == IntPtr.Zero && simulatorWindowHasOpened) this.Close();
+                        else if (ParenthWnd != IntPtr.Zero) simulatorWindowHasOpened = true;
+                    }
                 }
+                catch (Exception) { };
                 timerEvents.Enabled = true;
                 if (!TrainMethodsClient.GetSimulatorState())
                 {

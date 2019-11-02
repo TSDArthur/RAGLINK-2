@@ -46,7 +46,7 @@
 #define DEVICE_STATE1 0
 #define DEVICE_STATE2 1
 #define DEVICE_STATE3 2
-#define DEVICE_DURATION 3
+#define DEVICE_DURATION 1
 extern uint8_t Devices_I2C_Addr;
 extern uint8_t Devices_Type[DEVICE_SUM];
 extern uint8_t Devices_Parameters[DEVICE_SUM];

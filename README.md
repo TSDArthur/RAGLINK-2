@@ -20,3 +20,11 @@ ALL NEW RAGLINK System : Desktop Train Contoller Solution for OpenBVE and OpenRa
 ⚪All New RAGLINK File Editor Part.
 
 ⚪Multi-Platform, Including Version Selector for OpenBVE and OpenRails.
+
+# Thrid-Part Libs
+
+⚪leezer3/OpenBVE
+
+⚪Fleck
+
+⚪EPPlus

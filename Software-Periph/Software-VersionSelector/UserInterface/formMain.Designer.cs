@@ -34,8 +34,8 @@
             this.columnHeaderName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderVersion = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderDesc = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.labelTitle = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.pictureBoxBanner = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonLaunch
@@ -95,25 +95,14 @@
             this.columnHeaderDesc.Text = "简述";
             this.columnHeaderDesc.Width = 240;
             // 
-            // labelTitle
+            // pictureBoxBanner
             // 
-            this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new System.Drawing.Font("微软雅黑", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelTitle.Location = new System.Drawing.Point(4, 7);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(198, 46);
-            this.labelTitle.TabIndex = 4;
-            this.labelTitle.Text = "RAGLINK+";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(7, 51);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(234, 25);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "An open-source project.";
+            this.pictureBoxBanner.Image = global::RAGLINK_Version_Selector.Properties.Resources.banner;
+            this.pictureBoxBanner.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxBanner.Name = "pictureBoxBanner";
+            this.pictureBoxBanner.Size = new System.Drawing.Size(469, 42);
+            this.pictureBoxBanner.TabIndex = 4;
+            this.pictureBoxBanner.TabStop = false;
             // 
             // frmMain
             // 
@@ -122,8 +111,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(251)))), ((int)(((byte)(251)))));
             this.BackgroundImage = global::RAGLINK_Version_Selector.Properties.Resources.Background;
             this.ClientSize = new System.Drawing.Size(465, 589);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.labelTitle);
+            this.Controls.Add(this.pictureBoxBanner);
             this.Controls.Add(this.listViewPlatform);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.buttonLaunch);
@@ -138,8 +126,8 @@
             this.Text = "RAGLINK 版本选择器";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxBanner)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -150,8 +138,7 @@
         private System.Windows.Forms.ColumnHeader columnHeaderName;
         private System.Windows.Forms.ColumnHeader columnHeaderVersion;
         private System.Windows.Forms.ColumnHeader columnHeaderDesc;
-        private System.Windows.Forms.Label labelTitle;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox pictureBoxBanner;
     }
 }
 

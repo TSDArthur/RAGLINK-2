@@ -22,6 +22,5 @@ C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj
 C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\RAGLINK_Version_Selector.Properties.Resources.resources
 C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\RAGLINK_Version_Selector.frmMain.resources
 C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\RAGLINKVersionSelector.csproj.GenerateResource.cache
-C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\RAGLINKVersionSelector.csproj.CoreCompileInputs.cache
 C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\Selector.exe
 C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\Selector.pdb

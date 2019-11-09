@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml;
-using System.Xml.Linq;
 using OpenBveApi.Colors;
 using OpenBveApi.FunctionScripting;
 using OpenBveApi.Interface;
 using OpenBveApi.Math;
 using OpenBveApi.Objects;
 using OpenBveApi.Textures;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml;
+using System.Xml.Linq;
 using Path = OpenBveApi.Path;
 
 namespace OpenBve.Parsers.Panel
@@ -144,7 +144,11 @@ namespace OpenBve.Parsers.Panel
 										}
 										break;
 									case "daytimeimage":
-										if (!System.IO.Path.HasExtension(Value)) Value += ".bmp";
+										if (!System.IO.Path.HasExtension(Value))
+										{
+											Value += ".bmp";
+										}
+
 										if (Path.ContainsInvalidChars(Value))
 										{
 											Interface.AddMessage(MessageType.Error, false, "FileName contains illegal characters in " + Key + " in " + Section + " at line " + LineNumber.ToString(Culture) + " in " + FileName);
@@ -160,7 +164,11 @@ namespace OpenBve.Parsers.Panel
 										}
 										break;
 									case "nighttimeimage":
-										if (!System.IO.Path.HasExtension(Value)) Value += ".bmp";
+										if (!System.IO.Path.HasExtension(Value))
+										{
+											Value += ".bmp";
+										}
+
 										if (Path.ContainsInvalidChars(Value))
 										{
 											Interface.AddMessage(MessageType.Error, false, "FileName contains illegal characters in " + Key + " in " + Section + " at line " + LineNumber.ToString(Culture) + " in " + FileName);
@@ -366,7 +374,10 @@ namespace OpenBve.Parsers.Panel
 				if ((currentSectionElement & 4) == 0)
 				{
 					System.Threading.Thread.Sleep(1);
-					if (Loading.Cancel) return;
+					if (Loading.Cancel)
+					{
+						return;
+					}
 				}
 
 				string Section = SectionElement.Name.LocalName;
@@ -416,7 +427,7 @@ namespace OpenBve.Parsers.Panel
 						}
 						break;
 					case "touch":
-						if(GroupIndex > 0)
+						if (GroupIndex > 0)
 						{
 							Vector2 Location = new Vector2();
 							Vector2 Size = new Vector2();
@@ -429,7 +440,7 @@ namespace OpenBve.Parsers.Panel
 							{
 								string Key = KeyNode.Name.LocalName;
 								string Value = KeyNode.Value;
-								int LineNumber = ((IXmlLineInfo) KeyNode).LineNumber;
+								int LineNumber = ((IXmlLineInfo)KeyNode).LineNumber;
 
 								switch (Key.ToLowerInvariant())
 								{
@@ -532,7 +543,7 @@ namespace OpenBve.Parsers.Panel
 							{
 								string Key = KeyNode.Name.LocalName;
 								string Value = KeyNode.Value;
-								int LineNumber = ((IXmlLineInfo) KeyNode).LineNumber;
+								int LineNumber = ((IXmlLineInfo)KeyNode).LineNumber;
 
 								switch (Key.ToLowerInvariant())
 								{
@@ -560,7 +571,11 @@ namespace OpenBve.Parsers.Panel
 										}
 										break;
 									case "daytimeimage":
-										if (!System.IO.Path.HasExtension(Value)) Value += ".bmp";
+										if (!System.IO.Path.HasExtension(Value))
+										{
+											Value += ".bmp";
+										}
+
 										if (Path.ContainsInvalidChars(Value))
 										{
 											Interface.AddMessage(MessageType.Error, false, "FileName contains illegal characters in " + Key + " in " + Section + " at line " + LineNumber.ToString(Culture) + " in " + FileName);
@@ -576,7 +591,11 @@ namespace OpenBve.Parsers.Panel
 										}
 										break;
 									case "nighttimeimage":
-										if (!System.IO.Path.HasExtension(Value)) Value += ".bmp";
+										if (!System.IO.Path.HasExtension(Value))
+										{
+											Value += ".bmp";
+										}
+
 										if (Path.ContainsInvalidChars(Value))
 										{
 											Interface.AddMessage(MessageType.Error, false, "FileName contains illegal characters in " + Key + " in " + Section + " at line " + LineNumber.ToString(Culture) + " in " + FileName);
@@ -650,7 +669,7 @@ namespace OpenBve.Parsers.Panel
 							{
 								string Key = KeyNode.Name.LocalName;
 								string Value = KeyNode.Value;
-								int LineNumber = ((IXmlLineInfo) KeyNode).LineNumber;
+								int LineNumber = ((IXmlLineInfo)KeyNode).LineNumber;
 
 								switch (Key.ToLowerInvariant())
 								{
@@ -691,7 +710,11 @@ namespace OpenBve.Parsers.Panel
 										}
 										break;
 									case "daytimeimage":
-										if (!System.IO.Path.HasExtension(Value)) Value += ".bmp";
+										if (!System.IO.Path.HasExtension(Value))
+										{
+											Value += ".bmp";
+										}
+
 										if (Path.ContainsInvalidChars(Value))
 										{
 											Interface.AddMessage(MessageType.Error, false, "FileName contains illegal characters in " + Key + " in " + Section + " at line " + LineNumber.ToString(Culture) + " in " + FileName);
@@ -707,7 +730,11 @@ namespace OpenBve.Parsers.Panel
 										}
 										break;
 									case "nighttimeimage":
-										if (!System.IO.Path.HasExtension(Value)) Value += ".bmp";
+										if (!System.IO.Path.HasExtension(Value))
+										{
+											Value += ".bmp";
+										}
+
 										if (Path.ContainsInvalidChars(Value))
 										{
 											Interface.AddMessage(MessageType.Error, false, "FileName contains illegal characters in " + Key + " in " + Section + " at line " + LineNumber.ToString(Culture) + " in " + FileName);
@@ -834,14 +861,14 @@ namespace OpenBve.Parsers.Panel
 							{
 								Texture tday;
 								Textures.RegisterTexture(DaytimeImage,
-								                         new TextureParameters(null,
-								                                 new Color24(TransparentColor.R, TransparentColor.G, TransparentColor.B)), out tday);
+														 new TextureParameters(null,
+																 new Color24(TransparentColor.R, TransparentColor.G, TransparentColor.B)), out tday);
 								Texture tnight = null;
 								if (NighttimeImage != null)
 								{
 									Textures.RegisterTexture(NighttimeImage,
-									                         new TextureParameters(null,
-									                                 new Color24(TransparentColor.R, TransparentColor.G, TransparentColor.B)), out tnight);
+															 new TextureParameters(null,
+																	 new Color24(TransparentColor.R, TransparentColor.G, TransparentColor.B)), out tnight);
 								}
 								OpenBVEGame.RunInRenderThread(() =>
 								{
@@ -913,7 +940,7 @@ namespace OpenBve.Parsers.Panel
 							{
 								string Key = KeyNode.Name.LocalName;
 								string Value = KeyNode.Value;
-								int LineNumber = ((IXmlLineInfo) KeyNode).LineNumber;
+								int LineNumber = ((IXmlLineInfo)KeyNode).LineNumber;
 
 								switch (Key.ToLowerInvariant())
 								{
@@ -984,7 +1011,11 @@ namespace OpenBve.Parsers.Panel
 										}
 										break;
 									case "daytimeimage":
-										if (!System.IO.Path.HasExtension(Value)) Value += ".bmp";
+										if (!System.IO.Path.HasExtension(Value))
+										{
+											Value += ".bmp";
+										}
+
 										if (Path.ContainsInvalidChars(Value))
 										{
 											Interface.AddMessage(MessageType.Error, false, "FileName contains illegal characters in " + Key + " in " + Section + " at line " + LineNumber.ToString(Culture) + " in " + FileName);
@@ -1000,7 +1031,11 @@ namespace OpenBve.Parsers.Panel
 										}
 										break;
 									case "nighttimeimage":
-										if (!System.IO.Path.HasExtension(Value)) Value += ".bmp";
+										if (!System.IO.Path.HasExtension(Value))
+										{
+											Value += ".bmp";
+										}
+
 										if (Path.ContainsInvalidChars(Value))
 										{
 											Interface.AddMessage(MessageType.Error, false, "FileName contains illegal characters in " + Key + " in " + Section + " at line " + LineNumber.ToString(Culture) + " in " + FileName);
@@ -1078,7 +1113,7 @@ namespace OpenBve.Parsers.Panel
 							{
 								string Key = KeyNode.Name.LocalName;
 								string Value = KeyNode.Value;
-								int LineNumber = ((IXmlLineInfo) KeyNode).LineNumber;
+								int LineNumber = ((IXmlLineInfo)KeyNode).LineNumber;
 
 								switch (Key.ToLowerInvariant())
 								{
@@ -1106,7 +1141,11 @@ namespace OpenBve.Parsers.Panel
 										}
 										break;
 									case "daytimeimage":
-										if (!System.IO.Path.HasExtension(Value)) Value += ".bmp";
+										if (!System.IO.Path.HasExtension(Value))
+										{
+											Value += ".bmp";
+										}
+
 										if (Path.ContainsInvalidChars(Value))
 										{
 											Interface.AddMessage(MessageType.Error, false, "FileName contains illegal characters in " + Key + " in " + Section + " at line " + LineNumber.ToString(Culture) + " in " + FileName);
@@ -1122,7 +1161,11 @@ namespace OpenBve.Parsers.Panel
 										}
 										break;
 									case "nighttimeimage":
-										if (!System.IO.Path.HasExtension(Value)) Value += ".bmp";
+										if (!System.IO.Path.HasExtension(Value))
+										{
+											Value += ".bmp";
+										}
+
 										if (Path.ContainsInvalidChars(Value))
 										{
 											Interface.AddMessage(MessageType.Error, false, "FileName contains illegal characters in " + Key + " in " + Section + " at line " + LineNumber.ToString(Culture) + " in " + FileName);
@@ -1259,7 +1302,10 @@ namespace OpenBve.Parsers.Panel
 									for (int k = 0; k < tday.Length; k++)
 									{
 										int l = Panel2CfgParser.CreateElement(CarSection.Groups[GroupIndex], LocationX, LocationY, (double)wday, (double)Interval, new Vector2(0.5, 0.5), (OffsetLayer + Layer) * StackDistance, PanelResolution, PanelLeft, PanelRight, PanelTop, PanelBottom, PanelCenter, PanelOrigin, Train.Cars[Car].Driver, tday[k], tnight[k], Color32.White, k != 0);
-										if (k == 0) j = l;
+										if (k == 0)
+										{
+											j = l;
+										}
 									}
 									string f = Panel2CfgParser.GetStackLanguageFromSubject(Train, Subject, Section + " in " + FileName);
 									CarSection.Groups[GroupIndex].Elements[j].StateFunction = new FunctionScript(Program.CurrentHost, f, false);
@@ -1283,7 +1329,7 @@ namespace OpenBve.Parsers.Panel
 							{
 								string Key = KeyNode.Name.LocalName;
 								string Value = KeyNode.Value;
-								LineNumber = ((IXmlLineInfo) KeyNode).LineNumber;
+								LineNumber = ((IXmlLineInfo)KeyNode).LineNumber;
 
 								switch (Key.ToLowerInvariant())
 								{
@@ -1468,7 +1514,7 @@ namespace OpenBve.Parsers.Panel
 							{
 								string Key = KeyNode.Name.LocalName;
 								string Value = KeyNode.Value;
-								int LineNumber = ((IXmlLineInfo) KeyNode).LineNumber;
+								int LineNumber = ((IXmlLineInfo)KeyNode).LineNumber;
 
 								switch (Key.ToLowerInvariant())
 								{

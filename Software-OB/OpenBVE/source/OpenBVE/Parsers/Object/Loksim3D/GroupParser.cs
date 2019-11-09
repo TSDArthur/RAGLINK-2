@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Xml;
-using OpenBveApi.Math;
-using System.Linq;
-using OpenBveApi.FunctionScripting;
+﻿using OpenBveApi.FunctionScripting;
 using OpenBveApi.Interface;
+using OpenBveApi.Math;
 using OpenBveApi.Objects;
+using System;
+using System.IO;
+using System.Linq;
+using System.Xml;
 
 namespace OpenBve
 {
@@ -205,7 +205,8 @@ namespace OpenBve
 						}
 						ObjectManager.StaticObject Object = null;
 						ObjectManager.AnimatedObjectCollection AnimatedObject = null;
-						try {
+						try
+						{
 							if (CurrentObjects[i].Name.ToLowerInvariant().EndsWith(".l3dgrp"))
 							{
 								AnimatedObject = ReadObject(CurrentObjects[i].Name, Encoding, CurrentObjects[i].Rotation);
@@ -219,10 +220,11 @@ namespace OpenBve
 								throw new Exception("Format " + System.IO.Path.GetExtension(CurrentObjects[i].Name) + " is not currently supported by the Loksim3D object parser");
 							}
 						}
-						catch (Exception ex) {
+						catch (Exception ex)
+						{
 							Interface.AddMessage(MessageType.Error, false, ex.Message);
 						}
-						
+
 						if (Object != null)
 						{
 							if (!string.IsNullOrEmpty(CurrentObjects[i].FunctionScript))

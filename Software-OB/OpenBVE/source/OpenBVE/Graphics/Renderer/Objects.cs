@@ -1,7 +1,7 @@
-﻿using System;
-using OpenBveApi.Graphics;
+﻿using OpenBveApi.Graphics;
 using OpenBveApi.Objects;
 using OpenBveApi.Textures;
+using System;
 
 namespace OpenBve
 {
@@ -58,16 +58,16 @@ namespace OpenBve
 							for (int v = 0; v < ObjectManager.Objects[ObjectIndex].Mesh.Vertices.Length; v++)
 							{
 								if (ObjectManager.Objects[ObjectIndex].Mesh.Vertices[v].TextureCoordinates.X < 0.0f |
-								    ObjectManager.Objects[ObjectIndex].Mesh.Vertices[v].TextureCoordinates.X > 1.0f)
+									ObjectManager.Objects[ObjectIndex].Mesh.Vertices[v].TextureCoordinates.X > 1.0f)
 								{
 									wrap |= OpenGlTextureWrapMode.RepeatClamp;
 								}
 								if (ObjectManager.Objects[ObjectIndex].Mesh.Vertices[v].TextureCoordinates.Y < 0.0f |
-								    ObjectManager.Objects[ObjectIndex].Mesh.Vertices[v].TextureCoordinates.Y > 1.0f)
+									ObjectManager.Objects[ObjectIndex].Mesh.Vertices[v].TextureCoordinates.Y > 1.0f)
 								{
 									wrap |= OpenGlTextureWrapMode.ClampRepeat;
 								}
-							}							
+							}
 						}
 						else
 						{
@@ -85,7 +85,7 @@ namespace OpenBve
 									alpha = true;
 								}
 								else if (type == TextureTransparencyType.Partial &&
-								         Interface.CurrentOptions.TransparencyMode == TransparencyMode.Quality)
+										 Interface.CurrentOptions.TransparencyMode == TransparencyMode.Quality)
 								{
 									alpha = true;
 								}
@@ -102,7 +102,7 @@ namespace OpenBve
 									alpha = true;
 								}
 								else if (type == TextureTransparencyType.Partial &
-								         Interface.CurrentOptions.TransparencyMode == TransparencyMode.Quality)
+										 Interface.CurrentOptions.TransparencyMode == TransparencyMode.Quality)
 								{
 									alpha = true;
 								}
@@ -273,7 +273,7 @@ namespace OpenBve
 			}
 			int k = ObjectManager.Objects[ObjectIndex].RendererIndex - 1;
 			if (k >= 0)
-			{		
+			{
 				// remove faces
 				for (int i = 0; i < Objects[k].FaceListReferences.Length; i++)
 				{

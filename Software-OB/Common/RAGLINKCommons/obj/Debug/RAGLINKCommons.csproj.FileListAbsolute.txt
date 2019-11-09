@@ -33,11 +33,12 @@ C:\Documents\RAGLINKProject\RAGLINK\Program\RAGLINK-OB\RAGLINKCommons.dll
 C:\Documents\RAGLINKProject\RAGLINK\Program\RAGLINK-OB\RAGLINKCommons.pdb
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.csprojAssemblyReference.cache
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.Properties.Resources.resources
-C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.RAGLINKPlatform.formSummary.resources
-C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.RAGLINKPlatform.formSummaryInit.resources
-C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.RAGLINKProxy.formController.resources
-C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.RAGLINKProxy.formDataMonitor.resources
-C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.RAGLINKProxy.formStreamRecord.resources
+C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.RPlatform.FormSummary.resources
+C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.RPlatform.FormSummaryInit.resources
+C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.RProxy.FormController.resources
+C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.RProxy.FormDataMonitor.resources
+C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.RProxy.FormStreamRecord.resources
+C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.RStatistics.UserInterface.FromSAGAT.resources
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.csproj.GenerateResource.cache
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.csproj.CopyComplete
 C:\Documents\RAGLINKProject\RAGLINK\Software-OB\Common\RAGLINKCommons\obj\Debug\RAGLINKCommons.dll

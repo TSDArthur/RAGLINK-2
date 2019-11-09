@@ -1,11 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 using OpenBveApi;
-using OpenBveApi.Objects;
 using OpenBveApi.Interface;
+using OpenBveApi.Objects;
+using System;
+using System.Globalization;
+using System.Text;
 
 namespace OpenBve
 {
@@ -237,22 +235,32 @@ namespace OpenBve
 															break;
 														case "axles":
 															int k = b.IndexOf(',');
-															if (k >= 0) {
+															if (k >= 0)
+															{
 																string c = b.Substring(0, k).TrimEnd();
 																string d = b.Substring(k + 1).TrimStart();
 																double rear, front;
-																if (!double.TryParse(c, System.Globalization.NumberStyles.Float, Culture, out rear)) {
+																if (!double.TryParse(c, System.Globalization.NumberStyles.Float, Culture, out rear))
+																{
 																	Interface.AddMessage(MessageType.Error, false, "Rear is expected to be a floating-point number in " + a + " at line " + (i + 1).ToString(Culture) + " in file " + filePath);
-																} else if (!double.TryParse(d, System.Globalization.NumberStyles.Float, Culture, out front)) {
+																}
+																else if (!double.TryParse(d, System.Globalization.NumberStyles.Float, Culture, out front))
+																{
 																	Interface.AddMessage(MessageType.Error, false, "Front is expected to be a floating-point number in " + a + " at line " + (i + 1).ToString(Culture) + " in file " + filePath);
-																} else if (rear >= front) {
+																}
+																else if (rear >= front)
+																{
 																	Interface.AddMessage(MessageType.Error, false, "Rear is expected to be less than Front in " + a + " at line " + (i + 1).ToString(Culture) + " in file " + filePath);
-																} else {
+																}
+																else
+																{
 																	axleLocations[n] = rear;
 																	axleLocations[n + 1] = front;
 
 																}
-															} else {
+															}
+															else
+															{
 																Interface.AddMessage(MessageType.Error, false, "An argument-separating comma is expected in " + a + " at line " + (i + 1).ToString(Culture) + " in file " + filePath);
 															}
 															break;
@@ -503,7 +511,7 @@ namespace OpenBve
 			{
 				Interface.AddMessage(MessageType.Warning, false, "An incomplete set of exterior objects was provided in file " + filePath);
 			}
-			
+
 			if (bogieObjectsCount > 0 & bogieObjectsCount < train.Cars.Length * 2)
 			{
 				Interface.AddMessage(MessageType.Warning, false, "An incomplete set of bogie objects was provided in file " + filePath);

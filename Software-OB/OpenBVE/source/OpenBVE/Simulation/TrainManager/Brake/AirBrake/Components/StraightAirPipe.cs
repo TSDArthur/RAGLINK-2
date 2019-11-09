@@ -19,6 +19,6 @@
 			EmergencyRate = emergencyRate;
 			ReleaseRate = releaseRate;
 		}
-		
+
 	}
 }

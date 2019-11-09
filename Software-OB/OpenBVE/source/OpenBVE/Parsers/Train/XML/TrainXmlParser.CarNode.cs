@@ -1,14 +1,14 @@
-﻿using System.Xml;
+﻿using OpenBve.BrakeSystems;
+using OpenBve.Parsers.Panel;
+using OpenBveApi.Interface;
 using OpenBveApi.Math;
-using System.Linq;
+using OpenBveApi.Objects;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Xml;
 using System.Xml.Linq;
-using OpenBve.BrakeSystems;
-using OpenBve.Parsers.Panel;
-using OpenBveApi.Objects;
-using OpenBveApi.Interface;
 
 namespace OpenBve.Parsers.Train
 {
@@ -45,7 +45,7 @@ namespace OpenBve.Parsers.Train
 							}
 							catch
 							{
-								Interface.AddMessage(MessageType.Error, false, "Failed to load the child Brake XML file specified in " +c.InnerText);
+								Interface.AddMessage(MessageType.Error, false, "Failed to load the child Brake XML file specified in " + c.InnerText);
 							}
 						}
 						break;
@@ -260,7 +260,7 @@ namespace OpenBve.Parsers.Train
 							Elements = new ObjectManager.AnimatedObject[] { },
 							Overlay = true
 						};
-						
+
 						string cv = OpenBveApi.Path.CombineFile(currentPath, c.InnerText);
 						if (!System.IO.File.Exists(cv))
 						{
@@ -321,7 +321,7 @@ namespace OpenBve.Parsers.Train
 						return;
 					}
 					DocumentElements = CurrentXML.Root.Elements("Panel");
-					if (DocumentElements != null  && DocumentElements.Count() != 0)
+					if (DocumentElements != null && DocumentElements.Count() != 0)
 					{
 						PanelXmlParser.ParsePanelXml(interiorFile, currentPath, Train, Car);
 						Train.Cars[Car].CameraRestrictionMode = Camera.RestrictionMode.On;
@@ -395,7 +395,7 @@ namespace OpenBve.Parsers.Train
 						break;
 				}
 			}
-			
+
 		}
 	}
 }

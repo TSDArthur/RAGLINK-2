@@ -9,7 +9,7 @@ namespace RAGLINKFileEditor.FileIO
         static public string filePath = string.Empty;
         static public string fileName = string.Empty;
         static public string fileConvertedPath = string.Empty;
-        static public RAGLINKCommons.RAGLINKPlatform.SettingsContent.FileType fileType;
+        static public RAGLINKCommons.RPlatform.SettingsContent.FileType fileType;
         static public List<string> argsFileNameList = new List<string>();
     }
 }

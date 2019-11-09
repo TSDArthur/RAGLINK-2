@@ -49,7 +49,7 @@
 			internal CarReAdhesionDevice ReAdhesionDevice;
 
 			/// doors
-			
+
 			internal double DoorOpenFrequency;
 			internal double DoorCloseFrequency;
 			internal double DoorOpenPitch;

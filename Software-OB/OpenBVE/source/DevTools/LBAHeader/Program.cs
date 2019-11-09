@@ -56,7 +56,7 @@ namespace LBAHeader
 			{
 				Console.WriteLine("A problem occured whilst attempting to set the LBA flag for executable " + f);
 			}
-			
+
 		}
 	}
 }

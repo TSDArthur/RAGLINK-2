@@ -196,7 +196,7 @@ namespace OpenBve.Formats.DirectX
 			{
 				throw new Exception("Expected the " + newToken + " token, got " + currentToken);
 			}
-			
+
 			int level = 0;
 			while (currentPosition < myText.Length)
 			{
@@ -342,7 +342,7 @@ namespace OpenBve.Formats.DirectX
 			{
 				throw new Exception("Unrecognised token " + s);
 			}
-			
+
 			int level = 0;
 			while (currentPosition < myText.Length)
 			{
@@ -386,7 +386,7 @@ namespace OpenBve.Formats.DirectX
 			int val;
 			if (int.TryParse(s, NumberStyles.Number, CultureInfo.InvariantCulture, out val))
 			{
-				return (ushort) val;
+				return (ushort)val;
 			}
 			throw new Exception("Unable to parse " + s + " to a valid integer in block " + Token);
 		}
@@ -437,9 +437,9 @@ namespace OpenBve.Formats.DirectX
 		private string getNextValue()
 		{
 
-			if (char.IsWhiteSpace(myText[currentPosition]) || myText[currentPosition] == ';'  || myText[currentPosition] == ',')
+			if (char.IsWhiteSpace(myText[currentPosition]) || myText[currentPosition] == ';' || myText[currentPosition] == ',')
 			{
-				while (char.IsWhiteSpace(myText[currentPosition]) || myText[currentPosition] == ';'  || myText[currentPosition] == ',')
+				while (char.IsWhiteSpace(myText[currentPosition]) || myText[currentPosition] == ';' || myText[currentPosition] == ',')
 				{
 					currentPosition++;
 				}
@@ -519,7 +519,7 @@ namespace OpenBve.Formats.DirectX
 				switch (currentToken)
 				{
 					case "int_list":
-						int integerCount = (int) myReader.ReadInt32();
+						int integerCount = (int)myReader.ReadInt32();
 						for (int i = 0; i < integerCount; i++)
 						{
 							cachedIntegers.Add(myReader.ReadInt16());
@@ -527,7 +527,7 @@ namespace OpenBve.Formats.DirectX
 						myStream.Position += integerCount * 4;
 						break;
 					case "float_list":
-						int floatCount = (int) myReader.ReadInt32();
+						int floatCount = (int)myReader.ReadInt32();
 						switch (FloatingPointSize)
 						{
 							case 32:
@@ -565,14 +565,14 @@ namespace OpenBve.Formats.DirectX
 				switch (currentToken)
 				{
 					case "int_list":
-						int integerCount = (int) myReader.ReadInt32();
+						int integerCount = (int)myReader.ReadInt32();
 						for (int i = 0; i < integerCount; i++)
 						{
 							cachedIntegers.Add(myReader.ReadInt16());
 						}
 						break;
 					case "float_list":
-						int floatCount = (int) myReader.ReadInt32();
+						int floatCount = (int)myReader.ReadInt32();
 						switch (FloatingPointSize)
 						{
 							case 32:
@@ -620,14 +620,14 @@ namespace OpenBve.Formats.DirectX
 				switch (currentToken)
 				{
 					case "int_list":
-						int integerCount = (int) myReader.ReadInt32();
+						int integerCount = (int)myReader.ReadInt32();
 						for (int i = 0; i < integerCount; i++)
 						{
 							cachedIntegers.Add(myReader.ReadInt32());
 						}
 						break;
 					case "float_list":
-						int floatCount = (int) myReader.ReadInt32();
+						int floatCount = (int)myReader.ReadInt32();
 						switch (FloatingPointSize)
 						{
 							case 32:
@@ -729,7 +729,7 @@ namespace OpenBve.Formats.DirectX
 		{
 			string blockName = getNextToken();
 			TemplateID newToken;
-			
+
 			if (!Enum.TryParse(blockName, true, out newToken))
 			{
 				throw new Exception("Unable to parse " + blockName + " into a valid token.");
@@ -740,7 +740,7 @@ namespace OpenBve.Formats.DirectX
 			while (myStream.Position < myStream.Length)
 			{
 				string currentToken = getNextToken();
-				
+
 				switch (currentToken)
 				{
 					case "{":

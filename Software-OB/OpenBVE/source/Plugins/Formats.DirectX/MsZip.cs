@@ -1,24 +1,24 @@
-﻿using System;
+﻿using Ionic.Zlib;
+using System;
 using System.IO;
-using Ionic.Zlib;
 
 namespace OpenBve.Formats.DirectX
 {
-    public static class MSZip
-    {
+	public static class MSZip
+	{
 		/// <summary>Decompresses a byte array compressed with MSZip compression</summary>
 		/// <param name="Data">The byte array to decompress</param>
 		/// <returns>The uncompressed data</returns>
 		public static byte[] Decompress(byte[] Data)
 		{
 			uint MSZIP_SIGNATURE = 0x4B43;
-	    	uint MSZIP_BLOCK = 32786;
+			uint MSZIP_BLOCK = 32786;
 
 			int p = 0;
-            int end = Data.Length;
+			int end = Data.Length;
 
-            // Skip Header
-            p += 16;
+			// Skip Header
+			p += 16;
 
 #pragma warning disable CS0219
 			// Read file size after decompression excluding header
@@ -26,11 +26,11 @@ namespace OpenBve.Formats.DirectX
 			p += 4;
 #pragma warning restore CS0219
 
-            // Preparing for decompression
-            MemoryStream inputStream = new MemoryStream(Data);
-            MemoryStream outputStream = new MemoryStream();
+			// Preparing for decompression
+			MemoryStream inputStream = new MemoryStream(Data);
+			MemoryStream outputStream = new MemoryStream();
 			int currentBlock = 0;
-			byte[] previousBlockBytes = new byte[(int) MSZIP_BLOCK];
+			byte[] previousBlockBytes = new byte[(int)MSZIP_BLOCK];
 			byte[] blockBytes;
 			while (p + 3 < end)
 			{
@@ -75,11 +75,11 @@ namespace OpenBve.Formats.DirectX
 
 					decompressedBytes = ZlibDecompressWithDictionary(blockBytes, previousBlockBytes);
 				}
-				
+
 				outputStream.Write(decompressedBytes, 0, decompressedBytes.Length);
 				previousBlockBytes = decompressedBytes;
-				
-				
+
+
 				// Preparing to move to the next data block
 				p += compressedBlockSize;
 				currentBlock++;
@@ -88,61 +88,71 @@ namespace OpenBve.Formats.DirectX
 			return outputStream.ToArray();
 		}
 		/// <summary>Decompressed (inflates) a compressed byte array using the Inflate algorithm.</summary>
-        /// <param name="compressedData">The deflate-compressed data</param>
-        /// <param name="dictionary">The dictionary originally used to compress the data, or null if no dictionary was used.</param>
-        /// <returns>The uncompressed data</returns>
-        private static byte[] ZlibDecompressWithDictionary(byte[] compressedData, byte[] dictionary)
-        {
-            using (var ms = new MemoryStream()) {
-                const int bufferSize = 256;
-                var buffer = new byte[bufferSize];
+		/// <param name="compressedData">The deflate-compressed data</param>
+		/// <param name="dictionary">The dictionary originally used to compress the data, or null if no dictionary was used.</param>
+		/// <returns>The uncompressed data</returns>
+		private static byte[] ZlibDecompressWithDictionary(byte[] compressedData, byte[] dictionary)
+		{
+			using (var ms = new MemoryStream())
+			{
+				const int bufferSize = 256;
+				var buffer = new byte[bufferSize];
 
-                var codec = new ZlibCodec {
-                    InputBuffer = compressedData,
-                    NextIn = 0,
-                    AvailableBytesIn = compressedData.Length
-                };
+				var codec = new ZlibCodec
+				{
+					InputBuffer = compressedData,
+					NextIn = 0,
+					AvailableBytesIn = compressedData.Length
+				};
 
-                codec.AssertOk("InitializeInflate", codec.InitializeInflate(false));
-	            if (dictionary != null)
-	            {
-					
-		            codec.AssertOk("SetDictionary", codec.SetDictionary(dictionary));
-	            }
-                codec.OutputBuffer = buffer;
+				codec.AssertOk("InitializeInflate", codec.InitializeInflate(false));
+				if (dictionary != null)
+				{
 
-                while (true) {
-                    codec.NextOut = 0;
-                    codec.AvailableBytesOut = bufferSize;
-                    var inflateReturnCode = codec.Inflate(FlushType.None);
-                    var bytesToWrite = bufferSize - codec.AvailableBytesOut;
-                    ms.Write(buffer, 0, bytesToWrite);
+					codec.AssertOk("SetDictionary", codec.SetDictionary(dictionary));
+				}
+				codec.OutputBuffer = buffer;
 
-                    if (inflateReturnCode == ZlibConstants.Z_STREAM_END) {
-                        break;
-                    } else if (inflateReturnCode == ZlibConstants.Z_NEED_DICT && dictionary != null) {
-                        //implies bytesToWrite was 0
-                        var dictionaryAdler32 = ((int)Adler.Adler32(1u, dictionary, 0, dictionary.Length));
-                        if (codec.Adler32 != dictionaryAdler32) {
-                            throw new InvalidOperationException("Compressed data is requesting a dictionary with adler32 " + codec.Adler32 + ", but the dictionary is actually " + dictionaryAdler32);
-                        }
+				while (true)
+				{
+					codec.NextOut = 0;
+					codec.AvailableBytesOut = bufferSize;
+					var inflateReturnCode = codec.Inflate(FlushType.None);
+					var bytesToWrite = bufferSize - codec.AvailableBytesOut;
+					ms.Write(buffer, 0, bytesToWrite);
 
-                        codec.AssertOk("SetDictionary", codec.SetDictionary(dictionary));
-                    } else {
-                        codec.AssertOk("Inflate", inflateReturnCode);
-                    }
-                }
+					if (inflateReturnCode == ZlibConstants.Z_STREAM_END)
+					{
+						break;
+					}
+					else if (inflateReturnCode == ZlibConstants.Z_NEED_DICT && dictionary != null)
+					{
+						//implies bytesToWrite was 0
+						var dictionaryAdler32 = ((int)Adler.Adler32(1u, dictionary, 0, dictionary.Length));
+						if (codec.Adler32 != dictionaryAdler32)
+						{
+							throw new InvalidOperationException("Compressed data is requesting a dictionary with adler32 " + codec.Adler32 + ", but the dictionary is actually " + dictionaryAdler32);
+						}
 
-                codec.AssertOk("EndInflate", codec.EndInflate());
-                return ms.ToArray();
-            }
-        }
+						codec.AssertOk("SetDictionary", codec.SetDictionary(dictionary));
+					}
+					else
+					{
+						codec.AssertOk("Inflate", inflateReturnCode);
+					}
+				}
 
-        internal static void AssertOk(this ZlibCodec codec, string Message, int errorCode)
-        {
-            if (errorCode != 0) {
-                throw new InvalidOperationException("Failed with " + errorCode + "; " + Message + "; " + codec.Message);
-            }
-        }
-    }
+				codec.AssertOk("EndInflate", codec.EndInflate());
+				return ms.ToArray();
+			}
+		}
+
+		internal static void AssertOk(this ZlibCodec codec, string Message, int errorCode)
+		{
+			if (errorCode != 0)
+			{
+				throw new InvalidOperationException("Failed with " + errorCode + "; " + Message + "; " + codec.Message);
+			}
+		}
+	}
 }

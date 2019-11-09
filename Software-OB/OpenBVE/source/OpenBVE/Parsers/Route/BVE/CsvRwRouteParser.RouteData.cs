@@ -1,5 +1,5 @@
-﻿using System;
-using OpenBveApi.Textures;
+﻿using OpenBveApi.Textures;
+using System;
 
 namespace OpenBve
 {
@@ -142,6 +142,6 @@ namespace OpenBve
 				}
 			}
 		}
-		
+
 	}
 }

@@ -1,6 +1,6 @@
-﻿using System;
-using OpenBveApi.Colors;
+﻿using OpenBveApi.Colors;
 using OpenBveApi.Math;
+using System;
 
 namespace OpenBve
 {
@@ -11,7 +11,7 @@ namespace OpenBve
 	 */
 	internal static partial class Game
 	{
-		
+
 
 		/// <summary>The current size of the plane upon which messages are rendered</summary>
 		internal static Vector2 MessagesRendererSize = new Vector2(16.0, 16.0);
@@ -25,8 +25,8 @@ namespace OpenBve
 		/// <param name="key">The textual key identifiying this message</param>
 		internal static void AddMessage(string Text, MessageManager.MessageDependency Depencency, Interface.GameMode Mode, MessageColor Color, double Timeout, string key)
 		{
-			
-			
+
+
 			if (Interface.CurrentOptions.GameMode <= Mode)
 			{
 				MessageManager.GameMessage message = new MessageManager.GameMessage
@@ -52,7 +52,7 @@ namespace OpenBve
 		internal static void UpdateMessages()
 		{
 			MessageManager.UpdateMessages();
-			
+
 		}
 	}
 }

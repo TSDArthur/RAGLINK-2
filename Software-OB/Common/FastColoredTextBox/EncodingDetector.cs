@@ -55,7 +55,10 @@ namespace FastColoredTextBoxNS
             byte[] sampleBytes = new byte[HeuristicSampleSize > InputFileStream.Length ? InputFileStream.Length : HeuristicSampleSize];
             Array.Copy(bomBytes, sampleBytes, bomBytes.Length);
             if (InputFileStream.Length > bomBytes.Length)
+            {
                 InputFileStream.Read(sampleBytes, bomBytes.Length, sampleBytes.Length - bomBytes.Length);
+            }
+
             InputFileStream.Position = originalPos;
 
             //test byte array content
@@ -68,7 +71,9 @@ namespace FastColoredTextBoxNS
         public static Encoding DetectBOMBytes(byte[] BOMBytes)
         {
             if (BOMBytes.Length < 2)
+            {
                 return null;
+            }
 
             if (BOMBytes[0] == 0xff
                 && BOMBytes[1] == 0xfe
@@ -77,30 +82,46 @@ namespace FastColoredTextBoxNS
                     || BOMBytes[3] != 0
                     )
                 )
+            {
                 return Encoding.Unicode;
+            }
 
             if (BOMBytes[0] == 0xfe
                 && BOMBytes[1] == 0xff
                 )
+            {
                 return Encoding.BigEndianUnicode;
+            }
 
             if (BOMBytes.Length < 3)
+            {
                 return null;
+            }
 
             if (BOMBytes[0] == 0xef && BOMBytes[1] == 0xbb && BOMBytes[2] == 0xbf)
+            {
                 return Encoding.UTF8;
+            }
 
             if (BOMBytes[0] == 0x2b && BOMBytes[1] == 0x2f && BOMBytes[2] == 0x76)
+            {
                 return Encoding.UTF7;
+            }
 
             if (BOMBytes.Length < 4)
+            {
                 return null;
+            }
 
             if (BOMBytes[0] == 0xff && BOMBytes[1] == 0xfe && BOMBytes[2] == 0 && BOMBytes[3] == 0)
+            {
                 return Encoding.UTF32;
+            }
 
             if (BOMBytes[0] == 0 && BOMBytes[1] == 0 && BOMBytes[2] == 0xfe && BOMBytes[3] == 0xff)
+            {
                 return Encoding.GetEncoding(12001);
+            }
 
             return null;
         }
@@ -126,14 +147,20 @@ namespace FastColoredTextBoxNS
                 if (SampleBytes[currentPos] == 0)
                 {
                     if (currentPos % 2 == 0)
+                    {
                         evenBinaryNullsInSample++;
+                    }
                     else
+                    {
                         oddBinaryNullsInSample++;
+                    }
                 }
 
                 //likely US-ASCII characters
                 if (IsCommonUSASCIIByte(SampleBytes[currentPos]))
+                {
                     likelyUSASCIIBytesInSample++;
+                }
 
                 //suspicious sequences (look like UTF-8)
                 if (skipUTF8Bytes == 0)
@@ -164,7 +191,9 @@ namespace FastColoredTextBoxNS
             if (((evenBinaryNullsInSample * 2.0) / SampleBytes.Length) < 0.2
                 && ((oddBinaryNullsInSample * 2.0) / SampleBytes.Length) > 0.6
                 )
+            {
                 return Encoding.Unicode;
+            }
 
 
             //2: UTF-16 BE - in english / european environments, this is usually characterized by a 
@@ -176,7 +205,9 @@ namespace FastColoredTextBoxNS
             if (((oddBinaryNullsInSample * 2.0) / SampleBytes.Length) < 0.2
                 && ((evenBinaryNullsInSample * 2.0) / SampleBytes.Length) > 0.6
                 )
+            {
                 return Encoding.BigEndianUnicode;
+            }
 
 
             //3: UTF-8 - Martin Dürst outlines a method for detecting whether something CAN be UTF-8 content 
@@ -218,13 +249,15 @@ namespace FastColoredTextBoxNS
 
                 if ((suspiciousUTF8SequenceCount * 500000.0 / SampleBytes.Length >= 1) //suspicious sequences
                     && (
-                    //all suspicious, so cannot evaluate proportion of US-Ascii
+                           //all suspicious, so cannot evaluate proportion of US-Ascii
                            SampleBytes.Length - suspiciousUTF8BytesTotal == 0
                            ||
                            likelyUSASCIIBytesInSample * 1.0 / (SampleBytes.Length - suspiciousUTF8BytesTotal) >= 0.8
                        )
                     )
+                {
                     return Encoding.UTF8;
+                }
             }
 
             return null;
@@ -243,9 +276,13 @@ namespace FastColoredTextBoxNS
                 || (testByte >= 0x61 && testByte <= 0x7A) //lowercase letters
                 || (testByte >= 0x7B && testByte <= 0x7E) //common punctuation
                 )
+            {
                 return true;
+            }
             else
+            {
                 return false;
+            }
         }
 
         private static int DetectSuspiciousUTF8SequenceLength(byte[] SampleBytes, long currentPos)
@@ -260,15 +297,21 @@ namespace FastColoredTextBoxNS
                     || SampleBytes[currentPos + 1] == 0x8D
                     || SampleBytes[currentPos + 1] == 0x8F
                     )
+                {
                     lengthFound = 2;
+                }
                 else if (SampleBytes[currentPos + 1] == 0x90
                     || SampleBytes[currentPos + 1] == 0x9D
                     )
+                {
                     lengthFound = 2;
+                }
                 else if (SampleBytes[currentPos + 1] >= 0xA0
                     && SampleBytes[currentPos + 1] <= 0xBF
                     )
+                {
                     lengthFound = 2;
+                }
             }
             else if (SampleBytes.Length >= currentPos + 1
                 && SampleBytes[currentPos] == 0xC3
@@ -277,7 +320,9 @@ namespace FastColoredTextBoxNS
                 if (SampleBytes[currentPos + 1] >= 0x80
                     && SampleBytes[currentPos + 1] <= 0xBF
                     )
+                {
                     lengthFound = 2;
+                }
             }
             else if (SampleBytes.Length >= currentPos + 1
                 && SampleBytes[currentPos] == 0xC5
@@ -286,23 +331,31 @@ namespace FastColoredTextBoxNS
                 if (SampleBytes[currentPos + 1] == 0x92
                     || SampleBytes[currentPos + 1] == 0x93
                     )
+                {
                     lengthFound = 2;
+                }
                 else if (SampleBytes[currentPos + 1] == 0xA0
                     || SampleBytes[currentPos + 1] == 0xA1
                     )
+                {
                     lengthFound = 2;
+                }
                 else if (SampleBytes[currentPos + 1] == 0xB8
                     || SampleBytes[currentPos + 1] == 0xBD
                     || SampleBytes[currentPos + 1] == 0xBE
                     )
+                {
                     lengthFound = 2;
+                }
             }
             else if (SampleBytes.Length >= currentPos + 1
                 && SampleBytes[currentPos] == 0xC6
                 )
             {
                 if (SampleBytes[currentPos + 1] == 0x92)
+                {
                     lengthFound = 2;
+                }
             }
             else if (SampleBytes.Length >= currentPos + 1
                 && SampleBytes[currentPos] == 0xCB
@@ -311,7 +364,9 @@ namespace FastColoredTextBoxNS
                 if (SampleBytes[currentPos + 1] == 0x86
                     || SampleBytes[currentPos + 1] == 0x9C
                     )
+                {
                     lengthFound = 2;
+                }
             }
             else if (SampleBytes.Length >= currentPos + 2
                 && SampleBytes[currentPos] == 0xE2
@@ -322,39 +377,63 @@ namespace FastColoredTextBoxNS
                     if (SampleBytes[currentPos + 2] == 0x93
                         || SampleBytes[currentPos + 2] == 0x94
                         )
+                    {
                         lengthFound = 3;
+                    }
+
                     if (SampleBytes[currentPos + 2] == 0x98
                         || SampleBytes[currentPos + 2] == 0x99
                         || SampleBytes[currentPos + 2] == 0x9A
                         )
+                    {
                         lengthFound = 3;
+                    }
+
                     if (SampleBytes[currentPos + 2] == 0x9C
                         || SampleBytes[currentPos + 2] == 0x9D
                         || SampleBytes[currentPos + 2] == 0x9E
                         )
+                    {
                         lengthFound = 3;
+                    }
+
                     if (SampleBytes[currentPos + 2] == 0xA0
                         || SampleBytes[currentPos + 2] == 0xA1
                         || SampleBytes[currentPos + 2] == 0xA2
                         )
+                    {
                         lengthFound = 3;
+                    }
+
                     if (SampleBytes[currentPos + 2] == 0xA6)
+                    {
                         lengthFound = 3;
+                    }
+
                     if (SampleBytes[currentPos + 2] == 0xB0)
+                    {
                         lengthFound = 3;
+                    }
+
                     if (SampleBytes[currentPos + 2] == 0xB9
                         || SampleBytes[currentPos + 2] == 0xBA
                         )
+                    {
                         lengthFound = 3;
+                    }
                 }
                 else if (SampleBytes[currentPos + 1] == 0x82
                     && SampleBytes[currentPos + 2] == 0xAC
                     )
+                {
                     lengthFound = 3;
+                }
                 else if (SampleBytes[currentPos + 1] == 0x84
                     && SampleBytes[currentPos + 2] == 0xA2
                     )
+                {
                     lengthFound = 3;
+                }
             }
 
             return lengthFound;

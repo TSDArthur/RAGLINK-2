@@ -1,6 +1,6 @@
-﻿using System;
-using OpenBveApi.Colors;
+﻿using OpenBveApi.Colors;
 using OpenBveApi.Math;
+using System;
 
 namespace OpenBve
 {
@@ -79,7 +79,11 @@ namespace OpenBve
 				j = Value >= 0 & Value < PointsOfInterest.Length ? Value : -1;
 			}
 			// process poi
-			if (j < 0) return false;
+			if (j < 0)
+			{
+				return false;
+			}
+
 			World.CameraTrackFollower.Update(t, true, false);
 			World.CameraCurrentAlignment.Position = PointsOfInterest[j].TrackOffset;
 			World.CameraCurrentAlignment.Yaw = PointsOfInterest[j].TrackYaw;

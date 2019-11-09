@@ -1,6 +1,6 @@
-﻿using System;
-using OpenBveApi.Textures;
+﻿using OpenBveApi.Textures;
 using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace OpenBve
 {
@@ -202,7 +202,7 @@ namespace OpenBve
 								break;
 						}
 					}
-				}				
+				}
 			}
 
 			internal override void RenderBackground(float Alpha, float Scale)

@@ -1,13 +1,13 @@
+using OpenBveApi.Colors;
+using OpenBveApi.Interface;
+using OpenBveApi.Math;
+using OpenBveApi.Objects;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
-using OpenBveApi.Colors;
-using OpenBveApi.Interface;
-using OpenBveApi.Math;
-using OpenBveApi.Objects;
 using Path = OpenBveApi.Path;
 
 namespace OpenBve.Parsers.Panel
@@ -27,7 +27,7 @@ namespace OpenBve.Parsers.Panel
 			{
 				FileName = Path.CombineFile(TrainPath, PanelFile);
 			}
-			
+
 			XDocument CurrentXML = XDocument.Load(FileName, LoadOptions.SetLineInfo);
 
 			// Check for null
@@ -62,11 +62,14 @@ namespace OpenBve.Parsers.Panel
 
 			foreach (XElement SectionElement in Element.Elements())
 			{
-				Loading.TrainProgress = Loading.TrainProgressCurrentSum + invfac * (double) currentSectionElement;
+				Loading.TrainProgress = Loading.TrainProgressCurrentSum + invfac * (double)currentSectionElement;
 				if ((currentSectionElement & 4) == 0)
 				{
 					System.Threading.Thread.Sleep(1);
-					if (Loading.Cancel) return;
+					if (Loading.Cancel)
+					{
+						return;
+					}
 				}
 
 				string Section = SectionElement.Name.LocalName;
@@ -82,7 +85,7 @@ namespace OpenBve.Parsers.Panel
 							{
 								string Key = KeyNode.Name.LocalName;
 								string Value = KeyNode.Value;
-								int LineNumber = ((IXmlLineInfo) KeyNode).LineNumber;
+								int LineNumber = ((IXmlLineInfo)KeyNode).LineNumber;
 
 								switch (Key.ToLowerInvariant())
 								{
@@ -122,7 +125,7 @@ namespace OpenBve.Parsers.Panel
 							{
 								string Key = KeyNode.Name.LocalName;
 								string Value = KeyNode.Value;
-								int LineNumber = ((IXmlLineInfo) KeyNode).LineNumber;
+								int LineNumber = ((IXmlLineInfo)KeyNode).LineNumber;
 
 								switch (Key.ToLowerInvariant())
 								{
@@ -260,16 +263,16 @@ namespace OpenBve.Parsers.Panel
 		private static void CreateTouchElement(TrainManager.ElementsGroup Group, Vector3 Position, Vector3 Size, int ScreenIndex, int SoundIndex, Translations.Command Command, int CommandOption)
 		{
 			Vertex t0 = new Vertex(Size.X, Size.Y, -Size.Z);
-            Vertex t1 = new Vertex(Size.X, -Size.Y, -Size.Z);
-            Vertex t2 = new Vertex(-Size.X, -Size.Y, -Size.Z);
-            Vertex t3 = new Vertex(-Size.X, Size.Y, -Size.Z);
-            Vertex t4 = new Vertex(Size.X, Size.Y, Size.Z);
-            Vertex t5 = new Vertex(Size.X, -Size.Y, Size.Z);
-            Vertex t6 = new Vertex(-Size.X, -Size.Y, Size.Z);
-            Vertex t7 = new Vertex(-Size.X, Size.Y, Size.Z);
+			Vertex t1 = new Vertex(Size.X, -Size.Y, -Size.Z);
+			Vertex t2 = new Vertex(-Size.X, -Size.Y, -Size.Z);
+			Vertex t3 = new Vertex(-Size.X, Size.Y, -Size.Z);
+			Vertex t4 = new Vertex(Size.X, Size.Y, Size.Z);
+			Vertex t5 = new Vertex(Size.X, -Size.Y, Size.Z);
+			Vertex t6 = new Vertex(-Size.X, -Size.Y, Size.Z);
+			Vertex t7 = new Vertex(-Size.X, Size.Y, Size.Z);
 			ObjectManager.StaticObject Object = new ObjectManager.StaticObject();
 			Object.Mesh.Vertices = new VertexTemplate[] { t0, t1, t2, t3, t4, t5, t6, t7 };
-            Object.Mesh.Faces = new MeshFace[] { new MeshFace(new int[] { 0, 1, 2, 3 }), new MeshFace(new int[] { 0, 4, 5, 1 }), new MeshFace(new int[] { 0, 3, 7, 4 }), new MeshFace(new int[] { 6, 5, 4, 7 }), new MeshFace(new int[] { 6, 7, 3, 2 }), new MeshFace(new int[] { 6, 2, 1, 5 }) };
+			Object.Mesh.Faces = new MeshFace[] { new MeshFace(new int[] { 0, 1, 2, 3 }), new MeshFace(new int[] { 0, 4, 5, 1 }), new MeshFace(new int[] { 0, 3, 7, 4 }), new MeshFace(new int[] { 6, 5, 4, 7 }), new MeshFace(new int[] { 6, 7, 3, 2 }), new MeshFace(new int[] { 6, 2, 1, 5 }) };
 			Object.Mesh.Materials = new MeshMaterial[1];
 			Object.Mesh.Materials[0].Flags = 0;
 			Object.Mesh.Materials[0].Color = Color32.White;

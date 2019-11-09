@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Text;
 
 namespace FastColoredTextBoxNS
 {
@@ -11,7 +11,7 @@ namespace FastColoredTextBoxNS
     /// This class contains the source text (chars and styles).
     /// It stores a text lines, the manager of commands, undo/redo stack, styles.
     /// </summary>
-    public class TextSource: IList<Line>, IDisposable
+    public class TextSource : IList<Line>, IDisposable
     {
         readonly protected List<Line> lines = new List<Line>();
         protected LinesAccessor linesAccessor;
@@ -53,22 +53,29 @@ namespace FastColoredTextBoxNS
         /// <summary>
         /// Current focused FastColoredTextBox
         /// </summary>
-        public FastColoredTextBox CurrentTB {
+        public FastColoredTextBox CurrentTB
+        {
             get { return currentTB; }
-            set {
+            set
+            {
                 if (currentTB == value)
+                {
                     return;
+                }
+
                 currentTB = value;
-                OnCurrentTBChanged(); 
+                OnCurrentTBChanged();
             }
         }
 
         public virtual void ClearIsChanged()
         {
-            foreach(var line in lines)
+            foreach (var line in lines)
+            {
                 line.IsChanged = false;
+            }
         }
-        
+
         public virtual Line CreateLine()
         {
             return new Line(GenerateUniqueLineId());
@@ -77,7 +84,9 @@ namespace FastColoredTextBoxNS
         private void OnCurrentTBChanged()
         {
             if (CurrentTBChanged != null)
+            {
                 CurrentTBChanged(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -93,9 +102,13 @@ namespace FastColoredTextBoxNS
             Manager = new CommandManager(this);
 
             if (Enum.GetUnderlyingType(typeof(StyleIndex)) == typeof(UInt32))
+            {
                 Styles = new Style[32];
+            }
             else
+            {
                 Styles = new Style[16];
+            }
 
             InitDefaultStyle();
         }
@@ -107,10 +120,12 @@ namespace FastColoredTextBoxNS
 
         public virtual Line this[int i]
         {
-            get{
-                 return lines[i];
+            get
+            {
+                return lines[i];
             }
-            set {
+            set
+            {
                 throw new NotImplementedException();
             }
         }
@@ -135,7 +150,7 @@ namespace FastColoredTextBoxNS
 
         IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            return (lines  as IEnumerator);
+            return (lines as IEnumerator);
         }
 
         public virtual int BinarySearch(Line item, IComparer<Line> comparer)
@@ -162,7 +177,9 @@ namespace FastColoredTextBoxNS
         public virtual void OnLineInserted(int index, int count)
         {
             if (LineInserted != null)
+            {
                 LineInserted(this, new LineInsertedEventArgs(index, count));
+            }
         }
 
         public virtual void RemoveLine(int index)
@@ -180,9 +197,15 @@ namespace FastColoredTextBoxNS
             List<int> removedLineIds = new List<int>();
             //
             if (count > 0)
+            {
                 if (IsNeedBuildRemovedLineIds)
+                {
                     for (int i = 0; i < count; i++)
+                    {
                         removedLineIds.Add(this[index + i].UniqueId);
+                    }
+                }
+            }
             //
             lines.RemoveRange(index, count);
 
@@ -192,14 +215,20 @@ namespace FastColoredTextBoxNS
         public virtual void OnLineRemoved(int index, int count, List<int> removedLineIds)
         {
             if (count > 0)
+            {
                 if (LineRemoved != null)
+                {
                     LineRemoved(this, new LineRemovedEventArgs(index, count, removedLineIds));
+                }
+            }
         }
 
         public virtual void OnTextChanged(int fromLine, int toLine)
         {
             if (TextChanged != null)
-                TextChanged(this, new TextChangedEventArgs(Math.Min(fromLine, toLine), Math.Max(fromLine, toLine) ));
+            {
+                TextChanged(this, new TextChangedEventArgs(Math.Min(fromLine, toLine), Math.Max(fromLine, toLine)));
+            }
         }
 
         public class TextChangedEventArgs : EventArgs
@@ -271,19 +300,25 @@ namespace FastColoredTextBoxNS
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
 
         public virtual void NeedRecalc(TextChangedEventArgs args)
         {
             if (RecalcNeeded != null)
+            {
                 RecalcNeeded(this, args);
+            }
         }
 
         public virtual void OnRecalcWordWrap(TextChangedEventArgs args)
         {
             if (RecalcWordWrap != null)
+            {
                 RecalcWordWrap(this, args);
+            }
         }
 
         public virtual void OnTextChanging()
@@ -300,7 +335,9 @@ namespace FastColoredTextBoxNS
                 TextChanging(this, args);
                 text = args.InsertingText;
                 if (args.Cancel)
+                {
                     text = string.Empty;
+                }
             };
         }
 
@@ -328,10 +365,12 @@ namespace FastColoredTextBoxNS
         {
             using (StreamWriter sw = new StreamWriter(fileName, false, enc))
             {
-                for (int i = 0; i < Count - 1;i++ )
+                for (int i = 0; i < Count - 1; i++)
+                {
                     sw.WriteLine(lines[i].Text);
+                }
 
-                sw.Write(lines[Count-1].Text);
+                sw.Write(lines[Count - 1].Text);
             }
         }
     }

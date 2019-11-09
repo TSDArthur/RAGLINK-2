@@ -1,5 +1,5 @@
-﻿using System;
-using OpenBveApi.Math;
+﻿using OpenBveApi.Math;
+using System;
 
 namespace OpenBve
 {
@@ -36,7 +36,11 @@ namespace OpenBve
 			/// <param name="AddTrackInaccurary">Whether to add track innacuracy</param>
 			internal void Update(double NewTrackPosition, bool UpdateWorldCoordinates, bool AddTrackInaccurary)
 			{
-				if (TrackIndex >= Tracks.Length || Tracks[TrackIndex].Elements.Length == 0) return;
+				if (TrackIndex >= Tracks.Length || Tracks[TrackIndex].Elements.Length == 0)
+				{
+					return;
+				}
+
 				int i = LastTrackElement;
 				while (i >= 0 && NewTrackPosition < Tracks[TrackIndex].Elements[i].StartingTrackPosition)
 				{
@@ -49,7 +53,11 @@ namespace OpenBve
 				{
 					while (i < Tracks[TrackIndex].Elements.Length - 1)
 					{
-						if (NewTrackPosition < Tracks[TrackIndex].Elements[i + 1].StartingTrackPosition) break;
+						if (NewTrackPosition < Tracks[TrackIndex].Elements[i + 1].StartingTrackPosition)
+						{
+							break;
+						}
+
 						double ta = TrackPosition - Tracks[TrackIndex].Elements[i].StartingTrackPosition;
 						double tb = Tracks[TrackIndex].Elements[i + 1].StartingTrackPosition - Tracks[TrackIndex].Elements[i].StartingTrackPosition + 0.01;
 						CheckEvents(i, 1, ta, tb);

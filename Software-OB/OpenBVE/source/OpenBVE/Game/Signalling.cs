@@ -1,6 +1,6 @@
-﻿using System;
-using OpenBveApi.Runtime;
+﻿using OpenBveApi.Runtime;
 using OpenBveApi.Trains;
+using System;
 
 namespace OpenBve
 {
@@ -10,7 +10,7 @@ namespace OpenBve
 		internal enum SectionType
 		{
 			/// <summary>A section aspect may have any value</summary>
-			ValueBased, 
+			ValueBased,
 			/// <summary>Section aspect count upwards from zero (0,1,2,3....)</summary>
 			IndexBased
 		}
@@ -55,7 +55,13 @@ namespace OpenBve
 			/// <summary>The aspects attached to this section</summary>
 			internal SectionAspect[] Aspects;
 			/// <summary>A public read-only variable, which returns the current aspect to external scripts</summary>
-			public int currentAspect { get { return CurrentAspect; } }
+			public int currentAspect
+			{
+				get
+				{
+					return CurrentAspect;
+				}
+			}
 			/// <summary>The current aspect</summary>
 			internal int CurrentAspect;
 			/// <summary>The number of free sections ahead of this section</summary>
@@ -68,7 +74,10 @@ namespace OpenBve
 				int n = this.Trains.Length;
 				for (int i = 0; i < n; i++)
 				{
-					if (this.Trains[i] == Train) return;
+					if (this.Trains[i] == Train)
+					{
+						return;
+					}
 				}
 				Array.Resize<TrainManager.Train>(ref this.Trains, n + 1);
 				this.Trains[n] = Train;
@@ -101,7 +110,9 @@ namespace OpenBve
 				for (int i = 0; i < this.Trains.Length; i++)
 				{
 					if (this.Trains[i] == Train)
+					{
 						return true;
+					}
 				}
 				return false;
 			}

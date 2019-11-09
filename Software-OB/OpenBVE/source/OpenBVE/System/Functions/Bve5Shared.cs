@@ -22,7 +22,7 @@ namespace OpenBve
 			{
 				throw new Exception("Invalid BVE5 " + headerType + " header: " + fileHeader);
 			}
-			int l = splitHeader[0].Length -1;
+			int l = splitHeader[0].Length - 1;
 			int e = splitHeader[0].Length;
 			while (l > 0)
 			{
@@ -34,7 +34,7 @@ namespace OpenBve
 						e--; l--;
 						continue;
 					}
-					string s = splitHeader[0].Substring(l + 1, e - l -1);
+					string s = splitHeader[0].Substring(l + 1, e - l - 1);
 					if (!Double.TryParse(s, out Version))
 					{
 						throw new Exception("Invalid BVE5 " + headerType + " version: " + s);

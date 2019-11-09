@@ -12,21 +12,28 @@
 // ReSharper disable UnusedMember.Local
 // ReSharper disable NotAccessedField.Local
 
-using System;
-using System.Runtime.InteropServices;
-using System.IO;
 using OpenBveApi.Colors;
 using OpenBveApi.Textures;
+using System;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Plugin
 {
     public class DDSImage
     {
-	    internal Texture myTexture;
+        internal Texture myTexture;
         public DDSImage(byte[] ddsImage)
         {
-            if (ddsImage == null) return;
-            if (ddsImage.Length == 0) return;
+            if (ddsImage == null)
+            {
+                return;
+            }
+
+            if (ddsImage.Length == 0)
+            {
+                return;
+            }
 
             using (MemoryStream stream = new MemoryStream(ddsImage.Length))
             {
@@ -46,7 +53,10 @@ namespace Plugin
 
             if (this.ReadHeader(reader, ref header))
             {
-                if (header.depth == 0) header.depth = 1;
+                if (header.depth == 0)
+                {
+                    header.depth = 1;
+                }
 
                 int blocksize;
                 PixelFormat pixelFormat = this.GetFormat(header, out blocksize);
@@ -93,33 +103,33 @@ namespace Plugin
 
         private void CreateTexture(int width, int height, byte[] rawData)
         {
-            
+
             int size = width * height * 4;
-			byte[] textureData = new byte[size];
-	        for (int i = 0; i < size; i += 4)
-	        {
-		        textureData[i] = rawData[i]; // red
-		        textureData[i + 1] = rawData[i + 1]; // green
-		        textureData[i + 2] = rawData[i + 2]; // blue
-		        textureData[i + 3] = rawData[i + 3]; // alpha
-	        }
-	        myTexture = new Texture(width, height, 32, textureData, null);
+            byte[] textureData = new byte[size];
+            for (int i = 0; i < size; i += 4)
+            {
+                textureData[i] = rawData[i]; // red
+                textureData[i + 1] = rawData[i + 1]; // green
+                textureData[i + 2] = rawData[i + 2]; // blue
+                textureData[i + 3] = rawData[i + 3]; // alpha
+            }
+            myTexture = new Texture(width, height, 32, textureData, null);
         }
 
         private bool ReadHeader(BinaryReader reader, ref DdsHeader header)
         {
             byte[] signature = reader.ReadBytes(4);
-	        if (!(signature[0] == 'D' && signature[1] == 'D' && signature[2] == 'S' && signature[3] == ' '))
-	        {
-		        throw new InvalidDataException("DDS Header invalid.");
-	        }
+            if (!(signature[0] == 'D' && signature[1] == 'D' && signature[2] == 'S' && signature[3] == ' '))
+            {
+                throw new InvalidDataException("DDS Header invalid.");
+            }
 
-	        if (reader.ReadUInt32() != 124)
-	        {
-		        throw new InvalidDataException("DDS Header size invalid.");
-	        }
+            if (reader.ReadUInt32() != 124)
+            {
+                throw new InvalidDataException("DDS Header size invalid.");
+            }
 
-	        header.flags = reader.ReadUInt32();
+            header.flags = reader.ReadUInt32();
             header.height = (int)reader.ReadUInt32();
             header.width = (int)reader.ReadUInt32();
             header.sizeorpitch = reader.ReadUInt32();
@@ -131,10 +141,10 @@ namespace Plugin
             {
                 reader.ReadUInt32();	//Reserved 10 DWORD values : Microsoft documentation states unused
             }
-	        if (reader.ReadUInt32() != 32)
-	        {
-		        throw new InvalidDataException("Pixel Format size invalid.");
-	        }
+            if (reader.ReadUInt32() != 32)
+            {
+                throw new InvalidDataException("Pixel Format size invalid.");
+            }
             header.pixelFormat.flags = reader.ReadUInt32();
             header.pixelFormat.fourcc = (FourCC)reader.ReadUInt32();
             header.pixelFormat.rgbbitcount = (int)reader.ReadUInt32();
@@ -156,7 +166,7 @@ namespace Plugin
             if ((header.pixelFormat.flags & DDPF_FOURCC) == DDPF_FOURCC)
             {
                 blocksize = ((header.width + 3) / 4) * ((header.height + 3) / 4) * header.depth;
-				switch (header.pixelFormat.fourcc)
+                switch (header.pixelFormat.fourcc)
                 {
                     case FourCC.DXT1:
                         format = PixelFormat.DXT1;
@@ -310,15 +320,21 @@ namespace Plugin
         private bool Check16BitComponents(DdsHeader header)
         {
             if (header.pixelFormat.rgbbitcount != 32)
+            {
                 return false;
+            }
             // a2b10g10r10 format
             if (header.pixelFormat.rbitmask == 0x3FF00000 && header.pixelFormat.gbitmask == 0x000FFC00 && header.pixelFormat.bbitmask == 0x000003FF
                 && header.pixelFormat.alphabitmask == 0xC0000000)
+            {
                 return true;
+            }
             // a2r10g10b10 format
             else if (header.pixelFormat.rbitmask == 0x000003FF && header.pixelFormat.gbitmask == 0x000FFC00 && header.pixelFormat.bbitmask == 0x3FF00000
                 && header.pixelFormat.alphabitmask == 0xC0000000)
+            {
                 return true;
+            }
 
             return false;
         }
@@ -328,7 +344,11 @@ namespace Plugin
             for (uint i = 0; i < pixnum; i++)
             {
                 byte alpha = buffer[i + 3];
-                if (alpha == 0) continue;
+                if (alpha == 0)
+                {
+                    continue;
+                }
+
                 int red = (buffer[i] << 8) / alpha;
                 int green = (buffer[i + 1] << 8) / alpha;
                 int blue = (buffer[i + 2] << 8) / alpha;
@@ -348,9 +368,16 @@ namespace Plugin
                 shift1++;
             }
             uint bc = 0;
-            while ((mask & (1 << (int)bc)) != 0) bc++;
+            while ((mask & (1 << (int)bc)) != 0)
+            {
+                bc++;
+            }
+
             while ((mask * mul) < 255)
+            {
                 mul = (mul << (int)bc) + 1;
+            }
+
             mask *= (uint)mul;
 
             while ((mask & ~0xff) != 0)
@@ -419,7 +446,9 @@ namespace Plugin
             for (i = 0; i < 32; i++, temp >>= 1)
             {
                 if ((temp & 1) != 0)
+                {
                     break;
+                }
             }
             shiftRight = i;
 
@@ -427,7 +456,9 @@ namespace Plugin
             for (i = 0; i < 8; i++, temp >>= 1)
             {
                 if ((temp & 1) == 0)
+                {
                     break;
+                }
             }
             shiftLeft = 8 - i;
         }
@@ -443,11 +474,16 @@ namespace Plugin
                 if ((mask & testBit) != 0)
                 {
                     if (!foundBit)
+                    {
                         foundBit = true;
+                    }
+
                     count++;
                 }
                 else if (foundBit)
+                {
                     return count;
+                }
             }
 
             return count;
@@ -557,7 +593,7 @@ namespace Plugin
             {
                 case PixelFormat.RGBA:
                     rawData = this.DecompressRGBA(header, data, pixelFormat);
-	                break;
+                    break;
                 case PixelFormat.RGB:
                     rawData = this.DecompressRGB(header, data, pixelFormat);
                     break;
@@ -692,7 +728,7 @@ namespace Plugin
             int depth = (int)header.depth;
             byte[] rawData = DecompressDXT3(header, data, pixelFormat);
             CorrectPremult((uint)(width * height * depth), ref rawData);
-			return rawData;
+            return rawData;
         }
 
         private unsafe byte[] DecompressDXT3(DdsHeader header, byte[] data, PixelFormat pixelFormat)
@@ -750,7 +786,7 @@ namespace Plugin
 
                             for (int j = 0; j < 4; j++)
                             {
-                                ushort word = (ushort)(alpha[2 * j] | (alpha[2 * j + 1] << 8)); 
+                                ushort word = (ushort)(alpha[2 * j] | (alpha[2 * j + 1] << 8));
                                 for (int i = 0; i < 4; i++)
                                 {
                                     if (((x + i) < width) && ((y + j) < height))
@@ -804,7 +840,9 @@ namespace Plugin
                         for (int x = 0; x < width; x += 4)
                         {
                             if (y >= height || x >= width)
+                            {
                                 break;
+                            }
 
                             alphas[0] = temp[0];
                             alphas[1] = temp[1];
@@ -917,11 +955,11 @@ namespace Plugin
             int depth = (int)header.depth;
 
             byte[] rawData = new byte[depth * sizeofplane + height * bps + width * bpp];
-	        uint valMask;
-	        unchecked
-	        {
-		        valMask = (uint)((header.pixelFormat.rgbbitcount == 32) ? ~0 : (1 << (int)header.pixelFormat.rgbbitcount) - 1);
-	        }
+            uint valMask;
+            unchecked
+            {
+                valMask = (uint)((header.pixelFormat.rgbbitcount == 32) ? ~0 : (1 << (int)header.pixelFormat.rgbbitcount) - 1);
+            }
             uint pixSize = (uint)(((int)header.pixelFormat.rgbbitcount + 7) / 8);
             int rShift1; int rMul; int rShift2;
             ComputeMaskParams(header.pixelFormat.rbitmask, out rShift1, out rMul, out rShift2);
@@ -963,11 +1001,11 @@ namespace Plugin
             int depth = (int)header.depth;
 
             byte[] rawData = new byte[depth * sizeofplane + height * bps + width * bpp];
-	        uint valMask;
-	        unchecked
-	        {
-		        valMask = (uint)((header.pixelFormat.rgbbitcount == 32) ? ~0 : (1 << (int)header.pixelFormat.rgbbitcount) - 1);
-	        }
+            uint valMask;
+            unchecked
+            {
+                valMask = (uint)((header.pixelFormat.rgbbitcount == 32) ? ~0 : (1 << (int)header.pixelFormat.rgbbitcount) - 1);
+            }
             int pixSize = (header.pixelFormat.rgbbitcount + 7) / 8;
             int rShift1; int rMul; int rShift2;
             ComputeMaskParams(header.pixelFormat.rbitmask, out rShift1, out rMul, out rShift2);
@@ -1033,12 +1071,19 @@ namespace Plugin
                             int t2 = yColours[1] = temp[1];
                             temp += 2;
                             if (t1 > t2)
+                            {
                                 for (int i = 2; i < 8; ++i)
+                                {
                                     yColours[i] = (byte)(t1 + ((t2 - t1) * (i - 1)) / 7);
+                                }
+                            }
                             else
                             {
                                 for (int i = 2; i < 6; ++i)
+                                {
                                     yColours[i] = (byte)(t1 + ((t2 - t1) * (i - 1)) / 5);
+                                }
+
                                 yColours[6] = 0;
                                 yColours[7] = 255;
                             }
@@ -1048,12 +1093,19 @@ namespace Plugin
                             t2 = xColours[1] = temp2[1];
                             temp2 += 2;
                             if (t1 > t2)
+                            {
                                 for (int i = 2; i < 8; ++i)
+                                {
                                     xColours[i] = (byte)(t1 + ((t2 - t1) * (i - 1)) / 7);
+                                }
+                            }
                             else
                             {
                                 for (int i = 2; i < 6; ++i)
+                                {
                                     xColours[i] = (byte)(t1 + ((t2 - t1) * (i - 1)) / 5);
+                                }
+
                                 xColours[6] = 0;
                                 xColours[7] = 255;
                             }
@@ -1085,9 +1137,13 @@ namespace Plugin
                                                 //calculate b (z) component ((r/255)^2 + (g/255)^2 + (b/255)^2 = 1
                                                 t = 127 * 128 - (tx - 127) * (tx - 128) - (ty - 127) * (ty - 128);
                                                 if (t > 0)
+                                                {
                                                     rawData[t1 + 2] = (byte)(Math.Sqrt(t) + 128);
+                                                }
                                                 else
+                                                {
                                                     rawData[t1 + 2] = 0x7F;
+                                                }
                                             }
                                             bitmask >>= 3;
                                             bitmask2 >>= 3;
@@ -1138,12 +1194,19 @@ namespace Plugin
                             int t2 = colours[1] = temp[1];
                             temp += 2;
                             if (t1 > t2)
+                            {
                                 for (int i = 2; i < 8; ++i)
+                                {
                                     colours[i] = (byte)(t1 + ((t2 - t1) * (i - 1)) / 7);
+                                }
+                            }
                             else
                             {
                                 for (int i = 2; i < 6; ++i)
+                                {
                                     colours[i] = (byte)(t1 + ((t2 - t1) * (i - 1)) / 5);
+                                }
+
                                 colours[6] = 0;
                                 colours[7] = 255;
                             }
@@ -1229,8 +1292,8 @@ namespace Plugin
 
             Colour565 color_0 = new Colour565();
             Colour565 color_1 = new Colour565();
-	        Color32[]	colours = new Color32[4];
-	        byte[] alphas = new byte[8];
+            Color32[] colours = new Color32[4];
+            byte[] alphas = new byte[8];
 
             fixed (byte* bytePtr = data)
             {
@@ -1242,7 +1305,10 @@ namespace Plugin
                         for (int x = 0; x < width; x += 4)
                         {
                             if (y >= height || x >= width)
+                            {
                                 break;
+                            }
+
                             alphas[0] = temp[0];
                             alphas[1] = temp[1];
                             byte* alphamask = temp + 2;
@@ -1372,10 +1438,10 @@ namespace Plugin
             int depth = (int)header.depth;
 
             byte[] rawData = new byte[depth * sizeofplane + height * bps + width * bpp];
-            
+
             fixed (byte* bytePtr = data)
             {
-	            int size;
+                int size;
                 byte* temp = bytePtr;
                 fixed (byte* destPtr = rawData)
                 {
@@ -1441,7 +1507,9 @@ namespace Plugin
             int depth = (int)header.depth;
 
             if (Check16BitComponents(header))
+            {
                 return DecompressARGB16(header, data, pixelFormat);
+            }
 
             int sizeOfData = (int)((header.width * header.pixelFormat.rgbbitcount / 8) * header.height * header.depth);
             byte[] rawData = new byte[depth * sizeofplane + height * bps + width * bpp];
@@ -1474,20 +1542,27 @@ namespace Plugin
                     //winxp (and xp is right to stop this code - I always
                     //wondered that it worked the old way at all)
                     if (sizeOfData - i < 4)
-                    { 
+                    {
                         //less than 4 byte to write?
                         if (tempBpp == 3)
-                        { 
+                        {
                             //this branch is extra-SLOOOW
                             readI = (uint)(*temp | ((*(temp + 1)) << 8) | ((*(temp + 2)) << 16));
                         }
                         else if (tempBpp == 1)
+                        {
                             readI = *((byte*)temp);
+                        }
                         else if (tempBpp == 2)
+                        {
                             readI = (uint)(temp[0] | (temp[1] << 8));
+                        }
                     }
                     else
+                    {
                         readI = (uint)(temp[0] | (temp[1] << 8) | (temp[2] << 16) | (temp[3] << 24));
+                    }
+
                     temp += tempBpp;
 
                     rawData[i] = (byte)((((int)readI & (int)header.pixelFormat.rbitmask) >> (int)redR) << (int)redL);
@@ -1583,12 +1658,19 @@ namespace Plugin
                                 readI = (uint)(*temp | ((*(temp + 1)) << 8) | ((*(temp + 2)) << 16));
                             }
                             else if (tempBpp == 1)
+                            {
                                 readI = *((byte*)temp);
+                            }
                             else if (tempBpp == 2)
+                            {
                                 readI = (uint)(temp[0] | (temp[1] << 8));
+                            }
                         }
                         else
+                        {
                             readI = (uint)(temp[0] | (temp[1] << 8) | (temp[2] << 16) | (temp[3] << 24));
+                        }
+
                         temp += tempBpp;
 
                         ((ushort*)destData)[i + 2] = (ushort)((((int)readI & (int)header.pixelFormat.rbitmask) >> (int)redR) << (int)redL);

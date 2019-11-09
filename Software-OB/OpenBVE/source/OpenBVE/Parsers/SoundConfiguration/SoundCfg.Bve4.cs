@@ -1,10 +1,10 @@
-﻿using System;
+﻿using OpenBve.BrakeSystems;
+using OpenBveApi;
+using OpenBveApi.Interface;
+using OpenBveApi.Math;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using OpenBve.BrakeSystems;
-using OpenBveApi;
-using OpenBveApi.Math;
-using OpenBveApi.Interface;
 
 namespace OpenBve
 {
@@ -32,7 +32,7 @@ namespace OpenBve
 
 			//Radius at which the sound is audible at full volume, presumably in m
 			//TODO: All radii are much too SoundCfgParser.smallRadius in external mode, but we can't change them by default.....
-			
+
 
 			// parse configuration file
 			System.Globalization.CultureInfo Culture = System.Globalization.CultureInfo.InvariantCulture;
@@ -76,7 +76,10 @@ namespace OpenBve
 				if ((i & 7) == 0)
 				{
 					System.Threading.Thread.Sleep(1);
-					if (Loading.Cancel) return;
+					if (Loading.Cancel)
+					{
+						return;
+					}
 				}
 				switch (Lines[i].ToLowerInvariant())
 				{

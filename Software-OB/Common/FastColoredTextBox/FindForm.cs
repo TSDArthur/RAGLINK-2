@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace FastColoredTextBoxNS
 {
@@ -33,9 +32,14 @@ namespace FastColoredTextBoxNS
             {
                 RegexOptions opt = cbMatchCase.Checked ? RegexOptions.None : RegexOptions.IgnoreCase;
                 if (!cbRegex.Checked)
+                {
                     pattern = Regex.Escape(pattern);
+                }
+
                 if (cbWholeWord.Checked)
+                {
                     pattern = "\\b" + pattern + "\\b";
+                }
                 //
                 Range range = tb.Selection.Clone();
                 range.Normalize();
@@ -48,9 +52,13 @@ namespace FastColoredTextBoxNS
                 //
                 range.Start = range.End;
                 if (range.Start >= startPlace)
+                {
                     range.End = new Place(tb.GetLineLength(tb.LinesCount - 1), tb.LinesCount - 1);
+                }
                 else
+                {
                     range.End = startPlace;
+                }
                 //
                 foreach (var r in range.GetRangesByLines(pattern, opt))
                 {

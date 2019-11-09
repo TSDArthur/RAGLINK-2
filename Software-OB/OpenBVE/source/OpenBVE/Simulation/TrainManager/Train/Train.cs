@@ -1,10 +1,10 @@
-using System.Globalization;
 using OpenBve.BrakeSystems;
 using OpenBveApi.Colors;
-using OpenBveApi.Runtime;
-using OpenBveApi.Math;
 using OpenBveApi.Interface;
+using OpenBveApi.Math;
+using OpenBveApi.Runtime;
 using OpenBveApi.Trains;
+using System.Globalization;
 
 namespace OpenBve
 {
@@ -102,7 +102,7 @@ namespace OpenBve
 				}
 			}
 
-			
+
 
 			/// <summary>Call this method to update the train</summary>
 			/// <param name="TimeElapsed">The elapsed time this frame</param>
@@ -223,7 +223,7 @@ namespace OpenBve
 				}
 			}
 
-			
+
 
 			/// <summary>Updates the physics and controls for this train</summary>
 			/// <param name="TimeElapsed">The time elapsed</param>
@@ -433,9 +433,12 @@ namespace OpenBve
 									// Update constant speed device
 
 									this.Cars[i].Specs.ConstSpeed.Update(ref a, this.Specs.CurrentConstSpeed, this.Handles.Reverser.Actual);
-									
+
 									// finalize
-									if (wheelspin != 0.0) a = 0.0;
+									if (wheelspin != 0.0)
+									{
+										a = 0.0;
+									}
 								}
 								else
 								{
@@ -528,7 +531,10 @@ namespace OpenBve
 							double rf = Cars[i].FrontAxle.Follower.WorldDirection.Y;
 							double rr = Cars[i].RearAxle.Follower.WorldDirection.Y;
 							double ra = Math.Abs(0.5 * (rf + rr) * Game.RouteAccelerationDueToGravity);
-							if (a > ra) a = ra;
+							if (a > ra)
+							{
+								a = ra;
+							}
 						}
 						double factor = Cars[i].Specs.MassEmpty / Cars[i].Specs.MassCurrent;
 						if (a >= wheelSlipAccelerationBrakeFront)

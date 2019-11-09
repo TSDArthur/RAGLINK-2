@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using OpenBveApi.Runtime;
+﻿using OpenBveApi.Runtime;
 using OpenTK.Audio.OpenAL;
+using System;
+using System.Collections.Generic;
 
 
 namespace OpenBve
@@ -17,7 +17,11 @@ namespace OpenBve
 			//The time elapsed is used to work out the clamp factor
 			//If this is zero, or above 0.5, then this causes sounds bugs
 			//TODO: This is a nasty hack. Store the previous clamp factor in these cases??
-			if (timeElapsed == 0.0 || timeElapsed > 0.5) return;
+			if (timeElapsed == 0.0 || timeElapsed > 0.5)
+			{
+				return;
+			}
+
 			if (model == SoundModels.Linear)
 			{
 				UpdateLinearModel(timeElapsed);

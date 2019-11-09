@@ -49,35 +49,91 @@ namespace FastColoredTextBoxNS
 
         public static bool operator <(Place p1, Place p2)
         {
-            if (p1.iLine < p2.iLine) return true;
-            if (p1.iLine > p2.iLine) return false;
-            if (p1.iChar < p2.iChar) return true;
+            if (p1.iLine < p2.iLine)
+            {
+                return true;
+            }
+
+            if (p1.iLine > p2.iLine)
+            {
+                return false;
+            }
+
+            if (p1.iChar < p2.iChar)
+            {
+                return true;
+            }
+
             return false;
         }
 
         public static bool operator <=(Place p1, Place p2)
         {
-            if (p1.Equals(p2)) return true;
-            if (p1.iLine < p2.iLine) return true;
-            if (p1.iLine > p2.iLine) return false;
-            if (p1.iChar < p2.iChar) return true;
+            if (p1.Equals(p2))
+            {
+                return true;
+            }
+
+            if (p1.iLine < p2.iLine)
+            {
+                return true;
+            }
+
+            if (p1.iLine > p2.iLine)
+            {
+                return false;
+            }
+
+            if (p1.iChar < p2.iChar)
+            {
+                return true;
+            }
+
             return false;
         }
 
         public static bool operator >(Place p1, Place p2)
         {
-            if (p1.iLine > p2.iLine) return true;
-            if (p1.iLine < p2.iLine) return false;
-            if (p1.iChar > p2.iChar) return true;
+            if (p1.iLine > p2.iLine)
+            {
+                return true;
+            }
+
+            if (p1.iLine < p2.iLine)
+            {
+                return false;
+            }
+
+            if (p1.iChar > p2.iChar)
+            {
+                return true;
+            }
+
             return false;
         }
 
         public static bool operator >=(Place p1, Place p2)
         {
-            if (p1.Equals(p2)) return true;
-            if (p1.iLine > p2.iLine) return true;
-            if (p1.iLine < p2.iLine) return false;
-            if (p1.iChar > p2.iChar) return true;
+            if (p1.Equals(p2))
+            {
+                return true;
+            }
+
+            if (p1.iLine > p2.iLine)
+            {
+                return true;
+            }
+
+            if (p1.iLine < p2.iLine)
+            {
+                return false;
+            }
+
+            if (p1.iChar > p2.iChar)
+            {
+                return true;
+            }
+
             return false;
         }
 

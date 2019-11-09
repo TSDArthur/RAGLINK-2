@@ -1,9 +1,9 @@
-using System;
+using AssimpNET.X;
 using OpenBveApi.Colors;
-using OpenBveApi.Objects;
 using OpenBveApi.Interface;
 using OpenBveApi.Math;
-using AssimpNET.X;
+using OpenBveApi.Objects;
+using System;
 
 namespace OpenBve
 {
@@ -23,48 +23,48 @@ namespace OpenBve
 			try
 			{
 #endif
-				XFileParser parser = new XFileParser(System.IO.File.ReadAllBytes(FileName));
-				Scene scene = parser.GetImportedData();
+			XFileParser parser = new XFileParser(System.IO.File.ReadAllBytes(FileName));
+			Scene scene = parser.GetImportedData();
 
-				ObjectManager.StaticObject obj = new ObjectManager.StaticObject();
-				MeshBuilder builder = new MeshBuilder();
+			ObjectManager.StaticObject obj = new ObjectManager.StaticObject();
+			MeshBuilder builder = new MeshBuilder();
 
-				// Global
-				foreach (var mesh in scene.GlobalMeshes)
+			// Global
+			foreach (var mesh in scene.GlobalMeshes)
+			{
+				MeshBuilder(ref obj, ref builder, mesh);
+			}
+
+			if (scene.RootNode != null)
+			{
+				// Root Node
+				if (scene.RootNode.TrafoMatrix != OpenTK.Matrix4.Zero)
+				{
+					rootMatrix = ConvertMatrix(scene.RootNode.TrafoMatrix);
+				}
+
+				foreach (var mesh in scene.RootNode.Meshes)
 				{
 					MeshBuilder(ref obj, ref builder, mesh);
 				}
 
-				if (scene.RootNode != null)
+				// Children Node
+				foreach (var node in scene.RootNode.Children)
 				{
-					// Root Node
-					if (scene.RootNode.TrafoMatrix != OpenTK.Matrix4.Zero)
-					{
-						rootMatrix = ConvertMatrix(scene.RootNode.TrafoMatrix);
-					}
-
-					foreach (var mesh in scene.RootNode.Meshes)
-					{
-						MeshBuilder(ref obj, ref builder, mesh);
-					}
-
-					// Children Node
-					foreach (var node in scene.RootNode.Children)
-					{
-						ChildrenNode(ref obj, ref builder, node);
-					}
+					ChildrenNode(ref obj, ref builder, node);
 				}
+			}
 
-				builder.Apply(ref obj);
-				obj.Mesh.CreateNormals();
-				if (rootMatrix != Matrix4D.NoTransformation)
+			builder.Apply(ref obj);
+			obj.Mesh.CreateNormals();
+			if (rootMatrix != Matrix4D.NoTransformation)
+			{
+				for (int i = 0; i < obj.Mesh.Vertices.Length; i++)
 				{
-					for (int i = 0; i < obj.Mesh.Vertices.Length; i++)
-					{
-						obj.Mesh.Vertices[i].Coordinates.Transform(rootMatrix);
-					}
+					obj.Mesh.Vertices[i].Coordinates.Transform(rootMatrix);
 				}
-				return obj;
+			}
+			return obj;
 #if !DEBUG
 			}
 			catch (Exception e)
@@ -75,7 +75,7 @@ namespace OpenBve
 #endif
 		}
 
-		private static void  MeshBuilder(ref ObjectManager.StaticObject obj, ref MeshBuilder builder, AssimpNET.X.Mesh mesh)
+		private static void MeshBuilder(ref ObjectManager.StaticObject obj, ref MeshBuilder builder, AssimpNET.X.Mesh mesh)
 		{
 			if (builder.Vertices.Length != 0)
 			{

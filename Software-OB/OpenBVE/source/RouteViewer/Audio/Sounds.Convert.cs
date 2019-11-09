@@ -1,5 +1,5 @@
-﻿using System;
-using OpenBveApi.Sounds;
+﻿using OpenBveApi.Sounds;
+using System;
 
 namespace OpenBve
 {
@@ -113,7 +113,11 @@ namespace OpenBve
 			int remainingSamplesUsed = 0;
 			for (int i = 0; i < samples.Length; i++)
 			{
-				if (!(channelVolume[i] > silentThreshold * totalVolume)) continue;
+				if (!(channelVolume[i] > silentThreshold * totalVolume))
+				{
+					continue;
+				}
+
 				channelVolume[remainingSamplesUsed] = channelVolume[i];
 				remainingSamples[remainingSamplesUsed] = samples[i];
 				remainingSamplesUsed++;
@@ -164,7 +168,10 @@ namespace OpenBve
 			{
 				mix[j] *= totalVolume / mixVolume;
 				float value = Math.Abs(mix[j]);
-				if (value > maximum) maximum = value;
+				if (value > maximum)
+				{
+					maximum = value;
+				}
 			}
 			// --- if the maximum value now created exceeds the
 			//     permissible range, normalize the mono mix further ---

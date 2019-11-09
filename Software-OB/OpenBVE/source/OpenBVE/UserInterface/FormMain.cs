@@ -1,17 +1,14 @@
-﻿using OpenBve.RAGLINKPlatform;
-using OpenBveApi.Interface;
-using RAGLINKCommons;
+﻿using OpenBveApi.Interface;
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 namespace OpenBve
 {
-	internal partial class formMain : Form
+	internal partial class FormMain : Form
 	{
-		private formMain()
+		private FormMain()
 		{
 			InitializeComponent();
 			CheckForIllegalCrossThreadCalls = false;
@@ -54,21 +51,32 @@ namespace OpenBve
 		}
 		internal static MainDialogResult ShowMainDialog(MainDialogResult initial)
 		{
-			using (formMain Dialog = new formMain())
+			using (FormMain Dialog = new FormMain())
 			{
 				Dialog.Result = initial;
 				new System.Threading.Thread((System.Threading.ThreadStart)delegate
 				{
 					Application.Run(Dialog);
 				}).Start();
-				while (!formCloseTrig) ;
+				while (!formCloseTrig)
+				{
+					;
+				}
+
 				MainDialogResult result = Dialog.Result;
 				try
 				{
 					//Dispose of the worker thread when closing the form
 					//If it's still running, it attempts to update a non-existant form and crashes nastily
-					if (Dialog.routeWorkerThread != null) Dialog.routeWorkerThread.Dispose();
-					if (Dialog != null) Dialog.Dispose();
+					if (Dialog.routeWorkerThread != null)
+					{
+						Dialog.routeWorkerThread.Dispose();
+					}
+
+					if (Dialog != null)
+					{
+						Dialog.Dispose();
+					}
 				}
 				catch (Exception) { };
 				return result;
@@ -212,8 +220,16 @@ namespace OpenBve
 		{
 			if (e.Item.Checked)
 			{
-				for (int i = 0; i < e.Item.Index; i++) this.listViewPlanFile.Items[i].Checked = false;
-				for (int i = e.Item.Index + 1; i < this.listViewPlanFile.Items.Count; i++) this.listViewPlanFile.Items[i].Checked = false;
+				for (int i = 0; i < e.Item.Index; i++)
+				{
+					this.listViewPlanFile.Items[i].Checked = false;
+				}
+
+				for (int i = e.Item.Index + 1; i < this.listViewPlanFile.Items.Count; i++)
+				{
+					this.listViewPlanFile.Items[i].Checked = false;
+				}
+
 				selectedPlanID = e.Item.Index;
 				ReviewProject(1, listViewPlanFile.Items[selectedPlanID].SubItems[1].Text);
 			}
@@ -221,7 +237,11 @@ namespace OpenBve
 			{
 				for (int i = 0; i < this.listViewPlanFile.Items.Count; i++)
 				{
-					if (this.listViewPlanFile.Items[i].Checked) return;
+					if (this.listViewPlanFile.Items[i].Checked)
+					{
+						return;
+					}
+
 					ReviewProject(0, string.Empty);
 				}
 				selectedPlanID = -1;
@@ -230,15 +250,26 @@ namespace OpenBve
 
 		private void ListViewPlanFile_ColumnClick(object sender, ColumnClickEventArgs e)
 		{
-			if (listViewPlanFile.Sorting == SortOrder.Ascending) listViewPlanFile.Sorting = SortOrder.Descending;
-			else listViewPlanFile.Sorting = SortOrder.Ascending;
+			if (listViewPlanFile.Sorting == SortOrder.Ascending)
+			{
+				listViewPlanFile.Sorting = SortOrder.Descending;
+			}
+			else
+			{
+				listViewPlanFile.Sorting = SortOrder.Ascending;
+			}
+
 			listViewPlanFile.Sort();
 		}
 
 		private void CheckBoxFullScreen_CheckedChanged(object sender, EventArgs e)
 		{
 			checkBoxWindowsState.Checked = !checkBoxFullScreen.Checked;
-			if (optionsValueCurrent == null) return;
+			if (optionsValueCurrent == null)
+			{
+				return;
+			}
+
 			buttonSaveOptions.Enabled = true;
 			optionsValueCurrent.enableFullScreen = checkBoxFullScreen.Checked;
 		}
@@ -246,7 +277,11 @@ namespace OpenBve
 		private void CheckBoxWindowsState_CheckedChanged(object sender, EventArgs e)
 		{
 			checkBoxFullScreen.Checked = !checkBoxWindowsState.Checked;
-			if (optionsValueCurrent == null) return;
+			if (optionsValueCurrent == null)
+			{
+				return;
+			}
+
 			buttonSaveOptions.Enabled = true;
 			optionsValueCurrent.enableFullScreen = !checkBoxWindowsState.Checked;
 		}
@@ -277,7 +312,7 @@ namespace OpenBve
 
 		private void TextBoxWidth_TextChanged(object sender, EventArgs e)
 		{
-			if (textBoxWidth.Text == string.Empty || Int32.Parse(textBoxWidth.Text) < 0 || Int32.Parse(textBoxWidth.Text) > optionsValueCurrent.maxSimulatorWidth)
+			if (textBoxWidth.Text == string.Empty || Int32.Parse(textBoxWidth.Text) < optionsValueCurrent.minSimulatorWidth || Int32.Parse(textBoxWidth.Text) > optionsValueCurrent.maxSimulatorWidth)
 			{
 				textBoxWidth.BackColor = Color.LightCoral;
 				buttonSaveOptions.Enabled = false;
@@ -285,7 +320,11 @@ namespace OpenBve
 			else
 			{
 				textBoxWidth.BackColor = Color.White;
-				if (optionsValueCurrent == null) return;
+				if (optionsValueCurrent == null)
+				{
+					return;
+				}
+
 				buttonSaveOptions.Enabled = true;
 				optionsValueCurrent.simulatorWidth = Int32.Parse(textBoxWidth.Text);
 			}
@@ -293,7 +332,7 @@ namespace OpenBve
 
 		private void TextBoxHeight_TextChanged(object sender, EventArgs e)
 		{
-			if (textBoxHeight.Text == string.Empty || Int32.Parse(textBoxHeight.Text) < 0 || Int32.Parse(textBoxHeight.Text) > optionsValueCurrent.maxSimulatorHeight)
+			if (textBoxHeight.Text == string.Empty || Int32.Parse(textBoxHeight.Text) < optionsValueCurrent.minSimulatorHeight || Int32.Parse(textBoxHeight.Text) > optionsValueCurrent.maxSimulatorHeight)
 			{
 				textBoxHeight.BackColor = Color.LightCoral;
 				buttonSaveOptions.Enabled = false;
@@ -301,7 +340,11 @@ namespace OpenBve
 			else
 			{
 				textBoxHeight.BackColor = Color.White;
-				if (optionsValueCurrent == null) return;
+				if (optionsValueCurrent == null)
+				{
+					return;
+				}
+
 				buttonSaveOptions.Enabled = true;
 				optionsValueCurrent.simulatorHeight = Int32.Parse(textBoxHeight.Text);
 			}
@@ -317,7 +360,11 @@ namespace OpenBve
 			else
 			{
 				textBoxViewingDis.BackColor = Color.White;
-				if (optionsValueCurrent == null) return;
+				if (optionsValueCurrent == null)
+				{
+					return;
+				}
+
 				buttonSaveOptions.Enabled = true;
 				optionsValueCurrent.viewingDistance = Int32.Parse(textBoxViewingDis.Text);
 			}
@@ -325,14 +372,22 @@ namespace OpenBve
 
 		private void CheckBoxMotionBlur_CheckedChanged(object sender, EventArgs e)
 		{
-			if (optionsValueCurrent == null) return;
+			if (optionsValueCurrent == null)
+			{
+				return;
+			}
+
 			buttonSaveOptions.Enabled = true;
 			optionsValueCurrent.enableMotionBlur = checkBoxMotionBlur.Checked;
 		}
 
 		private void CheckBoxVSync_CheckedChanged(object sender, EventArgs e)
 		{
-			if (optionsValueCurrent == null) return;
+			if (optionsValueCurrent == null)
+			{
+				return;
+			}
+
 			buttonSaveOptions.Enabled = true;
 			optionsValueCurrent.enableVSync = checkBoxVSync.Checked;
 		}
@@ -343,7 +398,11 @@ namespace OpenBve
 			buttonAntiLevel2.BackColor = System.Drawing.Color.White;
 			buttonAntiLevel3.BackColor = System.Drawing.Color.White;
 			buttonAntiLevel4.BackColor = System.Drawing.Color.White;
-			if (optionsValueCurrent == null) return;
+			if (optionsValueCurrent == null)
+			{
+				return;
+			}
+
 			buttonSaveOptions.Enabled = true;
 			optionsValueCurrent.antiAliasingLevel = 1;
 		}
@@ -354,7 +413,11 @@ namespace OpenBve
 			buttonAntiLevel2.BackColor = System.Drawing.Color.FromArgb(128, 255, 128);
 			buttonAntiLevel3.BackColor = System.Drawing.Color.White;
 			buttonAntiLevel4.BackColor = System.Drawing.Color.White;
-			if (optionsValueCurrent == null) return;
+			if (optionsValueCurrent == null)
+			{
+				return;
+			}
+
 			buttonSaveOptions.Enabled = true;
 			optionsValueCurrent.antiAliasingLevel = 2;
 		}
@@ -365,7 +428,11 @@ namespace OpenBve
 			buttonAntiLevel2.BackColor = System.Drawing.Color.White;
 			buttonAntiLevel3.BackColor = System.Drawing.Color.FromArgb(128, 255, 128);
 			buttonAntiLevel4.BackColor = System.Drawing.Color.White;
-			if (optionsValueCurrent == null) return;
+			if (optionsValueCurrent == null)
+			{
+				return;
+			}
+
 			buttonSaveOptions.Enabled = true;
 			optionsValueCurrent.antiAliasingLevel = 3;
 		}
@@ -376,7 +443,11 @@ namespace OpenBve
 			buttonAntiLevel2.BackColor = System.Drawing.Color.White;
 			buttonAntiLevel3.BackColor = System.Drawing.Color.White;
 			buttonAntiLevel4.BackColor = System.Drawing.Color.FromArgb(128, 255, 128);
-			if (optionsValueCurrent == null) return;
+			if (optionsValueCurrent == null)
+			{
+				return;
+			}
+
 			buttonSaveOptions.Enabled = true;
 			optionsValueCurrent.antiAliasingLevel = 4;
 		}
@@ -386,7 +457,11 @@ namespace OpenBve
 			buttonTransLevel1.BackColor = System.Drawing.Color.FromArgb(128, 255, 128);
 			buttonTransLevel2.BackColor = System.Drawing.Color.White;
 			buttonTransLevel3.BackColor = System.Drawing.Color.White;
-			if (optionsValueCurrent == null) return;
+			if (optionsValueCurrent == null)
+			{
+				return;
+			}
+
 			buttonSaveOptions.Enabled = true;
 			optionsValueCurrent.transparencyLevel = 1;
 		}
@@ -396,7 +471,11 @@ namespace OpenBve
 			buttonTransLevel1.BackColor = System.Drawing.Color.White;
 			buttonTransLevel2.BackColor = System.Drawing.Color.FromArgb(128, 255, 128);
 			buttonTransLevel3.BackColor = System.Drawing.Color.White;
-			if (optionsValueCurrent == null) return;
+			if (optionsValueCurrent == null)
+			{
+				return;
+			}
+
 			buttonSaveOptions.Enabled = true;
 			optionsValueCurrent.transparencyLevel = 2;
 		}
@@ -406,16 +485,20 @@ namespace OpenBve
 			buttonTransLevel1.BackColor = System.Drawing.Color.White;
 			buttonTransLevel2.BackColor = System.Drawing.Color.White;
 			buttonTransLevel3.BackColor = System.Drawing.Color.FromArgb(128, 255, 128);
-			if (optionsValueCurrent == null) return;
+			if (optionsValueCurrent == null)
+			{
+				return;
+			}
+
 			buttonSaveOptions.Enabled = true;
 			optionsValueCurrent.transparencyLevel = 3;
 		}
 
 		private void ButtonSaveOptions_Click(object sender, EventArgs e)
 		{
-			optionsValueLoaded = (RAGLINKCommons.RAGLINKPlatform.GraphicOptionsManager.GraphicOptionsValue)optionsValueCurrent.Clone();
-			RAGLINKCommons.RAGLINKPlatform.GraphicOptionsManager.graphicOptionsValue = optionsValueLoaded;
-			RAGLINKCommons.RAGLINKPlatform.GraphicOptionsManager.SaveGraphicOptionsFile(optionsValueLoaded);
+			optionsValueLoaded = (RAGLINKCommons.RPlatform.GraphicOptionsManager.GraphicOptionsValue)optionsValueCurrent.Clone();
+			RAGLINKCommons.RPlatform.GraphicOptionsManager.graphicOptionsValue = optionsValueLoaded;
+			RAGLINKCommons.RPlatform.GraphicOptionsManager.SaveGraphicOptionsFile(optionsValueLoaded);
 			ApplyGraphicOptions(optionsValueLoaded);
 			buttonSaveOptions.Enabled = false;
 		}
@@ -425,7 +508,9 @@ namespace OpenBve
 			try
 			{
 				if (e.CloseReason == CloseReason.UserClosing)
+				{
 					formCloseTrig = true;
+				}
 			}
 			catch (Exception) { };
 		}
@@ -436,7 +521,7 @@ namespace OpenBve
 			// ===
 			OnLoadEvents();
 			StartArgsEvent(System.Environment.GetCommandLineArgs());
-			RAGLINKCommons.RAGLINKPlatform.formSummary.FormMainStartButtonEvent += ButtonStartStateSet;
+			RAGLINKCommons.RPlatform.FormSummary.FormMainStartButtonEvent += ButtonStartStateSet;
 		}
 
 		private void formMain_FormClosing(object sender, FormClosingEventArgs e)

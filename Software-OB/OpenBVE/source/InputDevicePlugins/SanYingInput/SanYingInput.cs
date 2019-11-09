@@ -19,11 +19,11 @@
 //IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 //CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-using System;
-using System.Windows.Forms;
 using OpenBveApi.FileSystem;
 using OpenBveApi.Interface;
 using OpenBveApi.Runtime;
+using System;
+using System.Windows.Forms;
 
 namespace SanYingInput
 {
@@ -45,7 +45,10 @@ namespace SanYingInput
 		/// <summary>
 		/// The control list that is using for plugin
 		/// </summary>
-		public InputControl[] Controls { get; private set; }
+		public InputControl[] Controls
+		{
+			get; private set;
+		}
 
 		private ConfigForm m_configForm;
 		private bool m_pauseTick;

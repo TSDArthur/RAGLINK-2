@@ -1,7 +1,7 @@
-﻿using System;
-using OpenBveApi.Colors;
-using OpenBveApi.Runtime;
+﻿using OpenBveApi.Colors;
 using OpenBveApi.Interface;
+using OpenBveApi.Runtime;
+using System;
 
 namespace OpenBve
 {
@@ -11,9 +11,9 @@ namespace OpenBve
 		internal enum TrainStopState
 		{
 			/// <summary>The stop is still pending</summary>
-			Pending = 0, 
+			Pending = 0,
 			/// <summary>The train is currrently stopped and passengers are boarding</summary>
-			Boarding = 1, 
+			Boarding = 1,
 			/// <summary>The stop has been completed, and the train is preparing to depart</summary>
 			Completed = 2,
 			/// <summary>The train is jumping between stations, and all stops should be ignored</summary>
@@ -55,7 +55,7 @@ namespace OpenBve
 						{
 							//Check that we are not moving
 							if (Math.Abs(Train.Specs.CurrentAverageSpeed) < 0.1 / 3.6 &
-							    Math.Abs(Train.Specs.CurrentAverageAcceleration) < 0.1 / 3.6)
+								Math.Abs(Train.Specs.CurrentAverageAcceleration) < 0.1 / 3.6)
 							{
 								//Check the interlock state for the doors
 								switch (Train.Specs.DoorInterlockState)
@@ -321,7 +321,11 @@ namespace OpenBve
 									{
 										left = true; break;
 									}
-								} if (left) break;
+								}
+								if (left)
+								{
+									break;
+								}
 							}
 						}
 						else
@@ -339,7 +343,11 @@ namespace OpenBve
 									{
 										right = true; break;
 									}
-								} if (right) break;
+								}
+								if (right)
+								{
+									break;
+								}
 							}
 						}
 						else
@@ -460,7 +468,7 @@ namespace OpenBve
 				{
 					Train.StationState = TrainStopState.Pending;
 				}
-				
+
 			}
 			// automatically close doors
 			if (Train.Specs.DoorCloseMode != DoorMode.Manual & Train.Specs.DoorInterlockState != DoorInterlockStates.Locked & !Train.Specs.DoorClosureAttempted)

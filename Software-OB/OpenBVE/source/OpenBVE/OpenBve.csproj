@@ -270,9 +270,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RAGLINK\DataManagerClient.cs" />
-    <Compile Include="RAGLINK\ATCSystem.cs" />
-    <Compile Include="RAGLINK\TrainMethods.cs" />
+    <Compile Include="RAGLINKClient\DataManagerClient.cs" />
+    <Compile Include="RAGLINKClient\ATCSystem.cs" />
+    <Compile Include="RAGLINKClient\SimCore.cs" />
     <Compile Include="Simulation\TrainManager\Brake\AirBrake\AirSound.cs" />
     <Compile Include="Simulation\TrainManager\Brake\AirBrake\AutomaticAirBrake.cs" />
     <Compile Include="Simulation\TrainManager\Brake\CarBrake.BrakeType.cs" />

@@ -1,9 +1,8 @@
-﻿using System;
-using System.Text;
-using System.Globalization;
-using OpenBveApi.Graphics;
+﻿using OpenBveApi.Graphics;
 using OpenBveApi.Packages;
-using System.Windows.Forms;
+using System;
+using System.Globalization;
+using System.Text;
 
 namespace OpenBve
 {
@@ -204,10 +203,10 @@ namespace OpenBve
 			internal bool KioskMode;
 			/// <summary>The timer before AI controls are enabled in kiosk mode</summary>
 			internal double KioskModeTimer; //5 minutes by default set in ctor
-			/*
-			 * Note: The following options were (are) used by the Managed Content system, and are currently non-functional
-			 */
-			/// <summary>The proxy URL to use when retrieving content from the internet</summary>
+											/*
+											 * Note: The following options were (are) used by the Managed Content system, and are currently non-functional
+											 */
+											/// <summary>The proxy URL to use when retrieving content from the internet</summary>
 			internal string ProxyUrl;
 			/// <summary>The proxy username to use when retrieving content from the internet</summary>
 			internal string ProxyUserName;
@@ -339,7 +338,8 @@ namespace OpenBve
 										case "code":
 											Interface.CurrentOptions.LanguageCode = Value.Length != 0 ? Value : "zh-CN";
 											break;
-									} break;
+									}
+									break;
 								case "interface":
 									switch (Key)
 									{
@@ -378,7 +378,8 @@ namespace OpenBve
 											}
 											Interface.CurrentOptions.KioskModeTimer = d;
 											break;
-									} break;
+									}
+									break;
 								case "display":
 									switch (Key)
 									{
@@ -399,7 +400,8 @@ namespace OpenBve
 													a = 960;
 												}
 												Interface.CurrentOptions.WindowWidth = a;
-											} break;
+											}
+											break;
 										case "windowheight":
 											{
 												int a;
@@ -408,7 +410,8 @@ namespace OpenBve
 													a = 600;
 												}
 												Interface.CurrentOptions.WindowHeight = a;
-											} break;
+											}
+											break;
 										case "fullscreenwidth":
 											{
 												int a;
@@ -417,7 +420,8 @@ namespace OpenBve
 													a = 1024;
 												}
 												Interface.CurrentOptions.FullscreenWidth = a;
-											} break;
+											}
+											break;
 										case "fullscreenheight":
 											{
 												int a;
@@ -426,7 +430,8 @@ namespace OpenBve
 													a = 768;
 												}
 												Interface.CurrentOptions.FullscreenHeight = a;
-											} break;
+											}
+											break;
 										case "fullscreenbits":
 											{
 												int a;
@@ -435,19 +440,22 @@ namespace OpenBve
 													a = 32;
 												}
 												Interface.CurrentOptions.FullscreenBits = a;
-											} break;
+											}
+											break;
 										case "mainmenuwidth":
 											{
 												int a;
 												int.TryParse(Value, NumberStyles.Integer, Culture, out a);
 												Interface.CurrentOptions.MainMenuWidth = a;
-											} break;
+											}
+											break;
 										case "mainmenuheight":
 											{
 												int a;
 												int.TryParse(Value, NumberStyles.Integer, Culture, out a);
 												Interface.CurrentOptions.MainMenuHeight = a;
-											} break;
+											}
+											break;
 										case "disabledisplaylists":
 											Interface.CurrentOptions.DisableDisplayLists = string.Compare(Value, "false", StringComparison.OrdinalIgnoreCase) != 0;
 											break;
@@ -460,7 +468,8 @@ namespace OpenBve
 										case "notextureresize":
 											Interface.CurrentOptions.NoTextureResize = string.Compare(Value, "false", StringComparison.OrdinalIgnoreCase) != 0;
 											break;
-									} break;
+									}
+									break;
 								case "quality":
 									switch (Key)
 									{
@@ -474,25 +483,29 @@ namespace OpenBve
 												case "trilinearmipmapped": Interface.CurrentOptions.Interpolation = InterpolationMode.TrilinearMipmapped; break;
 												case "anisotropicfiltering": Interface.CurrentOptions.Interpolation = InterpolationMode.AnisotropicFiltering; break;
 												default: Interface.CurrentOptions.Interpolation = InterpolationMode.BilinearMipmapped; break;
-											} break;
+											}
+											break;
 										case "anisotropicfilteringlevel":
 											{
 												int a;
 												int.TryParse(Value, NumberStyles.Integer, Culture, out a);
 												Interface.CurrentOptions.AnisotropicFilteringLevel = a;
-											} break;
+											}
+											break;
 										case "anisotropicfilteringmaximum":
 											{
 												int a;
 												int.TryParse(Value, NumberStyles.Integer, Culture, out a);
 												Interface.CurrentOptions.AnisotropicFilteringMaximum = a;
-											} break;
+											}
+											break;
 										case "antialiasinglevel":
 											{
 												int a;
 												int.TryParse(Value, NumberStyles.Integer, Culture, out a);
 												Interface.CurrentOptions.AntiAliasingLevel = a;
-											} break;
+											}
+											break;
 										case "transparencymode":
 											switch (Value.ToLowerInvariant())
 											{
@@ -511,7 +524,8 @@ namespace OpenBve
 														}
 														break;
 													}
-											} break;
+											}
+											break;
 										case "oldtransparencymode":
 											Interface.CurrentOptions.OldTransparencyMode = string.Compare(Value, "false", StringComparison.OrdinalIgnoreCase) != 0;
 											break;
@@ -520,7 +534,8 @@ namespace OpenBve
 												int a;
 												int.TryParse(Value, NumberStyles.Integer, Culture, out a);
 												Interface.CurrentOptions.ViewingDistance = a;
-											} break;
+											}
+											break;
 										case "motionblur":
 											switch (Value.ToLowerInvariant())
 											{
@@ -528,8 +543,10 @@ namespace OpenBve
 												case "medium": Interface.CurrentOptions.MotionBlur = MotionBlurMode.Medium; break;
 												case "high": Interface.CurrentOptions.MotionBlur = MotionBlurMode.High; break;
 												default: Interface.CurrentOptions.MotionBlur = MotionBlurMode.None; break;
-											} break;
-									} break;
+											}
+											break;
+									}
+									break;
 								case "objectoptimization":
 									switch (Key)
 									{
@@ -538,18 +555,22 @@ namespace OpenBve
 												int a;
 												int.TryParse(Value, NumberStyles.Integer, Culture, out a);
 												Interface.CurrentOptions.ObjectOptimizationBasicThreshold = a;
-											} break;
+											}
+											break;
 										case "fullthreshold":
 											{
 												int a;
 												int.TryParse(Value, NumberStyles.Integer, Culture, out a);
 												Interface.CurrentOptions.ObjectOptimizationFullThreshold = a;
-											} break;
+											}
+											break;
 										case "vertexCulling":
 											{
 												Interface.CurrentOptions.ObjectOptimizationVertexCulling = string.Compare(Value, "false", StringComparison.OrdinalIgnoreCase) != 0;
-											} break;
-									} break;
+											}
+											break;
+									}
+									break;
 								case "simulation":
 									switch (Key)
 									{
@@ -575,7 +596,8 @@ namespace OpenBve
 												case "normal": Interface.CurrentOptions.GameMode = Interface.GameMode.Normal; break;
 												case "expert": Interface.CurrentOptions.GameMode = Interface.GameMode.Expert; break;
 												default: Interface.CurrentOptions.GameMode = Interface.GameMode.Normal; break;
-											} break;
+											}
+											break;
 										case "acceleratedtimefactor":
 											int tf;
 											int.TryParse(Value, NumberStyles.Integer, Culture, out tf);
@@ -589,7 +611,8 @@ namespace OpenBve
 											Interface.CurrentOptions.EnableBveTsHacks = string.Compare(Value, "false", StringComparison.OrdinalIgnoreCase) != 0;
 											break;
 
-									} break;
+									}
+									break;
 								case "controls":
 									switch (Key)
 									{
@@ -604,25 +627,37 @@ namespace OpenBve
 												double a;
 												double.TryParse(Value, NumberStyles.Float, Culture, out a);
 												Interface.CurrentOptions.JoystickAxisThreshold = a;
-											} break;
+											}
+											break;
 										case "keyrepeatdelay":
 											{
 												int a;
 												int.TryParse(Value, NumberStyles.Integer, Culture, out a);
-												if (a <= 0) a = 500;
+												if (a <= 0)
+												{
+													a = 500;
+												}
+
 												Interface.CurrentOptions.KeyRepeatDelay = 0.001 * (double)a;
-											} break;
+											}
+											break;
 										case "keyrepeatinterval":
 											{
 												int a;
 												int.TryParse(Value, NumberStyles.Integer, Culture, out a);
-												if (a <= 0) a = 100;
+												if (a <= 0)
+												{
+													a = 100;
+												}
+
 												Interface.CurrentOptions.KeyRepeatInterval = 0.001 * (double)a;
-											} break;
+											}
+											break;
 										case "raildrivermph":
 											Interface.CurrentOptions.RailDriverMPH = string.Compare(Value, "false", StringComparison.OrdinalIgnoreCase) != 0;
 											break;
-									} break;
+									}
+									break;
 								case "sound":
 									switch (Key)
 									{
@@ -647,8 +682,10 @@ namespace OpenBve
 												int a;
 												int.TryParse(Value, NumberStyles.Integer, Culture, out a);
 												Interface.CurrentOptions.SoundNumber = a < 16 ? 16 : a;
-											} break;
-									} break;
+											}
+											break;
+									}
+									break;
 								case "verbosity":
 									switch (Key)
 									{
@@ -661,7 +698,8 @@ namespace OpenBve
 										case "debuglog":
 											Program.GenerateDebugLogging = string.Compare(Value, "false", StringComparison.OrdinalIgnoreCase) != 0;
 											break;
-									} break;
+									}
+									break;
 								case "folders":
 									switch (Key)
 									{
@@ -671,7 +709,8 @@ namespace OpenBve
 										case "train":
 											Interface.CurrentOptions.TrainFolder = Value;
 											break;
-									} break;
+									}
+									break;
 								case "proxy":
 									switch (Key)
 									{
@@ -684,7 +723,8 @@ namespace OpenBve
 										case "password":
 											Interface.CurrentOptions.ProxyPassword = Value;
 											break;
-									} break;
+									}
+									break;
 								case "packages":
 									switch (Key)
 									{
@@ -702,19 +742,22 @@ namespace OpenBve
 													break;
 											}
 											break;
-									} break;
+									}
+									break;
 								case "recentlyusedroutes":
 									{
 										int n = Interface.CurrentOptions.RecentlyUsedRoutes.Length;
 										Array.Resize<string>(ref Interface.CurrentOptions.RecentlyUsedRoutes, n + 1);
 										Interface.CurrentOptions.RecentlyUsedRoutes[n] = Value;
-									} break;
+									}
+									break;
 								case "recentlyusedtrains":
 									{
 										int n = Interface.CurrentOptions.RecentlyUsedTrains.Length;
 										Array.Resize<string>(ref Interface.CurrentOptions.RecentlyUsedTrains, n + 1);
 										Interface.CurrentOptions.RecentlyUsedTrains[n] = Value;
-									} break;
+									}
+									break;
 								case "routeencodings":
 									{
 										int a;
@@ -725,7 +768,7 @@ namespace OpenBve
 										try
 										{
 #pragma warning disable CS0219
-//Used to check that the parsed integer is a valid codepage
+											//Used to check that the parsed integer is a valid codepage
 											// ReSharper disable once UnusedVariable
 											Encoding e = Encoding.GetEncoding(a);
 #pragma warning restore CS0219
@@ -738,7 +781,8 @@ namespace OpenBve
 										Array.Resize<TextEncoding.EncodingValue>(ref Interface.CurrentOptions.RouteEncodings, n + 1);
 										Interface.CurrentOptions.RouteEncodings[n].Codepage = a;
 										Interface.CurrentOptions.RouteEncodings[n].Value = Value;
-									} break;
+									}
+									break;
 								case "trainencodings":
 									{
 										int a;
@@ -749,7 +793,7 @@ namespace OpenBve
 										try
 										{
 #pragma warning disable CS0219
-//Used to check that the parsed integer is a valid codepage
+											//Used to check that the parsed integer is a valid codepage
 											// ReSharper disable once UnusedVariable
 											Encoding e = Encoding.GetEncoding(a);
 #pragma warning restore CS0219
@@ -762,13 +806,15 @@ namespace OpenBve
 										Array.Resize<TextEncoding.EncodingValue>(ref Interface.CurrentOptions.TrainEncodings, n + 1);
 										Interface.CurrentOptions.TrainEncodings[n].Codepage = a;
 										Interface.CurrentOptions.TrainEncodings[n].Value = Value;
-									} break;
+									}
+									break;
 								case "enableinputdeviceplugins":
 									{
 										int n = Interface.CurrentOptions.EnableInputDevicePlugins.Length;
 										Array.Resize<string>(ref Interface.CurrentOptions.EnableInputDevicePlugins, n + 1);
 										Interface.CurrentOptions.EnableInputDevicePlugins[n] = Value;
-									} break;
+									}
+									break;
 								case "parsers":
 									switch (Key)
 									{
@@ -814,7 +860,8 @@ namespace OpenBve
 												int a;
 												int.TryParse(Value, NumberStyles.Integer, Culture, out a);
 												Interface.CurrentOptions.Panel2ExtendedMinSize = a;
-											} break;
+											}
+											break;
 									}
 									break;
 							}
@@ -826,7 +873,11 @@ namespace OpenBve
 			{
 				// file not found
 				string Code = CultureInfo.CurrentUICulture.Name;
-				if (string.IsNullOrEmpty(Code)) Code = "zh-CN";
+				if (string.IsNullOrEmpty(Code))
+				{
+					Code = "zh-CN";
+				}
+
 				File = OpenBveApi.Path.CombineFile(Program.FileSystem.GetDataFolder("Languages"), Code + ".cfg");
 				if (System.IO.File.Exists(File))
 				{

@@ -77,19 +77,19 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Diagnostics;
-using System.Globalization;
 using OpenTK;
 using OpenTK.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Text;
 using ZlibWithDictionary;
-using VectorKey = System.Collections.Generic.KeyValuePair<double, OpenTK.Vector3>;
-using QuatKey = System.Collections.Generic.KeyValuePair<double, OpenTK.Quaternion>;
 using MatrixKey = System.Collections.Generic.KeyValuePair<double, OpenTK.Matrix4>;
+using QuatKey = System.Collections.Generic.KeyValuePair<double, OpenTK.Quaternion>;
+using VectorKey = System.Collections.Generic.KeyValuePair<double, OpenTK.Vector3>;
 
 namespace AssimpNET.X
 {
@@ -104,7 +104,7 @@ namespace AssimpNET.X
 		protected uint MajorVersion, MinorVersion; // version numbers
 		protected readonly bool IsBinaryFormat; // true if the file is in binary, false if it's in text form
 		protected readonly uint BinaryFloatSize; // float size in bytes, either 4 or 8
-		// counter for number arrays in binary format
+												 // counter for number arrays in binary format
 		protected uint BinaryNumCount;
 
 		protected int P;
@@ -527,7 +527,7 @@ namespace AssimpNET.X
 				mesh.Positions.Add(ReadVector3());
 			}
 
-			if ((int) numVertices == 0)
+			if ((int)numVertices == 0)
 			{
 				TestForSeparator();
 			}
@@ -548,7 +548,7 @@ namespace AssimpNET.X
 				TestForSeparator();
 			}
 
-			if ((int) numPosFaces == 0)
+			if ((int)numPosFaces == 0)
 			{
 				TestForSeparator();
 			}
@@ -678,7 +678,7 @@ namespace AssimpNET.X
 				mesh.Normals.Add(ReadVector3());
 			}
 
-			if ((int) numNormals == 0)
+			if ((int)numNormals == 0)
 			{
 				TestForSeparator();
 			}
@@ -704,7 +704,7 @@ namespace AssimpNET.X
 				TestForSeparator();
 			}
 
-			if ((int) numFaces == 0)
+			if ((int)numFaces == 0)
 			{
 				TestForSeparator();
 			}
@@ -733,7 +733,7 @@ namespace AssimpNET.X
 			}
 			mesh.TexCoords[(int)mesh.NumTextures++] = coords;
 
-			if ((int) numCoords == 0)
+			if ((int)numCoords == 0)
 			{
 				TestForSeparator();
 			}
@@ -776,7 +776,7 @@ namespace AssimpNET.X
 			}
 			mesh.Colors[(int)mesh.NumColorSets++] = colors;
 
-			if ((int) numColors == 0)
+			if ((int)numColors == 0)
 			{
 				TestForSeparator();
 			}
@@ -1249,12 +1249,20 @@ namespace AssimpNET.X
 						P += 16;
 						return "<guid>";
 					case 6:
-						if (End - P < 4) return s;
+						if (End - P < 4)
+						{
+							return s;
+						}
+
 						len = ReadBinDWord();
 						P += (int)(len * 4);
 						return "<int_list>";
 					case 7:
-						if (End - P < 4) return s;
+						if (End - P < 4)
+						{
+							return s;
+						}
+
 						len = ReadBinDWord();
 						P += (int)(len * BinaryFloatSize);
 						return "<flt_list>";
@@ -1505,7 +1513,7 @@ namespace AssimpNET.X
 				if (BinaryNumCount == 0 && End - P >= 2)
 				{
 					ushort tmp = ReadBinWord(); // 0x06 or 0x03
-					// array of ints follows
+												// array of ints follows
 					if (tmp == 0x06 && End - P >= 4)
 					{
 						BinaryNumCount = ReadBinDWord();
@@ -1574,7 +1582,7 @@ namespace AssimpNET.X
 				if (BinaryNumCount == 0 && End - P >= 2)
 				{
 					ushort tmp = ReadBinWord(); // 0x07 or 0x42
-					// array of floats following
+												// array of floats following
 					if (tmp == 0x07 && End - P >= 4)
 					{
 						BinaryNumCount = ReadBinDWord();

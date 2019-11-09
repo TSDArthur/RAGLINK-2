@@ -5,7 +5,7 @@
 	{
 		internal struct TrainSpecs
 		{
-			
+
 			internal double CurrentAverageSpeed;
 			internal double CurrentAverageAcceleration;
 			internal double CurrentAirPressure;
@@ -17,7 +17,7 @@
 			internal DefaultSafetySystems DefaultSafetySystems;
 			internal bool HasConstSpeed;
 			internal bool CurrentConstSpeed;
-			
+
 			internal PassAlarmType PassAlarm;
 			internal DoorMode DoorOpenMode;
 			internal DoorMode DoorCloseMode;

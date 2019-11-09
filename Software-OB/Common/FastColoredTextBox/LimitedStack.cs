@@ -44,7 +44,9 @@ namespace FastColoredTextBoxNS
         public T Pop()
         {
             if (count == 0)
+            {
                 throw new Exception("Stack is empty");
+            }
 
             int i = LastIndex;
             T item = items[i];
@@ -66,7 +68,9 @@ namespace FastColoredTextBoxNS
         public T Peek()
         {
             if (count == 0)
+            {
                 return default(T);
+            }
 
             return items[LastIndex];
         }
@@ -77,9 +81,13 @@ namespace FastColoredTextBoxNS
         public void Push(T item)
         {
             if (count == items.Length)
+            {
                 start = (start + 1) % items.Length;
+            }
             else
+            {
                 count++;
+            }
 
             items[LastIndex] = item;
         }
@@ -98,7 +106,10 @@ namespace FastColoredTextBoxNS
         {
             T[] result = new T[count];
             for (int i = 0; i < count; i++)
+            {
                 result[i] = items[(start + i) % items.Length];
+            }
+
             return result;
         }
     }

@@ -1,10 +1,13 @@
 ﻿using OpenTK.Audio.OpenAL;
 
-namespace OpenBve {
-	internal static partial class Sounds {
-		
+namespace OpenBve
+{
+	internal static partial class Sounds
+	{
+
 		/// <summary>Represents the state of a sound source.</summary>
-		internal enum SoundSourceState {
+		internal enum SoundSourceState
+		{
 			/// <summary>The sound will start playing once in audible range. The OpenAL sound name is not yet valid.</summary>
 			PlayPending,
 			/// <summary>The sound is playing and the OpenAL source name is valid.</summary>
@@ -16,7 +19,8 @@ namespace OpenBve {
 		}
 
 		/// <summary>Represents the different types of sound</summary>
-		internal enum SoundType {
+		internal enum SoundType
+		{
 			/// <summary>The sound source is attached to the car of a train</summary>
 			TrainCar,
 			/// <summary>The sound source is emitted when triggered from a track location</summary>
@@ -32,9 +36,10 @@ namespace OpenBve {
 			/// <summary>The sound source is undefined</summary>
 			Undefined
 		}
-		
+
 		/// <summary>Represents a sound source.</summary>
-		internal class SoundSource {
+		internal class SoundSource
+		{
 			// --- members ---
 			/// <summary>The sound buffer.</summary>
 			internal SoundBuffer Buffer;
@@ -69,7 +74,8 @@ namespace OpenBve {
 			/// <param name="parent">The parent object this sound source is attached to, or a null reference.</param>
 			/// <param name="car">The car this sound source is attached to, or a null reference.</param>
 			/// <param name="looped">Whether this sound source plays in a loop.</param>
-			internal SoundSource(SoundBuffer buffer, double radius, double pitch, double volume, OpenBveApi.Math.Vector3 position, object parent, int car, bool looped) {
+			internal SoundSource(SoundBuffer buffer, double radius, double pitch, double volume, OpenBveApi.Math.Vector3 position, object parent, int car, bool looped)
+			{
 				this.Buffer = buffer;
 				this.Radius = radius;
 				this.Pitch = pitch;
@@ -91,9 +97,9 @@ namespace OpenBve {
 				}
 				else
 				{
-					this.Type = SoundType.Undefined;	
+					this.Type = SoundType.Undefined;
 				}
-				
+
 			}
 
 			/// <summary>Creates a new sound source.</summary>
@@ -124,17 +130,22 @@ namespace OpenBve {
 
 			// --- functions ---
 			/// <summary>Stops this sound.</summary>
-			internal void Stop() {
-				if (this.State == SoundSourceState.PlayPending) {
+			internal void Stop()
+			{
+				if (this.State == SoundSourceState.PlayPending)
+				{
 					this.State = SoundSourceState.Stopped;
-				} else if (this.State == SoundSourceState.Playing) {
+				}
+				else if (this.State == SoundSourceState.Playing)
+				{
 					this.State = SoundSourceState.StopPending;
 				}
 			}
 		}
 
 		/// <summary>Represents a microphone source</summary>
-		private class MicSource {
+		private class MicSource
+		{
 			// --- members ---
 			/// <summary>The OpenAL source name. Only valid if the sound is playing.</summary>
 			internal int OpenAlSourceName;
@@ -150,7 +161,8 @@ namespace OpenBve {
 			/// <param name="position">The position.</param>
 			/// <param name="backwardTolerance">allowed tolerance in the backward direction</param>
 			/// <param name="forwardTolerance">allowed tolerance in the forward direction</param>
-			internal MicSource(OpenBveApi.Math.Vector3 position, double backwardTolerance, double forwardTolerance) {
+			internal MicSource(OpenBveApi.Math.Vector3 position, double backwardTolerance, double forwardTolerance)
+			{
 				this.Position = position;
 				this.BackwardTolerance = backwardTolerance;
 				this.ForwardTolerance = forwardTolerance;

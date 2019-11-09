@@ -1,11 +1,14 @@
 ﻿using OpenBveApi.FunctionScripting;
 using OpenBveApi.Sounds;
 
-namespace OpenBve {
-	internal static partial class Sounds {
-		
+namespace OpenBve
+{
+	internal static partial class Sounds
+	{
+
 		/// <summary>Represents a sound buffer.</summary>
-		internal class SoundBuffer : SoundHandle {
+		internal class SoundBuffer : SoundHandle
+		{
 			// --- members ---
 			/// <summary>The origin where the sound can be loaded from.</summary>
 			internal readonly SoundOrigin Origin;
@@ -29,7 +32,8 @@ namespace OpenBve {
 			/// <summary>Creates a new sound buffer</summary>
 			/// <param name="path">The on-disk path to the sound to load</param>
 			/// <param name="radius">The radius for this sound</param>
-			internal SoundBuffer(string path, double radius) {
+			internal SoundBuffer(string path, double radius)
+			{
 				this.Origin = new PathOrigin(path);
 				this.Radius = radius;
 				this.Loaded = false;
@@ -39,13 +43,14 @@ namespace OpenBve {
 				this.Ignore = false;
 				this.PitchFunction = null;
 				this.VolumeFunction = null;
-				
+
 			}
 
 			/// <summary>Creates a new sound buffer</summary>
 			/// <param name="sound">The raw sound source, loaded via an API plugin</param>
 			/// <param name="radius">The radius of the sound</param>
-			internal SoundBuffer(OpenBveApi.Sounds.Sound sound, double radius) {
+			internal SoundBuffer(OpenBveApi.Sounds.Sound sound, double radius)
+			{
 				this.Origin = new RawOrigin(sound);
 				this.Radius = radius;
 				this.Loaded = false;
@@ -124,6 +129,6 @@ namespace OpenBve {
 				return null;
 			}
 		}
-		
+
 	}
 }

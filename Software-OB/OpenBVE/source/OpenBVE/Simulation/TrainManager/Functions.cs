@@ -1,5 +1,5 @@
-﻿using System;
-using OpenBveApi.Trains;
+﻿using OpenBveApi.Trains;
+using System;
 
 namespace OpenBve
 {
@@ -43,7 +43,7 @@ namespace OpenBve
 						obj.FrontAxleFollower.UpdateWorldCoordinates(false);
 						obj.RearAxleFollower.UpdateWorldCoordinates(false);
 					}
-				 
+
 				}
 			}
 			train.StationState = TrainStopState.Jumping;

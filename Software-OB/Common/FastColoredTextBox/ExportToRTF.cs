@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
@@ -51,7 +50,9 @@ namespace FastColoredTextBoxNS
             var lineNumberColor = GetColorTableNumber(r.tb.LineNumberColor);
 
             if (IncludeLineNumbers)
+            {
                 tempSB.AppendFormat(@"{{\cf{1} {0}}}\tab", currentLine + 1, lineNumberColor);
+            }
             //
             foreach (Place p in r)
             {
@@ -69,7 +70,9 @@ namespace FastColoredTextBoxNS
                     {
                         tempSB.AppendLine(@"\line");
                         if (IncludeLineNumbers)
+                        {
                             tempSB.AppendFormat(@"{{\cf{1} {0}}}\tab", i + 2, lineNumberColor);
+                        }
                     }
                     currentLine = p.iLine;
                 }
@@ -88,9 +91,14 @@ namespace FastColoredTextBoxNS
                         var ch = c.c;
                         var code = (int)ch;
                         if (code < 128)
+                        {
                             tempSB.Append(c.c);
+                        }
                         else
+                        {
                             tempSB.AppendFormat(@"{{\u{0}}}", code);
+                        }
+
                         break;
                 }
             }
@@ -99,7 +107,9 @@ namespace FastColoredTextBoxNS
             //build color table
             var list = new SortedList<int, Color>();
             foreach (var pair in colorTable)
+            {
                 list.Add(pair.Value, pair.Key);
+            }
 
             tempSB.Length = 0;
             tempSB.AppendFormat(@"{{\colortbl;");
@@ -136,6 +146,7 @@ namespace FastColoredTextBoxNS
             for (int i = 0; i < tb.Styles.Length; i++)
             {
                 if (tb.Styles[i] != null && ((int)styleIndex & mask) != 0)
+                {
                     if (tb.Styles[i].IsExportable)
                     {
                         var style = tb.Styles[i];
@@ -143,12 +154,16 @@ namespace FastColoredTextBoxNS
 
                         bool isTextStyle = style is TextStyle;
                         if (isTextStyle)
+                        {
                             if (!hasTextStyle || tb.AllowSeveralTextStyleDrawing)
                             {
                                 hasTextStyle = true;
                                 textStyle = style as TextStyle;
                             }
+                        }
                     }
+                }
+
                 mask = mask << 1;
             }
             //add TextStyle css
@@ -170,7 +185,10 @@ namespace FastColoredTextBoxNS
         public static string GetColorAsString(Color color)
         {
             if (color == Color.Transparent)
+            {
                 return "";
+            }
+
             return string.Format(@"\red{0}\green{1}\blue{2}", color.R, color.G, color.B);
         }
 
@@ -178,33 +196,52 @@ namespace FastColoredTextBoxNS
         {
             //find textRenderer
             if (tempSB.Length == 0)
+            {
                 return;
+            }
 
             var desc = GetRtfDescriptor(currentStyle);
             var cf = GetColorTableNumber(desc.ForeColor);
             var cb = GetColorTableNumber(desc.BackColor);
             var tags = new StringBuilder();
             if (cf >= 0)
+            {
                 tags.AppendFormat(@"\cf{0}", cf);
+            }
+
             if (cb >= 0)
+            {
                 tags.AppendFormat(@"\highlight{0}", cb);
+            }
+
             if (!string.IsNullOrEmpty(desc.AdditionalTags))
+            {
                 tags.Append(desc.AdditionalTags.Trim());
+            }
 
             if (tags.Length > 0)
+            {
                 sb.AppendFormat(@"{{{0} {1}}}", tags, tempSB.ToString());
+            }
             else
+            {
                 sb.Append(tempSB.ToString());
+            }
+
             tempSB.Length = 0;
         }
 
         private int GetColorTableNumber(Color color)
         {
             if (color.A == 0)
+            {
                 return -1;
+            }
 
             if (!colorTable.ContainsKey(color))
+            {
                 colorTable[color] = colorTable.Count + 1;
+            }
 
             return colorTable[color];
         }

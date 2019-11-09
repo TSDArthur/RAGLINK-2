@@ -5,17 +5,22 @@
 // ║ The files from the openBVE main program cannot be used here. ║
 // ╚══════════════════════════════════════════════════════════════╝
 
-using System;
 using OpenBveApi.Graphics;
 using OpenBveApi.Interface;
 using OpenBveApi.Math;
+using System;
 
-namespace OpenBve {
+namespace OpenBve
+{
 
 	// --- TimeTable.cs ---
-	internal static class Timetable {
-		internal static void AddObjectForCustomTimetable(ObjectManager.AnimatedObject obj) { }
-		internal enum TimetableState {
+	internal static class Timetable
+	{
+		internal static void AddObjectForCustomTimetable(ObjectManager.AnimatedObject obj)
+		{
+		}
+		internal enum TimetableState
+		{
 			None = 0,
 			Custom = 1,
 			Default = 2
@@ -25,8 +30,10 @@ namespace OpenBve {
 	}
 
 	// --- PluginManager.cs ---
-	internal static class PluginManager {
-		internal static class CurrentPlugin {
+	internal static class PluginManager
+	{
+		internal static class CurrentPlugin
+		{
 			internal static int[] Panel = new int[] { };
 		}
 	}
@@ -34,14 +41,20 @@ namespace OpenBve {
 #pragma warning disable 0649
 
 	// --- Game.cs ---
-	internal static class Game {
+	internal static class Game
+	{
 		internal static double SecondsSinceMidnight = 0.0;
-		internal enum SectionType { ValueBased, IndexBased }
-		internal struct SectionAspect {
+		internal enum SectionType
+		{
+			ValueBased, IndexBased
+		}
+		internal struct SectionAspect
+		{
 			internal int Number;
 			internal double Speed;
 		}
-		internal struct Section {
+		internal struct Section
+		{
 			internal int PreviousSection;
 			internal int NextSection;
 			internal TrainManager.Train[] Trains;
@@ -60,7 +73,8 @@ namespace OpenBve {
 		internal static int InfoTotalQuads = 0;
 		internal static int InfoTotalQuadStrip = 0;
 		internal static int InfoTotalPolygon = 0;
-		internal static void Reset() {
+		internal static void Reset()
+		{
 			Renderer.Reset();
 			ObjectManager.Objects = new ObjectManager.StaticObject[16];
 			ObjectManager.ObjectsUsed = 0;
@@ -73,49 +87,60 @@ namespace OpenBve {
 			ObjectManager.AnimatedWorldObjectsUsed = 0;
 		}
 	}
-	
+
 	// --- TrackManager.cs ---
-	internal static class TrackManager {
-		internal struct TrackFollower {
+	internal static class TrackManager
+	{
+		internal struct TrackFollower
+		{
 			internal double TrackPosition;
 			internal Vector3 WorldPosition;
 			internal Vector3 WorldDirection;
 			internal Vector3 WorldUp;
 			internal Vector3 WorldSide;
-            internal double CurveRadius;
-            internal double CurveCant;
+			internal double CurveRadius;
+			internal double CurveCant;
 			internal double Pitch;
-            internal double CantDueToInaccuracy;
+			internal double CantDueToInaccuracy;
 		}
-		internal static void UpdateTrackFollower(ref TrackFollower Follower, double NewTrackPosition, bool UpdateWorldCoordinates, bool AddTrackInaccurary) { }
+		internal static void UpdateTrackFollower(ref TrackFollower Follower, double NewTrackPosition, bool UpdateWorldCoordinates, bool AddTrackInaccurary)
+		{
+		}
 	}
 
 	// --- Interface.cs ---
-	internal static class Interface {
+	internal static class Interface
+	{
 
 		internal static LogMessage[] LogMessages = new LogMessage[] { };
 		internal static int MessageCount = 0;
-		internal static void AddMessage(MessageType Type, bool FileNotFound, string Text) {
-			if (MessageCount == 0) {
+		internal static void AddMessage(MessageType Type, bool FileNotFound, string Text)
+		{
+			if (MessageCount == 0)
+			{
 				LogMessages = new LogMessage[16];
-			} else if (MessageCount >= LogMessages.Length) {
+			}
+			else if (MessageCount >= LogMessages.Length)
+			{
 				Array.Resize<LogMessage>(ref LogMessages, LogMessages.Length << 1);
 			}
 			LogMessages[MessageCount] = new LogMessage(Type, FileNotFound, Text);
 			MessageCount++;
 		}
-		internal static void ClearMessages() {
+		internal static void ClearMessages()
+		{
 			LogMessages = new LogMessage[] { };
 			MessageCount = 0;
 		}
 
 		// ================================
-		internal struct Options {
+		internal struct Options
+		{
 			internal InterpolationMode Interpolation;
-            internal TransparencyMode TransparencyMode;
+			internal TransparencyMode TransparencyMode;
 			internal int AnisotropicFilteringLevel;
 			internal int AnisotropicFilteringMaximum;
-		    internal int AntialiasingLevel;
+			internal int AntialiasingLevel;
 			internal int ObjectOptimizationBasicThreshold;
 			internal int ObjectOptimizationFullThreshold;
 			internal int CurrentXParser;
@@ -128,11 +153,14 @@ namespace OpenBve {
 #pragma warning restore 0649
 
 		// round to power of two
-		internal static int RoundToPowerOfTwo(int Value) {
+		internal static int RoundToPowerOfTwo(int Value)
+		{
 			Value -= 1;
-			for (int i = 1; i < sizeof(int) * 8; i *= 2) {
+			for (int i = 1; i < sizeof(int) * 8; i *= 2)
+			{
 				Value = Value | Value >> i;
-			} return Value + 1;
+			}
+			return Value + 1;
 		}
 	}
 }

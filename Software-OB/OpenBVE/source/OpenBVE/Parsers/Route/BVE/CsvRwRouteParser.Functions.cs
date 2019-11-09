@@ -1,8 +1,8 @@
-﻿using System;
+﻿using OpenBveApi.Colors;
+using OpenBveApi.Textures;
+using System;
 using System.IO;
 using System.Security.Cryptography;
-using OpenBveApi.Colors;
-using OpenBveApi.Textures;
 
 namespace OpenBve
 {
@@ -88,12 +88,20 @@ namespace OpenBve
 			}
 			string Name = System.IO.Path.GetFileNameWithoutExtension(BaseFile);
 			Texture[] Textures = new Texture[] { };
-			if (Folder == null) return Textures;
+			if (Folder == null)
+			{
+				return Textures;
+			}
+
 			string[] Files = System.IO.Directory.GetFiles(Folder);
 			for (int i = 0; i < Files.Length; i++)
 			{
 				string a = System.IO.Path.GetFileNameWithoutExtension(Files[i]);
-				if (a == null || Name == null) return Textures;
+				if (a == null || Name == null)
+				{
+					return Textures;
+				}
+
 				if (a.StartsWith(Name, StringComparison.OrdinalIgnoreCase))
 				{
 					if (a.Length > Name.Length)
@@ -104,7 +112,11 @@ namespace OpenBve
 							if (j >= 0)
 							{
 								string c = System.IO.Path.GetExtension(Files[i]);
-								if (c == null) return Textures;
+								if (c == null)
+								{
+									return Textures;
+								}
+
 								switch (c.ToLowerInvariant())
 								{
 									case ".bmp":

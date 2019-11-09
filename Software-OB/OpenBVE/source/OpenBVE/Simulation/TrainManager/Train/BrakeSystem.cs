@@ -1,5 +1,5 @@
-﻿using System;
-using OpenBve.BrakeSystems;
+﻿using OpenBve.BrakeSystems;
+using System;
 
 namespace OpenBve
 {
@@ -29,7 +29,10 @@ namespace OpenBve
 						if (Cars[i - 1].Derailed | Cars[i].Derailed)
 						{
 							Cars[i].CarBrake.brakePipe.CurrentPressure -= Game.BrakePipeLeakRate * TimeElapsed;
-							if (Cars[i].CarBrake.brakePipe.CurrentPressure < 0.0) Cars[i].CarBrake.brakePipe.CurrentPressure = 0.0;
+							if (Cars[i].CarBrake.brakePipe.CurrentPressure < 0.0)
+							{
+								Cars[i].CarBrake.brakePipe.CurrentPressure = 0.0;
+							}
 						}
 					}
 					if (i < Cars.Length - 1)
@@ -37,7 +40,10 @@ namespace OpenBve
 						if (Cars[i].Derailed | Cars[i + 1].Derailed)
 						{
 							Cars[i].CarBrake.brakePipe.CurrentPressure -= Game.BrakePipeLeakRate * TimeElapsed;
-							if (Cars[i].CarBrake.brakePipe.CurrentPressure < 0.0) Cars[i].CarBrake.brakePipe.CurrentPressure = 0.0;
+							if (Cars[i].CarBrake.brakePipe.CurrentPressure < 0.0)
+							{
+								Cars[i].CarBrake.brakePipe.CurrentPressure = 0.0;
+							}
 						}
 					}
 					TotalPressure += Cars[i].CarBrake.brakePipe.CurrentPressure;
@@ -137,7 +143,7 @@ namespace OpenBve
 								}
 								else if (Handles.Brake.MaximumNotch > Handles.LocoBrake.MaximumNotch)
 								{
-									double nc = ((double) Handles.LocoBrake.Actual / Handles.LocoBrake.MaximumNotch) * Handles.Brake.MaximumNotch;
+									double nc = ((double)Handles.LocoBrake.Actual / Handles.LocoBrake.MaximumNotch) * Handles.Brake.MaximumNotch;
 									if (nc > Handles.Brake.Actual)
 									{
 										Cars[CarIndex].CarBrake.Update(TimeElapsed, Cars[DriverCar].Specs.CurrentSpeed, Handles.LocoBrake, out DecelerationDueToBrake);
@@ -149,7 +155,7 @@ namespace OpenBve
 								}
 								else
 								{
-									double nc = ((double) Handles.Brake.Actual / Handles.Brake.MaximumNotch) * Handles.LocoBrake.MaximumNotch;
+									double nc = ((double)Handles.Brake.Actual / Handles.Brake.MaximumNotch) * Handles.LocoBrake.MaximumNotch;
 									if (nc > Handles.LocoBrake.Actual)
 									{
 										Cars[CarIndex].CarBrake.Update(TimeElapsed, Cars[DriverCar].Specs.CurrentSpeed, Handles.Brake, out DecelerationDueToBrake);
@@ -221,36 +227,36 @@ namespace OpenBve
 				switch (Cars[CarIndex].CarBrake.airSound)
 				{
 					case AirSound.AirZero:
-					{
-						Sounds.SoundBuffer buffer = Cars[CarIndex].Sounds.AirZero.Buffer;
-						if (buffer != null)
 						{
-							OpenBveApi.Math.Vector3 pos = Cars[CarIndex].Sounds.AirZero.Position;
-							Sounds.PlaySound(buffer, 1.0, 1.0, pos, this, CarIndex, false);
-						}
+							Sounds.SoundBuffer buffer = Cars[CarIndex].Sounds.AirZero.Buffer;
+							if (buffer != null)
+							{
+								OpenBveApi.Math.Vector3 pos = Cars[CarIndex].Sounds.AirZero.Position;
+								Sounds.PlaySound(buffer, 1.0, 1.0, pos, this, CarIndex, false);
+							}
 
-						break;
-					}
+							break;
+						}
 					case AirSound.Air:
-					{
-						Sounds.SoundBuffer buffer = Cars[CarIndex].Sounds.Air.Buffer;
-						if (buffer != null)
 						{
-							OpenBveApi.Math.Vector3 pos = Cars[CarIndex].Sounds.Air.Position;
-							Sounds.PlaySound(buffer, 1.0, 1.0, pos, this, CarIndex, false);
+							Sounds.SoundBuffer buffer = Cars[CarIndex].Sounds.Air.Buffer;
+							if (buffer != null)
+							{
+								OpenBveApi.Math.Vector3 pos = Cars[CarIndex].Sounds.Air.Position;
+								Sounds.PlaySound(buffer, 1.0, 1.0, pos, this, CarIndex, false);
+							}
+							break;
 						}
-						break;
-					}
 					case AirSound.AirHigh:
-					{
-						Sounds.SoundBuffer buffer = Cars[CarIndex].Sounds.AirHigh.Buffer;
-						if (buffer != null)
 						{
-							OpenBveApi.Math.Vector3 pos = Cars[CarIndex].Sounds.AirHigh.Position;
-							Sounds.PlaySound(buffer, 1.0, 1.0, pos, this, CarIndex, false);
+							Sounds.SoundBuffer buffer = Cars[CarIndex].Sounds.AirHigh.Buffer;
+							if (buffer != null)
+							{
+								OpenBveApi.Math.Vector3 pos = Cars[CarIndex].Sounds.AirHigh.Position;
+								Sounds.PlaySound(buffer, 1.0, 1.0, pos, this, CarIndex, false);
+							}
+							break;
 						}
-						break;
-					}
 				}
 
 				// deceleration provided by motor
@@ -259,11 +265,11 @@ namespace OpenBve
 					double f;
 					if (Handles.LocoBrake.Actual != 0 && CarIndex == DriverCar)
 					{
-						f = (double) Handles.LocoBrake.Actual / (double) Handles.Brake.MaximumNotch;
+						f = (double)Handles.LocoBrake.Actual / (double)Handles.Brake.MaximumNotch;
 					}
 					else
 					{
-						f = (double) Handles.Brake.Actual / (double) Handles.Brake.MaximumNotch;
+						f = (double)Handles.Brake.Actual / (double)Handles.Brake.MaximumNotch;
 					}
 
 					double a = Cars[CarIndex].Specs.MotorDeceleration;

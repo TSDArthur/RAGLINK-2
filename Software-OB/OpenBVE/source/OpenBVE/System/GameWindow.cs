@@ -1,3 +1,10 @@
+using OpenBveApi.Colors;
+using OpenBveApi.Interface;
+using OpenBveApi.Runtime;
+using OpenBveApi.Trains;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Input;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,19 +13,12 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using OpenBveApi.Colors;
-using OpenBveApi.Runtime;
-using OpenBveApi.Interface;
-using OpenBveApi.Trains;
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Input;
 using GL = OpenTK.Graphics.OpenGL.GL;
 using MatrixMode = OpenTK.Graphics.OpenGL.MatrixMode;
 
 namespace OpenBve
 {
-	class OpenBVEGame: GameWindow
+	class OpenBVEGame : GameWindow
 	{
 		/// <summary>The current time acceleration factor</summary>
 		int TimeFactor = 1;
@@ -29,7 +29,7 @@ namespace OpenBve
 		private double RenderTimeElapsed;
 		private double RenderRealTimeElapsed;
 		//We need to explicitly specify the default constructor
-		public OpenBVEGame(int width, int height, GraphicsMode currentGraphicsMode, GameWindowFlags @default): base(width, height, currentGraphicsMode, Translations.GetInterfaceString("program_title"), @default)
+		public OpenBVEGame(int width, int height, GraphicsMode currentGraphicsMode, GameWindowFlags @default) : base(width, height, currentGraphicsMode, Translations.GetInterfaceString("program_title"), @default)
 		{
 			try
 			{
@@ -46,7 +46,7 @@ namespace OpenBve
 		//This renders the frame
 		protected override void OnRenderFrame(FrameEventArgs e)
 		{
-			
+
 			if (!firstFrame)
 			{
 				//If the load is not complete, then we shouldn't be running the mainloop
@@ -54,9 +54,9 @@ namespace OpenBve
 			}
 			double TimeElapsed = RenderTimeElapsed;
 			double RealTimeElapsed = RenderRealTimeElapsed;
-			
+
 			//Next, check if we're in paused/ in a menu
-			if(Game.CurrentInterface != Game.InterfaceType.Normal)
+			if (Game.CurrentInterface != Game.InterfaceType.Normal)
 			{
 				MainLoop.UpdateControlRepeats(0.0);
 				MainLoop.ProcessKeyboard();
@@ -79,7 +79,7 @@ namespace OpenBve
 				//If the menu state has not changed, don't update the rendered simulation
 				return;
 			}
-			
+
 			//Use the OpenTK framerate as this is much more accurate
 			//Also avoids running a calculation
 			if (TotalTimeElapsedForInfo >= 0.2)
@@ -87,8 +87,8 @@ namespace OpenBve
 				Game.InfoFrameRate = RenderFrequency;
 				TotalTimeElapsedForInfo = 0.0;
 			}
-			
-			
+
+
 			if (Game.PreviousInterface != Game.InterfaceType.Normal)
 			{
 				ObjectManager.UpdateAnimatedWorldObjects(0.0, false);
@@ -145,7 +145,7 @@ namespace OpenBve
 				if (Program.CurrentlyRunningOnMono && MainLoop.Quit == MainLoop.QuitMode.QuitProgram)
 				{
 					Environment.Exit(0);
-				}				
+				}
 			}
 			Renderer.UpdateLighting();
 			Renderer.RenderScene(TimeElapsed);
@@ -157,7 +157,7 @@ namespace OpenBve
 			Program.currentGameWindow.SwapBuffers();
 			Game.UpdateBlackBox();
 			// pause/menu
-			
+
 			// limit framerate
 			if (MainLoop.LimitFramerate)
 			{
@@ -175,23 +175,23 @@ namespace OpenBve
 					if (Interface.CurrentOptions.RailDriverMPH)
 					{
 						railDriver.SetDisplay((int)(TrainManager.PlayerTrain.Cars[TrainManager.PlayerTrain.DriverCar].Specs
-							                             .CurrentPerceivedSpeed * 2.23694));
+														 .CurrentPerceivedSpeed * 2.23694));
 					}
 					else
 					{
 						railDriver.SetDisplay((int)(TrainManager.PlayerTrain.Cars[TrainManager.PlayerTrain.DriverCar].Specs
-							                             .CurrentPerceivedSpeed * 3.6));
+														 .CurrentPerceivedSpeed * 3.6));
 					}
 				}
 			}
 			RenderRealTimeElapsed = 0.0;
 			RenderTimeElapsed = 0.0;
-				
-				
+
+
 
 #if DEBUG
 			MainLoop.CheckForOpenGlError("MainLoop");
-			 
+
 #endif
 			if (Interface.CurrentOptions.UnloadUnusedTextures)
 			{
@@ -214,7 +214,7 @@ namespace OpenBve
 			double TimeElapsed;
 			if (Game.SecondsSinceMidnight >= Game.StartupTime)
 			{
-				
+
 				RealTimeElapsed = CPreciseTimer.GetElapsedTime();
 				TimeElapsed = RealTimeElapsed * (double)TimeFactor;
 				if (loadComplete && !firstFrame)
@@ -261,7 +261,7 @@ namespace OpenBve
 
 				// update simulation in chunks
 				{
-					const double chunkTime = 1.0/2.0;
+					const double chunkTime = 1.0 / 2.0;
 					if (TimeElapsed <= chunkTime)
 					{
 						Game.SecondsSinceMidnight += TimeElapsed;
@@ -270,8 +270,8 @@ namespace OpenBve
 					else
 					{
 						const int maxChunks = 2;
-						int chunks = Math.Min((int) Math.Round(TimeElapsed/chunkTime), maxChunks);
-						double time = TimeElapsed/(double) chunks;
+						int chunks = Math.Min((int)Math.Round(TimeElapsed / chunkTime), maxChunks);
+						double time = TimeElapsed / (double)chunks;
 						for (int i = 0; i < chunks; i++)
 						{
 							Game.SecondsSinceMidnight += time;
@@ -297,7 +297,7 @@ namespace OpenBve
 
 		protected override void OnResize(EventArgs e)
 		{
-			if(Width == 0 && Height == 0)
+			if (Width == 0 && Height == 0)
 			{
 				/*
 				 * HACK: Don't resize if minimized
@@ -310,7 +310,7 @@ namespace OpenBve
 				return;
 			}
 			Screen.Minimized = false;
-			Screen.WindowResize(Width,Height);
+			Screen.WindowResize(Width, Height);
 		}
 
 		protected override void OnLoad(EventArgs e)
@@ -327,12 +327,12 @@ namespace OpenBve
 			LoadingScreenLoop();
 			//Add event handler hooks for keyboard and mouse buttons
 			//Do this after the renderer has init and the loop has started to prevent timing issues
-			KeyDown	+= MainLoop.keyDownEvent;
-			KeyUp	+= MainLoop.keyUpEvent;
-			MouseDown	+= MainLoop.mouseDownEvent;
+			KeyDown += MainLoop.keyDownEvent;
+			KeyUp += MainLoop.keyUpEvent;
+			MouseDown += MainLoop.mouseDownEvent;
 			MouseUp += MainLoop.mouseUpEvent;
-			MouseMove	+= MainLoop.mouseMoveEvent;
-			MouseWheel  += MainLoop.mouseWheelEvent;
+			MouseMove += MainLoop.mouseMoveEvent;
+			MouseWheel += MainLoop.mouseWheelEvent;
 
 			for (int i = 0; i < InputDevicePlugin.AvailablePluginInfos.Count; i++)
 			{
@@ -555,9 +555,9 @@ namespace OpenBve
 						else
 						{
 							Game.SecondsSinceMidnight = Game.Stations[PlayerFirstStationIndex].DepartureTime -
-							                            Game.Stations[PlayerFirstStationIndex].StopTime;
+														Game.Stations[PlayerFirstStationIndex].StopTime;
 							Game.StartupTime = Game.Stations[PlayerFirstStationIndex].DepartureTime -
-							                   Game.Stations[PlayerFirstStationIndex].StopTime;
+											   Game.Stations[PlayerFirstStationIndex].StopTime;
 						}
 					}
 					else
@@ -740,7 +740,11 @@ namespace OpenBve
 						double v = u < w ? u : w; u -= v;
 						Game.SecondsSinceMidnight += v;
 						TrainManager.UpdateTrains(v);
-						if (u <= 0.0) break;
+						if (u <= 0.0)
+						{
+							break;
+						}
+
 						TotalTimeElapsedForSectionUpdate += v;
 						if (TotalTimeElapsedForSectionUpdate >= 1.0)
 						{
@@ -776,11 +780,11 @@ namespace OpenBve
 				TrainManager.PlayerTrain.AI = new Game.SimpleHumanDriverAI(TrainManager.PlayerTrain);
 				if (TrainManager.PlayerTrain.Plugin != null && !TrainManager.PlayerTrain.Plugin.SupportsAI)
 				{
-					Game.AddMessage(Translations.GetInterfaceString("notification_aiunable"),MessageManager.MessageDependency.None, Interface.GameMode.Expert,
+					Game.AddMessage(Translations.GetInterfaceString("notification_aiunable"), MessageManager.MessageDependency.None, Interface.GameMode.Expert,
 						OpenBveApi.Colors.MessageColor.White, Game.SecondsSinceMidnight + 10.0, null);
 				}
 			}
-			
+
 			// warnings / errors
 			if (Interface.MessageCount != 0)
 			{
@@ -808,7 +812,7 @@ namespace OpenBve
 				{
 					NotFound = filesNotFound.ToString() + " file(s) not found";
 					Game.AddMessage(NotFound, MessageManager.MessageDependency.None, Interface.GameMode.Expert, MessageColor.Magenta, Game.SecondsSinceMidnight + 10.0, null);
-					
+
 				}
 				if (errors != 0 & warnings != 0)
 				{
@@ -945,10 +949,13 @@ namespace OpenBve
 				CPreciseTimer.GetElapsedTime();
 				this.ProcessEvents();
 				if (this.IsExiting)
+				{
 					Loading.Cancel = true;
+				}
+
 				Renderer.DrawLoadingScreen();
 				Program.currentGameWindow.SwapBuffers();
-				
+
 				if (Loading.JobAvailable)
 				{
 					while (jobs.Count > 0)
@@ -969,14 +976,18 @@ namespace OpenBve
 				double time = CPreciseTimer.GetElapsedTime();
 				double wait = 1000.0 / 60.0 - time * 1000 - 50;
 				if (wait > 0)
+				{
 					Thread.Sleep((int)(wait));
+				}
 			}
-			if(!Loading.Cancel)
+			if (!Loading.Cancel)
 			{
 				GL.PopMatrix();
 				GL.MatrixMode(MatrixMode.Projection);
 				SetupSimulation();
-			} else {
+			}
+			else
+			{
 				this.Exit();
 			}
 		}
@@ -984,7 +995,7 @@ namespace OpenBve
 		private static readonly object jobLock = new object();
 		private static Queue<ThreadStart> jobs;
 		private static Queue<object> locks;
-		
+
 		/// <summary>This method is used during loading to run commands requiring an OpenGL context in the main render loop</summary>
 		/// <param name="job">The OpenGL command</param>
 		internal static void RunInRenderThread(ThreadStart job)

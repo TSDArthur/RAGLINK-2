@@ -1,6 +1,6 @@
-﻿using System;
+﻿using OpenBveApi.Interface;
+using System;
 using System.Globalization;
-using OpenBveApi.Interface;
 
 namespace OpenBve
 {
@@ -21,10 +21,17 @@ namespace OpenBve
 						byte[] Data = Reader.ReadBytes(Identifier.Length);
 						for (int i = 0; i < Identifier.Length; i++)
 						{
-							if (Identifier[i] != Data[i]) throw new System.IO.InvalidDataException();
+							if (Identifier[i] != Data[i])
+							{
+								throw new System.IO.InvalidDataException();
+							}
 						}
 						short Number = Reader.ReadInt16();
-						if (Version != Number) throw new System.IO.InvalidDataException();
+						if (Version != Number)
+						{
+							throw new System.IO.InvalidDataException();
+						}
+
 						Game.LogRouteName = Reader.ReadString();
 						Game.LogTrainName = Reader.ReadString();
 						Game.LogDateTime = DateTime.FromBinary(Reader.ReadInt64());
@@ -61,10 +68,14 @@ namespace OpenBve
 						Data = Reader.ReadBytes(Identifier.Length);
 						for (int i = 0; i < Identifier.Length; i++)
 						{
-							if (Identifier[i] != Data[i]) throw new System.IO.InvalidDataException();
+							if (Identifier[i] != Data[i])
+							{
+								throw new System.IO.InvalidDataException();
+							}
 						}
 						Reader.Close();
-					} Stream.Close();
+					}
+					Stream.Close();
 				}
 			}
 			catch
@@ -95,14 +106,14 @@ namespace OpenBve
 					//It should be possible to spin up a stream in a separate thread which then continously appends
 					using (System.IO.BinaryWriter Writer = new System.IO.BinaryWriter(Stream, System.Text.Encoding.UTF8))
 					{
-						byte[] Identifier = new byte[] {111, 112, 101, 110, 66, 86, 69, 95, 76, 79, 71, 83};
+						byte[] Identifier = new byte[] { 111, 112, 101, 110, 66, 86, 69, 95, 76, 79, 71, 83 };
 						const short Version = 1;
 						Writer.Write(Identifier);
 						Writer.Write(Version);
 						Writer.Write(Game.LogRouteName);
 						Writer.Write(Game.LogTrainName);
 						Writer.Write(Game.LogDateTime.ToBinary());
-						Writer.Write((short) Interface.CurrentOptions.GameMode);
+						Writer.Write((short)Interface.CurrentOptions.GameMode);
 						Writer.Write(Game.BlackBoxEntryCount);
 						for (int i = 0; i < Game.BlackBoxEntryCount; i++)
 						{
@@ -112,11 +123,11 @@ namespace OpenBve
 							Writer.Write(Game.BlackBoxEntries[i].Acceleration);
 							Writer.Write(Game.BlackBoxEntries[i].ReverserDriver);
 							Writer.Write(Game.BlackBoxEntries[i].ReverserSafety);
-							Writer.Write((short) Game.BlackBoxEntries[i].PowerDriver);
-							Writer.Write((short) Game.BlackBoxEntries[i].PowerSafety);
-							Writer.Write((short) Game.BlackBoxEntries[i].BrakeDriver);
-							Writer.Write((short) Game.BlackBoxEntries[i].BrakeSafety);
-							Writer.Write((short) Game.BlackBoxEntries[i].EventToken);
+							Writer.Write((short)Game.BlackBoxEntries[i].PowerDriver);
+							Writer.Write((short)Game.BlackBoxEntries[i].PowerSafety);
+							Writer.Write((short)Game.BlackBoxEntries[i].BrakeDriver);
+							Writer.Write((short)Game.BlackBoxEntries[i].BrakeSafety);
+							Writer.Write((short)Game.BlackBoxEntries[i].EventToken);
 						}
 
 						Writer.Write(Game.ScoreLogCount);
@@ -125,11 +136,11 @@ namespace OpenBve
 							Writer.Write(Game.ScoreLogs[i].Time);
 							Writer.Write(Game.ScoreLogs[i].Position);
 							Writer.Write(Game.ScoreLogs[i].Value);
-							Writer.Write((short) Game.ScoreLogs[i].TextToken);
+							Writer.Write((short)Game.ScoreLogs[i].TextToken);
 						}
 
 						Writer.Write(Game.CurrentScore.Maximum);
-						Identifier = new byte[] {95, 102, 105, 108, 101, 69, 78, 68};
+						Identifier = new byte[] { 95, 102, 105, 108, 101, 69, 78, 68 };
 						Writer.Write(Identifier);
 						Writer.Close();
 					}
@@ -189,7 +200,8 @@ namespace OpenBve
 							Builder.Append("\r\n");
 						}
 						System.IO.File.WriteAllText(File, Builder.ToString(), new System.Text.UTF8Encoding(true));
-					} break;
+					}
+					break;
 				// formatted text
 				case BlackBoxFormat.FormattedText:
 					{
@@ -337,8 +349,10 @@ namespace OpenBve
 								if (j != 0)
 								{
 									Builder.Append('╤');
-								} Builder.Append('═', Widths[j] + 2);
-							} Builder.Append("╣\r\n");
+								}
+								Builder.Append('═', Widths[j] + 2);
+							}
+							Builder.Append("╣\r\n");
 						}
 						for (int i = 0; i < Lines.Length; i++)
 						{
@@ -351,14 +365,20 @@ namespace OpenBve
 									if (j != 0)
 									{
 										Builder.Append('┼');
-									} Builder.Append('─', Widths[j] + 2);
-								} Builder.Append("╢\r\n");
+									}
+									Builder.Append('─', Widths[j] + 2);
+								}
+								Builder.Append("╢\r\n");
 							}
 							// cell content
 							Builder.Append('║');
 							for (int j = 0; j < Columns; j++)
 							{
-								if (j != 0) Builder.Append('│');
+								if (j != 0)
+								{
+									Builder.Append('│');
+								}
+
 								Builder.Append(' ');
 								if (i != 0 & j <= 3)
 								{
@@ -369,7 +389,8 @@ namespace OpenBve
 									Builder.Append(Lines[i][j].PadRight(Widths[j], ' '));
 								}
 								Builder.Append(' ');
-							} Builder.Append("║\r\n");
+							}
+							Builder.Append("║\r\n");
 						}
 						{ // bottom border row
 							Builder.Append('╚');
@@ -378,11 +399,14 @@ namespace OpenBve
 								if (j != 0)
 								{
 									Builder.Append('╧');
-								} Builder.Append('═', Widths[j] + 2);
-							} Builder.Append('╝');
+								}
+								Builder.Append('═', Widths[j] + 2);
+							}
+							Builder.Append('╝');
 						}
 						System.IO.File.WriteAllText(File, Builder.ToString(), new System.Text.UTF8Encoding(true));
-					} break;
+					}
+					break;
 			}
 		}
 

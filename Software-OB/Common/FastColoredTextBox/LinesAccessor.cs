@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FastColoredTextBoxNS
 {
@@ -16,8 +15,12 @@ namespace FastColoredTextBoxNS
         public int IndexOf(string item)
         {
             for (int i = 0; i < ts.Count; i++)
+            {
                 if (ts[i].Text == item)
+                {
                     return i;
+                }
+            }
 
             return -1;
         }
@@ -57,8 +60,12 @@ namespace FastColoredTextBoxNS
         public bool Contains(string item)
         {
             for (int i = 0; i < ts.Count; i++)
+            {
                 if (ts[i].Text == item)
+                {
                     return true;
+                }
+            }
 
             return false;
         }
@@ -66,7 +73,9 @@ namespace FastColoredTextBoxNS
         public void CopyTo(string[] array, int arrayIndex)
         {
             for (int i = 0; i < ts.Count; i++)
+            {
                 array[i + arrayIndex] = ts[i].Text;
+            }
         }
 
         public int Count
@@ -87,7 +96,9 @@ namespace FastColoredTextBoxNS
         public IEnumerator<string> GetEnumerator()
         {
             for (int i = 0; i < ts.Count; i++)
+            {
                 yield return ts[i].Text;
+            }
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()

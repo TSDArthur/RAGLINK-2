@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Audio.OpenAL;
+using System;
+using System.IO;
 
 namespace OpenBve
 {
@@ -147,7 +147,11 @@ namespace OpenBve
 		{
 			for (int i = 0; i < BufferCount; i++)
 			{
-				if (!(Buffers[i].Origin is PathOrigin)) continue;
+				if (!(Buffers[i].Origin is PathOrigin))
+				{
+					continue;
+				}
+
 				if (((PathOrigin)Buffers[i].Origin).Path == path)
 				{
 					return Buffers[i];

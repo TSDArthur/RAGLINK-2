@@ -1,10 +1,10 @@
 ﻿using OpenBveApi.Colors;
 using OpenBveApi.Graphics;
+using OpenBveApi.Objects;
 using OpenBveApi.Textures;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Vector3 = OpenBveApi.Math.Vector3;
-using OpenBveApi.Objects;
 
 namespace OpenBve
 {
@@ -82,7 +82,7 @@ namespace OpenBve
 		private const float inv255 = 1.0f / 255.0f;
 
 		// render scene
-		
+
 		internal static void RenderScene(double TimeElapsed)
 		{
 			// initialize
@@ -544,7 +544,11 @@ namespace OpenBve
 			if (Material.BlendMode == MeshMaterialBlendMode.Additive)
 			{
 				factor = 1.0f;
-				if (!BlendEnabled) GL.Enable(EnableCap.Blend);
+				if (!BlendEnabled)
+				{
+					GL.Enable(EnableCap.Blend);
+				}
+
 				GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.One);
 				if (FogEnabled)
 				{
@@ -554,7 +558,11 @@ namespace OpenBve
 			else if (Material.NighttimeTexture == null)
 			{
 				float blend = inv255 * (float)Material.DaytimeNighttimeBlend + 1.0f - OptionLightingResultingAmount;
-				if (blend > 1.0f) blend = 1.0f;
+				if (blend > 1.0f)
+				{
+					blend = 1.0f;
+				}
+
 				factor = 1.0f - 0.7f * blend;
 			}
 			else
@@ -626,7 +634,7 @@ namespace OpenBve
 				{
 					GL.Color4(inv255 * (float)Material.Color.R * factor, inv255 * Material.Color.G * factor, inv255 * (float)Material.Color.B * factor, inv255 * (float)Material.Color.A);
 				}
-				
+
 			}
 			if ((Material.Flags & MeshMaterial.EmissiveColorMask) != 0)
 			{
@@ -646,7 +654,7 @@ namespace OpenBve
 						GL.TexCoord2(Vertices[Face.Vertices[j].Index].TextureCoordinates.X, Vertices[Face.Vertices[j].Index].TextureCoordinates.Y);
 						if (Vertices[Face.Vertices[j].Index] is ColoredVertex)
 						{
-							ColoredVertex v = (ColoredVertex) Vertices[Face.Vertices[j].Index];
+							ColoredVertex v = (ColoredVertex)Vertices[Face.Vertices[j].Index];
 							GL.Color3(v.Color.R, v.Color.G, v.Color.B);
 						}
 						GL.Vertex3((float)(Vertices[Face.Vertices[j].Index].Coordinates.X - Camera.X), (float)(Vertices[Face.Vertices[j].Index].Coordinates.Y - Camera.Y), (float)(Vertices[Face.Vertices[j].Index].Coordinates.Z - Camera.Z));
@@ -659,7 +667,7 @@ namespace OpenBve
 						GL.TexCoord2(Vertices[Face.Vertices[j].Index].TextureCoordinates.X, Vertices[Face.Vertices[j].Index].TextureCoordinates.Y);
 						if (Vertices[Face.Vertices[j].Index] is ColoredVertex)
 						{
-							ColoredVertex v = (ColoredVertex) Vertices[Face.Vertices[j].Index];
+							ColoredVertex v = (ColoredVertex)Vertices[Face.Vertices[j].Index];
 							GL.Color3(v.Color.R, v.Color.G, v.Color.B);
 						}
 						GL.Vertex3((float)(Vertices[Face.Vertices[j].Index].Coordinates.X - Camera.X), (float)(Vertices[Face.Vertices[j].Index].Coordinates.Y - Camera.Y), (float)(Vertices[Face.Vertices[j].Index].Coordinates.Z - Camera.Z));
@@ -675,7 +683,7 @@ namespace OpenBve
 						GL.Normal3(Face.Vertices[j].Normal.X, Face.Vertices[j].Normal.Y, Face.Vertices[j].Normal.Z);
 						if (Vertices[Face.Vertices[j].Index] is ColoredVertex)
 						{
-							ColoredVertex v = (ColoredVertex) Vertices[Face.Vertices[j].Index];
+							ColoredVertex v = (ColoredVertex)Vertices[Face.Vertices[j].Index];
 							GL.Color3(v.Color.R, v.Color.G, v.Color.B);
 						}
 						GL.Vertex3((float)(Vertices[Face.Vertices[j].Index].Coordinates.X - Camera.X), (float)(Vertices[Face.Vertices[j].Index].Coordinates.Y - Camera.Y), (float)(Vertices[Face.Vertices[j].Index].Coordinates.Z - Camera.Z));
@@ -687,7 +695,7 @@ namespace OpenBve
 					{
 						if (Vertices[Face.Vertices[j].Index] is ColoredVertex)
 						{
-							ColoredVertex v = (ColoredVertex) Vertices[Face.Vertices[j].Index];
+							ColoredVertex v = (ColoredVertex)Vertices[Face.Vertices[j].Index];
 							GL.Color3(v.Color.R, v.Color.G, v.Color.B);
 						}
 						GL.Vertex3((float)(Vertices[Face.Vertices[j].Index].Coordinates.X - Camera.X), (float)(Vertices[Face.Vertices[j].Index].Coordinates.Y - Camera.Y), (float)(Vertices[Face.Vertices[j].Index].Coordinates.Z - Camera.Z));
@@ -734,13 +742,20 @@ namespace OpenBve
 				{
 					alphafactor = (float)Glow.GetDistanceFactor(Vertices, ref Face, Material.GlowAttenuationData, Camera);
 					float blend = inv255 * (float)Material.DaytimeNighttimeBlend + 1.0f - OptionLightingResultingAmount;
-					if (blend > 1.0f) blend = 1.0f;
+					if (blend > 1.0f)
+					{
+						blend = 1.0f;
+					}
+
 					alphafactor *= blend;
 				}
 				else
 				{
 					alphafactor = inv255 * (float)Material.DaytimeNighttimeBlend + 1.0f - OptionLightingResultingAmount;
-					if (alphafactor > 1.0f) alphafactor = 1.0f;
+					if (alphafactor > 1.0f)
+					{
+						alphafactor = 1.0f;
+					}
 				}
 				if (OptionWireframe)
 				{
@@ -750,7 +765,7 @@ namespace OpenBve
 				{
 					GL.Color4(inv255 * (float)Material.Color.R * factor, inv255 * Material.Color.G * factor, inv255 * (float)Material.Color.B * factor, inv255 * (float)Material.Color.A * alphafactor);
 				}
-				
+
 				if ((Material.Flags & MeshMaterial.EmissiveColorMask) != 0)
 				{
 					GL.Material(MaterialFace.FrontAndBack, MaterialParameter.Emission, new float[] { inv255 * (float)Material.EmissiveColor.R, inv255 * (float)Material.EmissiveColor.G, inv255 * (float)Material.EmissiveColor.B, 1.0f });
@@ -764,7 +779,7 @@ namespace OpenBve
 					GL.TexCoord2(Vertices[Face.Vertices[j].Index].TextureCoordinates.X, Vertices[Face.Vertices[j].Index].TextureCoordinates.Y);
 					if (Vertices[Face.Vertices[j].Index] is ColoredVertex)
 					{
-						ColoredVertex v = (ColoredVertex) Vertices[Face.Vertices[j].Index];
+						ColoredVertex v = (ColoredVertex)Vertices[Face.Vertices[j].Index];
 						GL.Color3(v.Color.R, v.Color.G, v.Color.B);
 					}
 					GL.Vertex3((float)(Vertices[Face.Vertices[j].Index].Coordinates.X - Camera.X), (float)(Vertices[Face.Vertices[j].Index].Coordinates.Y - Camera.Y), (float)(Vertices[Face.Vertices[j].Index].Coordinates.Z - Camera.Z));
@@ -797,13 +812,17 @@ namespace OpenBve
 			if (Material.BlendMode == MeshMaterialBlendMode.Additive)
 			{
 				GL.BlendFunc(BlendingFactor.SrcAlpha, BlendingFactor.OneMinusSrcAlpha);
-				if (!BlendEnabled) GL.Disable(EnableCap.Blend);
+				if (!BlendEnabled)
+				{
+					GL.Disable(EnableCap.Blend);
+				}
+
 				if (FogEnabled)
 				{
 					GL.Enable(EnableCap.Fog);
 				}
 			}
 		}
-		
+
 	}
 }

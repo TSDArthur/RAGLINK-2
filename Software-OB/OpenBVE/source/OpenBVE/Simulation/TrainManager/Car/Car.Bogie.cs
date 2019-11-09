@@ -1,6 +1,6 @@
-﻿using System;
-using OpenBveApi.Math;
+﻿using OpenBveApi.Math;
 using OpenBveApi.Objects;
+using System;
 
 namespace OpenBve
 {
@@ -79,8 +79,16 @@ namespace OpenBve
 					if (Brightness != 0.0f)
 					{
 						Brightness = (float)(FrontAxle.Follower.TrackPosition - baseCar.Brightness.PreviousTrackPosition) / Brightness;
-						if (Brightness < 0.0f) Brightness = 0.0f;
-						if (Brightness > 1.0f) Brightness = 1.0f;
+						if (Brightness < 0.0f)
+						{
+							Brightness = 0.0f;
+						}
+
+						if (Brightness > 1.0f)
+						{
+							Brightness = 1.0f;
+						}
+
 						Brightness = baseCar.Brightness.PreviousBrightness * (1.0f - Brightness) + baseCar.Brightness.NextBrightness * Brightness;
 					}
 					else
@@ -126,7 +134,7 @@ namespace OpenBve
 					CarSections[j].Groups[0].Elements[0] = new ObjectManager.AnimatedObject
 					{
 						States = new ObjectManager.AnimatedObjectState[1]
-						
+
 					};
 					CarSections[j].Groups[0].Elements[0].States[0].Position = Vector3.Zero;
 					CarSections[j].Groups[0].Elements[0].States[0].Object = s;
@@ -232,12 +240,12 @@ namespace OpenBve
 						Up = Vector3.Cross(d, s);
 					}
 					// cant and radius
-					
+
 					//TODO: This currently uses the figures from the base car
 					// apply position due to cant/toppling
 					{
 						double a = baseCar.Specs.CurrentRollDueToTopplingAngle +
-						           baseCar.Specs.CurrentRollDueToCantAngle;
+								   baseCar.Specs.CurrentRollDueToCantAngle;
 						double x = Math.Sign(a) * 0.5 * Game.RouteRailGauge * (1.0 - Math.Cos(a));
 						double y = Math.Abs(0.5 * Game.RouteRailGauge * Math.Sin(a));
 						Vector3 c = new Vector3(s.X * x + Up.X * y, s.Y * x + Up.Y * y, s.Z * x + Up.Z * y);
@@ -247,7 +255,7 @@ namespace OpenBve
 					// apply rolling
 					{
 						double a = -baseCar.Specs.CurrentRollDueToTopplingAngle -
-						           baseCar.Specs.CurrentRollDueToCantAngle;
+								   baseCar.Specs.CurrentRollDueToCantAngle;
 						double cosa = Math.Cos(a);
 						double sina = Math.Sin(a);
 						s.Rotate(d, cosa, sina);

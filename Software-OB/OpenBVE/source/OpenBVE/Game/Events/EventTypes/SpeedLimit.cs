@@ -1,6 +1,6 @@
-﻿using System;
-using OpenBveApi.Colors;
+﻿using OpenBveApi.Colors;
 using OpenBveApi.Interface;
+using System;
 
 namespace OpenBve
 {
@@ -26,7 +26,7 @@ namespace OpenBve
 				}
 				if (Train.RouteLimits == null)
 				{
-					Train.RouteLimits = new double[] {};
+					Train.RouteLimits = new double[] { };
 				}
 				if (Direction < 0)
 				{

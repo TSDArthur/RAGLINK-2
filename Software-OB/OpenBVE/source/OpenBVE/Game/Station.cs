@@ -29,7 +29,7 @@ namespace OpenBve
 			/// <summary>ATC should be used</summary>
 			Atc = 1
 		}
-		
+
 		internal class Station : OpenBveApi.Runtime.Station
 		{
 			/// <summary>The ratio of passengers at this station (100 is a standard, fully loaded train)</summary>

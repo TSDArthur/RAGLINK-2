@@ -1,16 +1,15 @@
-﻿using System;
+﻿using OpenBve.Formats.MsTs;
+using OpenBveApi.Colors;
+using OpenBveApi.FunctionScripting;
+using OpenBveApi.Interface;
+using OpenBveApi.Math;
+using OpenBveApi.Objects;
+using SharpCompress.Compressors;
+using SharpCompress.Compressors.Deflate;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using OpenBveApi.Math;
-using OpenBveApi.Colors;
-using OpenBveApi.Objects;
-using OpenBve.Formats.MsTs;
-using OpenBveApi.FunctionScripting;
-using OpenBveApi.Interface;
-using OpenBveApi.Textures;
-using SharpCompress.Compressors;
-using SharpCompress.Compressors.Deflate;
 
 // Stop ReSharper complaining about unused stuff:
 // We need to load this sequentially anyway, and
@@ -104,7 +103,7 @@ namespace OpenBve
 				{
 					Material = material;
 				}
-				
+
 			}
 		}
 
@@ -252,10 +251,10 @@ namespace OpenBve
 
 						for (int j = 0; j < Object.Mesh.Faces[mf + i].Vertices.Length; j++)
 						{
-							Object.Mesh.Faces[mf + i].Vertices[j].Index += (ushort) mv;
+							Object.Mesh.Faces[mf + i].Vertices[j].Index += (ushort)mv;
 						}
 
-						Object.Mesh.Faces[mf + i].Material += (ushort) mm;
+						Object.Mesh.Faces[mf + i].Material += (ushort)mm;
 					}
 
 					for (int i = 0; i < materials.Count; i++)
@@ -371,7 +370,7 @@ namespace OpenBve
 					TextualBlock block = new TextualBlock(s, KujuTokenID.shape);
 					ParseBlock(block, ref shape);
 				}
-					
+
 			}
 			else if (subHeader[7] != 'b')
 			{
@@ -381,14 +380,14 @@ namespace OpenBve
 			{
 				using (BinaryReader reader = new BinaryReader(fb))
 				{
-					KujuTokenID currentToken = (KujuTokenID) reader.ReadUInt16();
+					KujuTokenID currentToken = (KujuTokenID)reader.ReadUInt16();
 					if (currentToken != KujuTokenID.shape)
 					{
 						throw new Exception(); //Shape definition
 					}
-					reader.ReadUInt16(); 
+					reader.ReadUInt16();
 					uint remainingBytes = reader.ReadUInt32();
-					byte[] newBytes = reader.ReadBytes((int) remainingBytes);
+					byte[] newBytes = reader.ReadBytes((int)remainingBytes);
 					BinaryBlock block = new BinaryBlock(newBytes, KujuTokenID.shape);
 					ParseBlock(block, ref shape);
 				}
@@ -454,7 +453,7 @@ namespace OpenBve
 			int[] t = null;
 			ParseBlock(block, ref shape, ref v, ref t);
 		}
-		
+
 
 		private static void ParseBlock(Block block, ref MsTsShape shape, ref Vertex vertex, ref int[] intArray)
 		{
@@ -551,7 +550,7 @@ namespace OpenBve
 				case KujuTokenID.prim_state:
 					flags = block.ReadUInt32();
 					int shader = block.ReadInt32();
-					int[] texIdxs = {};
+					int[] texIdxs = { };
 					newBlock = block.ReadSubBlock(KujuTokenID.tex_idxs);
 					ParseBlock(newBlock, ref shape, ref texIdxs);
 
@@ -603,7 +602,7 @@ namespace OpenBve
 					break;
 				case KujuTokenID.texture:
 					int imageIDX = block.ReadInt32();
-					int filterMode = (int) block.ReadUInt32();
+					int filterMode = (int)block.ReadUInt32();
 					float mipmapLODBias = block.ReadSingle();
 					uint borderColor = 0xff000000U;
 					if (block.Length() - block.Position() > 1)
@@ -620,8 +619,8 @@ namespace OpenBve
 					Texture t = new Texture();
 					t.fileName = shape.images[imageIDX];
 					t.filterMode = filterMode;
-					t.mipmapLODBias = (int) mipmapLODBias;
-					t.borderColor = new Color32((byte) r, (byte) g, (byte) b, (byte) a);
+					t.mipmapLODBias = (int)mipmapLODBias;
+					t.borderColor = new Color32((byte)r, (byte)g, (byte)b, (byte)a);
 					shape.textures.Add(t);
 					break;
 				case KujuTokenID.textures:
@@ -856,7 +855,7 @@ namespace OpenBve
 					int capacity = block.ReadInt32(); //Count of the number of entries in the block, not the number of primitives
 					while (capacity > 0)
 					{
-						newBlock = block.ReadSubBlock(new KujuTokenID[] {KujuTokenID.prim_state_idx, KujuTokenID.indexed_trilist});
+						newBlock = block.ReadSubBlock(new KujuTokenID[] { KujuTokenID.prim_state_idx, KujuTokenID.indexed_trilist });
 						switch (newBlock.Token)
 						{
 							case KujuTokenID.prim_state_idx:
@@ -886,7 +885,7 @@ namespace OpenBve
 
 						capacity--;
 					}
-					
+
 					break;
 				case KujuTokenID.prim_state_idx:
 					shape.currentPrimitiveState = block.ReadInt32();
@@ -1003,7 +1002,7 @@ namespace OpenBve
 						int v2 = block.ReadInt32();
 						int v3 = block.ReadInt32();
 
-						currentLOD.subObjects[currentLOD.subObjects.Count - 1].faces.Add(new Face(new int[] {v1, v2, v3}, currentLOD.subObjects[currentLOD.subObjects.Count - 1].materials.Count -1));
+						currentLOD.subObjects[currentLOD.subObjects.Count - 1].faces.Add(new Face(new int[] { v1, v2, v3 }, currentLOD.subObjects[currentLOD.subObjects.Count - 1].materials.Count - 1));
 						remainingVertex--;
 					}
 

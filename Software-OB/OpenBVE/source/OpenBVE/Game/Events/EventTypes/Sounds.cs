@@ -1,5 +1,5 @@
-﻿using System;
-using OpenBveApi.Math;
+﻿using OpenBveApi.Math;
+using System;
 
 namespace OpenBve
 {
@@ -47,7 +47,11 @@ namespace OpenBve
 			/// <param name="CarIndex">The car index which triggered this sound</param>
 			internal override void Trigger(int Direction, EventTriggerType TriggerType, TrainManager.Train Train, int CarIndex)
 			{
-				if (SuppressSoundEvents) return;
+				if (SuppressSoundEvents)
+				{
+					return;
+				}
+
 				if (TriggerType == EventTriggerType.FrontCarFrontAxle | TriggerType == EventTriggerType.OtherCarFrontAxle | TriggerType == EventTriggerType.OtherCarRearAxle | TriggerType == EventTriggerType.RearCarRearAxle)
 				{
 					if (!PlayerTrainOnly | Train == TrainManager.PlayerTrain)
@@ -97,14 +101,22 @@ namespace OpenBve
 			/// <param name="CarIndex">The car index which triggered this sound</param>
 			internal override void Trigger(int Direction, EventTriggerType TriggerType, TrainManager.Train Train, int CarIndex)
 			{
-				if (SuppressSoundEvents) return;
+				if (SuppressSoundEvents)
+				{
+					return;
+				}
+
 				if (TriggerType == EventTriggerType.FrontCarFrontAxle | TriggerType == EventTriggerType.OtherCarFrontAxle | TriggerType == EventTriggerType.OtherCarRearAxle | TriggerType == EventTriggerType.RearCarRearAxle)
 				{
 					Vector3 p;
 					Sounds.SoundBuffer buffer;
 					if (TriggerType == EventTriggerType.FrontCarFrontAxle | TriggerType == EventTriggerType.OtherCarFrontAxle)
 					{
-						if (Train.Specs.CurrentAverageSpeed <= 0.0) return;
+						if (Train.Specs.CurrentAverageSpeed <= 0.0)
+						{
+							return;
+						}
+
 						int bufferIndex = Train.Cars[CarIndex].FrontAxle.RunIndex;
 						if (Train.Cars[CarIndex].FrontAxle.PointSounds == null || Train.Cars[CarIndex].FrontAxle.PointSounds.Length == 0)
 						{
@@ -112,7 +124,7 @@ namespace OpenBve
 							return;
 						}
 						if (bufferIndex > Train.Cars[CarIndex].FrontAxle.PointSounds.Length - 1
-						    || Train.Cars[CarIndex].FrontAxle.PointSounds[bufferIndex].Buffer == null)
+							|| Train.Cars[CarIndex].FrontAxle.PointSounds[bufferIndex].Buffer == null)
 						{
 							//If the switch sound does not exist, return zero
 							//Required to handle legacy trains which don't have idx specific run sounds defined
@@ -124,8 +136,8 @@ namespace OpenBve
 					else
 					{
 						return; // HACK: Don't trigger sound for the rear axles
-						//buffer = Train.Cars[CarIndex].RearAxle.PointSounds.Buffer;
-						//p = Train.Cars[CarIndex].RearAxle.PointSounds.Position;
+								//buffer = Train.Cars[CarIndex].RearAxle.PointSounds.Buffer;
+								//p = Train.Cars[CarIndex].RearAxle.PointSounds.Position;
 					}
 					if (buffer != null)
 					{

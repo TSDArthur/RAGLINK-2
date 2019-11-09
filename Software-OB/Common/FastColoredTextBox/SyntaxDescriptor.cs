@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using System;
 
 namespace FastColoredTextBoxNS
 {
-    public class SyntaxDescriptor: IDisposable
+    public class SyntaxDescriptor : IDisposable
     {
         public char leftBracket = '(';
         public char rightBracket = ')';
@@ -18,7 +18,9 @@ namespace FastColoredTextBoxNS
         public void Dispose()
         {
             foreach (var style in styles)
+            {
                 style.Dispose();
+            }
         }
     }
 

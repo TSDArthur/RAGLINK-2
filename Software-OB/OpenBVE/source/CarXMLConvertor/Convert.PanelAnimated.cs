@@ -27,11 +27,13 @@ namespace CarXmlConvertor
 			string fileOut = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(FileName), "panel.xml");
 			try
 			{
-                
+
 				using (StreamWriter sw = new StreamWriter(fileOut))
 				{
 					foreach (String s in newLines.Lines)
+					{
 						sw.WriteLine(s);
+					}
 				}
 			}
 			catch

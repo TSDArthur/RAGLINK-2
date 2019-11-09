@@ -1,19 +1,34 @@
+using OpenTK;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using OpenTK;
 
 namespace OpenBve
 {
 	internal class Cursor
 	{
-		internal string FileName { get; private set; }
-		internal MouseCursor MyCursor { get; private set; }
-		internal MouseCursor MyCursorPlus { get; private set; }
-		internal MouseCursor MyCursorMinus { get; private set; }
-		internal Image Image { get; private set; }
+		internal string FileName
+		{
+			get; private set;
+		}
+		internal MouseCursor MyCursor
+		{
+			get; private set;
+		}
+		internal MouseCursor MyCursorPlus
+		{
+			get; private set;
+		}
+		internal MouseCursor MyCursorMinus
+		{
+			get; private set;
+		}
+		internal Image Image
+		{
+			get; private set;
+		}
 
 		internal Cursor(string fileName, Bitmap image)
 		{
@@ -114,7 +129,7 @@ namespace OpenBve
 			{
 				try
 				{
-					using (var Fs= new FileStream(File, FileMode.Open, FileAccess.Read))
+					using (var Fs = new FileStream(File, FileMode.Open, FileAccess.Read))
 					{
 						Bitmap Image = new Bitmap(Fs);
 						CursorList.Add(new Cursor(Path.GetFileName(File), Image));

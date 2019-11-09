@@ -1,8 +1,8 @@
-using System;
 using OpenBve.BrakeSystems;
 using OpenBveApi.Math;
 using OpenBveApi.Objects;
 using OpenBveApi.Trains;
+using System;
 
 namespace OpenBve
 {
@@ -56,7 +56,7 @@ namespace OpenBve
 			internal World.CameraAlignment InteriorCamera;
 
 			internal bool HasInteriorView = false;
-			
+
 			internal Car(Train train, int index)
 			{
 				baseTrain = train;
@@ -222,12 +222,18 @@ namespace OpenBve
 					if (j == RearAxle.RunIndex | j == RearAxle.RunIndex)
 					{
 						Sounds.RunVolume[j] += 3.0 * TimeElapsed;
-						if (Sounds.RunVolume[j] > 1.0) Sounds.RunVolume[j] = 1.0;
+						if (Sounds.RunVolume[j] > 1.0)
+						{
+							Sounds.RunVolume[j] = 1.0;
+						}
 					}
 					else
 					{
 						Sounds.RunVolume[j] -= 3.0 * TimeElapsed;
-						if (Sounds.RunVolume[j] < 0.0) Sounds.RunVolume[j] = 0.0;
+						if (Sounds.RunVolume[j] < 0.0)
+						{
+							Sounds.RunVolume[j] = 0.0;
+						}
 					}
 					double gain = basegain * Sounds.RunVolume[j];
 					if (OpenBve.Sounds.IsPlaying(Sounds.Run[j].Source))
@@ -289,7 +295,11 @@ namespace OpenBve
 					}
 					if (ndir != 0)
 					{
-						if (ndir < 0) j = k;
+						if (ndir < 0)
+						{
+							j = k;
+						}
+
 						if (j < Sounds.Motor.Tables.Length)
 						{
 							int idx2 = idx;
@@ -310,7 +320,11 @@ namespace OpenBve
 									if (max != 0.0)
 									{
 										double cur = Specs.CurrentAccelerationOutput;
-										if (cur < 0.0) cur = 0.0;
+										if (cur < 0.0)
+										{
+											cur = 0.0;
+										}
+
 										gain *= Math.Pow(cur / max, 0.25);
 									}
 								}
@@ -321,7 +335,11 @@ namespace OpenBve
 									if (max != 0.0)
 									{
 										double cur = -Specs.CurrentAccelerationOutput;
-										if (cur < 0.0) cur = 0.0;
+										if (cur < 0.0)
+										{
+											cur = 0.0;
+										}
+
 										gain *= Math.Pow(cur / max, 0.25);
 									}
 								}
@@ -438,7 +456,7 @@ namespace OpenBve
 							ShowObject(CarSections[1]);
 							break;
 						}
-						else if(!this.HasInteriorView && this.CarSections.Length > 0)
+						else if (!this.HasInteriorView && this.CarSections.Length > 0)
 						{
 							this.CurrentCarSection = 0;
 							this.CarSections[0].Initialize(true);
@@ -532,8 +550,16 @@ namespace OpenBve
 					if (b != 0.0f)
 					{
 						b = (float)(FrontAxle.Follower.TrackPosition - Brightness.PreviousTrackPosition) / b;
-						if (b < 0.0f) b = 0.0f;
-						if (b > 1.0f) b = 1.0f;
+						if (b < 0.0f)
+						{
+							b = 0.0f;
+						}
+
+						if (b > 1.0f)
+						{
+							b = 1.0f;
+						}
+
 						b = Brightness.PreviousBrightness * (1.0f - b) + Brightness.NextBrightness * b;
 					}
 					else
@@ -746,12 +772,18 @@ namespace OpenBve
 						if (Specs.CurrentRollShakeDirection < 0.0)
 						{
 							Specs.CurrentRollShakeDirection += dr * TimeElapsed;
-							if (Specs.CurrentRollShakeDirection > 0.0) Specs.CurrentRollShakeDirection = 0.0;
+							if (Specs.CurrentRollShakeDirection > 0.0)
+							{
+								Specs.CurrentRollShakeDirection = 0.0;
+							}
 						}
 						else
 						{
 							Specs.CurrentRollShakeDirection -= dr * TimeElapsed;
-							if (Specs.CurrentRollShakeDirection < 0.0) Specs.CurrentRollShakeDirection = 0.0;
+							if (Specs.CurrentRollShakeDirection < 0.0)
+							{
+								Specs.CurrentRollShakeDirection = 0.0;
+							}
 						}
 					}
 					else
@@ -813,12 +845,18 @@ namespace OpenBve
 						if (da < 0.0)
 						{
 							v -= j * TimeElapsed;
-							if (v < a) v = a;
+							if (v < a)
+							{
+								v = a;
+							}
 						}
 						else
 						{
 							v += j * TimeElapsed;
-							if (v > a) v = a;
+							if (v > a)
+							{
+								v = a;
+							}
 						}
 						if (i == 0)
 						{
@@ -899,7 +937,10 @@ namespace OpenBve
 					if (Derailed)
 					{
 						td = Math.Abs(ab);
-						if (td < 0.1) td = 0.1;
+						if (td < 0.1)
+						{
+							td = 0.1;
+						}
 					}
 					else
 					{
@@ -908,13 +949,21 @@ namespace OpenBve
 					if (a > ta)
 					{
 						double da = a - ta;
-						if (td > da) td = da;
+						if (td > da)
+						{
+							td = da;
+						}
+
 						a -= td * TimeElapsed;
 					}
 					else if (a < ta)
 					{
 						double da = ta - a;
-						if (td > da) td = da;
+						if (td > da)
+						{
+							td = da;
+						}
+
 						a += td * TimeElapsed;
 					}
 					Specs.CurrentRollDueToTopplingAngle = a;
@@ -989,7 +1038,7 @@ namespace OpenBve
 					}
 				}
 				// flange sound
-				if(Sounds.Flange != null && Sounds.Flange.Length != 0)
+				if (Sounds.Flange != null && Sounds.Flange.Length != 0)
 				{
 					/*
 					 * This determines the amount of flange noise as a result of the angle at which the
@@ -1014,17 +1063,31 @@ namespace OpenBve
 					/*
 					 * This applies the settings.
 					 * */
-					if (basegain < 0.0) basegain = 0.0;
-					if (basegain > 0.75) basegain = 0.75;
+					if (basegain < 0.0)
+					{
+						basegain = 0.0;
+					}
+
+					if (basegain > 0.75)
+					{
+						basegain = 0.75;
+					}
+
 					if (pitch > Sounds.FlangePitch)
 					{
 						Sounds.FlangePitch += TimeElapsed;
-						if (Sounds.FlangePitch > pitch) Sounds.FlangePitch = pitch;
+						if (Sounds.FlangePitch > pitch)
+						{
+							Sounds.FlangePitch = pitch;
+						}
 					}
 					else
 					{
 						Sounds.FlangePitch -= TimeElapsed;
-						if (Sounds.FlangePitch < pitch) Sounds.FlangePitch = pitch;
+						if (Sounds.FlangePitch < pitch)
+						{
+							Sounds.FlangePitch = pitch;
+						}
 					}
 					pitch = Sounds.FlangePitch;
 					for (int i = 0; i < Sounds.Flange.Length; i++)
@@ -1032,12 +1095,18 @@ namespace OpenBve
 						if (i == this.FrontAxle.FlangeIndex | i == this.RearAxle.FlangeIndex)
 						{
 							Sounds.FlangeVolume[i] += TimeElapsed;
-							if (Sounds.FlangeVolume[i] > 1.0) Sounds.FlangeVolume[i] = 1.0;
+							if (Sounds.FlangeVolume[i] > 1.0)
+							{
+								Sounds.FlangeVolume[i] = 1.0;
+							}
 						}
 						else
 						{
 							Sounds.FlangeVolume[i] -= TimeElapsed;
-							if (Sounds.FlangeVolume[i] < 0.0) Sounds.FlangeVolume[i] = 0.0;
+							if (Sounds.FlangeVolume[i] < 0.0)
+							{
+								Sounds.FlangeVolume[i] = 0.0;
+							}
 						}
 						double gain = basegain * Sounds.FlangeVolume[i];
 						if (OpenBve.Sounds.IsPlaying(Sounds.Flange[i].Source))

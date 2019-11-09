@@ -1,9 +1,9 @@
-﻿using System;
-using OpenBveApi.Colors;
+﻿using OpenBveApi.Colors;
 using OpenBveApi.Graphics;
-using OpenBveApi.Textures;
 using OpenBveApi.Interface;
+using OpenBveApi.Textures;
 using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace OpenBve
 {
@@ -113,7 +113,7 @@ namespace OpenBve
 						{
 							t = Translations.QuickReferences.HandlePower + TrainManager.PlayerTrain.Handles.Power.Driver.ToString(Culture);
 						}
-						
+
 					}
 					Element.TransitionState = 0.0;
 					break;
@@ -171,7 +171,7 @@ namespace OpenBve
 							{
 								t = Translations.QuickReferences.HandleService;
 							}
-							
+
 						}
 					}
 					else
@@ -223,7 +223,7 @@ namespace OpenBve
 							{
 								t = Translations.QuickReferences.HandleBrake + TrainManager.PlayerTrain.Handles.Brake.Driver.ToString(Culture);
 							}
-							
+
 						}
 					}
 					Element.TransitionState = 0.0;
@@ -271,7 +271,7 @@ namespace OpenBve
 							{
 								t = Translations.QuickReferences.HandleService;
 							}
-							
+
 						}
 					}
 					else
@@ -299,7 +299,7 @@ namespace OpenBve
 							{
 								t = Translations.QuickReferences.HandleLocoBrake + TrainManager.PlayerTrain.Handles.LocoBrake.Driver.ToString(Culture);
 							}
-							
+
 						}
 					}
 					Element.TransitionState = 0.0;
@@ -373,90 +373,56 @@ namespace OpenBve
 					break;
 				case "doorsleft":
 				case "doorsright":
-				{
-					if ((LeftDoors & TrainManager.TrainDoorState.AllClosed) == 0 | (RightDoors & TrainManager.TrainDoorState.AllClosed) == 0)
 					{
-						Element.TransitionState -= speed * TimeElapsed;
-						if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
-					}
-					else
-					{
-						Element.TransitionState += speed * TimeElapsed;
-						if (Element.TransitionState > 1.0) Element.TransitionState = 1.0;
-					}
-					TrainManager.TrainDoorState Doors = Command == "doorsleft" ? LeftDoors : RightDoors;
-					if ((Doors & TrainManager.TrainDoorState.Mixed) != 0)
-					{
-						sc = MessageColor.Orange;
-					}
-					else if ((Doors & TrainManager.TrainDoorState.AllClosed) != 0)
-					{
-						sc = MessageColor.Gray;
-					}
-					else if (TrainManager.PlayerTrain.Specs.DoorCloseMode == TrainManager.DoorMode.Manual)
-					{
-						sc = MessageColor.Green;
-					}
-					else
-					{
-						sc = MessageColor.Blue;
-					}
-					t = Command == "doorsleft" ? Translations.QuickReferences.DoorsLeft : Translations.QuickReferences.DoorsRight;
-				} break;
-				case "stopleft":
-				case "stopright":
-				case "stopnone":
-				{
-					int s = TrainManager.PlayerTrain.Station;
-					if (s >= 0 && Game.PlayerStopsAtStation(s) && Interface.CurrentOptions.GameMode != Interface.GameMode.Expert)
-					{
-						bool cond;
-						if (Command == "stopleft")
-						{
-							cond = Game.Stations[s].OpenLeftDoors;
-						}
-						else if (Command == "stopright")
-						{
-							cond = Game.Stations[s].OpenRightDoors;
-						}
-						else
-						{
-							cond = !Game.Stations[s].OpenLeftDoors & !Game.Stations[s].OpenRightDoors;
-						}
-						if (TrainManager.PlayerTrain.StationState == TrainManager.TrainStopState.Pending & cond)
+						if ((LeftDoors & TrainManager.TrainDoorState.AllClosed) == 0 | (RightDoors & TrainManager.TrainDoorState.AllClosed) == 0)
 						{
 							Element.TransitionState -= speed * TimeElapsed;
-							if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
+							if (Element.TransitionState < 0.0)
+							{
+								Element.TransitionState = 0.0;
+							}
 						}
 						else
 						{
 							Element.TransitionState += speed * TimeElapsed;
-							if (Element.TransitionState > 1.0) Element.TransitionState = 1.0;
+							if (Element.TransitionState > 1.0)
+							{
+								Element.TransitionState = 1.0;
+							}
 						}
+						TrainManager.TrainDoorState Doors = Command == "doorsleft" ? LeftDoors : RightDoors;
+						if ((Doors & TrainManager.TrainDoorState.Mixed) != 0)
+						{
+							sc = MessageColor.Orange;
+						}
+						else if ((Doors & TrainManager.TrainDoorState.AllClosed) != 0)
+						{
+							sc = MessageColor.Gray;
+						}
+						else if (TrainManager.PlayerTrain.Specs.DoorCloseMode == TrainManager.DoorMode.Manual)
+						{
+							sc = MessageColor.Green;
+						}
+						else
+						{
+							sc = MessageColor.Blue;
+						}
+						t = Command == "doorsleft" ? Translations.QuickReferences.DoorsLeft : Translations.QuickReferences.DoorsRight;
 					}
-					else
+					break;
+				case "stopleft":
+				case "stopright":
+				case "stopnone":
 					{
-						Element.TransitionState += speed * TimeElapsed;
-						if (Element.TransitionState > 1.0) Element.TransitionState = 1.0;
-					}
-					t = Element.Text;
-				} break;
-				case "stoplefttick":
-				case "stoprighttick":
-				case "stopnonetick":
-				{
-					int s = TrainManager.PlayerTrain.Station;
-					if (s >= 0 && Game.PlayerStopsAtStation(s) && Interface.CurrentOptions.GameMode != Interface.GameMode.Expert)
-					{
-						int c = Game.Stations[s].GetStopIndex(TrainManager.PlayerTrain.Cars.Length);
-						if (c >= 0)
+						int s = TrainManager.PlayerTrain.Station;
+						if (s >= 0 && Game.PlayerStopsAtStation(s) && Interface.CurrentOptions.GameMode != Interface.GameMode.Expert)
 						{
 							bool cond;
-							if (Command == "stoplefttick")
+							if (Command == "stopleft")
 							{
 								cond = Game.Stations[s].OpenLeftDoors;
 							}
-							else if (Command == "stoprighttick")
+							else if (Command == "stopright")
 							{
 								cond = Game.Stations[s].OpenRightDoors;
 							}
@@ -467,58 +433,137 @@ namespace OpenBve
 							if (TrainManager.PlayerTrain.StationState == TrainManager.TrainStopState.Pending & cond)
 							{
 								Element.TransitionState -= speed * TimeElapsed;
-								if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
+								if (Element.TransitionState < 0.0)
+								{
+									Element.TransitionState = 0.0;
+								}
 							}
 							else
 							{
 								Element.TransitionState += speed * TimeElapsed;
-								if (Element.TransitionState > 1.0) Element.TransitionState = 1.0;
+								if (Element.TransitionState > 1.0)
+								{
+									Element.TransitionState = 1.0;
+								}
 							}
-							double d = TrainManager.PlayerTrain.StationDistanceToStopPoint;
-							double r;
-							if (d > 0.0)
-							{
-								r = d / Game.Stations[s].Stops[c].BackwardTolerance;
-							}
-							else
-							{
-								r = d / Game.Stations[s].Stops[c].ForwardTolerance;
-							}
-							if (r < -1.0) r = -1.0;
-							if (r > 1.0) r = 1.0;
-							y -= r * (double)Element.Value1;
 						}
 						else
 						{
 							Element.TransitionState += speed * TimeElapsed;
-							if (Element.TransitionState > 1.0) Element.TransitionState = 1.0;
+							if (Element.TransitionState > 1.0)
+							{
+								Element.TransitionState = 1.0;
+							}
+						}
+						t = Element.Text;
+					}
+					break;
+				case "stoplefttick":
+				case "stoprighttick":
+				case "stopnonetick":
+					{
+						int s = TrainManager.PlayerTrain.Station;
+						if (s >= 0 && Game.PlayerStopsAtStation(s) && Interface.CurrentOptions.GameMode != Interface.GameMode.Expert)
+						{
+							int c = Game.Stations[s].GetStopIndex(TrainManager.PlayerTrain.Cars.Length);
+							if (c >= 0)
+							{
+								bool cond;
+								if (Command == "stoplefttick")
+								{
+									cond = Game.Stations[s].OpenLeftDoors;
+								}
+								else if (Command == "stoprighttick")
+								{
+									cond = Game.Stations[s].OpenRightDoors;
+								}
+								else
+								{
+									cond = !Game.Stations[s].OpenLeftDoors & !Game.Stations[s].OpenRightDoors;
+								}
+								if (TrainManager.PlayerTrain.StationState == TrainManager.TrainStopState.Pending & cond)
+								{
+									Element.TransitionState -= speed * TimeElapsed;
+									if (Element.TransitionState < 0.0)
+									{
+										Element.TransitionState = 0.0;
+									}
+								}
+								else
+								{
+									Element.TransitionState += speed * TimeElapsed;
+									if (Element.TransitionState > 1.0)
+									{
+										Element.TransitionState = 1.0;
+									}
+								}
+								double d = TrainManager.PlayerTrain.StationDistanceToStopPoint;
+								double r;
+								if (d > 0.0)
+								{
+									r = d / Game.Stations[s].Stops[c].BackwardTolerance;
+								}
+								else
+								{
+									r = d / Game.Stations[s].Stops[c].ForwardTolerance;
+								}
+								if (r < -1.0)
+								{
+									r = -1.0;
+								}
+
+								if (r > 1.0)
+								{
+									r = 1.0;
+								}
+
+								y -= r * (double)Element.Value1;
+							}
+							else
+							{
+								Element.TransitionState += speed * TimeElapsed;
+								if (Element.TransitionState > 1.0)
+								{
+									Element.TransitionState = 1.0;
+								}
+							}
+						}
+						else
+						{
+							Element.TransitionState += speed * TimeElapsed;
+							if (Element.TransitionState > 1.0)
+							{
+								Element.TransitionState = 1.0;
+							}
+						}
+						t = Element.Text;
+					}
+					break;
+				case "clock":
+					{
+						int hours = (int)Math.Floor(Game.SecondsSinceMidnight);
+						int seconds = hours % 60; hours /= 60;
+						int minutes = hours % 60; hours /= 60;
+						hours %= 24;
+						t = hours.ToString(Culture).PadLeft(2, '0') + ":" + minutes.ToString(Culture).PadLeft(2, '0') + ":" + seconds.ToString(Culture).PadLeft(2, '0');
+						if (OptionClock)
+						{
+							Element.TransitionState -= speed * TimeElapsed;
+							if (Element.TransitionState < 0.0)
+							{
+								Element.TransitionState = 0.0;
+							}
+						}
+						else
+						{
+							Element.TransitionState += speed * TimeElapsed;
+							if (Element.TransitionState > 1.0)
+							{
+								Element.TransitionState = 1.0;
+							}
 						}
 					}
-					else
-					{
-						Element.TransitionState += speed * TimeElapsed;
-						if (Element.TransitionState > 1.0) Element.TransitionState = 1.0;
-					}
-					t = Element.Text;
-				} break;
-				case "clock":
-				{
-					int hours = (int)Math.Floor(Game.SecondsSinceMidnight);
-					int seconds = hours % 60; hours /= 60;
-					int minutes = hours % 60; hours /= 60;
-					hours %= 24;
-					t = hours.ToString(Culture).PadLeft(2, '0') + ":" + minutes.ToString(Culture).PadLeft(2, '0') + ":" + seconds.ToString(Culture).PadLeft(2, '0');
-					if (OptionClock)
-					{
-						Element.TransitionState -= speed * TimeElapsed;
-						if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
-					}
-					else
-					{
-						Element.TransitionState += speed * TimeElapsed;
-						if (Element.TransitionState > 1.0) Element.TransitionState = 1.0;
-					}
-				} break;
+					break;
 				case "gradient":
 					if (OptionGradient == GradientDisplayMode.Percentage)
 					{
@@ -532,7 +577,10 @@ namespace OpenBve
 							t = "Level";
 						}
 						Element.TransitionState -= speed * TimeElapsed;
-						if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
+						if (Element.TransitionState < 0.0)
+						{
+							Element.TransitionState = 0.0;
+						}
 					}
 					else if (OptionGradient == GradientDisplayMode.UnitOfChange)
 					{
@@ -546,7 +594,10 @@ namespace OpenBve
 							t = "Level";
 						}
 						Element.TransitionState -= speed * TimeElapsed;
-						if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
+						if (Element.TransitionState < 0.0)
+						{
+							Element.TransitionState = 0.0;
+						}
 					}
 					else if (OptionGradient == GradientDisplayMode.Permil)
 					{
@@ -560,7 +611,10 @@ namespace OpenBve
 							t = "Level";
 						}
 						Element.TransitionState -= speed * TimeElapsed;
-						if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
+						if (Element.TransitionState < 0.0)
+						{
+							Element.TransitionState = 0.0;
+						}
 					}
 					else
 					{
@@ -574,35 +628,49 @@ namespace OpenBve
 							t = "Level";
 						}
 						Element.TransitionState += speed * TimeElapsed;
-						if (Element.TransitionState > 1.0) Element.TransitionState = 1.0;
-					} break;
+						if (Element.TransitionState > 1.0)
+						{
+							Element.TransitionState = 1.0;
+						}
+					}
+					break;
 				case "speed":
 					if (OptionSpeed == SpeedDisplayMode.Kmph)
 					{
 						double kmph = Math.Abs(TrainManager.PlayerTrain.Specs.CurrentAverageSpeed) * 3.6;
 						t = kmph.ToString("0.00", Culture) + " km/h";
 						Element.TransitionState -= speed * TimeElapsed;
-						if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
+						if (Element.TransitionState < 0.0)
+						{
+							Element.TransitionState = 0.0;
+						}
 					}
 					else if (OptionSpeed == SpeedDisplayMode.Mph)
 					{
 						double mph = Math.Abs(TrainManager.PlayerTrain.Specs.CurrentAverageSpeed) * 2.2369362920544;
 						t = mph.ToString("0.00", Culture) + " mph";
 						Element.TransitionState -= speed * TimeElapsed;
-						if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
+						if (Element.TransitionState < 0.0)
+						{
+							Element.TransitionState = 0.0;
+						}
 					}
 					else
 					{
 						double mph = Math.Abs(TrainManager.PlayerTrain.Specs.CurrentAverageSpeed) * 2.2369362920544;
 						t = mph.ToString("0.00", Culture) + " mph";
 						Element.TransitionState += speed * TimeElapsed;
-						if (Element.TransitionState > 1.0) Element.TransitionState = 1.0;
-					} break;
+						if (Element.TransitionState > 1.0)
+						{
+							Element.TransitionState = 1.0;
+						}
+					}
+					break;
 				case "dist_next_station":
 					int i;
 					if (TrainManager.PlayerTrain.Station >= 0 && TrainManager.PlayerTrain.StationState != TrainManager.TrainStopState.Completed)
 					{
-					i = TrainManager.PlayerTrain.LastStation;
+						i = TrainManager.PlayerTrain.LastStation;
 					}
 					else
 					{
@@ -645,7 +713,10 @@ namespace OpenBve
 							t = "Pass: " + m.ToString("0.000", Culture) + " km";
 						}
 						Element.TransitionState -= speed * TimeElapsed;
-						if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
+						if (Element.TransitionState < 0.0)
+						{
+							Element.TransitionState = 0.0;
+						}
 					}
 					else if (OptionDistanceToNextStation == DistanceToNextStationDisplayMode.Mile)
 					{
@@ -660,7 +731,10 @@ namespace OpenBve
 						}
 						t += m.ToString("0.0000", Culture) + " miles";
 						Element.TransitionState -= speed * TimeElapsed;
-						if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
+						if (Element.TransitionState < 0.0)
+						{
+							Element.TransitionState = 0.0;
+						}
 					}
 					else
 					{
@@ -675,33 +749,51 @@ namespace OpenBve
 						}
 						t += m.ToString("0.0000", Culture) + " miles";
 						Element.TransitionState += speed * TimeElapsed;
-						if (Element.TransitionState > 1.0) Element.TransitionState = 1.0;
-					} break;
+						if (Element.TransitionState > 1.0)
+						{
+							Element.TransitionState = 1.0;
+						}
+					}
+					break;
 				case "fps":
 					int fps = (int)Math.Round(Game.InfoFrameRate);
 					t = fps.ToString(Culture) + " fps";
 					if (OptionFrameRates)
 					{
 						Element.TransitionState -= speed * TimeElapsed;
-						if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
+						if (Element.TransitionState < 0.0)
+						{
+							Element.TransitionState = 0.0;
+						}
 					}
 					else
 					{
 						Element.TransitionState += speed * TimeElapsed;
-						if (Element.TransitionState > 1.0) Element.TransitionState = 1.0;
-					} break;
+						if (Element.TransitionState > 1.0)
+						{
+							Element.TransitionState = 1.0;
+						}
+					}
+					break;
 				case "ai":
 					t = "A.I.";
 					if (TrainManager.PlayerTrain.AI != null)
 					{
 						Element.TransitionState -= speed * TimeElapsed;
-						if (Element.TransitionState < 0.0) Element.TransitionState = 0.0;
+						if (Element.TransitionState < 0.0)
+						{
+							Element.TransitionState = 0.0;
+						}
 					}
 					else
 					{
 						Element.TransitionState += speed * TimeElapsed;
-						if (Element.TransitionState > 1.0) Element.TransitionState = 1.0;
-					} break;
+						if (Element.TransitionState > 1.0)
+						{
+							Element.TransitionState = 1.0;
+						}
+					}
+					break;
 				case "score":
 					if (Interface.CurrentOptions.GameMode == Interface.GameMode.Arcade)
 					{
@@ -724,7 +816,8 @@ namespace OpenBve
 					{
 						Element.TransitionState = 1.0;
 						t = "";
-					} break;
+					}
+					break;
 				default:
 					t = Element.Text;
 					break;

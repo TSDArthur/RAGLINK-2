@@ -1,13 +1,13 @@
-﻿using System;
-using System.ComponentModel;
-using System.Globalization;
-using OpenBveApi.Interface;
+﻿using OpenBveApi.Interface;
 using OpenBveApi.Runtime;
 using OpenTK;
-using OpenTK.Input;
 using OpenTK.Graphics.OpenGL;
-using ButtonState = OpenTK.Input.ButtonState;
+using OpenTK.Input;
+using System;
+using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Forms;
+using ButtonState = OpenTK.Input.ButtonState;
 
 namespace OpenBve
 {
@@ -26,8 +26,8 @@ namespace OpenBve
 		internal static bool BlockKeyRepeat;
 		/// <summary>The current simulation time-factor</summary>
 		internal static int TimeFactor = 1;
-		
-		internal static formMain.MainDialogResult currentResult;
+
+		internal static FormMain.MainDialogResult currentResult;
 		//		internal static formRouteInformation RouteInformationForm;
 		//		internal static Thread RouteInfoThread;
 		//		internal static bool RouteInfoActive
@@ -43,7 +43,7 @@ namespace OpenBve
 
 		private static double kioskModeTimer;
 
-		internal static void StartLoopEx(formMain.MainDialogResult result)
+		internal static void StartLoopEx(FormMain.MainDialogResult result)
 		{
 			Sounds.Initialize();
 			//Process extra command line arguments supplied
@@ -287,7 +287,7 @@ namespace OpenBve
 						continue;
 				}
 
-				
+
 				switch (Interface.CurrentControls[i].Component)
 				{
 					case Interface.JoystickComponent.Axis:
@@ -360,11 +360,17 @@ namespace OpenBve
 									}
 									if (Interface.CurrentControls[i].DigitalState == Interface.DigitalControlState.Released | Interface.CurrentControls[i].DigitalState == Interface.DigitalControlState.ReleasedAcknowledged)
 									{
-										if (axisState > 0.67) Interface.CurrentControls[i].DigitalState = Interface.DigitalControlState.Pressed;
+										if (axisState > 0.67)
+										{
+											Interface.CurrentControls[i].DigitalState = Interface.DigitalControlState.Pressed;
+										}
 									}
 									else
 									{
-										if (axisState < 0.33) Interface.CurrentControls[i].DigitalState = Interface.DigitalControlState.Released;
+										if (axisState < 0.33)
+										{
+											Interface.CurrentControls[i].DigitalState = Interface.DigitalControlState.Released;
+										}
 									}
 								}
 							}
@@ -462,16 +468,19 @@ namespace OpenBve
 			World.VerticalViewingAngle = World.OriginalVerticalViewingAngle;
 		}
 
-		
+
 #if DEBUG
 
 		/// <summary>Checks whether an OpenGL error has occured this frame</summary>
 		/// <param name="Location">The location of the caller (The main loop or the loading screen loop)</param>
-		internal static void CheckForOpenGlError(string Location) {
+		internal static void CheckForOpenGlError(string Location)
+		{
 			var error = GL.GetError();
-			if (error != ErrorCode.NoError) {
+			if (error != ErrorCode.NoError)
+			{
 				string message = Location + ": ";
-				switch (error) {
+				switch (error)
+				{
 					case ErrorCode.InvalidEnum:
 						message += "GL_INVALID_ENUM";
 						break;

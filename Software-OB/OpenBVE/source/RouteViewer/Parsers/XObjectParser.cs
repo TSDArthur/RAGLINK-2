@@ -1,26 +1,31 @@
-﻿using System;
-using System.IO;
-using System.IO.Compression;
-using OpenBveApi.Colors;
+﻿using OpenBveApi.Colors;
+using OpenBveApi.Interface;
 using OpenBveApi.Math;
 using OpenBveApi.Objects;
+using OpenBveApi.Textures;
+using System;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
-using OpenBveApi.Textures;
-using OpenBveApi.Interface;
 
-namespace OpenBve {
-	internal static class XObjectParser {
+namespace OpenBve
+{
+	internal static class XObjectParser
+	{
 
 		// read object
-		internal static ObjectManager.StaticObject ReadObject(string FileName, Encoding Encoding) {
+		internal static ObjectManager.StaticObject ReadObject(string FileName, Encoding Encoding)
+		{
 			byte[] Data = System.IO.File.ReadAllBytes(FileName);
-			if (Data.Length < 16 || Data[0] != 120 | Data[1] != 111 | Data[2] != 102 | Data[3] != 32) {
+			if (Data.Length < 16 || Data[0] != 120 | Data[1] != 111 | Data[2] != 102 | Data[3] != 32)
+			{
 				// not an x object
 				Interface.AddMessage(MessageType.Error, false, "Invalid X object file encountered in " + FileName);
 				return null;
 			}
-			if (Data[4] != 48 | Data[5] != 51 | Data[6] != 48 | Data[7] != 50 & Data[7] != 51) {
+			if (Data[4] != 48 | Data[5] != 51 | Data[6] != 48 | Data[7] != 50 & Data[7] != 51)
+			{
 				// unrecognized version
 				System.Text.ASCIIEncoding Ascii = new System.Text.ASCIIEncoding();
 				string s = new string(Ascii.GetChars(Data, 4, 4));
@@ -28,49 +33,63 @@ namespace OpenBve {
 			}
 			// floating-point format
 			int FloatingPointSize;
-			if (Data[12] == 48 & Data[13] == 48 & Data[14] == 51 & Data[15] == 50) {
+			if (Data[12] == 48 & Data[13] == 48 & Data[14] == 51 & Data[15] == 50)
+			{
 				FloatingPointSize = 32;
-			} else if (Data[12] == 48 & Data[13] == 48 & Data[14] == 54 & Data[15] == 52) {
+			}
+			else if (Data[12] == 48 & Data[13] == 48 & Data[14] == 54 & Data[15] == 52)
+			{
 				FloatingPointSize = 64;
-			} else {
+			}
+			else
+			{
 				Interface.AddMessage(MessageType.Error, false, "Unsupported floating point format encountered in X object file " + FileName);
 				return null;
 			}
 			// supported floating point format
-			if (Data[8] == 116 & Data[9] == 120 & Data[10] == 116 & Data[11] == 32) {
+			if (Data[8] == 116 & Data[9] == 120 & Data[10] == 116 & Data[11] == 32)
+			{
 				// textual flavor
 				return LoadTextualX(FileName, System.IO.File.ReadAllText(FileName), Encoding);
-			} else if (Data[8] == 98 & Data[9] == 105 & Data[10] == 110 & Data[11] == 32) {
+			}
+			else if (Data[8] == 98 & Data[9] == 105 & Data[10] == 110 & Data[11] == 32)
+			{
 				// binary flavor
 				return LoadBinaryX(FileName, Data, 16, FloatingPointSize);
-			} else if (Data[8] == 116 & Data[9] == 122 & Data[10] == 105 & Data[11] == 112) {
+			}
+			else if (Data[8] == 116 & Data[9] == 122 & Data[10] == 105 & Data[11] == 112)
+			{
 				// compressed textual flavor
-				#if !DEBUG
+#if !DEBUG
 				try {
-					#endif
-					byte[] Uncompressed = Decompress(Data);
-					string Text = Encoding.GetString(Uncompressed);
-					return LoadTextualX(FileName, Text, Encoding);
-					#if !DEBUG
+#endif
+				byte[] Uncompressed = Decompress(Data);
+				string Text = Encoding.GetString(Uncompressed);
+				return LoadTextualX(FileName, Text, Encoding);
+#if !DEBUG
 				} catch (Exception ex) {
 					Interface.AddMessage(MessageType.Error, false, "An unexpected error occured (" + ex.Message + ") while attempting to decompress the binary X object file encountered in " + FileName);
 					return null;
 				}
-				#endif
-			} else if (Data[8] == 98 & Data[9] == 122 & Data[10] == 105 & Data[11] == 112) {
+#endif
+			}
+			else if (Data[8] == 98 & Data[9] == 122 & Data[10] == 105 & Data[11] == 112)
+			{
 				// compressed binary flavor
-				#if !DEBUG
+#if !DEBUG
 				try {
-					#endif
-					byte[] Uncompressed = Decompress(Data);
-					return LoadBinaryX(FileName, Uncompressed, 0, FloatingPointSize);
-					#if !DEBUG
+#endif
+				byte[] Uncompressed = Decompress(Data);
+				return LoadBinaryX(FileName, Uncompressed, 0, FloatingPointSize);
+#if !DEBUG
 				} catch (Exception ex) {
 					Interface.AddMessage(MessageType.Error, false, "An unexpected error occured (" + ex.Message + ") while attempting to decompress the binary X object file encountered in " + FileName);
 					return null;
 				}
-				#endif
-			} else {
+#endif
+			}
+			else
+			{
 				// unsupported flavor
 				Interface.AddMessage(MessageType.Error, false, "Unsupported X object file encountered in " + FileName);
 				return null;
@@ -80,19 +99,26 @@ namespace OpenBve {
 		// ================================
 
 		// decompress
-		private static byte[] Decompress(byte[] Data) {
+		private static byte[] Decompress(byte[] Data)
+		{
 			byte[] Target;
-			using (MemoryStream InputStream = new MemoryStream(Data)) {
+			using (MemoryStream InputStream = new MemoryStream(Data))
+			{
 				InputStream.Position = 26;
-				using (DeflateStream Deflate = new DeflateStream(InputStream, CompressionMode.Decompress, true)) {
-					using (MemoryStream OutputStream = new MemoryStream()) {
+				using (DeflateStream Deflate = new DeflateStream(InputStream, CompressionMode.Decompress, true))
+				{
+					using (MemoryStream OutputStream = new MemoryStream())
+					{
 						byte[] Buffer = new byte[4096];
-						while (true) {
+						while (true)
+						{
 							int Count = Deflate.Read(Buffer, 0, Buffer.Length);
-							if (Count != 0) {
+							if (Count != 0)
+							{
 								OutputStream.Write(Buffer, 0, Count);
 							}
-							if (Count != Buffer.Length) {
+							if (Count != Buffer.Length)
+							{
 								break;
 							}
 						}
@@ -108,11 +134,13 @@ namespace OpenBve {
 		// ================================
 
 		// template
-		private class Template {
+		private class Template
+		{
 			internal string Name;
 			internal string[] Members;
 			internal string Key;
-			internal Template(string Name, string[] Members) {
+			internal Template(string Name, string[] Members)
+			{
 				this.Name = Name;
 				this.Members = Members;
 			}
@@ -147,7 +175,8 @@ namespace OpenBve {
 		};
 
 		// data
-		private class Structure {
+		private class Structure
+		{
 			internal string Name;
 			internal string Key;
 			internal object[] Data;
@@ -163,9 +192,12 @@ namespace OpenBve {
 		private static Structure[] LoadedMaterials;
 
 		// get template
-		private static Template GetTemplate(string Name, bool binary) {
-			for (int i = 0; i < Templates.Length; i++) {
-				if (Templates[i].Name == Name) {
+		private static Template GetTemplate(string Name, bool binary)
+		{
+			for (int i = 0; i < Templates.Length; i++)
+			{
+				if (Templates[i].Name == Name)
+				{
 					return Templates[i];
 				}
 			}
@@ -175,7 +207,7 @@ namespace OpenBve {
 				//Appears in Blender exported stuff
 				return Templates[13];
 			}
-			
+
 			if (Name.ToLowerInvariant().StartsWith("mesh "))
 			{
 				//Named material, just ignore the name for the minute
@@ -199,18 +231,27 @@ namespace OpenBve {
 		// ================================
 
 		// load textual x
-		private static ObjectManager.StaticObject LoadTextualX(string FileName, string Text, Encoding Encoding) {
+		private static ObjectManager.StaticObject LoadTextualX(string FileName, string Text, Encoding Encoding)
+		{
 			// load
 			string[] Lines = Text.Replace("\u000D\u000A", "\u2028").Split(new char[] { '\u000A', '\u000C', '\u000D', '\u0085', '\u2028', '\u2029' }, StringSplitOptions.None);
 			AlternateStructure = false;
-			LoadedMaterials = new Structure[] {};
+			LoadedMaterials = new Structure[] { };
 			// strip away comments
 			bool Quote = false;
-			for (int i = 0; i < Lines.Length; i++) {
-				for (int j = 0; j < Lines[i].Length; j++) {
-					if (Lines[i][j] == '"') Quote = !Quote;
-					if (!Quote) {
-						if (Lines[i][j] == '#' || j < Lines[i].Length - 1 && Lines[i].Substring(j, 2) == "//") {
+			for (int i = 0; i < Lines.Length; i++)
+			{
+				for (int j = 0; j < Lines[i].Length; j++)
+				{
+					if (Lines[i][j] == '"')
+					{
+						Quote = !Quote;
+					}
+
+					if (!Quote)
+					{
+						if (Lines[i][j] == '#' || j < Lines[i].Length - 1 && Lines[i].Substring(j, 2) == "//")
+						{
 							Lines[i] = Lines[i].Substring(0, j);
 							break;
 						}
@@ -220,7 +261,7 @@ namespace OpenBve {
 				var list = Lines[i].Split(' ').Where(s => !string.IsNullOrWhiteSpace(s));
 				Lines[i] = string.Join(" ", list);
 			}
-			
+
 			//Preprocess the string array to get the variants to something we understand....
 			for (int i = 0; i < Lines.Length; i++)
 			{
@@ -247,22 +288,24 @@ namespace OpenBve {
 					Lines[i - 1] = Lines[i - 1].Substring(0, Lines[i - 1].Length - 2) + ";;";
 				}
 			}
-			
+
 			// strip away header
-			if (Lines.Length == 0 || Lines[0].Length < 16) {
+			if (Lines.Length == 0 || Lines[0].Length < 16)
+			{
 				Interface.AddMessage(MessageType.Error, false, "The textual X object file is invalid at line 1 in " + FileName);
 				return null;
 			}
 			Lines[0] = Lines[0].Substring(16);
 			// join lines
 			StringBuilder Builder = new StringBuilder();
-			for (int i = 0; i < Lines.Length; i++) {
+			for (int i = 0; i < Lines.Length; i++)
+			{
 				Builder.Append(Lines[i]);
 			}
 			string Content = Builder.ToString();
 			//Horrible hack to make Blender generated materials work
 			int idx = Content.IndexOf("Material ", StringComparison.InvariantCultureIgnoreCase);
-			while(idx != -1)
+			while (idx != -1)
 			{
 				int idx2 = idx + 9;
 				if (Content[idx2] != '{')
@@ -276,7 +319,7 @@ namespace OpenBve {
 							break;
 						}
 
-						
+
 					}
 					StringBuilder sb = new StringBuilder(Content);
 					sb.Remove(idx2, idx3 - idx2);
@@ -288,12 +331,14 @@ namespace OpenBve {
 			// parse file
 			int Position = 0;
 			Structure Structure;
-			if (!ReadTextualTemplate(FileName, Content, ref Position, new Template("", new string[] { "[...]" }), false, out Structure)) {
+			if (!ReadTextualTemplate(FileName, Content, ref Position, new Template("", new string[] { "[...]" }), false, out Structure))
+			{
 				return null;
 			}
 			// process structure
 			ObjectManager.StaticObject Object;
-			if (!ProcessStructure(FileName, Structure, out Object)) {
+			if (!ProcessStructure(FileName, Structure, out Object))
+			{
 				return null;
 			}
 			return Object;
@@ -321,7 +366,7 @@ namespace OpenBve {
 				case "frametransformmatrix":
 					return true;
 			}
-			
+
 			return false;
 		}
 
@@ -352,76 +397,127 @@ namespace OpenBve {
 		}
 
 		// read textual template
-		private static bool ReadTextualTemplate(string FileName, string Content, ref int Position, Template Template, bool Inline, out Structure Structure) {
+		private static bool ReadTextualTemplate(string FileName, string Content, ref int Position, Template Template, bool Inline, out Structure Structure)
+		{
 			if (Template.Name == "MeshMaterialList" && AlternateStructure)
 			{
 				Template = new Template("MeshMaterialList", new string[] { "DWORD", "DWORD", "DWORD[1]", "string2", "[...]" });
 			}
 			Structure = new Structure(Template.Name, new object[] { }, Template.Key);
 			int i = Position; bool q = false;
-			int m; for (m = 0; m < Template.Members.Length; m++) {
-				if (Position >= Content.Length) break;
-				if (Template.Members[m] == "[???]") {
+			int m; for (m = 0; m < Template.Members.Length; m++)
+			{
+				if (Position >= Content.Length)
+				{
+					break;
+				}
+
+				if (Template.Members[m] == "[???]")
+				{
 					// unknown data accepted
-					while (Position < Content.Length) {
-						if (q) {
-							if (Content[Position] == '"') q = false;
-						} else {
-							if (Content[Position] == '"') {
+					while (Position < Content.Length)
+					{
+						if (q)
+						{
+							if (Content[Position] == '"')
+							{
+								q = false;
+							}
+						}
+						else
+						{
+							if (Content[Position] == '"')
+							{
 								q = true;
-							} else if (Content[Position] == ',' | Content[Position] == ';') {
+							}
+							else if (Content[Position] == ',' | Content[Position] == ';')
+							{
 								i = Position + 1;
-							} else if (Content[Position] == '{') {
+							}
+							else if (Content[Position] == '{')
+							{
 								string s = Content.Substring(i, Position - i).Trim();
 								Structure o;
 								Position++;
-								if (!ReadTextualTemplate(FileName, Content, ref Position, GetTemplate(s, false), false, out o)) {
+								if (!ReadTextualTemplate(FileName, Content, ref Position, GetTemplate(s, false), false, out o))
+								{
 									return false;
-								} Position--;
+								}
+								Position--;
 								i = Position + 1;
-							} else if (Content[Position] == '}') {
+							}
+							else if (Content[Position] == '}')
+							{
 								Position++;
 								return true;
 							}
-						} Position++;
-					} m--;
-				} else if (Template.Members[m] == "[...]") {
+						}
+						Position++;
+					}
+					m--;
+				}
+				else if (Template.Members[m] == "[...]")
+				{
 					// any template accepted
-					while (Position < Content.Length) {
-						if (q) {
-							if (Content[Position] == '"') q = false;
-						} else {
-							if (Content[Position] == '"') {
+					while (Position < Content.Length)
+					{
+						if (q)
+						{
+							if (Content[Position] == '"')
+							{
+								q = false;
+							}
+						}
+						else
+						{
+							if (Content[Position] == '"')
+							{
 								q = true;
-							} else if (Content[Position] == '{') {
+							}
+							else if (Content[Position] == '{')
+							{
 								string s = Content.Substring(i, Position - i).Trim();
 								Structure o;
 								Position++;
-								if (!ReadTextualTemplate(FileName, Content, ref Position, GetTemplate(s, false), false, out o)) {
+								if (!ReadTextualTemplate(FileName, Content, ref Position, GetTemplate(s, false), false, out o))
+								{
 									return false;
-								} Position--;
+								}
+								Position--;
 								if (!IsDefaultTemplate(s))
 								{
 									Array.Resize<object>(ref Structure.Data, Structure.Data.Length + 1);
 									Structure.Data[Structure.Data.Length - 1] = o;
 								}
 								i = Position + 1;
-							} else if (Content[Position] == '}') {
-								if (Inline) {
+							}
+							else if (Content[Position] == '}')
+							{
+								if (Inline)
+								{
 									Interface.AddMessage(MessageType.Error, false, "Unexpected closing brace encountered in inlined template " + Template.Name + " in textual X object file " + FileName);
 									return false;
-								} else {
+								}
+								else
+								{
 									Position++;
 									return true;
 								}
-							} else if (Content[Position] == ',') {
+							}
+							else if (Content[Position] == ',')
+							{
 								Interface.AddMessage(MessageType.Error, false, "Unexpected comma encountered in template " + Template.Name + " in textual X object file " + FileName);
 								return false;
-							} else if (Content[Position] == ';') {
-								if (Inline) {
+							}
+							else if (Content[Position] == ';')
+							{
+								if (Inline)
+								{
 									Position++;
 									return true;
-								} else {
+								}
+								else
+								{
 									if (Template.Name == "MeshMaterialList")
 									{
 										//A MeshMaterialList can also end with two semi-colons
@@ -433,189 +529,281 @@ namespace OpenBve {
 									return false;
 								}
 							}
-						} Position++;
-					} m--;
-				} else if (Template.Members[m].EndsWith("]", StringComparison.Ordinal)) {
+						}
+						Position++;
+					}
+					m--;
+				}
+				else if (Template.Members[m].EndsWith("]", StringComparison.Ordinal))
+				{
 					// inlined array expected
 					string r = Template.Members[m].Substring(0, Template.Members[m].Length - 1);
 					int h = r.IndexOf('[');
-					if (h >= 0) {
+					if (h >= 0)
+					{
 						string z = r.Substring(h + 1, r.Length - h - 1);
 						r = r.Substring(0, h);
-						if (!int.TryParse(z, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out h)) {
+						if (!int.TryParse(z, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out h))
+						{
 							Interface.AddMessage(MessageType.Error, false, "The internal format description for a template array is invalid in template " + Template.Name + " in textual X object file " + FileName);
 							return false;
 						}
-						if (h < 0 || h >= Structure.Data.Length || !(Structure.Data[h] is int)) {
+						if (h < 0 || h >= Structure.Data.Length || !(Structure.Data[h] is int))
+						{
 							Interface.AddMessage(MessageType.Error, false, "The internal format description for a template array is invalid in template " + Template.Name + " in textual X object file " + FileName);
 							return false;
 						}
 						h = (int)Structure.Data[h];
-					} else {
+					}
+					else
+					{
 						Interface.AddMessage(MessageType.Error, false, "The internal format description for a template array is invalid in template " + Template.Name + " in textual X object file " + FileName);
 						return false;
 					}
-					if (r == "DWORD") {
+					if (r == "DWORD")
+					{
 						// dword array
 						int[] o = new int[h];
-						if (h == 0) {
+						if (h == 0)
+						{
 							// empty array
-							while (Position < Content.Length) {
-								if (Content[Position] == ';') {
+							while (Position < Content.Length)
+							{
+								if (Content[Position] == ';')
+								{
 									Position++;
 									break;
-								} else if (!char.IsWhiteSpace(Content, Position)) {
+								}
+								else if (!char.IsWhiteSpace(Content, Position))
+								{
 									Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing an array in template " + Template.Name + " in textual X object file " + FileName);
 									return false;
-								} else {
+								}
+								else
+								{
 									Position++;
 								}
 							}
-						} else {
+						}
+						else
+						{
 							// non-empty array
-							for (int k = 0; k < h; k++) {
-								while (Position < Content.Length) {
-									if (Content[Position] == '{' | Content[Position] == '}' | Content[Position] == '"') {
+							for (int k = 0; k < h; k++)
+							{
+								while (Position < Content.Length)
+								{
+									if (Content[Position] == '{' | Content[Position] == '}' | Content[Position] == '"')
+									{
 										Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing a DWORD array in template " + Template.Name + " in textual X object file " + FileName);
 										return false;
-									} else if (Content[Position] == ',') {
-										if (k == h - 1) {
+									}
+									else if (Content[Position] == ',')
+									{
+										if (k == h - 1)
+										{
 											Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing a DWORD array in template " + Template.Name + " in textual X object file " + FileName);
 											return false;
 										}
 										break;
-									} else if (Content[Position] == ';') {
-										if (k != h - 1) {
+									}
+									else if (Content[Position] == ';')
+									{
+										if (k != h - 1)
+										{
 											Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing a DWORD array in template " + Template.Name + " in textual X object file " + FileName);
 											return false;
 										}
 										break;
-									} Position++;
-								} if (Position == Content.Length) {
+									}
+									Position++;
+								}
+								if (Position == Content.Length)
+								{
 									Interface.AddMessage(MessageType.Error, false, "DWORD array was not terminated at the end of the file in template " + Template.Name + " in textual X object file " + FileName);
 									return false;
 								}
 								string s = Content.Substring(i, Position - i);
 								Position++;
 								i = Position;
-								if (!int.TryParse(s, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out o[k])) {
+								if (!int.TryParse(s, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out o[k]))
+								{
 									Interface.AddMessage(MessageType.Error, false, "DWORD could not be parsed in array in template " + Template.Name + " in textual X object file " + FileName);
 								}
 							}
 						}
 						Array.Resize<object>(ref Structure.Data, Structure.Data.Length + 1);
 						Structure.Data[Structure.Data.Length - 1] = o;
-					} else if (r == "float") {
+					}
+					else if (r == "float")
+					{
 						// float array
 						double[] o = new double[h];
-						if (h == 0) {
+						if (h == 0)
+						{
 							// empty array
-							while (Position < Content.Length) {
-								if (Content[Position] == ';') {
+							while (Position < Content.Length)
+							{
+								if (Content[Position] == ';')
+								{
 									Position++;
 									break;
-								} else if (!char.IsWhiteSpace(Content, Position)) {
+								}
+								else if (!char.IsWhiteSpace(Content, Position))
+								{
 									Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing an array in template " + Template.Name + " in textual X object file " + FileName);
 									return false;
-								} else {
+								}
+								else
+								{
 									Position++;
 								}
 							}
-						} else {
+						}
+						else
+						{
 							// non-empty array
-							for (int k = 0; k < h; k++) {
-								while (Position < Content.Length) {
-									if (Content[Position] == '{' | Content[Position] == '}' | Content[Position] == '"') {
+							for (int k = 0; k < h; k++)
+							{
+								while (Position < Content.Length)
+								{
+									if (Content[Position] == '{' | Content[Position] == '}' | Content[Position] == '"')
+									{
 										Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing a float array in template " + Template.Name + " in textual X object file " + FileName);
 										return false;
-									} else if (Content[Position] == ',') {
-										if (k == h - 1) {
+									}
+									else if (Content[Position] == ',')
+									{
+										if (k == h - 1)
+										{
 											Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing a float array in template " + Template.Name + " in textual X object file " + FileName);
 											return false;
 										}
 										break;
-									} else if (Content[Position] == ';') {
-										if (k != h - 1) {
+									}
+									else if (Content[Position] == ';')
+									{
+										if (k != h - 1)
+										{
 											Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing a float array in template " + Template.Name + " in textual X object file " + FileName);
 											return false;
 										}
 										break;
-									} Position++;
-								} if (Position == Content.Length) {
+									}
+									Position++;
+								}
+								if (Position == Content.Length)
+								{
 									Interface.AddMessage(MessageType.Error, false, "float array was not terminated at the end of the file in template " + Template.Name + " in textual X object file " + FileName);
 									return false;
 								}
 								string s = Content.Substring(i, Position - i);
 								Position++;
 								i = Position;
-								if (!double.TryParse(s, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out o[k])) {
+								if (!double.TryParse(s, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out o[k]))
+								{
 									Interface.AddMessage(MessageType.Error, false, "float could not be parsed in array in template " + Template.Name + " in textual X object file " + FileName);
 								}
 							}
 						}
 						Array.Resize<object>(ref Structure.Data, Structure.Data.Length + 1);
 						Structure.Data[Structure.Data.Length - 1] = o;
-					} else {
+					}
+					else
+					{
 						// non-primitive array
 						Template t = GetTemplate(r, false);
 						Structure[] o = new Structure[h];
-						if (h == 0) {
+						if (h == 0)
+						{
 							// empty array
-							while (Position < Content.Length) {
-								if (Content[Position] == ';') {
+							while (Position < Content.Length)
+							{
+								if (Content[Position] == ';')
+								{
 									Position++;
 									break;
-								} else if (Content[Position] == '}' && Position == Content.Length -1 && Template.Members[m].StartsWith("MeshFace")) {
+								}
+								else if (Content[Position] == '}' && Position == Content.Length - 1 && Template.Members[m].StartsWith("MeshFace"))
+								{
 									// A mesh has been provided, but no faces etc.
 									// Usually found in null objects
 									break;
-								} else if (!char.IsWhiteSpace(Content, Position)) {
+								}
+								else if (!char.IsWhiteSpace(Content, Position))
+								{
 									Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing an array in template " + Template.Name + " in textual X object file " + FileName);
 									return false;
-								} else {
+								}
+								else
+								{
 									Position++;
 								}
 							}
-						} else {
+						}
+						else
+						{
 							int k;
-							for (k = 0; k < h; k++) {
-								if (!ReadTextualTemplate(FileName, Content, ref Position, t, true, out o[k])) {
+							for (k = 0; k < h; k++)
+							{
+								if (!ReadTextualTemplate(FileName, Content, ref Position, t, true, out o[k]))
+								{
 									return false;
 								}
-								if (k < h - 1) {
+								if (k < h - 1)
+								{
 									// most elements
-									while (Position < Content.Length) {
-										if (Content[Position] == ',') {
+									while (Position < Content.Length)
+									{
+										if (Content[Position] == ',')
+										{
 											Position++;
 											break;
-										} else if (!char.IsWhiteSpace(Content, Position)) {
+										}
+										else if (!char.IsWhiteSpace(Content, Position))
+										{
 											Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing an array in template " + Template.Name + " in textual X object file " + FileName);
 											return false;
-										} else {
+										}
+										else
+										{
 											Position++;
 										}
-									} if (Position == Content.Length) {
+									}
+									if (Position == Content.Length)
+									{
 										Interface.AddMessage(MessageType.Error, false, "Array was not continued at the end of the file in template " + Template.Name + " in textual X object file " + FileName);
 										return false;
 									}
-								} else {
+								}
+								else
+								{
 									// last element
-									while (Position < Content.Length) {
-										if (Content[Position] == ';') {
+									while (Position < Content.Length)
+									{
+										if (Content[Position] == ';')
+										{
 											Position++;
 											break;
-										} else if (!char.IsWhiteSpace(Content, Position)) {
+										}
+										else if (!char.IsWhiteSpace(Content, Position))
+										{
 											Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing an array in template " + Template.Name + " in textual X object file " + FileName);
 											return false;
-										} else {
+										}
+										else
+										{
 											Position++;
 										}
-									} if (Position == Content.Length) {
+									}
+									if (Position == Content.Length)
+									{
 										Interface.AddMessage(MessageType.Error, false, "Array was not terminated at the end of the file in template " + Template.Name + " in textual X object file " + FileName);
 										return false;
 									}
 								}
-							} if (k < h) {
+							}
+							if (k < h)
+							{
 								return false;
 							}
 						}
@@ -623,17 +811,25 @@ namespace OpenBve {
 						Structure.Data[Structure.Data.Length - 1] = o;
 					}
 					i = Position;
-				} else {
+				}
+				else
+				{
 					// inlined template or primitive expected
-					switch (Template.Members[m]) {
+					switch (Template.Members[m])
+					{
 						case "DWORD":
-							while (Position < Content.Length) {
-								if (Content[Position] == '{' | Content[Position] == '}' | Content[Position] == ',' | Content[Position] == '"') {
+							while (Position < Content.Length)
+							{
+								if (Content[Position] == '{' | Content[Position] == '}' | Content[Position] == ',' | Content[Position] == '"')
+								{
 									Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing a DWORD in template " + Template.Name + " in textual X object file " + FileName);
 									return false;
-								} else if (Content[Position] == ';') {
+								}
+								else if (Content[Position] == ';')
+								{
 									string s = Content.Substring(i, Position - i).Trim();
-									int a; if (!int.TryParse(s, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out a)) {
+									int a; if (!int.TryParse(s, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out a))
+									{
 										Interface.AddMessage(MessageType.Error, false, "DWORD could not be parsed in template " + Template.Name + " in textual X object file " + FileName);
 										return false;
 									}
@@ -642,16 +838,23 @@ namespace OpenBve {
 									Position++;
 									i = Position;
 									break;
-								} Position++;
-							} break;
+								}
+								Position++;
+							}
+							break;
 						case "float":
-							while (Position < Content.Length) {
-								if (Content[Position] == '{' | Content[Position] == '}' |  Content[Position] == '"') {
+							while (Position < Content.Length)
+							{
+								if (Content[Position] == '{' | Content[Position] == '}' | Content[Position] == '"')
+								{
 									Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing a DWORD in template " + Template.Name + " in textual X object file " + FileName);
 									return false;
-								} else if (Content[Position] == ';' || Content[Position] == ',') {
+								}
+								else if (Content[Position] == ';' || Content[Position] == ',')
+								{
 									string s = Content.Substring(i, Position - i).Trim();
-									double a; if (!double.TryParse(s, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out a)) {
+									double a; if (!double.TryParse(s, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out a))
+									{
 										if (s != string.Empty)
 										{
 											//Handle omitted entries which are still in a valid format
@@ -669,47 +872,71 @@ namespace OpenBve {
 									Position++;
 									i = Position;
 									break;
-								} Position++;
-							} break;
+								}
+								Position++;
+							}
+							break;
 						case "string":
-							while (Position < Content.Length) {
-								if (Content[Position] == '"') {
+							while (Position < Content.Length)
+							{
+								if (Content[Position] == '"')
+								{
 									Position++;
 									break;
-								} else if (!char.IsWhiteSpace(Content, Position)) {
+								}
+								else if (!char.IsWhiteSpace(Content, Position))
+								{
 									Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing a string in template " + Template.Name + " in textual X object file " + FileName);
 									return false;
-								} else {
+								}
+								else
+								{
 									Position++;
 								}
-							} if (Position >= Content.Length) {
+							}
+							if (Position >= Content.Length)
+							{
 								Interface.AddMessage(MessageType.Error, false, "Unexpected end of file encountered while processing a string in template " + Template.Name + " in textual X object file " + FileName);
 								return false;
 							}
 							i = Position;
-							while (Position < Content.Length) {
-								if (Content[Position] == '"') {
+							while (Position < Content.Length)
+							{
+								if (Content[Position] == '"')
+								{
 									Position++;
 									break;
-								} else {
+								}
+								else
+								{
 									Position++;
 								}
-							} if (Position >= Content.Length) {
+							}
+							if (Position >= Content.Length)
+							{
 								Interface.AddMessage(MessageType.Error, false, "Unexpected end of file encountered while processing a string in template " + Template.Name + " in textual X object file " + FileName);
 								return false;
 							}
 							string t = Content.Substring(i, Position - i - 1);
-							while (Position < Content.Length) {
-								if (Content[Position] == ';') {
+							while (Position < Content.Length)
+							{
+								if (Content[Position] == ';')
+								{
 									Position++;
 									break;
-								} else if (!char.IsWhiteSpace(Content, Position)) {
+								}
+								else if (!char.IsWhiteSpace(Content, Position))
+								{
 									Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing a string in template " + Template.Name + " in textual X object file " + FileName);
 									return false;
-								} else {
+								}
+								else
+								{
 									Position++;
 								}
-							} if (Position >= Content.Length) {
+							}
+							if (Position >= Content.Length)
+							{
 								Interface.AddMessage(MessageType.Error, false, "Unexpected end of file encountered while processing a string in template " + Template.Name + " in textual X object file " + FileName);
 								return false;
 							}
@@ -801,34 +1028,48 @@ namespace OpenBve {
 						default:
 							{
 								Structure o;
-								if (!ReadTextualTemplate(FileName, Content, ref Position, GetTemplate(Template.Members[m], false), true, out o)) {
+								if (!ReadTextualTemplate(FileName, Content, ref Position, GetTemplate(Template.Members[m], false), true, out o))
+								{
 									return false;
 								}
-								while (Position < Content.Length) {
-									if (Content[Position] == ';') {
+								while (Position < Content.Length)
+								{
+									if (Content[Position] == ';')
+									{
 										Position++;
 										break;
-									} else if (!char.IsWhiteSpace(Content, Position)) {
+									}
+									else if (!char.IsWhiteSpace(Content, Position))
+									{
 										Interface.AddMessage(MessageType.Error, false, "Invalid character encountered while processing an inlined template in template " + Template.Name + " in textual X object file " + FileName);
 										return false;
-									} else {
+									}
+									else
+									{
 										Position++;
 									}
-								} if (Position >= Content.Length) {
+								}
+								if (Position >= Content.Length)
+								{
 									Interface.AddMessage(MessageType.Error, false, "Unexpected end of file encountered while processing an inlined template in template " + Template.Name + " in textual X object file " + FileName);
 									return false;
 								}
 								Array.Resize<object>(ref Structure.Data, Structure.Data.Length + 1);
 								Structure.Data[Structure.Data.Length - 1] = o;
 								i = Position;
-							} break;
+							}
+							break;
 					}
 				}
 			}
-			if (m >= Template.Members.Length) {
-				if (Inline) {
+			if (m >= Template.Members.Length)
+			{
+				if (Inline)
+				{
 					return true;
-				} else {
+				}
+				else
+				{
 					// closed non-inline template
 					while (Position < Content.Length)
 					{
@@ -850,21 +1091,29 @@ namespace OpenBve {
 						{
 							Position++;
 						}
-					} if (Position >= Content.Length)
+					}
+					if (Position >= Content.Length)
 					{
 						Interface.AddMessage(MessageType.Error, false, "Unexpected end of file encountered in template " + Template.Name + " in textual X object file " + FileName);
 						return false;
 					}
 					return true;
 				}
-			} else {
-				if (q) {
+			}
+			else
+			{
+				if (q)
+				{
 					Interface.AddMessage(MessageType.Error, false, "Quotation mark not closed at the end of the file in template " + Template.Name + " in textual X object file " + FileName);
 					return false;
-				} else if (Template.Name.Length != 0) {
+				}
+				else if (Template.Name.Length != 0)
+				{
 					Interface.AddMessage(MessageType.Error, false, "Unexpected end of file encountered in template " + Template.Name + " in textual X object file " + FileName);
 					return false;
-				} else {
+				}
+				else
+				{
 					return true;
 				}
 			}
@@ -873,15 +1122,19 @@ namespace OpenBve {
 		// ================================
 
 		// load binary x
-		private static ObjectManager.StaticObject LoadBinaryX(string FileName, byte[] Data, int StartingPosition, int FloatingPointSize) {
+		private static ObjectManager.StaticObject LoadBinaryX(string FileName, byte[] Data, int StartingPosition, int FloatingPointSize)
+		{
 			// parse file
 			AlternateStructure = false;
-			LoadedMaterials = new Structure[] {};
+			LoadedMaterials = new Structure[] { };
 			Structure Structure;
-			try {
+			try
+			{
 				bool Result;
-				using (System.IO.MemoryStream Stream = new System.IO.MemoryStream(Data)) {
-					using (System.IO.BinaryReader Reader = new System.IO.BinaryReader(Stream)) {
+				using (System.IO.MemoryStream Stream = new System.IO.MemoryStream(Data))
+				{
+					using (System.IO.BinaryReader Reader = new System.IO.BinaryReader(Stream))
+					{
 						Stream.Position = StartingPosition;
 						BinaryCache Cache = new BinaryCache();
 						Cache.IntegersRemaining = 0;
@@ -890,28 +1143,36 @@ namespace OpenBve {
 						Reader.Close();
 					}
 					Stream.Close();
-				} if (!Result) {
+				}
+				if (!Result)
+				{
 					return null;
 				}
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				Interface.AddMessage(MessageType.Error, false, "Unhandled error (" + ex.Message + ") encountered in binary X object file " + FileName);
 				return null;
 			}
 			// process structure
 			ObjectManager.StaticObject Object;
-			if (!ProcessStructure(FileName, Structure, out Object)) {
+			if (!ProcessStructure(FileName, Structure, out Object))
+			{
 				return null;
-			} return Object;
+			}
+			return Object;
 		}
 
 		// read binary template
-		private struct BinaryCache {
+		private struct BinaryCache
+		{
 			internal int[] Integers;
 			internal int IntegersRemaining;
 			internal double[] Floats;
 			internal int FloatsRemaining;
 		}
-		private static bool ReadBinaryTemplate(string FileName, System.IO.BinaryReader Reader, int FloatingPointSize, Template Template, bool Inline, ref BinaryCache Cache, out Structure Structure) {
+		private static bool ReadBinaryTemplate(string FileName, System.IO.BinaryReader Reader, int FloatingPointSize, Template Template, bool Inline, ref BinaryCache Cache, out Structure Structure)
+		{
 			const short TOKEN_NAME = 0x1;
 			const short TOKEN_STRING = 0x2;
 			const short TOKEN_INTEGER = 0x3;
@@ -924,113 +1185,146 @@ namespace OpenBve {
 			Structure = new Structure(Template.Name, new object[] { }, Template.Key);
 			System.Globalization.CultureInfo Culture = System.Globalization.CultureInfo.InvariantCulture;
 			System.Text.ASCIIEncoding Ascii = new System.Text.ASCIIEncoding();
-			int m; for (m = 0; m < Template.Members.Length; m++) {
-				if (Template.Members[m] == "[???]") {
+			int m; for (m = 0; m < Template.Members.Length; m++)
+			{
+				if (Template.Members[m] == "[???]")
+				{
 					// unknown template
 					int Level = 0;
-					if (Cache.IntegersRemaining != 0) {
+					if (Cache.IntegersRemaining != 0)
+					{
 						Interface.AddMessage(MessageType.Error, false, "An integer list was not depleted at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
-					} else if (Cache.FloatsRemaining != 0) {
+					}
+					else if (Cache.FloatsRemaining != 0)
+					{
 						Interface.AddMessage(MessageType.Error, false, "A float list was not depleted at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 					}
 					short Token = Reader.ReadInt16();
-					switch (Token) {
+					switch (Token)
+					{
 						case TOKEN_NAME:
 							{
 								Level++;
 								int n = Reader.ReadInt32();
-								if (n < 1) {
+								if (n < 1)
+								{
 									Interface.AddMessage(MessageType.Error, false, "count is invalid in TOKEN_NAME at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 									return false;
 								}
 								Reader.BaseStream.Position += n;
 								Token = Reader.ReadInt16();
-								if (Token != TOKEN_OBRACE) {
+								if (Token != TOKEN_OBRACE)
+								{
 									Interface.AddMessage(MessageType.Error, false, "TOKEN_OBRACE expected at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 									return false;
 								}
-							} break;
+							}
+							break;
 						case TOKEN_INTEGER:
 							{
 								Reader.BaseStream.Position += 4;
-							} break;
+							}
+							break;
 						case TOKEN_INTEGER_LIST:
 							{
 								int n = Reader.ReadInt32();
-								if (n < 0) {
+								if (n < 0)
+								{
 									Interface.AddMessage(MessageType.Error, false, "count is invalid in TOKEN_INTEGER_LIST at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 									return false;
 								}
 								Reader.BaseStream.Position += 4 * n;
-							} break;
+							}
+							break;
 						case TOKEN_FLOAT_LIST:
 							{
 								int n = Reader.ReadInt32();
-								if (n < 0) {
+								if (n < 0)
+								{
 									Interface.AddMessage(MessageType.Error, false, "count is invalid in TOKEN_FLOAT_LIST at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 									return false;
 								}
 								Reader.BaseStream.Position += (FloatingPointSize >> 3) * n;
-							} break;
+							}
+							break;
 						case TOKEN_STRING:
 							{
 								int n = Reader.ReadInt32();
-								if (n < 0) {
+								if (n < 0)
+								{
 									Interface.AddMessage(MessageType.Error, false, "count is invalid in TOKEN_STRING at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 									return false;
 								}
 								Reader.BaseStream.Position += n;
 								Token = Reader.ReadInt16();
-								if (Token != TOKEN_COMMA & Token != TOKEN_SEMICOLON) {
+								if (Token != TOKEN_COMMA & Token != TOKEN_SEMICOLON)
+								{
 									Interface.AddMessage(MessageType.Error, false, "TOKEN_COMMA or TOKEN_SEMICOLON expected at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 									return false;
 								}
-							} break;
+							}
+							break;
 						case TOKEN_OBRACE:
 							Interface.AddMessage(MessageType.Error, false, "Unexpected token TOKEN_OBRACE encountered at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 							return false;
 						case TOKEN_CBRACE:
-							if (Level == 0) return true;
+							if (Level == 0)
+							{
+								return true;
+							}
+
 							Level--;
 							break;
 						default:
 							Interface.AddMessage(MessageType.Error, false, "Unknown token encountered at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 							return false;
-					} m--;
-				} else if (Template.Members[m] == "[...]") {
+					}
+					m--;
+				}
+				else if (Template.Members[m] == "[...]")
+				{
 					// any template
-					if (Cache.IntegersRemaining != 0) {
+					if (Cache.IntegersRemaining != 0)
+					{
 						Interface.AddMessage(MessageType.Error, false, "An integer list was not depleted at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
-					} else if (Cache.FloatsRemaining != 0) {
+					}
+					else if (Cache.FloatsRemaining != 0)
+					{
 						Interface.AddMessage(MessageType.Error, false, "A float list was not depleted at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 					}
-					if (Template.Name.Length == 0 && Reader.BaseStream.Position == Reader.BaseStream.Length) {
+					if (Template.Name.Length == 0 && Reader.BaseStream.Position == Reader.BaseStream.Length)
+					{
 						// end of file
 						return true;
 					}
 					short Token = Reader.ReadInt16();
-					switch (Token) {
+					switch (Token)
+					{
 						case TOKEN_NAME:
 							int n = Reader.ReadInt32();
-							if (n < 1) {
+							if (n < 1)
+							{
 								Interface.AddMessage(MessageType.Error, false, "count is invalid in TOKEN_NAME at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 								return false;
 							}
 							string Name = new string(Ascii.GetChars(Reader.ReadBytes(n)));
 							Token = Reader.ReadInt16();
-							if (Token != TOKEN_OBRACE) {
+							if (Token != TOKEN_OBRACE)
+							{
 								Interface.AddMessage(MessageType.Error, false, "TOKEN_OBRACE expected at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 								return false;
 							}
 							Structure o;
-							if (!ReadBinaryTemplate(FileName, Reader, FloatingPointSize, GetTemplate(Name, true), false, ref Cache, out o)) {
+							if (!ReadBinaryTemplate(FileName, Reader, FloatingPointSize, GetTemplate(Name, true), false, ref Cache, out o))
+							{
 								return false;
 							}
 							Array.Resize<object>(ref Structure.Data, Structure.Data.Length + 1);
 							Structure.Data[Structure.Data.Length - 1] = o;
 							break;
 						case TOKEN_CBRACE:
-							if (Template.Name.Length == 0) {
+							if (Template.Name.Length == 0)
+							{
 								Interface.AddMessage(MessageType.Error, false, "Unexpected TOKEN_CBRACE encountered at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 								return false;
 							}
@@ -1039,55 +1333,77 @@ namespace OpenBve {
 						default:
 							Interface.AddMessage(MessageType.Error, false, "TOKEN_NAME or TOKEN_CBRACE expected at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 							return false;
-					} m--;
-				} else if (Template.Members[m].EndsWith("]", StringComparison.Ordinal)) {
+					}
+					m--;
+				}
+				else if (Template.Members[m].EndsWith("]", StringComparison.Ordinal))
+				{
 					// inlined array expected
 					string r = Template.Members[m].Substring(0, Template.Members[m].Length - 1);
 					int h = r.IndexOf('[');
-					if (h >= 0) {
+					if (h >= 0)
+					{
 						string z = r.Substring(h + 1, r.Length - h - 1);
 						r = r.Substring(0, h);
-						if (!int.TryParse(z, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out h)) {
+						if (!int.TryParse(z, System.Globalization.NumberStyles.Integer, System.Globalization.CultureInfo.InvariantCulture, out h))
+						{
 							Interface.AddMessage(MessageType.Error, false, "The internal format description for a template array is invalid in template " + Template.Name + " in binary X object file " + FileName);
 							return false;
 						}
-						if (h < 0 || h >= Structure.Data.Length || !(Structure.Data[h] is int)) {
+						if (h < 0 || h >= Structure.Data.Length || !(Structure.Data[h] is int))
+						{
 							Interface.AddMessage(MessageType.Error, false, "The internal format description for a template array is invalid in template " + Template.Name + " in binary X object file " + FileName);
 							return false;
 						}
 						h = (int)Structure.Data[h];
-					} else {
+					}
+					else
+					{
 						Interface.AddMessage(MessageType.Error, false, "The internal format description for a template array is invalid in template " + Template.Name + " in binary X object file " + FileName);
 						return false;
 					}
-					if (r == "DWORD") {
+					if (r == "DWORD")
+					{
 						// dword array
 						int[] o = new int[h];
-						for (int i = 0; i < h; i++) {
-							if (Cache.IntegersRemaining != 0) {
+						for (int i = 0; i < h; i++)
+						{
+							if (Cache.IntegersRemaining != 0)
+							{
 								// use cached integer
 								int a = Cache.Integers[Cache.IntegersRemaining - 1];
 								Cache.IntegersRemaining--;
 								o[i] = a;
-							} else if (Cache.FloatsRemaining != 0) {
+							}
+							else if (Cache.FloatsRemaining != 0)
+							{
 								// cannot use cached float
 								Interface.AddMessage(MessageType.Error, false, "A float list was not depleted at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 								return false;
-							} else {
-								while (true) {
+							}
+							else
+							{
+								while (true)
+								{
 									short Token = Reader.ReadInt16();
-									if (Token == TOKEN_INTEGER) {
+									if (Token == TOKEN_INTEGER)
+									{
 										int a = Reader.ReadInt32();
 										o[i] = a; break;
-									} else if (Token == TOKEN_INTEGER_LIST) {
+									}
+									else if (Token == TOKEN_INTEGER_LIST)
+									{
 										int n = Reader.ReadInt32();
-										if (n < 0) {
+										if (n < 0)
+										{
 											Interface.AddMessage(MessageType.Error, false, "count is invalid in TOKEN_INTEGER_LIST at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 											return false;
 										}
-										if (n != 0) {
+										if (n != 0)
+										{
 											Cache.Integers = new int[n];
-											for (int j = 0; j < n; j++) {
+											for (int j = 0; j < n; j++)
+											{
 												Cache.Integers[n - j - 1] = Reader.ReadInt32();
 											}
 											Cache.IntegersRemaining = n - 1;
@@ -1095,7 +1411,9 @@ namespace OpenBve {
 											o[i] = a;
 											break;
 										}
-									} else {
+									}
+									else
+									{
 										Interface.AddMessage(MessageType.Error, false, "TOKEN_INTEGER or TOKEN_INTEGER_LIST expected at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 										return false;
 									}
@@ -1104,34 +1422,50 @@ namespace OpenBve {
 						}
 						Array.Resize<object>(ref Structure.Data, Structure.Data.Length + 1);
 						Structure.Data[Structure.Data.Length - 1] = o;
-					} else if (r == "float") {
+					}
+					else if (r == "float")
+					{
 						// float array
 						double[] o = new double[h];
-						for (int i = 0; i < h; i++) {
-							if (Cache.IntegersRemaining != 0) {
+						for (int i = 0; i < h; i++)
+						{
+							if (Cache.IntegersRemaining != 0)
+							{
 								// cannot use cached integer
 								Interface.AddMessage(MessageType.Error, false, "An integer list was not depleted at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 								return false;
-							} else if (Cache.FloatsRemaining != 0) {
+							}
+							else if (Cache.FloatsRemaining != 0)
+							{
 								// use cached float
 								double a = Cache.Floats[Cache.FloatsRemaining - 1];
 								Cache.FloatsRemaining--;
 								o[i] = a;
-							} else {
-								while (true) {
+							}
+							else
+							{
+								while (true)
+								{
 									short Token = Reader.ReadInt16();
-									if (Token == TOKEN_FLOAT_LIST) {
+									if (Token == TOKEN_FLOAT_LIST)
+									{
 										int n = Reader.ReadInt32();
-										if (n < 0) {
+										if (n < 0)
+										{
 											Interface.AddMessage(MessageType.Error, false, "count is invalid in TOKEN_FLOAT_LIST at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 											return false;
 										}
-										if (n != 0) {
+										if (n != 0)
+										{
 											Cache.Floats = new double[n];
-											for (int j = 0; j < n; j++) {
-												if (FloatingPointSize == 32) {
+											for (int j = 0; j < n; j++)
+											{
+												if (FloatingPointSize == 32)
+												{
 													Cache.Floats[n - j - 1] = (double)Reader.ReadSingle();
-												} else if (FloatingPointSize == 64) {
+												}
+												else if (FloatingPointSize == 64)
+												{
 													Cache.Floats[n - j - 1] = Reader.ReadDouble();
 												}
 											}
@@ -1140,7 +1474,9 @@ namespace OpenBve {
 											o[i] = a;
 											break;
 										}
-									} else {
+									}
+									else
+									{
 										Interface.AddMessage(MessageType.Error, false, "TOKEN_FLOAT_LIST expected at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 										return false;
 									}
@@ -1149,48 +1485,66 @@ namespace OpenBve {
 						}
 						Array.Resize<object>(ref Structure.Data, Structure.Data.Length + 1);
 						Structure.Data[Structure.Data.Length - 1] = o;
-					} else {
+					}
+					else
+					{
 						// template array
 						Structure[] o = new Structure[h];
-						for (int i = 0; i < h; i++) {
+						for (int i = 0; i < h; i++)
+						{
 							ReadBinaryTemplate(FileName, Reader, FloatingPointSize, GetTemplate(r, true), true, ref Cache, out o[i]);
 						}
 						Array.Resize<object>(ref Structure.Data, Structure.Data.Length + 1);
 						Structure.Data[Structure.Data.Length - 1] = o;
 					}
-				} else {
+				}
+				else
+				{
 					// inlined template or primitive expected
-					switch (Template.Members[m]) {
+					switch (Template.Members[m])
+					{
 						case "DWORD":
 							// dword expected
-							if (Cache.IntegersRemaining != 0) {
+							if (Cache.IntegersRemaining != 0)
+							{
 								// use cached integer
 								int a = Cache.Integers[Cache.IntegersRemaining - 1];
 								Cache.IntegersRemaining--;
 								Array.Resize<object>(ref Structure.Data, Structure.Data.Length + 1);
 								Structure.Data[Structure.Data.Length - 1] = a;
-							} else if (Cache.FloatsRemaining != 0) {
+							}
+							else if (Cache.FloatsRemaining != 0)
+							{
 								// cannot use cached float
 								Interface.AddMessage(MessageType.Error, false, "A float list was not depleted at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 								return false;
-							} else {
+							}
+							else
+							{
 								// read new data
-								while (true) {
+								while (true)
+								{
 									short Token = Reader.ReadInt16();
-									if (Token == TOKEN_INTEGER) {
+									if (Token == TOKEN_INTEGER)
+									{
 										int a = Reader.ReadInt32();
 										Array.Resize<object>(ref Structure.Data, Structure.Data.Length + 1);
 										Structure.Data[Structure.Data.Length - 1] = a;
 										break;
-									} else if (Token == TOKEN_INTEGER_LIST) {
+									}
+									else if (Token == TOKEN_INTEGER_LIST)
+									{
 										int n = Reader.ReadInt32();
-										if (n < 0) {
+										if (n < 0)
+										{
 											Interface.AddMessage(MessageType.Error, false, "count is invalid in TOKEN_INTEGER_LIST at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 											return false;
 										}
-										if (n != 0) {
+										if (n != 0)
+										{
 											Cache.Integers = new int[n];
-											for (int i = 0; i < n; i++) {
+											for (int i = 0; i < n; i++)
+											{
 												Cache.Integers[n - i - 1] = Reader.ReadInt32();
 											}
 											Cache.IntegersRemaining = n - 1;
@@ -1199,40 +1553,56 @@ namespace OpenBve {
 											Structure.Data[Structure.Data.Length - 1] = a;
 											break;
 										}
-									} else {
+									}
+									else
+									{
 										Interface.AddMessage(MessageType.Error, false, "TOKEN_INTEGER or TOKEN_INTEGER_LIST expected at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 										return false;
 									}
 								}
-							} break;
+							}
+							break;
 						case "float":
 							// float expected
-							if (Cache.IntegersRemaining != 0) {
+							if (Cache.IntegersRemaining != 0)
+							{
 								// cannot use cached integer
 								Interface.AddMessage(MessageType.Error, false, "An integer list was not depleted at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 								return false;
-							} else if (Cache.FloatsRemaining != 0) {
+							}
+							else if (Cache.FloatsRemaining != 0)
+							{
 								// use cached float
 								double a = Cache.Floats[Cache.FloatsRemaining - 1];
 								Cache.FloatsRemaining--;
 								Array.Resize<object>(ref Structure.Data, Structure.Data.Length + 1);
 								Structure.Data[Structure.Data.Length - 1] = a;
-							} else {
+							}
+							else
+							{
 								// read new data
-								while (true) {
+								while (true)
+								{
 									short Token = Reader.ReadInt16();
-									if (Token == TOKEN_FLOAT_LIST) {
+									if (Token == TOKEN_FLOAT_LIST)
+									{
 										int n = Reader.ReadInt32();
-										if (n < 0) {
+										if (n < 0)
+										{
 											Interface.AddMessage(MessageType.Error, false, "count is invalid in TOKEN_FLOAT_LIST at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 											return false;
 										}
-										if (n != 0) {
+										if (n != 0)
+										{
 											Cache.Floats = new double[n];
-											for (int i = 0; i < n; i++) {
-												if (FloatingPointSize == 32) {
+											for (int i = 0; i < n; i++)
+											{
+												if (FloatingPointSize == 32)
+												{
 													Cache.Floats[n - i - 1] = (double)Reader.ReadSingle();
-												} else if (FloatingPointSize == 64) {
+												}
+												else if (FloatingPointSize == 64)
+												{
 													Cache.Floats[n - i - 1] = Reader.ReadDouble();
 												}
 											}
@@ -1242,24 +1612,32 @@ namespace OpenBve {
 											Structure.Data[Structure.Data.Length - 1] = a;
 											break;
 										}
-									} else {
+									}
+									else
+									{
 										Interface.AddMessage(MessageType.Error, false, "TOKEN_FLOAT_LIST expected at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 										return false;
 									}
 								}
-							} break;
+							}
+							break;
 						case "string":
 							{
 								// string expected
-								if (Cache.IntegersRemaining != 0) {
+								if (Cache.IntegersRemaining != 0)
+								{
 									Interface.AddMessage(MessageType.Error, false, "An integer list was not depleted at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
-								} else if (Cache.FloatsRemaining != 0) {
+								}
+								else if (Cache.FloatsRemaining != 0)
+								{
 									Interface.AddMessage(MessageType.Error, false, "A float list was not depleted at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 								}
 								short Token = Reader.ReadInt16();
-								if (Token == TOKEN_STRING) {
+								if (Token == TOKEN_STRING)
+								{
 									int n = Reader.ReadInt32();
-									if (n < 0) {
+									if (n < 0)
+									{
 										Interface.AddMessage(MessageType.Error, false, "count is invalid in TOKEN_STRING at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 										return false;
 									}
@@ -1267,15 +1645,19 @@ namespace OpenBve {
 									Array.Resize<object>(ref Structure.Data, Structure.Data.Length + 1);
 									Structure.Data[Structure.Data.Length - 1] = s;
 									Token = Reader.ReadInt16();
-									if (Token != TOKEN_SEMICOLON) {
+									if (Token != TOKEN_SEMICOLON)
+									{
 										Interface.AddMessage(MessageType.Error, false, "TOKEN_SEMICOLON expected at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 										return false;
 									}
-								} else {
+								}
+								else
+								{
 									Interface.AddMessage(MessageType.Error, false, "TOKEN_STRING expected at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 									return false;
 								}
-							} break;
+							}
+							break;
 						default:
 							// inlined template expected
 							Structure o;
@@ -1286,13 +1668,18 @@ namespace OpenBve {
 					}
 				}
 			}
-			if (Inline) {
+			if (Inline)
+			{
 				return true;
-			} else {
+			}
+			else
+			{
 				string s = Template.Members[Template.Members.Length - 1];
-				if (s != "[???]" & s != "[...]") {
+				if (s != "[???]" & s != "[...]")
+				{
 					int Token = Reader.ReadInt16();
-					if (Token != TOKEN_CBRACE) {
+					if (Token != TOKEN_CBRACE)
+					{
 						Interface.AddMessage(MessageType.Error, false, "TOKEN_CBRACE expected at position 0x" + Reader.BaseStream.Position.ToString("X", Culture) + " in binary X object file " + FileName);
 						return false;
 					}
@@ -1304,7 +1691,8 @@ namespace OpenBve {
 		// ================================
 
 		// structures
-		private struct Material {
+		private struct Material
+		{
 			internal Color32 faceColor;
 			internal Color24 specularColor;
 			internal Color24 emissiveColor;
@@ -1312,17 +1700,21 @@ namespace OpenBve {
 		}
 
 		// process structure
-		private static bool ProcessStructure(string FileName, Structure Structure, out ObjectManager.StaticObject Object) {
+		private static bool ProcessStructure(string FileName, Structure Structure, out ObjectManager.StaticObject Object)
+		{
 			System.Globalization.CultureInfo Culture = System.Globalization.CultureInfo.InvariantCulture;
 			Object = new ObjectManager.StaticObject();
 			// file
-			for (int i = 0; i < Structure.Data.Length; i++) {
+			for (int i = 0; i < Structure.Data.Length; i++)
+			{
 				Structure f = Structure.Data[i] as Structure;
-				if (f == null) {
+				if (f == null)
+				{
 					Interface.AddMessage(MessageType.Error, false, "Top-level inlined arguments are invalid in x object file " + FileName);
 					return false;
 				}
-				switch (f.Name) {
+				switch (f.Name)
+				{
 					case "Frame Root":
 					case "Frame":
 						//This is just a placeholder around the other templates
@@ -1412,7 +1804,7 @@ namespace OpenBve {
 								double x = (double)vertices[j].Data[0];
 								double y = (double)vertices[j].Data[1];
 								double z = (double)vertices[j].Data[2];
-								Vertices[j] = new Vertex(new Vector3(x,y,z));
+								Vertices[j] = new Vertex(new Vector3(x, y, z));
 							}
 							// collect faces
 							int[][] Faces = new int[nFaces][];
@@ -2050,7 +2442,7 @@ namespace OpenBve {
 												Interface.AddMessage(MessageType.Error, false, "A is expected to be a float in MeshVertexColors[" + k.ToString(Culture) + "] in in Mesh in x object file " + FileName);
 												continue;
 											}
-											
+
 											double red = (double)colorStructure.Data[0], green = (double)colorStructure.Data[1], blue = (double)colorStructure.Data[2], alpha = (double)colorStructure.Data[3];
 
 											OpenBveApi.Colors.Color128 c = new Color128((float)red, (float)green, (float)blue, (float)alpha);

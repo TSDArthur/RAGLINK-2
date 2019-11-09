@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using OpenBveApi.Interface;
 using OpenBveApi.Objects;
 using OpenBveApi.Runtime;
 using OpenBveApi.Textures;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace OpenBve
 {
@@ -313,7 +313,7 @@ namespace OpenBve
 			{
 				return;
 			}
-			
+
 			if (World.CameraMode != CameraViewMode.Interior && World.CameraMode != CameraViewMode.InteriorLookAhead)
 			{
 				return;
@@ -335,13 +335,13 @@ namespace OpenBve
 
 					ResetOpenGlState();
 					GL.PushMatrix();
-					
+
 					UpdateViewport(ViewPortChangeMode.ChangeToCab);
 
 					RenderSceneSelection(true);
 
 					GL.PopMatrix();
-					
+
 					foreach (var TouchElement in TouchElements)
 					{
 						int o = TouchElement.Element.ObjectIndex;
@@ -411,7 +411,7 @@ namespace OpenBve
 							}
 						}
 					}
-					
+
 					if (PickedObjectIndex >= 0)
 					{
 						return true;
@@ -427,7 +427,7 @@ namespace OpenBve
 			{
 				return;
 			}
-			
+
 			if (World.CameraMode != CameraViewMode.Interior && World.CameraMode != CameraViewMode.InteriorLookAhead)
 			{
 				return;

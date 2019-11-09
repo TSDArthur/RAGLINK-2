@@ -27,6 +27,6 @@ namespace OpenBve
 			/// <summary>The in-game time at which this log message was generated at</summary>
 			internal double Time;
 		}
-		
+
 	}
 }

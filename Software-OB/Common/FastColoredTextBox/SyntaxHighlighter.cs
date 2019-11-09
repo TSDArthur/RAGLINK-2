@@ -98,7 +98,7 @@ namespace FastColoredTextBoxNS
 
         protected Regex SQLCommentRegex1,
                       SQLCommentRegex2,
-                      SQLCommentRegex3, 
+                      SQLCommentRegex3,
                       SQLCommentRegex4;
 
         protected Regex SQLFunctionsRegex;
@@ -121,13 +121,18 @@ namespace FastColoredTextBoxNS
             get
             {
                 if (platformType == Platform.X86)
+                {
                     return RegexOptions.Compiled;
+                }
                 else
+                {
                     return RegexOptions.None;
+                }
             }
         }
 
-        public SyntaxHighlighter(FastColoredTextBox currentTb) {
+        public SyntaxHighlighter(FastColoredTextBox currentTb)
+        {
             this.currentTb = currentTb;
         }
 
@@ -136,7 +141,9 @@ namespace FastColoredTextBoxNS
         public void Dispose()
         {
             foreach (SyntaxDescriptor desc in descByXMLfileNames.Values)
+            {
                 desc.Dispose();
+            }
         }
 
         #endregion
@@ -188,7 +195,9 @@ namespace FastColoredTextBoxNS
                 var doc = new XmlDocument();
                 string file = XMLdescriptionFile;
                 if (!File.Exists(file))
+                {
                     file = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.GetFileName(file));
+                }
 
                 doc.LoadXml(File.ReadAllText(file));
                 desc = ParseXmlDescription(doc);
@@ -240,7 +249,9 @@ namespace FastColoredTextBoxNS
             tb.CalcAutoIndentShiftByCodeFolding(sender, args);*/
             //block {}
             if (Regex.IsMatch(args.LineText, @"^[^""']*\{.*\}[^""']*$"))
+            {
                 return;
+            }
             //start of block {}
             if (Regex.IsMatch(args.LineText, @"^[^""']*\{"))
             {
@@ -256,11 +267,13 @@ namespace FastColoredTextBoxNS
             }
             //is unclosed operator in previous line ?
             if (Regex.IsMatch(args.PrevLineText, @"^\s*(if|for|foreach|while|[\}\s]*else)\b[^{]*$"))
+            {
                 if (!Regex.IsMatch(args.PrevLineText, @"(;\s*$)|(;\s*//)")) //operator is unclosed
                 {
                     args.Shift = args.TabLength;
                     return;
                 }
+            }
         }
 
         protected void SQLAutoIndentNeeded(object sender, AutoIndentEventArgs args)
@@ -300,7 +313,9 @@ namespace FastColoredTextBoxNS
             }
             // then ...
             if (Regex.IsMatch(args.LineText, @"\b(Then)\s*\S+", RegexOptions.IgnoreCase))
+            {
                 return;
+            }
             //start of operator block
             if (Regex.IsMatch(args.LineText, @"^\s*(If|While|For|Do|Try|With|Using|Select)\b", RegexOptions.IgnoreCase))
             {
@@ -327,7 +342,9 @@ namespace FastColoredTextBoxNS
         {
             //block {}
             if (Regex.IsMatch(args.LineText, @"^[^""']*\{.*\}[^""']*$"))
+            {
                 return;
+            }
             //start of block {}
             if (Regex.IsMatch(args.LineText, @"^[^""']*\{"))
             {
@@ -356,11 +373,13 @@ namespace FastColoredTextBoxNS
             }
             //is unclosed operator in previous line ?
             if (Regex.IsMatch(args.PrevLineText, @"^\s*(if|for|foreach|while|[\}\s]*else)\b[^{]*$"))
+            {
                 if (!Regex.IsMatch(args.PrevLineText, @"(;\s*$)|(;\s*//)")) //operator is unclosed
                 {
                     args.Shift = args.TabLength;
                     return;
                 }
+            }
         }
 
         /// <summary>
@@ -388,7 +407,11 @@ namespace FastColoredTextBoxNS
         /// <param name="style">Style to add</param>
         public virtual void AddResilientStyle(Style style)
         {
-            if (resilientStyles.Contains(style)) return;
+            if (resilientStyles.Contains(style))
+            {
+                return;
+            }
+
             currentTb.CheckStylesBufferSize(); // Prevent buffer overflow
             resilientStyles.Add(style);
         }
@@ -424,9 +447,13 @@ namespace FastColoredTextBoxNS
                 }
 
                 if (brackets.Attributes["strategy"] == null || brackets.Attributes["strategy"].Value == "")
+                {
                     desc.bracketsHighlightStrategy = BracketsHighlightStrategy.Strategy2;
+                }
                 else
+                {
                     desc.bracketsHighlightStrategy = (BracketsHighlightStrategy)Enum.Parse(typeof(BracketsHighlightStrategy), brackets.Attributes["strategy"].Value);
+                }
             }
 
             var styleByName = new Dictionary<string, Style>();
@@ -438,9 +465,14 @@ namespace FastColoredTextBoxNS
                 desc.styles.Add(s);
             }
             foreach (XmlNode rule in doc.SelectNodes("doc/rule"))
+            {
                 desc.rules.Add(ParseRule(rule, styleByName));
+            }
+
             foreach (XmlNode folding in doc.SelectNodes("doc/folding"))
+            {
                 desc.foldings.Add(ParseFolding(folding));
+            }
 
             return desc;
         }
@@ -454,7 +486,9 @@ namespace FastColoredTextBoxNS
             //options
             XmlAttribute optionsA = foldingNode.Attributes["options"];
             if (optionsA != null)
+            {
                 folding.options = (RegexOptions)Enum.Parse(typeof(RegexOptions), optionsA.Value);
+            }
 
             return folding;
         }
@@ -468,13 +502,21 @@ namespace FastColoredTextBoxNS
             XmlAttribute optionsA = ruleNode.Attributes["options"];
             //Style
             if (styleA == null)
+            {
                 throw new Exception("Rule must contain style name.");
+            }
+
             if (!styles.ContainsKey(styleA.Value))
+            {
                 throw new Exception("Style '" + styleA.Value + "' is not found.");
+            }
+
             rule.style = styles[styleA.Value];
             //options
             if (optionsA != null)
+            {
                 rule.options = (RegexOptions)Enum.Parse(typeof(RegexOptions), optionsA.Value);
+            }
 
             return rule;
         }
@@ -489,14 +531,21 @@ namespace FastColoredTextBoxNS
             //colors
             SolidBrush foreBrush = null;
             if (colorA != null)
+            {
                 foreBrush = new SolidBrush(ParseColor(colorA.Value));
+            }
+
             SolidBrush backBrush = null;
             if (backColorA != null)
+            {
                 backBrush = new SolidBrush(ParseColor(backColorA.Value));
+            }
             //fontStyle
             FontStyle fontStyle = FontStyle.Regular;
             if (fontStyleA != null)
+            {
                 fontStyle = (FontStyle)Enum.Parse(typeof(FontStyle), fontStyleA.Value);
+            }
 
             return new TextStyle(foreBrush, backBrush, fontStyle);
         }
@@ -506,13 +555,19 @@ namespace FastColoredTextBoxNS
             if (s.StartsWith("#"))
             {
                 if (s.Length <= 7)
+                {
                     return Color.FromArgb(255,
                                           Color.FromArgb(Int32.Parse(s.Substring(1), NumberStyles.AllowHexSpecifier)));
+                }
                 else
+                {
                     return Color.FromArgb(Int32.Parse(s.Substring(1), NumberStyles.AllowHexSpecifier));
+                }
             }
             else
+            {
                 return Color.FromName(s);
+            }
         }
 
         public void HighlightSyntax(SyntaxDescriptor desc, Range range)
@@ -520,11 +575,15 @@ namespace FastColoredTextBoxNS
             //set style order
             range.tb.ClearStylesBuffer();
             for (int i = 0; i < desc.styles.Count; i++)
+            {
                 range.tb.Styles[i] = desc.styles[i];
+            }
             // add resilient styles
             int l = desc.styles.Count;
             for (int i = 0; i < resilientStyles.Count; i++)
+            {
                 range.tb.Styles[l + i] = resilientStyles[i];
+            }
             //brackets
             char[] oldBrackets = RememberBrackets(range.tb);
             range.tb.LeftBracket = desc.leftBracket;
@@ -535,12 +594,16 @@ namespace FastColoredTextBoxNS
             range.ClearStyle(desc.styles.ToArray());
             //highlight syntax
             foreach (RuleDesc rule in desc.rules)
+            {
                 range.SetStyle(rule.style, rule.Regex);
+            }
             //clear folding
             range.ClearFoldingMarkers();
             //folding markers
             foreach (FoldingDesc folding in desc.foldings)
+            {
                 range.SetFoldingMarkers(folding.startMarkerRegex, folding.finishMarkerRegex, folding.options);
+            }
 
             //
             RestoreBrackets(range.tb, oldBrackets);
@@ -706,7 +769,9 @@ namespace FastColoredTextBoxNS
             range.ClearStyle(StringStyle, CommentStyle, NumberStyle, AttributeStyle, ClassNameStyle, KeywordStyle);
             //
             if (CSharpStringRegex == null)
+            {
                 InitCShaprRegex();
+            }
             //string highlighting
             range.SetStyle(StringStyle, CSharpStringRegex);
             //comment highlighting
@@ -729,7 +794,9 @@ namespace FastColoredTextBoxNS
                 r.ClearStyle(StyleIndex.All);
                 //do XML highlighting
                 if (HTMLTagRegex == null)
+                {
                     InitHTMLRegex();
+                }
                 //
                 r.SetStyle(CommentStyle);
                 //tags
@@ -787,7 +854,9 @@ namespace FastColoredTextBoxNS
             range.ClearStyle(StringStyle, CommentStyle, NumberStyle, ClassNameStyle, KeywordStyle);
             //
             if (VBStringRegex == null)
+            {
                 InitVBRegex();
+            }
             //string highlighting
             range.SetStyle(StringStyle, VBStringRegex);
             //comment highlighting
@@ -855,7 +924,9 @@ namespace FastColoredTextBoxNS
                              HtmlEntityStyle);
             //
             if (HTMLTagRegex == null)
+            {
                 InitHTMLRegex();
+            }
             //comment highlighting
             range.SetStyle(CommentStyle, HTMLCommentRegex1);
             range.SetStyle(CommentStyle, HTMLCommentRegex2);
@@ -979,7 +1050,9 @@ namespace FastColoredTextBoxNS
                     stack.Push(tag);
                     // if this line has no markers - set marker
                     if (string.IsNullOrEmpty(fctb[iLine].FoldingStartMarker))
+                    {
                         fctb[iLine].FoldingStartMarker = tag.Marker;
+                    }
                 }
                 else
                 {
@@ -992,13 +1065,17 @@ namespace FastColoredTextBoxNS
                         {
                             //remove marker, because same line can not be folding
                             if (fctb[iLine].FoldingStartMarker == tag.Marker) //was it our marker?
+                            {
                                 fctb[iLine].FoldingStartMarker = null;
+                            }
                         }
                         else
                         {
                             //set end folding marker
                             if (string.IsNullOrEmpty(fctb[iLine].FoldingEndMarker))
+                            {
                                 fctb[iLine].FoldingEndMarker = tag.Marker;
+                            }
                         }
                     }
                 }
@@ -1049,7 +1126,9 @@ namespace FastColoredTextBoxNS
                              FunctionsStyle, TypesStyle);
             //
             if (SQLStringRegex == null)
+            {
                 InitSQLRegex();
+            }
             //comment highlighting
             range.SetStyle(CommentStyle, SQLCommentRegex1);
             range.SetStyle(CommentStyle, SQLCommentRegex2);
@@ -1122,7 +1201,9 @@ namespace FastColoredTextBoxNS
 
             //
             if (PHPStringRegex == null)
+            {
                 InitPHPRegex();
+            }
             //string highlighting
             range.SetStyle(StringStyle, PHPStringRegex);
             //comment highlighting
@@ -1182,7 +1263,9 @@ namespace FastColoredTextBoxNS
             range.ClearStyle(StringStyle, CommentStyle, NumberStyle, KeywordStyle);
             //
             if (JScriptStringRegex == null)
+            {
                 InitJScriptRegex();
+            }
             //string highlighting
             range.SetStyle(StringStyle, JScriptStringRegex);
             //comment highlighting
@@ -1242,7 +1325,9 @@ namespace FastColoredTextBoxNS
             range.ClearStyle(StringStyle, CommentStyle, NumberStyle, KeywordStyle, FunctionsStyle);
             //
             if (LuaStringRegex == null)
+            {
                 InitLuaRegex();
+            }
             //string highlighting
             range.SetStyle(StringStyle, LuaStringRegex);
             //comment highlighting
@@ -1273,7 +1358,9 @@ namespace FastColoredTextBoxNS
             }
             // then ...
             if (Regex.IsMatch(args.LineText, @"\b(then)\s*\S+"))
+            {
                 return;
+            }
             //start of operator block
             if (Regex.IsMatch(args.LineText, @"^\s*(function|do|for|while|repeat|if)\b"))
             {

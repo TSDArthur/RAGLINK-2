@@ -133,7 +133,7 @@ namespace OpenBve
 			public readonly int Height = 0;
 			public int Selection;
 			public int TopItem;         // the top displayed menu item
-			
+
 
 			/********************
 				MENU C'TOR
@@ -151,15 +151,21 @@ namespace OpenBve
 				{
 					case MenuType.Top:          // top level menu
 						for (i = 0; i < Game.Stations.Length; i++)
+						{
 							if (Game.PlayerStopsAtStation(i) & Game.Stations[i].Stops.Length > 0)
 							{
 								jump = 1;
 								break;
 							}
+						}
+
 						Items = new MenuEntry[2 + jump];
 						Items[0] = new MenuCommand(Translations.GetInterfaceString("menu_resume"), MenuTag.BackToSim, 0);
 						if (jump > 0)
+						{
 							Items[1] = new MenuCommand(Translations.GetInterfaceString("menu_jump"), MenuTag.MenuJumpToStation, 0);
+						}
+
 						if (!Interface.CurrentOptions.KioskMode)
 						{
 							//Don't allow quitting or customisation of the controls in kiosk mode
@@ -172,7 +178,7 @@ namespace OpenBve
 						}
 						else
 						{
-							Array.Resize(ref Items, Items.Length -3);
+							Array.Resize(ref Items, Items.Length - 3);
 						}
 						break;
 
@@ -180,14 +186,19 @@ namespace OpenBve
 													// count the number of available stations
 						menuItem = 0;
 						for (i = 0; i < Game.Stations.Length; i++)
+						{
 							if (Game.PlayerStopsAtStation(i) & Game.Stations[i].Stops.Length > 0)
+							{
 								menuItem++;
+							}
+						}
 						// list available stations, selecting the next station as predefined choice
 						jump = 0;                           // no jump found yet
 						Items = new MenuEntry[menuItem + 1];
 						Items[0] = new MenuCommand(Translations.GetInterfaceString("menu_back"), MenuTag.MenuBack, 0);
 						menuItem = 1;
 						for (i = 0; i < Game.Stations.Length; i++)
+						{
 							if (Game.PlayerStopsAtStation(i) & Game.Stations[i].Stops.Length > 0)
 							{
 								Items[menuItem] = new MenuCommand(Game.Stations[i].Name, MenuTag.JumpToStation, i);
@@ -200,6 +211,8 @@ namespace OpenBve
 								}
 								menuItem++;
 							}
+						}
+
 						Align = TextAlignment.TopLeft;
 						break;
 
@@ -225,7 +238,10 @@ namespace OpenBve
 						Items = new MenuEntry[Interface.CurrentControls.Length + 1];
 						Items[0] = new MenuCommand(Translations.GetInterfaceString("menu_back"), MenuTag.MenuBack, 0);
 						for (i = 0; i < Interface.CurrentControls.Length; i++)
+						{
 							Items[i + 1] = new MenuCommand(Interface.CurrentControls[i].Command.ToString(), MenuTag.Control, i);
+						}
+
 						Align = TextAlignment.TopLeft;
 						break;
 
@@ -319,9 +335,14 @@ namespace OpenBve
 					}
 					size = Renderer.MeasureString(Game.Menu.MenuFont, Items[i].Text);
 					if (size.Width > Width)
+					{
 						Width = size.Width;
+					}
+
 					if (!(Items[i] is MenuCaption) && size.Width > ItemWidth)
+					{
 						ItemWidth = size.Width;
+					}
 				}
 				Height = Items.Length * Game.Menu.LineHeight;
 				TopItem = 0;
@@ -396,11 +417,27 @@ namespace OpenBve
 			// choose the text font size according to screen height
 			// the boundaries follow approximately the progression
 			// of font sizes defined in Graphics/Fonts.cs
-			if (Screen.Height <= 512) menuFont = Fonts.SmallFont;
-			else if (Screen.Height <= 680) menuFont = Fonts.NormalFont;
-			else if (Screen.Height <= 890) menuFont = Fonts.LargeFont;
-			else if (Screen.Height <= 1150) menuFont = Fonts.VeryLargeFont;
-			else menuFont = Fonts.EvenLargerFont;
+			if (Screen.Height <= 512)
+			{
+				menuFont = Fonts.SmallFont;
+			}
+			else if (Screen.Height <= 680)
+			{
+				menuFont = Fonts.NormalFont;
+			}
+			else if (Screen.Height <= 890)
+			{
+				menuFont = Fonts.LargeFont;
+			}
+			else if (Screen.Height <= 1150)
+			{
+				menuFont = Fonts.VeryLargeFont;
+			}
+			else
+			{
+				menuFont = Fonts.EvenLargerFont;
+			}
+
 			em = (int)menuFont.FontSize;
 			lineHeight = (int)(em * LineSpacing);
 			for (int i = 0; i < Interface.CurrentControls.Length; i++)
@@ -435,10 +472,16 @@ namespace OpenBve
 		public void PushMenu(MenuType type, int data = 0)
 		{
 			if (!isInitialized)
+			{
 				Init();
+			}
+
 			CurrMenu++;
 			if (Menus.Length <= CurrMenu)
+			{
 				Array.Resize(ref Menus, CurrMenu + 1);
+			}
+
 			Menus[CurrMenu] = new Menu.SingleMenu(type, data);
 			PositionMenu();
 			Game.PreviousInterface = Game.CurrentInterface;
@@ -557,7 +600,9 @@ namespace OpenBve
 			// if not in menu or during control customisation or down outside menu area, do nothing
 			if (Game.CurrentInterface != Game.InterfaceType.Menu ||
 				isCustomisingControl)
+			{
 				return false;
+			}
 
 			// Load the current menu
 			SingleMenu menu = Menus[CurrMenu];
@@ -633,7 +678,10 @@ namespace OpenBve
 
 			SingleMenu menu = Menus[CurrMenu];
 			if (menu.Selection == SelectionNone)    // if menu has no selection, do nothing
+			{
 				return;
+			}
+
 			switch (cmd)
 			{
 				case Translations.Command.MenuUp:      // UP
@@ -727,7 +775,9 @@ namespace OpenBve
 			int i;
 
 			if (CurrMenu < 0 || CurrMenu >= Menus.Length)
+			{
 				return;
+			}
 
 			SingleMenu menu = Menus[CurrMenu];
 			// overlay background
@@ -755,8 +805,10 @@ namespace OpenBve
 					itemLeft + menu.ItemWidth + MenuItemBorderX, menuYmin + em + MenuItemBorderY * 2);
 			}
 			if (menu.TopItem > 0)
+			{
 				Renderer.DrawString(MenuFont, "...", new Point(itemX, menuYmin),
 					menu.Align, ColourDimmed, false);
+			}
 			// draw the items
 			int itemY = topItemY;
 			for (i = menu.TopItem; i <= menuBottomItem && i < menu.Items.Length; i++)
@@ -778,11 +830,16 @@ namespace OpenBve
 						menu.Align, ColourHighlight, false);
 				}
 				else if (menu.Items[i] is MenuCaption)
+				{
 					Renderer.DrawString(MenuFont, menu.Items[i].Text, new Point(itemX, itemY),
 						menu.Align, ColourCaption, false);
+				}
 				else
+				{
 					Renderer.DrawString(MenuFont, menu.Items[i].Text, new Point(itemX, itemY),
 						menu.Align, ColourNormal, false);
+				}
+
 				itemY += lineHeight;
 			}
 
@@ -795,8 +852,10 @@ namespace OpenBve
 			}
 			// if not at the end of the menu, draw a dimmed ellipsis item at the bottom
 			if (i < menu.Items.Length - 1)
+			{
 				Renderer.DrawString(MenuFont, "...", new Point(itemX, itemY),
 					menu.Align, ColourDimmed, false);
+			}
 		}
 
 		//
@@ -809,7 +868,9 @@ namespace OpenBve
 			//			int i;
 
 			if (CurrMenu < 0 || CurrMenu >= Menus.Length)
+			{
 				return;
+			}
 
 			SingleMenu menu = Menus[CurrMenu];
 			// HORIZONTAL PLACEMENT: centre the menu in the main window

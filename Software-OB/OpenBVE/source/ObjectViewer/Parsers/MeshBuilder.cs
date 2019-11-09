@@ -1,9 +1,9 @@
-﻿using System;
-using System.Drawing;
-using OpenBveApi.Colors;
+﻿using OpenBveApi.Colors;
 using OpenBveApi.Math;
 using OpenBveApi.Objects;
 using OpenBveApi.Textures;
+using System;
+using System.Drawing;
 
 namespace OpenBve
 {
@@ -16,9 +16,9 @@ namespace OpenBve
 
 		internal MeshBuilder()
 		{
-			this.Vertices = new VertexTemplate[] {};
+			this.Vertices = new VertexTemplate[] { };
 			this.Faces = new MeshFace[] { };
-			this.Materials = new Material[] {new Material()};
+			this.Materials = new Material[] { new Material() };
 		}
 
 		internal void Apply(ref ObjectManager.StaticObject Object)
@@ -48,15 +48,15 @@ namespace OpenBve
 					Object.Mesh.Faces[mf + i] = Faces[i];
 					for (int j = 0; j < Object.Mesh.Faces[mf + i].Vertices.Length; j++)
 					{
-						Object.Mesh.Faces[mf + i].Vertices[j].Index += (ushort) mv;
+						Object.Mesh.Faces[mf + i].Vertices[j].Index += (ushort)mv;
 					}
 
-					Object.Mesh.Faces[mf + i].Material += (ushort) mm;
+					Object.Mesh.Faces[mf + i].Material += (ushort)mm;
 				}
 
 				for (int i = 0; i < Materials.Length; i++)
 				{
-					Object.Mesh.Materials[mm + i].Flags = (byte) ((Materials[i].EmissiveColorUsed ? MeshMaterial.EmissiveColorMask : 0) | (Materials[i].TransparentColorUsed ? MeshMaterial.TransparentColorMask : 0));
+					Object.Mesh.Materials[mm + i].Flags = (byte)((Materials[i].EmissiveColorUsed ? MeshMaterial.EmissiveColorMask : 0) | (Materials[i].TransparentColorUsed ? MeshMaterial.TransparentColorMask : 0));
 					Object.Mesh.Materials[mm + i].Color = Materials[i].Color;
 					Object.Mesh.Materials[mm + i].TransparentColor = Materials[i].TransparentColor;
 					if (Materials[i].DaytimeTexture != null || Materials[i].Text != null)
@@ -125,7 +125,8 @@ namespace OpenBve
 
 	}
 
-	internal class Material {
+	internal class Material
+	{
 		internal Color32 Color;
 		internal Color24 EmissiveColor;
 		internal bool EmissiveColorUsed;
@@ -142,8 +143,9 @@ namespace OpenBve
 		internal Color TextColor;
 		internal Color BackgroundColor;
 		internal string Font;
-		internal Vector2 TextPadding; 
-		internal Material() {
+		internal Vector2 TextPadding;
+		internal Material()
+		{
 			this.Color = Color32.White;
 			this.EmissiveColor = Color24.Black;
 			this.EmissiveColorUsed = false;
@@ -159,7 +161,8 @@ namespace OpenBve
 			this.Font = "Arial";
 			this.WrapMode = null;
 		}
-		internal Material(string Texture) {
+		internal Material(string Texture)
+		{
 			this.Color = Color32.White;
 			this.EmissiveColor = Color24.Black;
 			this.EmissiveColorUsed = false;
@@ -176,7 +179,8 @@ namespace OpenBve
 			this.WrapMode = null;
 			this.DaytimeTexture = Texture;
 		}
-		internal Material(Material Prototype) {
+		internal Material(Material Prototype)
+		{
 			this.Color = Prototype.Color;
 			this.EmissiveColor = Prototype.EmissiveColor;
 			this.EmissiveColorUsed = Prototype.EmissiveColorUsed;

@@ -1,5 +1,5 @@
-﻿using System.Text;
-using OpenBveApi.Math;
+﻿using OpenBveApi.Math;
+using System.Text;
 
 namespace OpenBve
 {
@@ -9,7 +9,7 @@ namespace OpenBve
 		/// <summary>Parses any command-line arguments passed to the main program</summary>
 		/// <param name="Arguments">A string array of arguments</param>
 		/// <param name="Result">The main dialog result (Used to launch)</param>
-		internal static void ParseArguments(string[] Arguments, ref formMain.MainDialogResult Result)
+		internal static void ParseArguments(string[] Arguments, ref FormMain.MainDialogResult Result)
 		{
 			if (Arguments.Length == 0)
 			{

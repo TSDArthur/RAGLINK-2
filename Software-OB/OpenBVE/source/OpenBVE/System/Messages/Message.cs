@@ -2,6 +2,6 @@
 {
 	internal static partial class Interface
 	{
-		
+
 	}
 }

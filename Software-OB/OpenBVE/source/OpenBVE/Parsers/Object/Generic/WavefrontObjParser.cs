@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using OpenBveApi.Colors;
+﻿using OpenBveApi.Colors;
+using OpenBveApi.Interface;
 using OpenBveApi.Math;
-using System.Collections.Generic;
 using OpenBveApi.Objects;
 using OpenBveApi.Textures;
-using OpenBveApi.Interface;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace OpenBve
 {
@@ -37,7 +37,7 @@ namespace OpenBve
 			/*
 			 * Temporary arrays
 			 */
-			 List<Vector3> tempVertices = new List<Vector3>();
+			List<Vector3> tempVertices = new List<Vector3>();
 			List<Vector3> tempNormals = new List<Vector3>();
 			List<Vector2> tempCoords = new List<Vector2>();
 			Material[] TempMaterials = new Material[0];
@@ -58,7 +58,7 @@ namespace OpenBve
 				}
 				// collect arguments
 				List<string> Arguments = new List<string>(Lines[i].Split(new char[] { ' ', '\t' }, StringSplitOptions.None));
-				for (int j = Arguments.Count -1; j >= 0; j--)
+				for (int j = Arguments.Count - 1; j >= 0; j--)
 				{
 					Arguments[j] = Arguments[j].Trim();
 					if (Arguments[j] == string.Empty)
@@ -131,7 +131,7 @@ namespace OpenBve
 						for (int f = 1; f < Arguments.Count; f++)
 						{
 							Vertex newVertex = new Vertex();
-							string[] faceArguments = Arguments[f].Split(new char[] {'/'} , StringSplitOptions.None);
+							string[] faceArguments = Arguments[f].Split(new char[] { '/' }, StringSplitOptions.None);
 							int idx;
 							if (!int.TryParse(faceArguments[0], out idx))
 							{
@@ -143,7 +143,7 @@ namespace OpenBve
 							if (idx != Math.Abs(idx))
 							{
 								//Offset, so we seem to need to add one....
-								currentVertex++; 
+								currentVertex++;
 								currentVertex += idx;
 							}
 							else
@@ -191,7 +191,7 @@ namespace OpenBve
 									{
 										newVertex.TextureCoordinates = tempCoords[currentCoord - 1];
 									}
-									
+
 								}
 							}
 							if (faceArguments.Length <= 2)
@@ -238,7 +238,7 @@ namespace OpenBve
 						for (int k = 0; k < vertices.Count; k++)
 						{
 							Builder.Vertices.Add(vertices[k]);
-							Vertices[k].Index = (ushort)(Builder.Vertices.Count -1);
+							Vertices[k].Index = (ushort)(Builder.Vertices.Count - 1);
 							Vertices[k].Normal = normals[k];
 						}
 						Builder.Faces.Add(currentMaterial == -1 ? new MeshFace(Vertices, 0) : new MeshFace(Vertices, (ushort)currentMaterial));
@@ -260,7 +260,7 @@ namespace OpenBve
 						 * twiddling to deliberately support specifiying the shading type for a face
 						 * 
 						 */
-						 break;
+						break;
 					case "mtllib":
 						//Loads the library of materials used by this file
 						string MaterialsPath = OpenBveApi.Path.CombineFile(Path.GetDirectoryName(FileName), Arguments[1]);
@@ -337,7 +337,7 @@ namespace OpenBve
 				{
 					continue;
 				}
-				
+
 				switch (Arguments[0].ToLowerInvariant())
 				{
 					case "newmtl":
@@ -397,17 +397,17 @@ namespace OpenBve
 						}
 						else
 						{
-							Interface.AddMessage(MessageType.Error, true, "Material texture file " + Arguments[Arguments.Count -1] + " was not found.");
+							Interface.AddMessage(MessageType.Error, true, "Material texture file " + Arguments[Arguments.Count - 1] + " was not found.");
 						}
 						break;
-					
+
 					case "map_ke":
 						//Emissive color map not supported
 						break;
 					case "illum":
 						//Illumination mode not supported
 						break;
-					
+
 				}
 			}
 			Array.Resize(ref Materials, Materials.Length + 1);

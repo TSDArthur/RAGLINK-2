@@ -42,7 +42,7 @@ namespace OpenBve
 			var m = message as GameMessage;
 			if (m != null && m.Depencency == MessageDependency.PassedRedSignal)
 			{
-				for (int i = TextualMessages.Count -1; i >= 0; i--)
+				for (int i = TextualMessages.Count - 1; i >= 0; i--)
 				{
 					var c = TextualMessages[i] as GameMessage;
 					if (c != null && (c.Depencency == MessageDependency.SectionLimit || c.Depencency == MessageDependency.RouteLimit))
@@ -111,7 +111,7 @@ namespace OpenBve
 		/// <summary>Updates all current messages</summary>
 		internal static void UpdateMessages()
 		{
-			for (int i = TextualMessages.Count -1; i >= 0; i--)
+			for (int i = TextualMessages.Count - 1; i >= 0; i--)
 			{
 				TextualMessages[i].Update();
 				if (TextualMessages[i].QueueForRemoval)

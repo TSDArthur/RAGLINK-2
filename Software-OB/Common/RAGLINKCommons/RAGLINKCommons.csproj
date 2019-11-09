@@ -49,80 +49,95 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RAGLINKPlatform\BoardsManager.cs" />
-    <Compile Include="RAGLINKPlatform\CommunicationNetwork.cs" />
-    <Compile Include="RAGLINKPlatform\CommunicationSerial.cs" />
-    <Compile Include="RAGLINKPlatform\ControlObjects.cs" />
-    <Compile Include="RAGLINKPlatform\DataManager.cs" />
-    <Compile Include="RAGLINKPlatform\DevicesManager.cs" />
-    <Compile Include="RAGLINKPlatform\FileEncryption.cs" />
-    <Compile Include="RAGLINKPlatform\GraphicOptionsManager.cs" />
-    <Compile Include="RAGLINKPlatform\ProjectLoader.cs" />
-    <Compile Include="RAGLINKPlatform\ProjectsManager.cs" />
-    <Compile Include="RAGLINKPlatform\PackagesManager.cs" />
-    <Compile Include="RAGLINKPlatform\SettingsContent.cs" />
-    <Compile Include="RAGLINKPlatform\SettingsFileIO.cs" />
-    <Compile Include="RAGLINKPlatform\UserInterface\formSummary.cs">
+    <Compile Include="RPlatform\BoardsManager.cs" />
+    <Compile Include="RPlatform\CommunicationNetwork.cs" />
+    <Compile Include="RPlatform\CommunicationSerial.cs" />
+    <Compile Include="RPlatform\ControlObjects.cs" />
+    <Compile Include="RPlatform\DataManager.cs" />
+    <Compile Include="RPlatform\DevicesManager.cs" />
+    <Compile Include="RPlatform\FileEncryption.cs" />
+    <Compile Include="RPlatform\GraphicOptionsManager.cs" />
+    <Compile Include="RPlatform\ProjectLoader.cs" />
+    <Compile Include="RPlatform\ProjectsManager.cs" />
+    <Compile Include="RPlatform\PackagesManager.cs" />
+    <Compile Include="RPlatform\SettingsContent.cs" />
+    <Compile Include="RPlatform\SettingsFileIO.cs" />
+    <Compile Include="RPlatform\UserInterface\FormSummary.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RAGLINKPlatform\UserInterface\formSummary.Designer.cs">
-      <DependentUpon>formSummary.cs</DependentUpon>
+    <Compile Include="RPlatform\UserInterface\FormSummary.Designer.cs">
+      <DependentUpon>FormSummary.cs</DependentUpon>
     </Compile>
-    <Compile Include="RAGLINKPlatform\UserInterface\formSummary.ItemsLoader.cs">
-      <DependentUpon>formSummary.cs</DependentUpon>
+    <Compile Include="RPlatform\UserInterface\formSummary.ItemsLoader.cs">
+      <DependentUpon>FormSummary.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RAGLINKPlatform\UserInterface\formSummaryInit.cs">
+    <Compile Include="RPlatform\UserInterface\FormSummaryInit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RAGLINKPlatform\UserInterface\formSummaryInit.Designer.cs">
-      <DependentUpon>formSummaryInit.cs</DependentUpon>
+    <Compile Include="RPlatform\UserInterface\FormSummaryInit.Designer.cs">
+      <DependentUpon>FormSummaryInit.cs</DependentUpon>
     </Compile>
-    <Compile Include="RAGLINKPlatform\UserInterface\UserInterfaceSwap.cs" />
-    <Compile Include="RAGLINKProxy\TrainMethodsClient.cs" />
-    <Compile Include="RAGLINKProxy\UserInterface\formController.cs">
+    <Compile Include="RPlatform\UserInterface\UserInterfaceSwap.cs" />
+    <Compile Include="RProxy\SimWorldTrigger.cs" />
+    <Compile Include="RProxy\SimCoreClient.cs" />
+    <Compile Include="RProxy\UserInterface\FormController.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RAGLINKProxy\UserInterface\formController.Designer.cs">
-      <DependentUpon>formController.cs</DependentUpon>
+    <Compile Include="RProxy\UserInterface\FormController.Designer.cs">
+      <DependentUpon>FormController.cs</DependentUpon>
     </Compile>
-    <Compile Include="RAGLINKProxy\UserInterface\formController.Loader.cs">
-      <DependentUpon>formController.cs</DependentUpon>
+    <Compile Include="RProxy\UserInterface\formController.Loader.cs">
+      <DependentUpon>FormController.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RAGLINKProxy\UserInterface\formDataMonitor.cs">
+    <Compile Include="RProxy\UserInterface\FormDataMonitor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RAGLINKProxy\UserInterface\formDataMonitor.Designer.cs">
-      <DependentUpon>formDataMonitor.cs</DependentUpon>
+    <Compile Include="RProxy\UserInterface\FormDataMonitor.Designer.cs">
+      <DependentUpon>FormDataMonitor.cs</DependentUpon>
     </Compile>
-    <Compile Include="RAGLINKProxy\UserInterface\formDataMonitor.Update.cs">
-      <DependentUpon>formDataMonitor.cs</DependentUpon>
+    <Compile Include="RProxy\UserInterface\formDataMonitor.Update.cs">
+      <DependentUpon>FormDataMonitor.cs</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RAGLINKProxy\UserInterface\formStreamRecord.cs">
+    <Compile Include="RProxy\UserInterface\FormStreamRecord.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RAGLINKProxy\UserInterface\formStreamRecord.Designer.cs">
-      <DependentUpon>formStreamRecord.cs</DependentUpon>
+    <Compile Include="RProxy\UserInterface\FormStreamRecord.Designer.cs">
+      <DependentUpon>FormStreamRecord.cs</DependentUpon>
     </Compile>
-    <Compile Include="RAGLINKProxy\UserInterface\ListBoxDoubleBuffered.cs">
+    <Compile Include="RProxy\UserInterface\ListBoxDoubleBuffered.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="RAGLINKProxy\UserInterface\ListViewDoubleBuffered.cs">
+    <Compile Include="RProxy\UserInterface\ListViewDoubleBuffered.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="RAGLINKProxy\UserInterface\UserInterfaceSwap.cs" />
+    <Compile Include="RProxy\UserInterface\UserInterfaceSwap.cs" />
+    <Compile Include="RStatistics\SAGATManager.cs" />
+    <Compile Include="RStatistics\UserInterface\FormSAGAT.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RStatistics\UserInterface\FormSAGAT.Designer.cs">
+      <DependentUpon>FormSAGAT.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Fleck, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Fleck.1.1.0\lib\net45\Fleck.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Windows.Forms" />
@@ -139,20 +154,23 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="RAGLINKPlatform\UserInterface\formSummary.resx">
-      <DependentUpon>formSummary.cs</DependentUpon>
+    <EmbeddedResource Include="RPlatform\UserInterface\FormSummary.resx">
+      <DependentUpon>FormSummary.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RAGLINKPlatform\UserInterface\formSummaryInit.resx">
-      <DependentUpon>formSummaryInit.cs</DependentUpon>
+    <EmbeddedResource Include="RPlatform\UserInterface\FormSummaryInit.resx">
+      <DependentUpon>FormSummaryInit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RAGLINKProxy\UserInterface\formController.resx">
-      <DependentUpon>formController.cs</DependentUpon>
+    <EmbeddedResource Include="RProxy\UserInterface\FormController.resx">
+      <DependentUpon>FormController.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RAGLINKProxy\UserInterface\formDataMonitor.resx">
-      <DependentUpon>formDataMonitor.cs</DependentUpon>
+    <EmbeddedResource Include="RProxy\UserInterface\FormDataMonitor.resx">
+      <DependentUpon>FormDataMonitor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RAGLINKProxy\UserInterface\formStreamRecord.resx">
-      <DependentUpon>formStreamRecord.cs</DependentUpon>
+    <EmbeddedResource Include="RProxy\UserInterface\FormStreamRecord.resx">
+      <DependentUpon>FormStreamRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RStatistics\UserInterface\FormSAGAT.resx">
+      <DependentUpon>FormSAGAT.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

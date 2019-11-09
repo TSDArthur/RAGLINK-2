@@ -1,5 +1,5 @@
-﻿using System.IO;
-using Mozilla.NUniversalCharDet;
+﻿using Mozilla.NUniversalCharDet;
+using System.IO;
 
 namespace OpenBve
 {
@@ -70,7 +70,7 @@ namespace OpenBve
 					return System.Text.Encoding.Default;
 			}
 		}
-		
+
 		/// <summary>Gets the character endcoding of a file</summary>
 		/// <param name="File">The absolute path to a file</param>
 		/// <returns>The character encoding, or unknown</returns>
@@ -86,18 +86,39 @@ namespace OpenBve
 				byte[] Data = System.IO.File.ReadAllBytes(File);
 				if (Data.Length >= 3)
 				{
-					if (Data[0] == 0xEF & Data[1] == 0xBB & Data[2] == 0xBF) return Encoding.Utf8;
-					if (Data[0] == 0x2b & Data[1] == 0x2f & Data[2] == 0x76) return Encoding.Utf7;
+					if (Data[0] == 0xEF & Data[1] == 0xBB & Data[2] == 0xBF)
+					{
+						return Encoding.Utf8;
+					}
+
+					if (Data[0] == 0x2b & Data[1] == 0x2f & Data[2] == 0x76)
+					{
+						return Encoding.Utf7;
+					}
 				}
 				if (Data.Length >= 2)
 				{
-					if (Data[0] == 0xFE & Data[1] == 0xFF) return Encoding.Utf16Be;
-					if (Data[0] == 0xFF & Data[1] == 0xFE) return Encoding.Utf16Le;
+					if (Data[0] == 0xFE & Data[1] == 0xFF)
+					{
+						return Encoding.Utf16Be;
+					}
+
+					if (Data[0] == 0xFF & Data[1] == 0xFE)
+					{
+						return Encoding.Utf16Le;
+					}
 				}
 				if (Data.Length >= 4)
 				{
-					if (Data[0] == 0x00 & Data[1] == 0x00 & Data[2] == 0xFE & Data[3] == 0xFF) return Encoding.Utf32Be;
-					if (Data[0] == 0xFF & Data[1] == 0xFE & Data[2] == 0x00 & Data[3] == 0x00) return Encoding.Utf32Le;
+					if (Data[0] == 0x00 & Data[1] == 0x00 & Data[2] == 0xFE & Data[3] == 0xFF)
+					{
+						return Encoding.Utf32Be;
+					}
+
+					if (Data[0] == 0xFF & Data[1] == 0xFE & Data[2] == 0x00 & Data[3] == 0x00)
+					{
+						return Encoding.Utf32Le;
+					}
 				}
 
 				UniversalDetector Det = new UniversalDetector(null);
@@ -140,7 +161,7 @@ namespace OpenBve
 		{
 			return GetEncodingFromFile(OpenBveApi.Path.CombineFile(Folder, File));
 		}
-		
+
 		/// <summary>Gets the encoding corresponding to a textual name string</summary>
 		/// <param name="EncodingName">The textual name of the encoding</param>
 		/// <returns>The System.Text.Encoding</returns>

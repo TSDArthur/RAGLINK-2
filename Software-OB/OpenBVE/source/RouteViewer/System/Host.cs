@@ -1,7 +1,7 @@
-﻿using System;
-using OpenBveApi.Interface;
+﻿using OpenBveApi.Interface;
 using OpenBveApi.Math;
 using OpenBveApi.Trains;
+using System;
 
 namespace OpenBve
 {

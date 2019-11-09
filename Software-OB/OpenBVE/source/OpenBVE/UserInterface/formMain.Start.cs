@@ -1,15 +1,13 @@
 ﻿using OpenBveApi;
-using OpenBveApi.Interface;
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 namespace OpenBve
 {
-	internal partial class formMain : Form
+	internal partial class FormMain : Form
 	{
 		static public bool formCloseTrig = false;
 		public delegate void ShowRouteDelegate(bool UserSelectedEncoding);
@@ -21,7 +19,8 @@ namespace OpenBve
 		// start
 		private readonly object StartGame = new Object();
 
-		private void StartSimulator() {
+		private void StartSimulator()
+		{
 			if (Result.RouteFile != null & Result.TrainFolder != null)
 			{
 				if (System.IO.File.Exists(Result.RouteFile) & System.IO.Directory.Exists(Result.TrainFolder))
@@ -29,7 +28,10 @@ namespace OpenBve
 					Result.Start = true;
 					formCloseTrig = true;
 					Sounds.Deinitialize();
-					if (routeWorkerThread != null) routeWorkerThread.Dispose();
+					if (routeWorkerThread != null)
+					{
+						routeWorkerThread.Dispose();
+					}
 					//HACK: Call Application.DoEvents() to force the message pump to process all pending messages when the form closes
 					//This fixes the main form failing to close on Linux
 					Application.DoEvents();
@@ -42,12 +44,13 @@ namespace OpenBve
 			}
 		}
 
-		private void buttonStart_Click(object sender, EventArgs e) {
+		private void buttonStart_Click(object sender, EventArgs e)
+		{
 			tabControlMain.SelectedIndex = 0;
 			LaunchProject(listViewPlanFile.Items[selectedPlanID].SubItems[1].Text);
 		}
-		
-		
+
+
 		// =========
 		// functions
 		// =========
@@ -75,7 +78,11 @@ namespace OpenBve
 				pictureboxRouteGradient.Image = null;
 				Result.ErrorFile = Result.RouteFile;
 				Result.RouteFile = null;
-				if (routeWorkerThread != null) routeWorkerThread.Dispose();
+				if (routeWorkerThread != null)
+				{
+					routeWorkerThread.Dispose();
+				}
+
 				this.Cursor = System.Windows.Forms.Cursors.Default;
 				return;
 			}
@@ -98,7 +105,7 @@ namespace OpenBve
 				}
 				else
 				{
-					string[] f = new string[] {".png", ".bmp", ".gif", ".tiff", ".tif", ".jpeg", ".jpg"};
+					string[] f = new string[] { ".png", ".bmp", ".gif", ".tiff", ".tif", ".jpeg", ".jpg" };
 					int i;
 					for (i = 0; i < f.Length; i++)
 					{
@@ -147,20 +154,21 @@ namespace OpenBve
 				Result.ErrorFile = Result.RouteFile;
 				Result.RouteFile = null;
 			}
-			
+
 			this.Cursor = System.Windows.Forms.Cursors.Default;
 			//Deliberately select the tab when the process is complete
 			//This hopefully fixes another instance of the 'grey tabs' bug
 
 			//For RAGLINK Package Manager
 			ReviewProject(2, string.Empty);
-			RAGLINKCommons.RAGLINKPlatform.PackagesManager.SetRouteDetailData(pictureboxRouteMap.Image, pictureboxRouteGradient.Image,
+			RAGLINKCommons.RPlatform.PackagesManager.SetRouteDetailData(pictureboxRouteMap.Image, pictureboxRouteGradient.Image,
 				System.IO.Path.GetFileNameWithoutExtension(Result.RouteFile), textboxRouteDescription.Text);
 		}
 
 
 		// show route
-		private void ShowRoute(bool UserSelectedEncoding) {
+		private void ShowRoute(bool UserSelectedEncoding)
+		{
 			if (routeWorkerThread == null)
 			{
 				return;
@@ -169,9 +177,11 @@ namespace OpenBve
 			{
 				this.Cursor = System.Windows.Forms.Cursors.WaitCursor;
 				// determine encoding
-				if (!UserSelectedEncoding) {
+				if (!UserSelectedEncoding)
+				{
 					Result.RouteEncoding = System.Text.Encoding.Default;
-					switch (TextEncoding.GetEncodingFromFile(Result.RouteFile)) {
+					switch (TextEncoding.GetEncodingFromFile(Result.RouteFile))
+					{
 						case TextEncoding.Encoding.Utf7:
 							Result.RouteEncoding = System.Text.Encoding.UTF7;
 							break;
@@ -203,18 +213,23 @@ namespace OpenBve
 							Result.RouteEncoding = System.Text.Encoding.GetEncoding(949);
 							break;
 					}
-					
+
 					int i;
-					for (i = 0; i < Interface.CurrentOptions.RouteEncodings.Length; i++) {
-						if (Interface.CurrentOptions.RouteEncodings[i].Value == Result.RouteFile) {
+					for (i = 0; i < Interface.CurrentOptions.RouteEncodings.Length; i++)
+					{
+						if (Interface.CurrentOptions.RouteEncodings[i].Value == Result.RouteFile)
+						{
 							int j;
-							for (j = 1; j < EncodingCodepages.Length; j++) {
-								if (EncodingCodepages[j] == Interface.CurrentOptions.RouteEncodings[i].Codepage) {
+							for (j = 1; j < EncodingCodepages.Length; j++)
+							{
+								if (EncodingCodepages[j] == Interface.CurrentOptions.RouteEncodings[i].Codepage)
+								{
 									Result.RouteEncoding = System.Text.Encoding.GetEncoding(EncodingCodepages[j]);
 									break;
 								}
 							}
-							if (j == EncodingCodepages.Length) {
+							if (j == EncodingCodepages.Length)
+							{
 								Result.RouteEncoding = System.Text.Encoding.UTF8;
 							}
 							break;
@@ -231,10 +246,13 @@ namespace OpenBve
 		}
 
 		// show train
-		private void ShowTrain(bool UserSelectedEncoding) {
-			if (!UserSelectedEncoding) {
+		private void ShowTrain(bool UserSelectedEncoding)
+		{
+			if (!UserSelectedEncoding)
+			{
 				Result.TrainEncoding = System.Text.Encoding.Default;
-				switch (TextEncoding.GetEncodingFromFile(Result.TrainFolder, "train.txt")) {
+				switch (TextEncoding.GetEncodingFromFile(Result.TrainFolder, "train.txt"))
+				{
 					case TextEncoding.Encoding.Utf8:
 						Result.TrainEncoding = System.Text.Encoding.UTF8;
 						break;
@@ -264,16 +282,21 @@ namespace OpenBve
 						break;
 				}
 				int i;
-				for (i = 0; i < Interface.CurrentOptions.TrainEncodings.Length; i++) {
-					if (Interface.CurrentOptions.TrainEncodings[i].Value == Result.TrainFolder) {
+				for (i = 0; i < Interface.CurrentOptions.TrainEncodings.Length; i++)
+				{
+					if (Interface.CurrentOptions.TrainEncodings[i].Value == Result.TrainFolder)
+					{
 						int j;
-						for (j = 1; j < EncodingCodepages.Length; j++) {
-							if (EncodingCodepages[j] == Interface.CurrentOptions.TrainEncodings[i].Codepage) {
+						for (j = 1; j < EncodingCodepages.Length; j++)
+						{
+							if (EncodingCodepages[j] == Interface.CurrentOptions.TrainEncodings[i].Codepage)
+							{
 								Result.TrainEncoding = System.Text.Encoding.GetEncoding(EncodingCodepages[j]);
 								break;
 							}
 						}
-						if (j == EncodingCodepages.Length) {
+						if (j == EncodingCodepages.Length)
+						{
 							Result.TrainEncoding = System.Text.Encoding.UTF8;
 						}
 						break;
@@ -283,33 +306,43 @@ namespace OpenBve
 			{
 				// train image
 				string File = OpenBveApi.Path.CombineFile(Result.TrainFolder, "train.png");
-				if (!System.IO.File.Exists(File)) {
+				if (!System.IO.File.Exists(File))
+				{
 					File = OpenBveApi.Path.CombineFile(Result.TrainFolder, "train.bmp");
 				}
-				if (System.IO.File.Exists(File)) {
+				if (System.IO.File.Exists(File))
+				{
 					TryLoadImage(pictureboxTrainImage, File);
-				} else {
+				}
+				else
+				{
 					TryLoadImage(pictureboxTrainImage, "train_unknown.png");
 				}
 			}
 			{
 				// train description
 				string File = OpenBveApi.Path.CombineFile(Result.TrainFolder, "train.txt");
-				if (System.IO.File.Exists(File)) {
-					try {
+				if (System.IO.File.Exists(File))
+				{
+					try
+					{
 						string trainText = System.IO.File.ReadAllText(File, Result.TrainEncoding);
 						trainText = trainText.ConvertNewlinesToCrLf();
 						textboxTrainDescription.Text = trainText;
-					} catch {
+					}
+					catch
+					{
 						textboxTrainDescription.Text = System.IO.Path.GetFileName(Result.TrainFolder);
 					}
-				} else {
+				}
+				else
+				{
 					textboxTrainDescription.Text = System.IO.Path.GetFileName(Result.TrainFolder);
 				}
 			}
 
 			// for RAGLINK Package Manager
-			RAGLINKCommons.RAGLINKPlatform.PackagesManager.SetTrainDetailData(System.IO.Path.GetFileNameWithoutExtension(Result.TrainFolder), textboxTrainDescription.Text);
+			RAGLINKCommons.RPlatform.PackagesManager.SetTrainDetailData(System.IO.Path.GetFileNameWithoutExtension(Result.TrainFolder), textboxTrainDescription.Text);
 		}
 	}
 }

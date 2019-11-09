@@ -1,7 +1,8 @@
-using System;
 using OpenTK.Input;
+using System;
 
-namespace SanYingInput {
+namespace SanYingInput
+{
 	/// <summary>Provides functions for dealing with joysticks.</summary>
 	internal partial class JoystickManager
 	{
@@ -15,7 +16,7 @@ namespace SanYingInput {
 			/// <summary>The handle to the joystick.</summary>
 			internal int Handle;
 
-            internal Guid Guid;
+			internal Guid Guid;
 
 			internal byte[] currentState = new byte[15];
 
@@ -62,7 +63,7 @@ namespace SanYingInput {
 					{
 						Name = "Joystick" + i,
 						Handle = i,
-                        Guid = OpenTK.Input.Joystick.GetGuid(i)
+						Guid = OpenTK.Input.Joystick.GetGuid(i)
 					};
 
 					bool alreadyFound = false;

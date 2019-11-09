@@ -39,9 +39,17 @@ namespace OpenBve.BrakeSystems
 				double d = equalizingReservoir.NormalPressure - equalizingReservoir.CurrentPressure;
 				double m = equalizingReservoir.NormalPressure;
 				r = GetRate(d / m, r * TimeElapsed);
-				if (r > d) r = d;
+				if (r > d)
+				{
+					r = d;
+				}
+
 				d = mainReservoir.CurrentPressure - equalizingReservoir.CurrentPressure;
-				if (r > d) r = d;
+				if (r > d)
+				{
+					r = d;
+				}
+
 				double f = mainReservoir.EqualizingReservoirCoefficient;
 				double s = r * f * TimeElapsed;
 				if (s > mainReservoir.CurrentPressure)
@@ -63,7 +71,11 @@ namespace OpenBve.BrakeSystems
 					double d = brakePipe.CurrentPressure - equalizingReservoir.CurrentPressure;
 					double m = equalizingReservoir.NormalPressure;
 					r = (0.5 + 1.5 * d / m) * r * TimeElapsed;
-					if (r > d) r = d;
+					if (r > d)
+					{
+						r = d;
+					}
+
 					brakePipe.CurrentPressure -= r;
 				}
 				else if (brakePipe.CurrentPressure + Tolerance < equalizingReservoir.CurrentPressure)
@@ -73,9 +85,17 @@ namespace OpenBve.BrakeSystems
 					double d = equalizingReservoir.CurrentPressure - brakePipe.CurrentPressure;
 					double m = equalizingReservoir.NormalPressure;
 					r = (0.5 + 1.5 * d / m) * r * TimeElapsed;
-					if (r > d) r = d;
+					if (r > d)
+					{
+						r = d;
+					}
+
 					d = brakePipe.NormalPressure - brakePipe.CurrentPressure;
-					if (r > d) r = d;
+					if (r > d)
+					{
+						r = d;
+					}
+
 					double f = mainReservoir.BrakePipeCoefficient;
 					double s = r * f;
 					if (s > mainReservoir.CurrentPressure)
@@ -100,9 +120,17 @@ namespace OpenBve.BrakeSystems
 					r = brakePipe.CurrentPressure;
 				}
 
-				if (r > d) r = d;
+				if (r > d)
+				{
+					r = d;
+				}
+
 				d = auxiliaryReservoir.MaximumPressure - auxiliaryReservoir.CurrentPressure;
-				if (r > d) r = d;
+				if (r > d)
+				{
+					r = d;
+				}
+
 				double f = auxiliaryReservoir.BrakePipeCoefficient;
 				double s = r / f;
 				if (s > brakePipe.CurrentPressure)
@@ -141,7 +169,7 @@ namespace OpenBve.BrakeSystems
 			else
 			{
 				//Otherwise [BVE2 / BVE4 train.dat format] work out target pressure as a proportion of the max notch:
-				targetPressure = (double) brakeHandle.Actual / (double) brakeHandle.MaximumNotch;
+				targetPressure = (double)brakeHandle.Actual / (double)brakeHandle.MaximumNotch;
 				targetPressure *= brakeCylinder.ServiceMaximumPressure;
 			}
 
@@ -168,7 +196,11 @@ namespace OpenBve.BrakeSystems
 						{
 							//Deceleration provided by the motor is not enough, so increase the BC target pressure
 							targetPressure = d / DecelerationAtServiceMaximumPressure(brakeHandle.Actual, currentSpeed);
-							if (targetPressure > 1.0) targetPressure = 1.0;
+							if (targetPressure > 1.0)
+							{
+								targetPressure = 1.0;
+							}
+
 							targetPressure *= brakeCylinder.ServiceMaximumPressure;
 						}
 						else
@@ -187,8 +219,15 @@ namespace OpenBve.BrakeSystems
 				double d = brakeCylinder.CurrentPressure - targetPressure;
 				double m = brakeCylinder.EmergencyMaximumPressure;
 				r = GetRate(d / m, r * TimeElapsed);
-				if (r > brakeCylinder.CurrentPressure) r = brakeCylinder.CurrentPressure;
-				if (r > d) r = d;
+				if (r > brakeCylinder.CurrentPressure)
+				{
+					r = brakeCylinder.CurrentPressure;
+				}
+
+				if (r > d)
+				{
+					r = d;
+				}
 				// air sound
 				if (r > 0.0 & brakeCylinder.CurrentPressure < brakeCylinder.SoundPlayedForPressure)
 				{
@@ -221,7 +260,11 @@ namespace OpenBve.BrakeSystems
 					r = auxiliaryReservoir.CurrentPressure;
 				}
 
-				if (r > d) r = d;
+				if (r > d)
+				{
+					r = d;
+				}
+
 				double s = r / f;
 				if (s > d)
 				{
@@ -254,7 +297,7 @@ namespace OpenBve.BrakeSystems
 			}
 			else
 			{
-				p = (double) brakeHandle.Actual / (double) brakeHandle.MaximumNotch;
+				p = (double)brakeHandle.Actual / (double)brakeHandle.MaximumNotch;
 				p *= brakeCylinder.ServiceMaximumPressure;
 			}
 
@@ -273,7 +316,11 @@ namespace OpenBve.BrakeSystems
 				double d = straightAirPipe.CurrentPressure - p;
 				double m = brakeCylinder.EmergencyMaximumPressure;
 				r = GetRate(d / m, r * TimeElapsed);
-				if (r > d) r = d;
+				if (r > d)
+				{
+					r = d;
+				}
+
 				straightAirPipe.CurrentPressure -= r;
 			}
 			else if (p > straightAirPipe.CurrentPressure + Tolerance)
@@ -282,7 +329,11 @@ namespace OpenBve.BrakeSystems
 				double d = p - straightAirPipe.CurrentPressure;
 				double m = brakeCylinder.EmergencyMaximumPressure;
 				r = GetRate(d / m, r * TimeElapsed);
-				if (r > d) r = d;
+				if (r > d)
+				{
+					r = d;
+				}
+
 				straightAirPipe.CurrentPressure += r;
 			}
 

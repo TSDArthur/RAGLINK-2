@@ -77,12 +77,12 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Collections.Generic;
-using System.Linq;
 using OpenTK;
 using OpenTK.Graphics;
-using IndexArray = System.Collections.Generic.List<uint>;
+using System.Collections.Generic;
+using System.Linq;
 using GroupMap = System.Collections.Generic.SortedDictionary<string, System.Collections.Generic.List<uint>>;
+using IndexArray = System.Collections.Generic.List<uint>;
 
 namespace AssimpNET.Obj
 {

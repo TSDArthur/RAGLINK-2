@@ -74,7 +74,8 @@ namespace TrainEditor
 										case "code":
 											CurrentOptions.LanguageCode = Value.Length != 0 ? Value : "en-US";
 											break;
-									} break;
+									}
+									break;
 							}
 						}
 					}
@@ -84,7 +85,11 @@ namespace TrainEditor
 			{
 				// file not found
 				string Code = CultureInfo.CurrentUICulture.Name;
-				if (string.IsNullOrEmpty(Code)) Code = "en-US";
+				if (string.IsNullOrEmpty(Code))
+				{
+					Code = "en-US";
+				}
+
 				string File = OpenBveApi.Path.CombineFile(Program.FileSystem.GetDataFolder("Languages"), Code + ".cfg");
 				if (System.IO.File.Exists(File))
 				{

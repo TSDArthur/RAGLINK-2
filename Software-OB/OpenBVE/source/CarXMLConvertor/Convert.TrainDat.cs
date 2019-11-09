@@ -1,7 +1,7 @@
-﻿using System;
+﻿using OpenBveApi.Math;
+using System;
 using System.Globalization;
 using System.Windows.Forms;
-using OpenBveApi.Math;
 
 namespace CarXmlConvertor
 {
@@ -148,43 +148,67 @@ namespace CarXmlConvertor
 						}
 						i--; break;
 					case "#pressure":
-						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.Ordinal)) {
-							double a; if (NumberFormats.TryParseDoubleVb6(Lines[i], out a)) {
-								switch (n) {
+						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.Ordinal))
+						{
+							double a; if (NumberFormats.TryParseDoubleVb6(Lines[i], out a))
+							{
+								switch (n)
+								{
 									case 0:
 										if (a <= 0.0)
 										{
 											mainForm.updateLogBoxText += "BrakeCylinderServiceMaximumPressure is expected to be positive at line " + (i + 1).ToString(CultureInfo.InvariantCulture) + " in " + FileName;
-										} else {
+										}
+										else
+										{
 											BrakeCylinderServiceMaximumPressure = a * 1000.0;
-										} break;
+										}
+										break;
 									case 1:
-										if (a <= 0.0) {
+										if (a <= 0.0)
+										{
 											mainForm.updateLogBoxText += "BrakeCylinderEmergencyMaximumPressure is expected to be positive at line " + (i + 1).ToString(CultureInfo.InvariantCulture) + " in " + FileName;
-										} else {
+										}
+										else
+										{
 											BrakeCylinderEmergencyMaximumPressure = a * 1000.0;
-										} break;
+										}
+										break;
 									case 2:
-										if (a <= 0.0) {
+										if (a <= 0.0)
+										{
 											mainForm.updateLogBoxText += "MainReservoirMinimumPressure is expected to be positive at line " + (i + 1).ToString(CultureInfo.InvariantCulture) + " in " + FileName;
-										} else {
+										}
+										else
+										{
 											MainReservoirMinimumPressure = a * 1000.0;
-										} break;
+										}
+										break;
 									case 3:
-										if (a <= 0.0) {
+										if (a <= 0.0)
+										{
 											mainForm.updateLogBoxText += "MainReservoirMaximumPressure is expected to be positive at line " + (i + 1).ToString(CultureInfo.InvariantCulture) + " in " + FileName;
-										} else {
+										}
+										else
+										{
 											MainReservoirMaximumPressure = a * 1000.0;
-										} break;
+										}
+										break;
 									case 4:
-										if (a <= 0.0) {
+										if (a <= 0.0)
+										{
 											mainForm.updateLogBoxText += "BrakePipePressue is expected to be positive at line " + (i + 1).ToString(CultureInfo.InvariantCulture) + " in " + FileName;
-										} else {
+										}
+										else
+										{
 											BrakePipePressure = a * 1000.0;
-										} break;
+										}
+										break;
 								}
-							} i++; n++;
-						} i--; break;
+							}
+							i++; n++;
+						}
+						i--; break;
 					case "#device":
 						i++;
 						while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.Ordinal))
@@ -193,22 +217,22 @@ namespace CarXmlConvertor
 							{
 								switch (n)
 								{
-									case 5: ReadhesionDeviceType = (int) a; break;
+									case 5: ReadhesionDeviceType = (int)a; break;
 								}
 							}
 							i++; n++;
 						}
-						i--; 
+						i--;
 						break;
 					default:
-					{
-						i++;
-						while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.Ordinal))
 						{
-							i++; n++;
+							i++;
+							while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.Ordinal))
+							{
+								i++; n++;
+							}
+							i--;
 						}
-						i--;
-					}
 						break;
 				}
 			}
@@ -284,7 +308,11 @@ namespace CarXmlConvertor
 						x = Math.Ceiling(y);
 						r = x - y;
 						int i = (int)x;
-						if (i >= NumberOfCars) break;
+						if (i >= NumberOfCars)
+						{
+							break;
+						}
+
 						MotorCars[i] = true;
 					}
 				}
@@ -300,7 +328,11 @@ namespace CarXmlConvertor
 						x = Math.Ceiling(y);
 						r = x - y;
 						int i = (int)x;
-						if (i >= NumberOfCars) break;
+						if (i >= NumberOfCars)
+						{
+							break;
+						}
+
 						MotorCars[i] = true;
 					}
 				}

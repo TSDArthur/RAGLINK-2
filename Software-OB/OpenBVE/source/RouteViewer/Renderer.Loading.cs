@@ -1,9 +1,9 @@
-﻿using System;
-using System.Drawing;
-using OpenBveApi.Colors;
+﻿using OpenBveApi.Colors;
 using OpenBveApi.Graphics;
 using OpenBveApi.Textures;
 using OpenTK.Graphics.OpenGL;
+using System;
+using System.Drawing;
 
 namespace OpenBve
 {
@@ -41,7 +41,7 @@ namespace OpenBve
 			customLoadScreen = false;
 			string Path = Program.FileSystem.GetDataFolder("In-game");
 			int bkgNo = Game.Generator.Next(numOfLoadingBkgs);
-			if(TextureLoadingBkg == null)
+			if (TextureLoadingBkg == null)
 			{
 				string file = OpenBveApi.Path.CombineFile(Path, "loadingbkg_" + bkgNo + ".png");
 				if (System.IO.File.Exists(file))
@@ -49,12 +49,22 @@ namespace OpenBve
 					Textures.RegisterTexture(file, out TextureLoadingBkg);
 				}
 			}
-			
+
 			// choose logo size according to screen width
 			string fName;
-			if (Renderer.ScreenWidth > 2048) fName = LogoFileName[2];
-			else if (Renderer.ScreenWidth > 1024) fName = LogoFileName[1];
-			else fName = LogoFileName[0];
+			if (Renderer.ScreenWidth > 2048)
+			{
+				fName = LogoFileName[2];
+			}
+			else if (Renderer.ScreenWidth > 1024)
+			{
+				fName = LogoFileName[1];
+			}
+			else
+			{
+				fName = LogoFileName[0];
+			}
+
 			fName = OpenBveApi.Path.CombineFile(Path, fName);
 			if (System.IO.File.Exists(fName))
 			{
@@ -83,7 +93,7 @@ namespace OpenBve
 		/// <summary>Draws on OpenGL canvas the route/train loading screen</summary>
 		internal static void DrawLoadingScreen()
 		{
-			
+
 			// begin HACK //
 			if (!BlendEnabled)
 			{
@@ -105,7 +115,7 @@ namespace OpenBve
 			GL.Color4(1.0f, 1.0f, 1.0f, 1.0f);
 			// BACKGROUND IMAGE
 			int bkgHeight = Renderer.ScreenHeight, bkgWidth = Renderer.ScreenWidth;
-			int fontHeight = (int) Fonts.SmallFont.FontSize;
+			int fontHeight = (int)Fonts.SmallFont.FontSize;
 			int logoBottom;
 			//			int		versionTop;
 			int halfWidth = Renderer.ScreenWidth / 2;
@@ -115,30 +125,30 @@ namespace OpenBve
 				if (TextureLoadingBkg.Width != Renderer.ScreenWidth && TextureLoadingBkg.Height != Renderer.ScreenHeight)
 				{
 					// stretch the background image to fit at least one screen dimension
-					double ratio = (double) TextureLoadingBkg.Width/ (double) TextureLoadingBkg.Height;
-					if ((double) Renderer.ScreenWidth/ratio > Renderer.ScreenHeight) // if screen ratio is shorter than bkg...
+					double ratio = (double)TextureLoadingBkg.Width / (double)TextureLoadingBkg.Height;
+					if ((double)Renderer.ScreenWidth / ratio > Renderer.ScreenHeight) // if screen ratio is shorter than bkg...
 					{
 						bkgHeight = Renderer.ScreenHeight; // set height to screen height
-						bkgWidth = (int) (Renderer.ScreenWidth*ratio); // and scale width proprtionally
+						bkgWidth = (int)(Renderer.ScreenWidth * ratio); // and scale width proprtionally
 					}
 					else // if screen ratio is wider than bkg...
 					{
 						bkgWidth = Renderer.ScreenWidth; // set width to screen width
-						bkgHeight = (int) (Renderer.ScreenHeight/ratio); // and scale height accordingly
+						bkgHeight = (int)(Renderer.ScreenHeight / ratio); // and scale height accordingly
 					}
 				}
-				
-				
+
+
 				// draw the background image down from the top screen edge
 				try
 				{
-					DrawRectangle(TextureLoadingBkg, new Point((Renderer.ScreenWidth - bkgWidth)/2, 0), new Size(bkgWidth, bkgHeight), Color128.White);
+					DrawRectangle(TextureLoadingBkg, new Point((Renderer.ScreenWidth - bkgWidth) / 2, 0), new Size(bkgWidth, bkgHeight), Color128.White);
 				}
 				catch
 				{
 					TextureLoadingBkg = null;
 				}
-				
+
 			}
 			// if the route has no custom loading image, add the openBVE logo
 			// (the route custom image is loaded in OldParsers/CsvRwRouteParser.cs)
@@ -146,15 +156,17 @@ namespace OpenBve
 			{
 				// place the centre of the logo at from the screen top
 				int logoTop = (int)(Renderer.ScreenHeight * logoCentreYFactor - TextureLogo.Height / 2.0);
-				DrawRectangle(TextureLogo,new Point((Renderer.ScreenWidth - TextureLogo.Width) / 2, logoTop),new Size(TextureLogo.Width, TextureLogo.Height), Color128.White);
+				DrawRectangle(TextureLogo, new Point((Renderer.ScreenWidth - TextureLogo.Width) / 2, logoTop), new Size(TextureLogo.Width, TextureLogo.Height), Color128.White);
 			}
 			else
 			{
 				// if custom route image, no logo and leave a conventional black area below the potential logo
 			}
 			logoBottom = Renderer.ScreenHeight / 2;
-			if (!bkgLoaded)				// if the background texture not yet loaded, do nothing else
+			if (!bkgLoaded)             // if the background texture not yet loaded, do nothing else
+			{
 				return;
+			}
 			// take the height remaining below the logo and divide in 3 horiz. parts
 			int blankHeight = (Renderer.ScreenHeight - logoBottom) / 3;
 

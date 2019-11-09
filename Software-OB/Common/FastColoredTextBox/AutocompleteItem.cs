@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Printing;
 
 namespace FastColoredTextBoxNS
 {
@@ -16,7 +15,7 @@ namespace FastColoredTextBoxNS
         string toolTipText;
         string menuText;
         public AutocompleteMenu Parent { get; internal set; }
-        
+
 
         public AutocompleteItem()
         {
@@ -61,7 +60,9 @@ namespace FastColoredTextBoxNS
         {
             if (Text.StartsWith(fragmentText, StringComparison.InvariantCultureIgnoreCase) &&
                    Text != fragmentText)
+            {
                 return CompareResult.VisibleAndSelected;
+            }
 
             return CompareResult.Hidden;
         }
@@ -96,9 +97,9 @@ namespace FastColoredTextBoxNS
         /// Tooltip text.
         /// </summary>
         /// <remarks>For display tooltip text, ToolTipTitle must be not null</remarks>
-        public virtual string ToolTipText 
+        public virtual string ToolTipText
         {
-            get{ return toolTipText; }
+            get { return toolTipText; }
             set { toolTipText = value; }
         }
 
@@ -188,8 +189,12 @@ namespace FastColoredTextBoxNS
             e.Tb.Selection.Start = p1;
             //move caret position right and find char ^
             while (e.Tb.Selection.CharBeforeStart != '^')
+            {
                 if (!e.Tb.Selection.GoRightThroughFolded())
+                {
                     break;
+                }
+            }
             //remove char ^
             e.Tb.Selection.GoLeft(true);
             e.Tb.InsertText("");
@@ -205,7 +210,9 @@ namespace FastColoredTextBoxNS
         {
             if (Text.StartsWith(fragmentText, StringComparison.InvariantCultureIgnoreCase) &&
                    Text != fragmentText)
+            {
                 return CompareResult.Visible;
+            }
 
             return CompareResult.Hidden;
         }
@@ -229,15 +236,27 @@ namespace FastColoredTextBoxNS
         {
             int i = fragmentText.LastIndexOf('.');
             if (i < 0)
+            {
                 return CompareResult.Hidden;
+            }
+
             string lastPart = fragmentText.Substring(i + 1);
             firstPart = fragmentText.Substring(0, i);
 
-            if(lastPart=="") return CompareResult.Visible;
-            if(Text.StartsWith(lastPart, StringComparison.InvariantCultureIgnoreCase))
-                return CompareResult.VisibleAndSelected;
-            if(lowercaseText.Contains(lastPart.ToLower()))
+            if (lastPart == "")
+            {
                 return CompareResult.Visible;
+            }
+
+            if (Text.StartsWith(lastPart, StringComparison.InvariantCultureIgnoreCase))
+            {
+                return CompareResult.VisibleAndSelected;
+            }
+
+            if (lowercaseText.Contains(lastPart.ToLower()))
+            {
+                return CompareResult.Visible;
+            }
 
             return CompareResult.Hidden;
         }
@@ -254,8 +273,8 @@ namespace FastColoredTextBoxNS
     /// </summary>
     public class SuggestItem : AutocompleteItem
     {
-        public SuggestItem(string text, int imageIndex):base(text, imageIndex)
-        {   
+        public SuggestItem(string text, int imageIndex) : base(text, imageIndex)
+        {
         }
 
         public override CompareResult Compare(string fragmentText)

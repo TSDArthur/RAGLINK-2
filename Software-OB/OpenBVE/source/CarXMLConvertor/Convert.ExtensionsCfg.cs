@@ -64,7 +64,7 @@ namespace CarXmlConvertor
 
 		private static Car[] CarInfos;
 		private static Coupler[] Couplers;
-	
+
 
 		internal static void ReadExtensionsCfg()
 		{
@@ -152,19 +152,19 @@ namespace CarXmlConvertor
 															}
 															break;
 														case "length":
-														{
-															double m;
-															if (double.TryParse(b, System.Globalization.NumberStyles.Float, Culture, out m))
 															{
-																if (m > 0.0)
+																double m;
+																if (double.TryParse(b, System.Globalization.NumberStyles.Float, Culture, out m))
 																{
-																	CarInfos[n].Length = m;
+																	if (m > 0.0)
+																	{
+																		CarInfos[n].Length = m;
+																	}
 																}
 															}
-														}
 															break;
 														case "axles":
-														int k = b.IndexOf(',');
+															int k = b.IndexOf(',');
 															if (k >= 0)
 															{
 																string c = b.Substring(0, k).TrimEnd();
@@ -210,25 +210,25 @@ namespace CarXmlConvertor
 													switch (a.ToLowerInvariant())
 													{
 														case "distances":
-														{
-															int k = b.IndexOf(',');
-															if (k >= 0)
 															{
-																string c = b.Substring(0, k).TrimEnd();
-																string d = b.Substring(k + 1).TrimStart();
-																double min, max;
-																if (!double.TryParse(c, System.Globalization.NumberStyles.Float, Culture, out min))
+																int k = b.IndexOf(',');
+																if (k >= 0)
 																{
-																}
-																else if (!double.TryParse(d, System.Globalization.NumberStyles.Float, Culture, out max))
-																{
-																}
-																else
-																{
-																	Couplers[n] = new Coupler { Min = min, Max = max };
+																	string c = b.Substring(0, k).TrimEnd();
+																	string d = b.Substring(k + 1).TrimStart();
+																	double min, max;
+																	if (!double.TryParse(c, System.Globalization.NumberStyles.Float, Culture, out min))
+																	{
+																	}
+																	else if (!double.TryParse(d, System.Globalization.NumberStyles.Float, Culture, out max))
+																	{
+																	}
+																	else
+																	{
+																		Couplers[n] = new Coupler { Min = min, Max = max };
+																	}
 																}
 															}
-														}
 															break;
 													}
 												}
@@ -320,7 +320,7 @@ namespace CarXmlConvertor
 											i++;
 										}
 										i--;
-										
+
 									}
 								}
 							}
@@ -350,13 +350,15 @@ namespace CarXmlConvertor
 					string fileOut = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(FileName), "Car" + i + ".xml");
 					try
 					{
-						
+
 						using (StreamWriter sw = new StreamWriter(fileOut))
 						{
 							foreach (String s in carLines.Lines)
+							{
 								sw.WriteLine(s);
+							}
 						}
-						newLines.Add("<Car>"+ "Car" + i + ".xml</Car>");
+						newLines.Add("<Car>" + "Car" + i + ".xml</Car>");
 					}
 					catch
 					{
@@ -365,7 +367,7 @@ namespace CarXmlConvertor
 						return;
 					}
 				}
-				
+
 			}
 			newLines.Add("</Train>");
 			newLines.Add("</openBVE>");
@@ -375,7 +377,9 @@ namespace CarXmlConvertor
 				using (StreamWriter sw = new StreamWriter(fileOut))
 				{
 					foreach (String s in newLines.Lines)
+					{
 						sw.WriteLine(s);
+					}
 				}
 			}
 			catch
@@ -464,9 +468,9 @@ namespace CarXmlConvertor
 			}
 			if (i == ConvertTrainDat.DriverCar)
 			{
-				if(System.IO.File.Exists(OpenBveApi.Path.CombineFile(System.IO.Path.GetDirectoryName(FileName), "panel.animated")))
+				if (System.IO.File.Exists(OpenBveApi.Path.CombineFile(System.IO.Path.GetDirectoryName(FileName), "panel.animated")))
 				{
-					newLines.Add("<InteriorView>panel.animated</InteriorView>" );
+					newLines.Add("<InteriorView>panel.animated</InteriorView>");
 					newLines.Add("<DriverPosition>" + ConvertSoundCfg.DriverPosition.X + "," + ConvertSoundCfg.DriverPosition.Y + "," + ConvertSoundCfg.DriverPosition.Z + "</DriverPosition>");
 				}
 				else if (System.IO.File.Exists(OpenBveApi.Path.CombineFile(System.IO.Path.GetDirectoryName(FileName), "panel2.cfg")))
@@ -561,7 +565,9 @@ namespace CarXmlConvertor
 				using (StreamWriter sw = new StreamWriter(fileOut))
 				{
 					foreach (String s in newLines.Lines)
+					{
 						sw.WriteLine(s);
+					}
 				}
 			}
 			catch

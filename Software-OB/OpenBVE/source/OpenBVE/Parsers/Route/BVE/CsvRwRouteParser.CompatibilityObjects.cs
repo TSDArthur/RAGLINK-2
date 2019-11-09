@@ -1,7 +1,7 @@
-﻿using System;
-using System.Xml;
+﻿using OpenBveApi.Interface;
+using System;
 using System.Linq;
-using OpenBveApi.Interface;
+using System.Xml;
 
 namespace OpenBve
 {
@@ -73,7 +73,7 @@ namespace OpenBve
 					}
 				}
 
-				
+
 			}
 			//We haven't found the object on-disk, so check the compatibility objects to see if a replacement is available
 			for (int i = 0; i < CompatibilityObjects.AvailableReplacements.Length; i++)
@@ -231,7 +231,7 @@ namespace OpenBve
 			{
 				return;
 			}
-			
+
 			//Check for null
 			if (currentXML.DocumentElement != null)
 			{
@@ -263,11 +263,11 @@ namespace OpenBve
 										}
 										break;
 									case "path":
-											string f = OpenBveApi.Path.CombineFile(d, c.InnerText.Trim());
-											if (System.IO.File.Exists(f))
-											{
-												o.ReplacementPath = f;
-											}
+										string f = OpenBveApi.Path.CombineFile(d, c.InnerText.Trim());
+										if (System.IO.File.Exists(f))
+										{
+											o.ReplacementPath = f;
+										}
 										break;
 									case "message":
 										o.Message = c.InnerText.Trim();
@@ -346,8 +346,8 @@ namespace OpenBve
 						}
 					}
 					//Now try and load any object list XML files this references
-						DocumentNodes = currentXML.DocumentElement.SelectNodes("/openBVE/Compatibility/ObjectList");
-					
+					DocumentNodes = currentXML.DocumentElement.SelectNodes("/openBVE/Compatibility/ObjectList");
+
 					if (DocumentNodes != null)
 					{
 						foreach (XmlNode n in DocumentNodes)
@@ -367,7 +367,8 @@ namespace OpenBve
 													f = OpenBveApi.Path.CombineFile(d, f);
 												}
 												catch
-												{ }
+												{
+												}
 											}
 											LoadCompatibilityObjects(f);
 											break;

@@ -19,7 +19,7 @@ namespace OpenBve
 				this.Buffer = buffer;
 				this.Source = source;
 				this.Position = position;
-				
+
 			}
 
 			/// <summary>Defines a default empty sound</summary>

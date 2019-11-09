@@ -1,8 +1,8 @@
-﻿using System.Linq;
-using System.Xml;
-using OpenBveApi.Math;
-using OpenBve.BrakeSystems;
+﻿using OpenBve.BrakeSystems;
 using OpenBveApi.Interface;
+using OpenBveApi.Math;
+using System.Linq;
+using System.Xml;
 
 namespace OpenBve.Parsers.Train
 {
@@ -165,7 +165,7 @@ namespace OpenBve.Parsers.Train
 										if (!NumberFormats.TryParseDoubleVb6(cc.InnerText, out straightAirPipeServiceRate) | straightAirPipeServiceRate <= 0.0)
 										{
 											Interface.AddMessage(MessageType.Warning, false, "Invalid straight air pipe service rate defined for Car " + Car + " in XML file " + fileName);
-											 straightAirPipeServiceRate = 300000.0;
+											straightAirPipeServiceRate = 300000.0;
 										}
 										break;
 									case "emergencyrate":
@@ -231,12 +231,20 @@ namespace OpenBve.Parsers.Train
 			Train.Cars[Car].CarBrake.mainReservoir = new MainReservoir(compressorMinimumPressure, compressorMaximumPressure, 0.01, (Train.Handles.Brake is TrainManager.AirBrakeHandle ? 0.25 : 0.075) / Train.Cars.Length);
 			Train.Cars[Car].CarBrake.equalizingReservoir = new EqualizingReservoir(equalizingReservoirServiceRate, equalizingReservoirEmergencyRate, equalizingReservoirChargeRate);
 			Train.Cars[Car].CarBrake.equalizingReservoir.NormalPressure = 1.005 * brakePipeNormalPressure;
-				
+
 			Train.Cars[Car].CarBrake.brakePipe = new BrakePipe(brakePipeNormalPressure, brakePipeChargeRate, brakePipeServiceRate, brakePipeEmergencyRate, Train.Cars[0].CarBrake is ElectricCommandBrake);
 			{
 				double r = 200000.0 / brakeCylinderEmergencyMaximumPressure - 1.0;
-				if (r < 0.1) r = 0.1;
-				if (r > 1.0) r = 1.0;
+				if (r < 0.1)
+				{
+					r = 0.1;
+				}
+
+				if (r > 1.0)
+				{
+					r = 1.0;
+				}
+
 				Train.Cars[Car].CarBrake.auxiliaryReservoir = new AuxiliaryReservoir(0.975 * brakePipeNormalPressure, auxiliaryReservoirChargeRate, 0.5, r);
 			}
 			Train.Cars[Car].CarBrake.brakeCylinder = new BrakeCylinder(brakeCylinderServiceMaximumPressure, brakeCylinderEmergencyMaximumPressure, Train.Handles.Brake is TrainManager.AirBrakeHandle ? brakeCylinderEmergencyRate : 0.3 * brakeCylinderEmergencyRate, brakeCylinderEmergencyRate, brakeCylinderReleaseRate);

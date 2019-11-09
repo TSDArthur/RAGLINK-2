@@ -2,15 +2,19 @@
 using System.Linq;
 using System.Windows.Forms;
 
-namespace TrainEditor {
-	internal static class TrainDat {
+namespace TrainEditor
+{
+	internal static class TrainDat
+	{
 
 		// data structures
 
 		// acceleration
 		/// <summary>The Acceleration section of the train.dat. All members are stored in the unit as specified by the train.dat documentation.</summary>
-		internal class Acceleration {
-			internal struct Entry {
+		internal class Acceleration
+		{
+			internal struct Entry
+			{
 				internal double a0;
 				internal double a1;
 				internal double v1;
@@ -18,10 +22,12 @@ namespace TrainEditor {
 				internal double e;
 			}
 			internal Entry[] Entries;
-			internal Acceleration() {
+			internal Acceleration()
+			{
 				const int n = 8;
 				this.Entries = new Entry[n];
-				for (int i = 0; i < n; i++) {
+				for (int i = 0; i < n; i++)
+				{
 					this.Entries[i].a0 = 1.0;
 					this.Entries[i].a1 = 1.0;
 					this.Entries[i].v1 = 25.0;
@@ -30,51 +36,57 @@ namespace TrainEditor {
 				}
 			}
 		}
-		
+
 		// performance
 		/// <summary>The Performance section of the train.dat. All members are stored in the unit as specified by the train.dat documentation.</summary>
-		internal class Performance {
+		internal class Performance
+		{
 			internal double Deceleration;
 			internal double CoefficientOfStaticFriction;
 			internal double CoefficientOfRollingResistance;
 			internal double AerodynamicDragCoefficient;
-			internal Performance() {
+			internal Performance()
+			{
 				this.Deceleration = 1.0;
 				this.CoefficientOfStaticFriction = 0.35;
 				this.CoefficientOfRollingResistance = 0.0025;
 				this.AerodynamicDragCoefficient = 1.2;
 			}
 		}
-		
+
 		// delay
 		/// <summary>The Delay section of the train.dat. All members are stored in the unit as specified by the train.dat documentation.</summary>
-		internal class Delay {
+		internal class Delay
+		{
 			internal double[] DelayPowerUp;
 			internal double[] DelayPowerDown;
 			internal double[] DelayBrakeUp;
 			internal double[] DelayBrakeDown;
 			internal double[] DelayLocoBrakeUp;
 			internal double[] DelayLocoBrakeDown;
-			internal Delay() {
-				this.DelayPowerUp = new double[] { 0.0, 0.0, 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0  };
-				this.DelayPowerDown = new double[] { 0.0, 0.0, 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0  };
-				this.DelayBrakeUp = new double[] { 0.0, 0.0, 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0  };
-				this.DelayBrakeDown = new double[] { 0.0, 0.0, 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0  };
-				this.DelayLocoBrakeUp = new double[] { 0.0, 0.0, 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0  };
-				this.DelayLocoBrakeDown = new double[] { 0.0, 0.0, 0.0 , 0.0, 0.0, 0.0, 0.0, 0.0  };
+			internal Delay()
+			{
+				this.DelayPowerUp = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+				this.DelayPowerDown = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+				this.DelayBrakeUp = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+				this.DelayBrakeDown = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+				this.DelayLocoBrakeUp = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
+				this.DelayLocoBrakeDown = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 			}
 		}
-		
+
 		// move
 		/// <summary>The Move section of the train.dat. All members are stored in the unit as specified by the train.dat documentation.</summary>
-		internal class Move {
+		internal class Move
+		{
 			internal double JerkPowerUp;
 			internal double JerkPowerDown;
 			internal double JerkBrakeUp;
 			internal double JerkBrakeDown;
 			internal double BrakeCylinderUp;
 			internal double BrakeCylinderDown;
-			internal Move() {
+			internal Move()
+			{
 				this.JerkPowerUp = 1000.0;
 				this.JerkPowerDown = 1000.0;
 				this.JerkBrakeUp = 1000.0;
@@ -83,21 +95,25 @@ namespace TrainEditor {
 				this.BrakeCylinderDown = 200.0;
 			}
 		}
-		
+
 		// brake
 		/// <summary>The Brake section of the train.dat. All members are stored in the unit as specified by the train.dat documentation.</summary>
-		internal class Brake {
-			internal enum BrakeTypes {
+		internal class Brake
+		{
+			internal enum BrakeTypes
+			{
 				ElectromagneticStraightAirBrake = 0,
 				ElectricCommandBrake = 1,
 				AutomaticAirBrake = 2
 			}
-			internal enum LocoBrakeTypes {
+			internal enum LocoBrakeTypes
+			{
 				NotFitted = 0,
 				NotchedAirBrake = 1,
 				AutomaticAirBrake = 2
 			}
-			internal enum BrakeControlSystems {
+			internal enum BrakeControlSystems
+			{
 				None = 0,
 				ClosingElectromagneticValve = 1,
 				DelayIncludingSystem = 2
@@ -106,23 +122,26 @@ namespace TrainEditor {
 			internal LocoBrakeTypes LocoBrakeType;
 			internal BrakeControlSystems BrakeControlSystem;
 			internal double BrakeControlSpeed;
-			internal Brake() {
+			internal Brake()
+			{
 				this.BrakeType = BrakeTypes.ElectromagneticStraightAirBrake;
 				this.LocoBrakeType = LocoBrakeTypes.NotFitted;
 				this.BrakeControlSystem = BrakeControlSystems.None;
 				this.BrakeControlSpeed = 0.0;
 			}
 		}
-		
+
 		// pressure
 		/// <summary>The Pressure section of the train.dat. All members are stored in the unit as specified by the train.dat documentation.</summary>
-		internal class Pressure {
+		internal class Pressure
+		{
 			internal double BrakeCylinderServiceMaximumPressure;
 			internal double BrakeCylinderEmergencyMaximumPressure;
 			internal double MainReservoirMinimumPressure;
 			internal double MainReservoirMaximumPressure;
 			internal double BrakePipeNormalPressure;
-			internal Pressure() {
+			internal Pressure()
+			{
 				this.BrakeCylinderServiceMaximumPressure = 480.0;
 				this.BrakeCylinderEmergencyMaximumPressure = 480.0;
 				this.MainReservoirMinimumPressure = 690.0;
@@ -130,11 +149,13 @@ namespace TrainEditor {
 				this.BrakePipeNormalPressure = 490.0;
 			}
 		}
-		
+
 		// handle
 		/// <summary>The Handle section of the train.dat. All members are stored in the unit as specified by the train.dat documentation.</summary>
-		internal class Handle {
-			internal enum HandleTypes {
+		internal class Handle
+		{
+			internal enum HandleTypes
+			{
 				Separate = 0,
 				Combined = 1
 			}
@@ -149,7 +170,7 @@ namespace TrainEditor {
 			internal enum LocoBrakeType
 			{
 				Combined = 0,
-				Independant = 1, 
+				Independant = 1,
 				Blocking = 2
 			}
 			internal HandleTypes HandleType;
@@ -161,7 +182,8 @@ namespace TrainEditor {
 			internal int LocoBrakeNotches;
 			internal int DriverPowerNotches;
 			internal int DriverBrakeNotches;
-			internal Handle() {
+			internal Handle()
+			{
 				this.HandleType = HandleTypes.Separate;
 				this.PowerNotches = 8;
 				this.BrakeNotches = 8;
@@ -173,15 +195,17 @@ namespace TrainEditor {
 				this.DriverBrakeNotches = 8;
 			}
 		}
-		
+
 		// cab
 		/// <summary>The Cab section of the train.dat. All members are stored in the unit as specified by the train.dat documentation.</summary>
-		internal class Cab {
+		internal class Cab
+		{
 			internal double X;
 			internal double Y;
 			internal double Z;
 			internal double DriverCar;
-			internal Cab() {
+			internal Cab()
+			{
 				this.X = 0.0;
 				this.Y = 0.0;
 				this.Z = 0.0;
@@ -189,10 +213,11 @@ namespace TrainEditor {
 			}
 		}
 
-		
+
 		// car
 		/// <summary>The Car section of the train.dat. All members are stored in the unit as specified by the train.dat documentation.</summary>
-		internal class Car {
+		internal class Car
+		{
 			internal double MotorCarMass;
 			internal int NumberOfMotorCars;
 			internal double TrailerCarMass;
@@ -204,7 +229,8 @@ namespace TrainEditor {
 			internal double CenterOfGravityHeight;
 			internal double ExposedFrontalArea;
 			internal double UnexposedFrontalArea;
-			internal Car() {
+			internal Car()
+			{
 				this.MotorCarMass = 40.0;
 				this.NumberOfMotorCars = 1;
 				this.TrailerCarMass = 40.0;
@@ -218,33 +244,39 @@ namespace TrainEditor {
 				this.UnexposedFrontalArea = 1.6;
 			}
 		}
-		
+
 		// device
 		/// <summary>The Device section of the train.dat. All members are stored in the unit as specified by the train.dat documentation.</summary>
-		internal class Device {
-			internal enum AtsModes {
+		internal class Device
+		{
+			internal enum AtsModes
+			{
 				None = -1,
 				AtsSn = 0,
 				AtsSnP = 1
 			}
-			internal enum AtcModes {
+			internal enum AtcModes
+			{
 				None = 0,
 				Manual = 1,
 				Automatic = 2
 			}
-			internal enum ReAdhesionDevices {
+			internal enum ReAdhesionDevices
+			{
 				None = -1,
 				TypeA = 0,
 				TypeB = 1,
 				TypeC = 2,
 				TypeD = 3
 			}
-			internal enum PassAlarmModes {
+			internal enum PassAlarmModes
+			{
 				None = 0,
 				Single = 1,
 				Looping = 2
 			}
-			internal enum DoorModes {
+			internal enum DoorModes
+			{
 				SemiAutomatic = 0,
 				Automatic = 1,
 				Manual = 2
@@ -261,7 +293,8 @@ namespace TrainEditor {
 			internal DoorModes DoorCloseMode;
 			internal double DoorWidth;
 			internal double DoorMaxTolerance;
-			internal Device() {
+			internal Device()
+			{
 				this.Ats = AtsModes.AtsSn;
 				this.Atc = AtcModes.None;
 				this.Eb = false;
@@ -276,30 +309,35 @@ namespace TrainEditor {
 				this.DoorMaxTolerance = 0.0;
 			}
 		}
-		
+
 		// motor
 		/// <summary>Any of the Motor sections of the train.dat. All members are stored in the unit as specified by the train.dat documentation.</summary>
-		internal class Motor {
-			internal struct Entry {
+		internal class Motor
+		{
+			internal struct Entry
+			{
 				internal int SoundIndex;
 				internal double Pitch;
 				internal double Volume;
 			}
 			internal Entry[] Entries;
-			internal Motor() {
+			internal Motor()
+			{
 				const int n = 800;
 				this.Entries = new Entry[n];
-				for (int i = 0; i < n; i++) {
+				for (int i = 0; i < n; i++)
+				{
 					this.Entries[i].SoundIndex = -1;
 					this.Entries[i].Pitch = 100.0;
 					this.Entries[i].Volume = 128.0;
 				}
 			}
 		}
-		
+
 		// train
 		/// <summary>The representation of the train.dat.</summary>
-		internal class Train {
+		internal class Train
+		{
 			internal Acceleration Acceleration;
 			internal Performance Performance;
 			internal Delay Delay;
@@ -314,7 +352,8 @@ namespace TrainEditor {
 			internal Motor MotorP2;
 			internal Motor MotorB1;
 			internal Motor MotorB2;
-			internal Train () {
+			internal Train()
+			{
 				this.Acceleration = new Acceleration();
 				this.Performance = new Performance();
 				this.Delay = new Delay();
@@ -338,23 +377,30 @@ namespace TrainEditor {
 		/// <summary>Loads a file into an instance of the Train class.</summary>
 		/// <param name="FileName">The train.dat file to load.</param>
 		/// <returns>An instance of the Train class.</returns>
-		internal static Train Load(string FileName) {
+		internal static Train Load(string FileName)
+		{
 			Train t = new Train();
 			t.Pressure.BrakePipeNormalPressure = 0.0;
 			System.Globalization.CultureInfo Culture = System.Globalization.CultureInfo.InvariantCulture;
 			string[] Lines = System.IO.File.ReadAllLines(FileName, new System.Text.UTF8Encoding());
-			for (int i = 0; i < Lines.Length; i++) {
+			for (int i = 0; i < Lines.Length; i++)
+			{
 				int j = Lines[i].IndexOf(';');
-				if (j >= 0) {
+				if (j >= 0)
+				{
 					Lines[i] = Lines[i].Substring(0, j).Trim();
-				} else {
+				}
+				else
+				{
 					Lines[i] = Lines[i].Trim();
 				}
 			}
 			bool ver1220000 = false;
-			
-			for (int i = 0; i < Lines.Length; i++) {
-				if (Lines[i].Length != 0) {
+
+			for (int i = 0; i < Lines.Length; i++)
+			{
+				if (Lines[i].Length != 0)
+				{
 					string s = Lines[i].ToLowerInvariant();
 					switch (s)
 					{
@@ -389,24 +435,35 @@ namespace TrainEditor {
 					break;
 				}
 			}
-			for (int i = 0; i < Lines.Length; i++) {
+			for (int i = 0; i < Lines.Length; i++)
+			{
 				int n = 0;
-				switch (Lines[i].ToLowerInvariant()) {
+				switch (Lines[i].ToLowerInvariant())
+				{
 					case "#acceleration":
 						i++;
-						while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase)) {
-							if (n == t.Acceleration.Entries.Length) {
+						while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase))
+						{
+							if (n == t.Acceleration.Entries.Length)
+							{
 								Array.Resize<Acceleration.Entry>(ref t.Acceleration.Entries, t.Acceleration.Entries.Length << 1);
 							}
 							string u = Lines[i] + ",";
 							int m = 0;
-							while (true) {
+							while (true)
+							{
 								int j = u.IndexOf(',');
-								if (j == -1) break;
+								if (j == -1)
+								{
+									break;
+								}
+
 								string s = u.Substring(0, j).Trim();
 								u = u.Substring(j + 1);
-								double a; if (double.TryParse(s, System.Globalization.NumberStyles.Float, Culture, out a)) {
-									switch (m) {
+								double a; if (double.TryParse(s, System.Globalization.NumberStyles.Float, Culture, out a))
+								{
+									switch (m)
+									{
 										case 0:
 											t.Acceleration.Entries[n].a0 = Math.Max(a, 0.0);
 											break;
@@ -418,29 +475,38 @@ namespace TrainEditor {
 											break;
 										case 3:
 											t.Acceleration.Entries[n].v2 = Math.Max(a, 0.0);
-											if (t.Acceleration.Entries[n].v2 < t.Acceleration.Entries[n].v1) {
+											if (t.Acceleration.Entries[n].v2 < t.Acceleration.Entries[n].v1)
+											{
 												double x = t.Acceleration.Entries[n].v1;
 												t.Acceleration.Entries[n].v1 = t.Acceleration.Entries[n].v2;
 												t.Acceleration.Entries[n].v2 = x;
 											}
 											break;
 										case 4:
-											if (ver1220000) {
-												if (a <= 0.0) {
+											if (ver1220000)
+											{
+												if (a <= 0.0)
+												{
 													t.Acceleration.Entries[n].e = 1.0;
-												} else {
+												}
+												else
+												{
 													const double c = 1.23315173118822;
 													t.Acceleration.Entries[n].e = 1.0 - Math.Log(a) * t.Acceleration.Entries[n].v2 * c;
-													if (t.Acceleration.Entries[n].e > 4.0) {
+													if (t.Acceleration.Entries[n].e > 4.0)
+													{
 														t.Acceleration.Entries[n].e = 4.0;
 													}
 												}
-											} else {
+											}
+											else
+											{
 												t.Acceleration.Entries[n].e = a;
 											}
 											break;
 									}
-								} m++;
+								}
+								m++;
 							}
 							i++;
 							n++;
@@ -450,40 +516,80 @@ namespace TrainEditor {
 						break;
 					case "#performance":
 					case "#deceleration":
-						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase)) {
-							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a)) {
-								switch (n) {
+						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase))
+						{
+							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a))
+							{
+								switch (n)
+								{
 									case 0:
-										if (a >= 0.0) t.Performance.Deceleration = a;
+										if (a >= 0.0)
+										{
+											t.Performance.Deceleration = a;
+										}
+
 										break;
 									case 1:
-										if (a >= 0.0) t.Performance.CoefficientOfStaticFriction = a;
+										if (a >= 0.0)
+										{
+											t.Performance.CoefficientOfStaticFriction = a;
+										}
+
 										break;
 									case 3:
-										if (a >= 0.0) t.Performance.CoefficientOfRollingResistance = a;
+										if (a >= 0.0)
+										{
+											t.Performance.CoefficientOfRollingResistance = a;
+										}
+
 										break;
 									case 4:
-										if (a >= 0.0) t.Performance.AerodynamicDragCoefficient = a;
+										if (a >= 0.0)
+										{
+											t.Performance.AerodynamicDragCoefficient = a;
+										}
+
 										break;
 								}
-							} i++; n++;
-						} i--; break;
+							}
+							i++; n++;
+						}
+						i--; break;
 					case "#delay":
-						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase)) {
+						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase))
+						{
 							double a;
-							if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a)) {
-								switch (n) {
+							if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a))
+							{
+								switch (n)
+								{
 									case 0:
-										if(a >= 0.0) t.Delay.DelayPowerUp = new double[] { a };
+										if (a >= 0.0)
+										{
+											t.Delay.DelayPowerUp = new double[] { a };
+										}
+
 										break;
 									case 1:
-										if(a >= 0.0) t.Delay.DelayPowerDown = new double[] { a };
+										if (a >= 0.0)
+										{
+											t.Delay.DelayPowerDown = new double[] { a };
+										}
+
 										break;
 									case 2:
-										if(a >= 0.0) t.Delay.DelayBrakeUp = new double[] { a };
+										if (a >= 0.0)
+										{
+											t.Delay.DelayBrakeUp = new double[] { a };
+										}
+
 										break;
 									case 3:
-										if(a >= 0.0) t.Delay.DelayBrakeDown = new double[] { a };
+										if (a >= 0.0)
+										{
+											t.Delay.DelayBrakeDown = new double[] { a };
+										}
+
 										break;
 								}
 							}
@@ -512,114 +618,234 @@ namespace TrainEditor {
 								}
 							}
 							i++; n++;
-						} i--; break;
+						}
+						i--; break;
 					case "#move":
-						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase)) {
-							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a)) {
-								switch (n) {
+						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase))
+						{
+							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a))
+							{
+								switch (n)
+								{
 									case 0:
-										if(a >= 0.0) t.Move.JerkPowerUp = a;
+										if (a >= 0.0)
+										{
+											t.Move.JerkPowerUp = a;
+										}
+
 										break;
 									case 1:
-										if(a >= 0.0) t.Move.JerkPowerDown = a;
+										if (a >= 0.0)
+										{
+											t.Move.JerkPowerDown = a;
+										}
+
 										break;
 									case 2:
-										if(a >= 0.0) t.Move.JerkBrakeUp = a;
+										if (a >= 0.0)
+										{
+											t.Move.JerkBrakeUp = a;
+										}
+
 										break;
 									case 3:
-										if(a >= 0.0) t.Move.JerkBrakeDown = a;
+										if (a >= 0.0)
+										{
+											t.Move.JerkBrakeDown = a;
+										}
+
 										break;
 									case 4:
-										if(a >= 0.0) t.Move.BrakeCylinderUp = a;
+										if (a >= 0.0)
+										{
+											t.Move.BrakeCylinderUp = a;
+										}
+
 										break;
 									case 5:
-										if(a >= 0.0) t.Move.BrakeCylinderDown = a;
+										if (a >= 0.0)
+										{
+											t.Move.BrakeCylinderDown = a;
+										}
+
 										break;
 								}
-							} i++; n++;
-						} i--; break;
+							}
+							i++; n++;
+						}
+						i--; break;
 					case "#brake":
-						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase)) {
-							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a)) {
+						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase))
+						{
+							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a))
+							{
 								int b = (int)Math.Round(a);
-								switch (n) {
+								switch (n)
+								{
 									case 0:
-										if (b >= 0 & b <= 2) t.Brake.BrakeType = (Brake.BrakeTypes)b;
+										if (b >= 0 & b <= 2)
+										{
+											t.Brake.BrakeType = (Brake.BrakeTypes)b;
+										}
+
 										break;
 									case 1:
-										if (b >= 0 & b <= 2) t.Brake.BrakeControlSystem = (Brake.BrakeControlSystems)b;
+										if (b >= 0 & b <= 2)
+										{
+											t.Brake.BrakeControlSystem = (Brake.BrakeControlSystems)b;
+										}
+
 										break;
 									case 2:
-										if (a >= 0.0) t.Brake.BrakeControlSpeed = a;
+										if (a >= 0.0)
+										{
+											t.Brake.BrakeControlSpeed = a;
+										}
+
 										break;
 									case 3:
-										if (a <= 0 && a > 3) t.Brake.LocoBrakeType = (Brake.LocoBrakeTypes) b;
+										if (a <= 0 && a > 3)
+										{
+											t.Brake.LocoBrakeType = (Brake.LocoBrakeTypes)b;
+										}
+
 										break;
 								}
-							} i++; n++;
-						} i--; break;
+							}
+							i++; n++;
+						}
+						i--; break;
 					case "#pressure":
-						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase)) {
-							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a)) {
-								switch (n) {
+						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase))
+						{
+							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a))
+							{
+								switch (n)
+								{
 									case 0:
-										if (a > 0.0) t.Pressure.BrakeCylinderServiceMaximumPressure = a;
+										if (a > 0.0)
+										{
+											t.Pressure.BrakeCylinderServiceMaximumPressure = a;
+										}
+
 										break;
 									case 1:
-										if (a > 0.0) t.Pressure.BrakeCylinderEmergencyMaximumPressure = a;
+										if (a > 0.0)
+										{
+											t.Pressure.BrakeCylinderEmergencyMaximumPressure = a;
+										}
+
 										break;
 									case 2:
-										if (a > 0.0) t.Pressure.MainReservoirMinimumPressure = a;
+										if (a > 0.0)
+										{
+											t.Pressure.MainReservoirMinimumPressure = a;
+										}
+
 										break;
 									case 3:
-										if (a > 0.0) t.Pressure.MainReservoirMaximumPressure = a;
+										if (a > 0.0)
+										{
+											t.Pressure.MainReservoirMaximumPressure = a;
+										}
+
 										break;
 									case 4:
-										if (a > 0.0) t.Pressure.BrakePipeNormalPressure = a;
+										if (a > 0.0)
+										{
+											t.Pressure.BrakePipeNormalPressure = a;
+										}
+
 										break;
 								}
-							} i++; n++;
-						} i--; break;
+							}
+							i++; n++;
+						}
+						i--; break;
 					case "#handle":
-						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase)) {
-							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a)) {
+						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase))
+						{
+							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a))
+							{
 								int b = (int)Math.Round(a);
-								switch (n) {
+								switch (n)
+								{
 									case 0:
-										if (b == 0 | b == 1) t.Handle.HandleType = (Handle.HandleTypes)b;
+										if (b == 0 | b == 1)
+										{
+											t.Handle.HandleType = (Handle.HandleTypes)b;
+										}
+
 										break;
 									case 1:
-										if (b > 0) t.Handle.PowerNotches = b;
+										if (b > 0)
+										{
+											t.Handle.PowerNotches = b;
+										}
+
 										break;
 									case 2:
-										if (b > 0) t.Handle.BrakeNotches = b;
+										if (b > 0)
+										{
+											t.Handle.BrakeNotches = b;
+										}
+
 										break;
 									case 3:
-										if (b >= 0) t.Handle.PowerNotchReduceSteps = b;
+										if (b >= 0)
+										{
+											t.Handle.PowerNotchReduceSteps = b;
+										}
+
 										break;
 									case 4:
-										if (a >= 0 && a < 4) t.Handle.HandleBehaviour = (Handle.EbHandleBehaviour) b;
+										if (a >= 0 && a < 4)
+										{
+											t.Handle.HandleBehaviour = (Handle.EbHandleBehaviour)b;
+										}
+
 										break;
 									case 5:
-										if (b > 0) t.Handle.LocoBrakeNotches = b;
+										if (b > 0)
+										{
+											t.Handle.LocoBrakeNotches = b;
+										}
+
 										break;
 									case 6:
-										if (a <= 0 && a > 3) t.Handle.LocoBrake = (Handle.LocoBrakeType) b;
+										if (a <= 0 && a > 3)
+										{
+											t.Handle.LocoBrake = (Handle.LocoBrakeType)b;
+										}
+
 										break;
 									case 7:
-										if (b > 0) t.Handle.DriverPowerNotches = b;
+										if (b > 0)
+										{
+											t.Handle.DriverPowerNotches = b;
+										}
+
 										break;
 									case 8:
-										if (b > 0) t.Handle.DriverBrakeNotches = b;
+										if (b > 0)
+										{
+											t.Handle.DriverBrakeNotches = b;
+										}
+
 										break;
 								}
-							} i++; n++;
-						} i--; break;
+							}
+							i++; n++;
+						}
+						i--; break;
 					case "#cockpit":
 					case "#cab":
-						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase)) {
-							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a)) {
-								switch (n) {
+						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase))
+						{
+							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a))
+							{
+								switch (n)
+								{
 									case 0:
 										t.Cab.X = a;
 										break;
@@ -633,59 +859,113 @@ namespace TrainEditor {
 										t.Cab.DriverCar = (int)Math.Round(a);
 										break;
 								}
-							} i++; n++;
-						} i--; break;
+							}
+							i++; n++;
+						}
+						i--; break;
 					case "#car":
-						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase)) {
-							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a)) {
+						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase))
+						{
+							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a))
+							{
 								int b = (int)Math.Round(a);
-								switch (n) {
+								switch (n)
+								{
 									case 0:
-										if (a > 0.0) t.Car.MotorCarMass = a;
+										if (a > 0.0)
+										{
+											t.Car.MotorCarMass = a;
+										}
+
 										break;
 									case 1:
-										if (b >= 1) t.Car.NumberOfMotorCars = b;
+										if (b >= 1)
+										{
+											t.Car.NumberOfMotorCars = b;
+										}
+
 										break;
 									case 2:
-										if (a > 0.0) t.Car.TrailerCarMass = a;
+										if (a > 0.0)
+										{
+											t.Car.TrailerCarMass = a;
+										}
+
 										break;
 									case 3:
-										if (b >= 0) t.Car.NumberOfTrailerCars = b;
+										if (b >= 0)
+										{
+											t.Car.NumberOfTrailerCars = b;
+										}
+
 										break;
 									case 4:
-										if (b > 0.0) t.Car.LengthOfACar = a;
+										if (b > 0.0)
+										{
+											t.Car.LengthOfACar = a;
+										}
+
 										break;
 									case 5:
 										t.Car.FrontCarIsAMotorCar = a == 1.0;
 										break;
 									case 6:
-										if (a > 0.0) t.Car.WidthOfACar = a;
+										if (a > 0.0)
+										{
+											t.Car.WidthOfACar = a;
+										}
+
 										break;
 									case 7:
-										if (a > 0.0) t.Car.HeightOfACar = a;
+										if (a > 0.0)
+										{
+											t.Car.HeightOfACar = a;
+										}
+
 										break;
 									case 8:
 										t.Car.CenterOfGravityHeight = a;
 										break;
 									case 9:
-										if (a > 0.0) t.Car.ExposedFrontalArea = a;
+										if (a > 0.0)
+										{
+											t.Car.ExposedFrontalArea = a;
+										}
+
 										break;
 									case 10:
-										if (a > 0.0) t.Car.UnexposedFrontalArea = a;
+										if (a > 0.0)
+										{
+											t.Car.UnexposedFrontalArea = a;
+										}
+
 										break;
 								}
-							} i++; n++;
-						} i--; break;
+							}
+							i++; n++;
+						}
+						i--; break;
 					case "#device":
-						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase)) {
-							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a)) {
+						i++; while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase))
+						{
+							double a; if (double.TryParse(Lines[i], System.Globalization.NumberStyles.Float, Culture, out a))
+							{
 								int b = (int)Math.Round(a);
-								switch (n) {
+								switch (n)
+								{
 									case 0:
-										if (b >= -1 & b <= 1) t.Device.Ats = (Device.AtsModes)b;
+										if (b >= -1 & b <= 1)
+										{
+											t.Device.Ats = (Device.AtsModes)b;
+										}
+
 										break;
 									case 1:
-										if (b >= 0 & b <= 2) t.Device.Atc = (Device.AtcModes)b;
+										if (b >= 0 & b <= 2)
+										{
+											t.Device.Atc = (Device.AtcModes)b;
+										}
+
 										break;
 									case 2:
 										t.Device.Eb = a == 1.0;
@@ -697,29 +977,55 @@ namespace TrainEditor {
 										t.Device.HoldBrake = a == 1.0;
 										break;
 									case 5:
-										if (b >= -1 & b <= 3) t.Device.ReAdhesionDevice = (Device.ReAdhesionDevices)b;
+										if (b >= -1 & b <= 3)
+										{
+											t.Device.ReAdhesionDevice = (Device.ReAdhesionDevices)b;
+										}
+
 										break;
 									case 6:
 										t.Device.LoadCompensatingDevice = a;
 										break;
 									case 7:
-										if (b >= 0 & b <= 2) t.Device.PassAlarm = (Device.PassAlarmModes)b;
+										if (b >= 0 & b <= 2)
+										{
+											t.Device.PassAlarm = (Device.PassAlarmModes)b;
+										}
+
 										break;
 									case 8:
-										if (b >= 0 & b <= 2) t.Device.DoorOpenMode = (Device.DoorModes)b;
+										if (b >= 0 & b <= 2)
+										{
+											t.Device.DoorOpenMode = (Device.DoorModes)b;
+										}
+
 										break;
 									case 9:
-										if (b >= 0 & b <= 2) t.Device.DoorCloseMode = (Device.DoorModes)b;
+										if (b >= 0 & b <= 2)
+										{
+											t.Device.DoorCloseMode = (Device.DoorModes)b;
+										}
+
 										break;
 									case 10:
-										if (a >= 0.0) t.Device.DoorWidth = a;
+										if (a >= 0.0)
+										{
+											t.Device.DoorWidth = a;
+										}
+
 										break;
 									case 11:
-										if (a >= 0.0) t.Device.DoorMaxTolerance = a;
+										if (a >= 0.0)
+										{
+											t.Device.DoorMaxTolerance = a;
+										}
+
 										break;
 								}
-							} i++; n++;
-						} i--; break;
+							}
+							i++; n++;
+						}
+						i--; break;
 					case "#motor_p1":
 					case "#motor_p2":
 					case "#motor_b1":
@@ -728,20 +1034,29 @@ namespace TrainEditor {
 							string section = Lines[i].ToLowerInvariant();
 							i++;
 							Motor m = new Motor();
-							while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase)) {
-								if (n == m.Entries.Length) {
+							while (i < Lines.Length && !Lines[i].StartsWith("#", StringComparison.InvariantCultureIgnoreCase))
+							{
+								if (n == m.Entries.Length)
+								{
 									Array.Resize<Motor.Entry>(ref m.Entries, m.Entries.Length << 1);
 								}
 								string u = Lines[i] + ",";
 								int k = 0;
-								while (true) {
+								while (true)
+								{
 									int j = u.IndexOf(',');
-									if (j == -1) break;
+									if (j == -1)
+									{
+										break;
+									}
+
 									string s = u.Substring(0, j).Trim();
 									u = u.Substring(j + 1);
-									double a; if (double.TryParse(s, System.Globalization.NumberStyles.Float, Culture, out a)) {
+									double a; if (double.TryParse(s, System.Globalization.NumberStyles.Float, Culture, out a))
+									{
 										int b = (int)Math.Round(a);
-										switch (k) {
+										switch (k)
+										{
 											case 0:
 												m.Entries[n].SoundIndex = b >= 0 ? b : -1;
 												break;
@@ -752,14 +1067,16 @@ namespace TrainEditor {
 												m.Entries[n].Volume = Math.Max(a, 0.0);
 												break;
 										}
-									} k++;
+									}
+									k++;
 								}
 								i++;
 								n++;
 							}
 							Array.Resize<Motor.Entry>(ref m.Entries, n);
 							i--;
-							switch (section) {
+							switch (section)
+							{
 								case "#motor_p1":
 									t.MotorP1 = m;
 									break;
@@ -796,45 +1113,59 @@ namespace TrainEditor {
 					t.Delay.DelayPowerDown[i] = 0;
 				}
 			}
-			if (t.Pressure.BrakePipeNormalPressure <= 0.0) {
-				if (t.Brake.BrakeType == Brake.BrakeTypes.AutomaticAirBrake) {
+			if (t.Pressure.BrakePipeNormalPressure <= 0.0)
+			{
+				if (t.Brake.BrakeType == Brake.BrakeTypes.AutomaticAirBrake)
+				{
 					t.Pressure.BrakePipeNormalPressure = t.Pressure.BrakeCylinderEmergencyMaximumPressure + 0.75 * (t.Pressure.MainReservoirMinimumPressure - t.Pressure.BrakeCylinderEmergencyMaximumPressure);
-					if (t.Pressure.BrakePipeNormalPressure > t.Pressure.MainReservoirMinimumPressure) {
+					if (t.Pressure.BrakePipeNormalPressure > t.Pressure.MainReservoirMinimumPressure)
+					{
 						t.Pressure.BrakePipeNormalPressure = t.Pressure.MainReservoirMinimumPressure;
 					}
-				} else {
-					if (t.Pressure.BrakeCylinderEmergencyMaximumPressure < 480000.0 & t.Pressure.MainReservoirMinimumPressure > 500000.0) {
+				}
+				else
+				{
+					if (t.Pressure.BrakeCylinderEmergencyMaximumPressure < 480000.0 & t.Pressure.MainReservoirMinimumPressure > 500000.0)
+					{
 						t.Pressure.BrakePipeNormalPressure = 490000.0;
-					} else {
+					}
+					else
+					{
 						t.Pressure.BrakePipeNormalPressure = t.Pressure.BrakeCylinderEmergencyMaximumPressure + 0.75 * (t.Pressure.MainReservoirMinimumPressure - t.Pressure.BrakeCylinderEmergencyMaximumPressure);
 					}
 				}
 			}
-			if (t.Brake.BrakeType == Brake.BrakeTypes.AutomaticAirBrake) {
+			if (t.Brake.BrakeType == Brake.BrakeTypes.AutomaticAirBrake)
+			{
 				t.Device.HoldBrake = false;
 			}
-			if (t.Device.HoldBrake & t.Handle.BrakeNotches <= 0) {
+			if (t.Device.HoldBrake & t.Handle.BrakeNotches <= 0)
+			{
 				t.Handle.BrakeNotches = 1;
 			}
-			if (t.Cab.DriverCar < 0 | t.Cab.DriverCar >= t.Car.NumberOfMotorCars + t.Car.NumberOfTrailerCars) {
+			if (t.Cab.DriverCar < 0 | t.Cab.DriverCar >= t.Car.NumberOfMotorCars + t.Car.NumberOfTrailerCars)
+			{
 				t.Cab.DriverCar = 0;
 			}
 			return t;
 		}
-		
+
 		// save
 		/// <summary>Saves an instance of the Train class into a specified file.</summary>
 		/// <param name="FileName">The train.dat file to save.</param>
 		/// <param name="t">An instance of the Train class to save.</param>
-		internal static void Save(string FileName, Train t) {
+		internal static void Save(string FileName, Train t)
+		{
 			System.Globalization.CultureInfo Culture = System.Globalization.CultureInfo.InvariantCulture;
 			System.Text.StringBuilder b = new System.Text.StringBuilder();
 			b.AppendLine("OPENBVE" + currentVersion);
 			b.AppendLine("#ACCELERATION");
-			if (t.Acceleration.Entries.Length > t.Handle.PowerNotches) {
+			if (t.Acceleration.Entries.Length > t.Handle.PowerNotches)
+			{
 				Array.Resize<Acceleration.Entry>(ref t.Acceleration.Entries, t.Handle.PowerNotches);
 			}
-			for (int i = 0; i < t.Acceleration.Entries.Length; i++) {
+			for (int i = 0; i < t.Acceleration.Entries.Length; i++)
+			{
 				b.Append(t.Acceleration.Entries[i].a0.ToString(Culture) + ",");
 				b.Append(t.Acceleration.Entries[i].a1.ToString(Culture) + ",");
 				b.Append(t.Acceleration.Entries[i].v1.ToString(Culture) + ",");
@@ -913,9 +1244,11 @@ namespace TrainEditor {
 			b.AppendLine(((int)t.Device.DoorCloseMode).ToString(Culture).PadRight(n, ' ') + "; DoorCloseMode");
 			b.AppendLine(t.Device.DoorWidth.ToString(Culture).PadRight(n, ' ') + "; DoorWidth");
 			b.AppendLine(t.Device.DoorMaxTolerance.ToString(Culture).PadRight(n, ' ') + "; DoorMaxTolerance");
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 4; i++)
+			{
 				Motor m = null;
-				switch (i) {
+				switch (i)
+				{
 					case 0:
 						b.AppendLine("#MOTOR_P1");
 						m = t.MotorP1;
@@ -934,12 +1267,17 @@ namespace TrainEditor {
 						break;
 				}
 				int k;
-				for (k = m.Entries.Length - 1; k >= 0; k--) {
-					if (m.Entries[k].SoundIndex >= 0) break;
+				for (k = m.Entries.Length - 1; k >= 0; k--)
+				{
+					if (m.Entries[k].SoundIndex >= 0)
+					{
+						break;
+					}
 				}
 				k = Math.Min(k + 2, m.Entries.Length);
 				Array.Resize<Motor.Entry>(ref m.Entries, k);
-				for (int j = 0; j < m.Entries.Length; j++) {
+				for (int j = 0; j < m.Entries.Length; j++)
+				{
 					b.Append(m.Entries[j].SoundIndex.ToString(Culture) + ",");
 					b.Append(m.Entries[j].Pitch.ToString(Culture) + ",");
 					b.AppendLine(m.Entries[j].Volume.ToString(Culture));

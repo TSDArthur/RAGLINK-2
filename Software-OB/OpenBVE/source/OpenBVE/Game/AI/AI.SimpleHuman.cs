@@ -1,6 +1,6 @@
-﻿using System;
-using OpenBveApi.Runtime;
+﻿using OpenBveApi.Runtime;
 using OpenBveApi.Trains;
+using System;
 
 namespace OpenBve
 {
@@ -144,7 +144,10 @@ namespace OpenBve
 							doorsopen = true;
 							break;
 						}
-						if (doorsopen) break;
+						if (doorsopen)
+						{
+							break;
+						}
 					}
 				}
 				// do the ai
@@ -369,7 +372,11 @@ namespace OpenBve
 						for (int i = te; i < TrackManager.Tracks[0].Elements.Length; i++)
 						{
 							double stp = TrackManager.Tracks[0].Elements[i].StartingTrackPosition;
-							if (tp + lookahead <= stp) break;
+							if (tp + lookahead <= stp)
+							{
+								break;
+							}
+
 							for (int j = 0; j < TrackManager.Tracks[0].Elements[i].Events.Length; j++)
 							{
 								if (TrackManager.Tracks[0].Elements[i].Events[j] is TrackManager.StationStartEvent && Train.NextStopSkipped == TrainManager.StopSkipMode.None)
@@ -397,7 +404,11 @@ namespace OpenBve
 						for (int i = te; i < TrackManager.Tracks[0].Elements.Length; i++)
 						{
 							double stp = TrackManager.Tracks[0].Elements[i].StartingTrackPosition;
-							if (tp + lookahead <= stp) break;
+							if (tp + lookahead <= stp)
+							{
+								break;
+							}
+
 							for (int j = 0; j < TrackManager.Tracks[0].Elements[i].Events.Length; j++)
 							{
 								if (TrackManager.Tracks[0].Elements[i].Events[j] is TrackManager.LimitChangeEvent)
@@ -408,7 +419,10 @@ namespace OpenBve
 									{
 										double dist = stp + e.TrackPositionDelta - tp;
 										double edec = (spd * spd - e.NextSpeedLimit * e.NextSpeedLimit * this.CurrentSpeedFactor) / (2.0 * dist);
-										if (edec > dec) dec = edec;
+										if (edec > dec)
+										{
+											dec = edec;
+										}
 									}
 								}
 								else if (TrackManager.Tracks[0].Elements[i].Events[j] is TrackManager.SectionChangeEvent)
@@ -468,7 +482,10 @@ namespace OpenBve
 														edec = 0.0;
 													}
 												}
-												if (edec > dec) dec = edec;
+												if (edec > dec)
+												{
+													dec = edec;
+												}
 											}
 										}
 									}
@@ -496,7 +513,10 @@ namespace OpenBve
 														dist -= 5.0;
 													}
 													var edec = spd * spd / (2.0 * dist);
-													if (edec > dec) dec = edec;
+													if (edec > dec)
+													{
+														dec = edec;
+													}
 												}
 											}
 										}
@@ -527,7 +547,10 @@ namespace OpenBve
 													if (dist > 25)
 													{
 														var edec = spd * spd / (2.0 * dist);
-														if (edec > dec) dec = edec;
+														if (edec > dec)
+														{
+															dec = edec;
+														}
 													}
 
 												}
@@ -558,7 +581,10 @@ namespace OpenBve
 														dist -= 5.0;
 													}
 													var edec = spd * spd / (2.0 * dist);
-													if (edec > dec) dec = edec;
+													if (edec > dec)
+													{
+														dec = edec;
+													}
 												}
 											}
 										}
@@ -580,7 +606,10 @@ namespace OpenBve
 										{
 											edec = BrakeDeceleration;
 										}
-										if (edec > dec) dec = edec;
+										if (edec > dec)
+										{
+											dec = edec;
+										}
 									}
 								}
 							}
@@ -614,7 +643,10 @@ namespace OpenBve
 									this.CurrentInterval = 10.0;
 									return;
 								}
-								if (edec > dec) dec = edec;
+								if (edec > dec)
+								{
+									dec = edec;
+								}
 							}
 						}
 					}
@@ -657,7 +689,10 @@ namespace OpenBve
 								{
 									reduceDecelerationCruiseAndStart = true;
 								}
-								if (edec > dec) dec = edec;
+								if (edec > dec)
+								{
+									dec = edec;
+								}
 							}
 						}
 					}
@@ -682,7 +717,10 @@ namespace OpenBve
 										dist -= 5.0;
 									}
 									var edec = spd * spd / (2.0 * dist);
-									if (edec > dec) dec = edec;
+									if (edec > dec)
+									{
+										dec = edec;
+									}
 								}
 								else
 								{
@@ -716,7 +754,10 @@ namespace OpenBve
 								Train.ApplyNotch(-1, true, 0, true);
 							}
 							CurrentInterval *= 0.4;
-							if (CurrentInterval < 0.3) CurrentInterval = 0.3;
+							if (CurrentInterval < 0.3)
+							{
+								CurrentInterval = 0.3;
+							}
 						}
 						else if (decdiff > decelerationStep)
 						{
@@ -724,7 +765,10 @@ namespace OpenBve
 							Train.ApplyNotch(-1, true, -1, true);
 							Train.ApplyAirBrakeHandle(TrainManager.AirBrakeHandleState.Release);
 							CurrentInterval *= 0.4;
-							if (CurrentInterval < 0.3) CurrentInterval = 0.3;
+							if (CurrentInterval < 0.3)
+							{
+								CurrentInterval = 0.3;
+							}
 						}
 						else
 						{
@@ -732,7 +776,10 @@ namespace OpenBve
 							Train.ApplyNotch(-1, true, 0, true);
 							Train.ApplyAirBrakeHandle(TrainManager.AirBrakeHandleState.Lap);
 							CurrentInterval *= 1.2;
-							if (CurrentInterval > 1.0) CurrentInterval = 1.0;
+							if (CurrentInterval > 1.0)
+							{
+								CurrentInterval = 1.0;
+							}
 						}
 						if (Train.Handles.Power.Driver == 0 & Train.Handles.Brake.Driver == 0)
 						{
@@ -754,7 +801,10 @@ namespace OpenBve
 							Train.ApplyHoldBrake(Train.Handles.HasHoldBrake);
 						}
 						CurrentInterval *= 0.4;
-						if (CurrentInterval < 0.3) CurrentInterval = 0.3;
+						if (CurrentInterval < 0.3)
+						{
+							CurrentInterval = 0.3;
+						}
 					}
 					else
 					{
@@ -801,7 +851,10 @@ namespace OpenBve
 								double p = (double)Train.Handles.Power.Driver / (double)Train.Handles.Power.MaximumNotch;
 								CurrentInterval = 0.3 + 15.0 * p / (powerstart - spd + 1.0);
 							}
-							if (CurrentInterval > 1.3) CurrentInterval = 1.3;
+							if (CurrentInterval > 1.3)
+							{
+								CurrentInterval = 1.3;
+							}
 						}
 						else if (spd > powerend)
 						{
@@ -809,7 +862,10 @@ namespace OpenBve
 							Train.ApplyNotch(-1, true, -1, true);
 							Train.ApplyAirBrakeHandle(TrainManager.AirBrakeHandleState.Release);
 							CurrentInterval *= 0.3;
-							if (CurrentInterval < 0.2) CurrentInterval = 0.2;
+							if (CurrentInterval < 0.2)
+							{
+								CurrentInterval = 0.2;
+							}
 						}
 						else if (acc < acclim)
 						{
@@ -845,7 +901,10 @@ namespace OpenBve
 								Train.ApplyHoldBrake(Train.Handles.HasHoldBrake);
 							}
 							CurrentInterval *= 1.1;
-							if (CurrentInterval > 1.5) CurrentInterval = 1.5;
+							if (CurrentInterval > 1.5)
+							{
+								CurrentInterval = 1.5;
+							}
 						}
 					}
 				}

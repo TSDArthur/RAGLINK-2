@@ -1,5 +1,5 @@
-﻿using System;
-using OpenBveApi.Math;
+﻿using OpenBveApi.Math;
+using System;
 
 namespace OpenBve
 {
@@ -58,7 +58,11 @@ namespace OpenBve
 			for (int i = 0; i < Files.Length; i++)
 			{
 				string a = System.IO.Path.GetFileName(Files[i]);
-				if (a == null) return Sounds;
+				if (a == null)
+				{
+					return Sounds;
+				}
+
 				if (a.Length > FileStart.Length + FileEnd.Length)
 				{
 					if (a.StartsWith(FileStart, StringComparison.OrdinalIgnoreCase) & a.EndsWith(FileEnd, StringComparison.OrdinalIgnoreCase))

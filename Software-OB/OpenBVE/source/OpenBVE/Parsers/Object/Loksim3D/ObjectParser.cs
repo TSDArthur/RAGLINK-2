@@ -1,15 +1,15 @@
-﻿using System;
+﻿using OpenBveApi.Colors;
+using OpenBveApi.Interface;
+using OpenBveApi.Math;
+using OpenBveApi.Objects;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml;
-using OpenBveApi.Colors;
-using OpenBveApi.Math;
-using System.Linq;
-using OpenBveApi.Interface;
-using OpenBveApi.Objects;
 
 namespace OpenBve
 {
@@ -138,7 +138,7 @@ namespace OpenBve
 													{
 														Interface.AddMessage(MessageType.Error, true, "AlphaTexture " + transtex + " could not be found in file " + FileName);
 														transtex = null;
-													}												
+													}
 													break;
 												//Sets the transparency type
 												case "TransparentTyp":
@@ -187,14 +187,14 @@ namespace OpenBve
 													}
 													break;
 
-												/*
-												 * MISSING PROPERTIES:
-												 * AutoRotate - Rotate with tracks?? LS3D presumably uses a 3D world system.
-												 * Beleuchtet- Translates as illuminated. Presume something to do with lighting? - What emissive color?
-												 * FileAuthor
-												 * FileInfo
-												 * FilePicture
-												 */
+													/*
+													 * MISSING PROPERTIES:
+													 * AutoRotate - Rotate with tracks?? LS3D presumably uses a 3D world system.
+													 * Beleuchtet- Translates as illuminated. Presume something to do with lighting? - What emissive color?
+													 * FileAuthor
+													 * FileInfo
+													 * FilePicture
+													 */
 											}
 										}
 									}
@@ -428,7 +428,7 @@ namespace OpenBve
 			Object.Mesh.CreateNormals();
 			return Object;
 		}
-		
+
 
 		private static Bitmap ResizeImage(Image image, int width, int height)
 		{

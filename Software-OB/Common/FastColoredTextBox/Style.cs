@@ -1,7 +1,7 @@
-﻿using System.Drawing;
-using System;
-using System.Drawing.Drawing2D;
+﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 
 namespace FastColoredTextBoxNS
 {
@@ -42,7 +42,9 @@ namespace FastColoredTextBoxNS
         public virtual void OnVisualMarkerClick(FastColoredTextBox tb, VisualMarkerEventArgs args)
         {
             if (VisualMarkerClick != null)
+            {
                 VisualMarkerClick(tb, args);
+            }
         }
 
         /// <summary>
@@ -120,7 +122,9 @@ namespace FastColoredTextBoxNS
         {
             //draw background
             if (BackgroundBrush != null)
-                gr.FillRectangle(BackgroundBrush, position.X, position.Y, (range.End.iChar - range.Start.iChar) * range.tb.CharWidth , range.tb.CharHeight);
+            {
+                gr.FillRectangle(BackgroundBrush, position.X, position.Y, (range.End.iChar - range.Start.iChar) * range.tb.CharWidth, range.tb.CharHeight);
+            }
             //draw chars
             using (var f = new Font(range.tb.Font, FontStyle))
             {
@@ -130,7 +134,9 @@ namespace FastColoredTextBoxNS
                 float x = position.X - range.tb.CharWidth / 3;
 
                 if (ForeBrush == null)
+                {
                     ForeBrush = new SolidBrush(range.tb.ForeColor);
+                }
 
                 if (range.tb.ImeAllowed)
                 {
@@ -185,22 +191,37 @@ namespace FastColoredTextBoxNS
             {
                 var s = ExportToHTML.GetColorAsString((BackgroundBrush as SolidBrush).Color);
                 if (s != "")
+                {
                     result += "background-color:" + s + ";";
+                }
             }
             if (ForeBrush is SolidBrush)
             {
                 var s = ExportToHTML.GetColorAsString((ForeBrush as SolidBrush).Color);
                 if (s != "")
+                {
                     result += "color:" + s + ";";
+                }
             }
             if ((FontStyle & FontStyle.Bold) != 0)
+            {
                 result += "font-weight:bold;";
+            }
+
             if ((FontStyle & FontStyle.Italic) != 0)
+            {
                 result += "font-style:oblique;";
+            }
+
             if ((FontStyle & FontStyle.Strikeout) != 0)
+            {
                 result += "text-decoration:line-through;";
+            }
+
             if ((FontStyle & FontStyle.Underline) != 0)
+            {
                 result += "text-decoration:underline;";
+            }
 
             return result;
         }
@@ -210,19 +231,34 @@ namespace FastColoredTextBoxNS
             var result = new RTFStyleDescriptor();
 
             if (BackgroundBrush is SolidBrush)
+            {
                 result.BackColor = (BackgroundBrush as SolidBrush).Color;
+            }
 
             if (ForeBrush is SolidBrush)
+            {
                 result.ForeColor = (ForeBrush as SolidBrush).Color;
+            }
 
             if ((FontStyle & FontStyle.Bold) != 0)
+            {
                 result.AdditionalTags += @"\b";
+            }
+
             if ((FontStyle & FontStyle.Italic) != 0)
+            {
                 result.AdditionalTags += @"\i";
+            }
+
             if ((FontStyle & FontStyle.Strikeout) != 0)
+            {
                 result.AdditionalTags += @"\strike";
+            }
+
             if ((FontStyle & FontStyle.Underline) != 0)
+            {
                 result.AdditionalTags += @"\ul";
+            }
 
             return result;
         }
@@ -248,10 +284,16 @@ namespace FastColoredTextBoxNS
 
                 //find first non space symbol
                 for (int i = range.Start.iChar; i < range.End.iChar; i++)
+                {
                     if (range.tb[range.Start.iLine][i].c != ' ')
+                    {
                         break;
+                    }
                     else
+                    {
                         firstNonSpaceSymbolX += range.tb.CharWidth;
+                    }
+                }
 
                 //create marker
                 range.tb.AddVisualMarker(new FoldedAreaMarker(range.Start.iLine, new Rectangle(firstNonSpaceSymbolX, position.Y, position.X + (range.End.iChar - range.Start.iChar) * range.tb.CharWidth - firstNonSpaceSymbolX, range.tb.CharHeight)));
@@ -260,7 +302,9 @@ namespace FastColoredTextBoxNS
             {
                 //draw '...'
                 using (Font f = new Font(range.tb.Font, FontStyle))
+                {
                     gr.DrawString("...", f, ForeBrush, range.tb.LeftIndent, position.Y - 2);
+                }
                 //create marker
                 range.tb.AddVisualMarker(new FoldedAreaMarker(range.Start.iLine, new Rectangle(range.tb.LeftIndent + 2, position.Y, 2 * range.tb.CharHeight, range.tb.CharHeight)));
             }
@@ -294,14 +338,17 @@ namespace FastColoredTextBoxNS
             {
                 gr.SmoothingMode = SmoothingMode.None;
                 var cnt = 0;
-                foreach(var c in range.Text)
+                foreach (var c in range.Text)
                 {
                     cnt += c > 0xff ? range.tb.CharCnWidth : range.tb.CharWidth;
                 }
 
                 var rect = new Rectangle(position.X, position.Y, cnt, range.tb.CharHeight);
                 if (rect.Width == 0)
+                {
                     return;
+                }
+
                 gr.FillRectangle(BackgroundBrush, rect);
                 //
                 if (ForegroundBrush != null)
@@ -312,7 +359,9 @@ namespace FastColoredTextBoxNS
                     var r = new Range(range.tb, range.Start.iChar, range.Start.iLine,
                                       Math.Min(range.tb[range.End.iLine].Count, range.End.iChar), range.End.iLine);
                     using (var style = new TextStyle(ForegroundBrush, null, FontStyle.Regular))
+                    {
                         style.Draw(gr, new Point(position.X, position.Y - 1), r);
+                    }
                 }
             }
         }
@@ -339,7 +388,10 @@ namespace FastColoredTextBoxNS
             {
                 Rectangle rect = new Rectangle(position.X, position.Y, (range.End.iChar - range.Start.iChar) * range.tb.CharWidth, range.tb.CharHeight);
                 if (rect.Width == 0)
+                {
                     return;
+                }
+
                 gr.FillRectangle(BackgroundBrush, rect);
             }
         }
@@ -352,7 +404,9 @@ namespace FastColoredTextBoxNS
             {
                 var s = ExportToHTML.GetColorAsString((BackgroundBrush as SolidBrush).Color);
                 if (s != "")
+                {
                     result += "background-color:" + s + ";";
+                }
             }
 
             return result;
@@ -430,7 +484,9 @@ namespace FastColoredTextBoxNS
             base.Dispose();
 
             if (Pen != null)
+            {
                 Pen.Dispose();
+            }
         }
     }
 

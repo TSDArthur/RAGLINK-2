@@ -1,7 +1,7 @@
-﻿using System;
+﻿using OpenBveApi.Colors;
+using System;
 using System.Globalization;
 using System.Windows.Forms;
-using OpenBveApi.Colors;
 
 namespace OpenBve
 {
@@ -56,7 +56,7 @@ namespace OpenBve
 								if (j >= 0)
 								{
 									string Command = Lines[i].Substring(0, j).TrimEnd();
-									string[] Arguments = Lines[i].Substring(j + 1).TrimStart().Split(new char[] {','}, StringSplitOptions.None);
+									string[] Arguments = Lines[i].Substring(j + 1).TrimStart().Split(new char[] { ',' }, StringSplitOptions.None);
 									for (j = 0; j < Arguments.Length; j++)
 									{
 										Arguments[j] = Arguments[j].Trim();
@@ -307,7 +307,7 @@ namespace OpenBve
 													g = g < 0 ? 0 : g > 255 ? 255 : g;
 													b = b < 0 ? 0 : b > 255 ? 255 : b;
 													a = a < 0 ? 0 : a > 255 ? 255 : a;
-													CurrentHudElements[Length - 1].BackgroundColor = new Color32((byte) r, (byte) g, (byte) b, (byte) a);
+													CurrentHudElements[Length - 1].BackgroundColor = new Color32((byte)r, (byte)g, (byte)b, (byte)a);
 												}
 
 												break;
@@ -340,7 +340,7 @@ namespace OpenBve
 													g = g < 0 ? 0 : g > 255 ? 255 : g;
 													b = b < 0 ? 0 : b > 255 ? 255 : b;
 													a = a < 0 ? 0 : a > 255 ? 255 : a;
-													CurrentHudElements[Length - 1].OverlayColor = new Color32((byte) r, (byte) g, (byte) b, (byte) a);
+													CurrentHudElements[Length - 1].OverlayColor = new Color32((byte)r, (byte)g, (byte)b, (byte)a);
 												}
 
 												break;
@@ -373,7 +373,7 @@ namespace OpenBve
 													g = g < 0 ? 0 : g > 255 ? 255 : g;
 													b = b < 0 ? 0 : b > 255 ? 255 : b;
 													a = a < 0 ? 0 : a > 255 ? 255 : a;
-													CurrentHudElements[Length - 1].TextColor = new Color32((byte) r, (byte) g, (byte) b, (byte) a);
+													CurrentHudElements[Length - 1].TextColor = new Color32((byte)r, (byte)g, (byte)b, (byte)a);
 												}
 
 												break;
@@ -537,7 +537,7 @@ namespace OpenBve
 												}
 												else
 												{
-													CurrentHudElements[Length - 1].Transition = (HUD.Transition) n;
+													CurrentHudElements[Length - 1].Transition = (HUD.Transition)n;
 												}
 											}
 											else

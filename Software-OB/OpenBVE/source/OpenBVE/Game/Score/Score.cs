@@ -1,8 +1,8 @@
-﻿using System;
-using OpenBveApi.Colors;
+﻿using OpenBveApi.Colors;
+using OpenBveApi.Interface;
 using OpenBveApi.Math;
 using OpenBveApi.Runtime;
-using OpenBveApi.Interface;
+using System;
 
 namespace OpenBve
 {
@@ -156,7 +156,11 @@ namespace OpenBve
 					if (q)
 					{
 						int x = ScoreValueDerailment;
-						if (this.CurrentValue > 0) x -= this.CurrentValue;
+						if (this.CurrentValue > 0)
+						{
+							x -= this.CurrentValue;
+						}
+
 						this.CurrentValue += x;
 						if (x != 0)
 						{
@@ -255,7 +259,11 @@ namespace OpenBve
 									}
 									else
 									{
-										if (r > 1.0) r = 1.0;
+										if (r > 1.0)
+										{
+											r = 1.0;
+										}
+
 										r = (r - 0.01) * 1.01010101010101;
 										xc = (int)Math.Ceiling(ScoreFactorStationStop * r);
 										this.CurrentValue += xc;
@@ -283,10 +291,22 @@ namespace OpenBve
 									if (Stations[j].Type == StationType.Terminal)
 									{
 										double y = (double)this.CurrentValue / (double)Maximum;
-										if (y < 0.0) y = 0.0;
-										if (y > 1.0) y = 1.0;
+										if (y < 0.0)
+										{
+											y = 0.0;
+										}
+
+										if (y > 1.0)
+										{
+											y = 1.0;
+										}
+
 										int k = (int)Math.Floor(y * (double)Translations.RatingsCount);
-										if (k >= Translations.RatingsCount) k = Translations.RatingsCount - 1;
+										if (k >= Translations.RatingsCount)
+										{
+											k = Translations.RatingsCount - 1;
+										}
+
 										System.Globalization.CultureInfo Culture = System.Globalization.CultureInfo.InvariantCulture;
 										AddScore(Translations.GetInterfaceString("score_rating"), 20.0);
 										AddScore(Translations.GetInterfaceString("rating_" + k.ToString(Culture)) + " (" + (100.0 * y).ToString("0.00", Culture) + "%)", 20.0);

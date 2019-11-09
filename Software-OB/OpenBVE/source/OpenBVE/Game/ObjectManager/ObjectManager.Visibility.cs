@@ -1,5 +1,5 @@
-﻿using System;
-using OpenBveApi.Objects;
+﻿using OpenBveApi.Objects;
+using System;
 
 namespace OpenBve
 {
@@ -74,8 +74,15 @@ namespace OpenBve
 			double p = World.CameraTrackFollower.TrackPosition + World.CameraCurrentAlignment.Position.Z;
 			if (d < 0.0)
 			{
-				if (ObjectsSortedByStartPointer >= n) ObjectsSortedByStartPointer = n - 1;
-				if (ObjectsSortedByEndPointer >= n) ObjectsSortedByEndPointer = n - 1;
+				if (ObjectsSortedByStartPointer >= n)
+				{
+					ObjectsSortedByStartPointer = n - 1;
+				}
+
+				if (ObjectsSortedByEndPointer >= n)
+				{
+					ObjectsSortedByEndPointer = n - 1;
+				}
 				// dispose
 				while (ObjectsSortedByStartPointer >= 0)
 				{
@@ -110,8 +117,15 @@ namespace OpenBve
 			}
 			else if (d > 0.0)
 			{
-				if (ObjectsSortedByStartPointer < 0) ObjectsSortedByStartPointer = 0;
-				if (ObjectsSortedByEndPointer < 0) ObjectsSortedByEndPointer = 0;
+				if (ObjectsSortedByStartPointer < 0)
+				{
+					ObjectsSortedByStartPointer = 0;
+				}
+
+				if (ObjectsSortedByEndPointer < 0)
+				{
+					ObjectsSortedByEndPointer = 0;
+				}
 				// dispose
 				while (ObjectsSortedByEndPointer < n)
 				{

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using OpenBveApi.Interface;
 using OpenBveApi.Math;
+using System;
 using System.Linq;
-using OpenBveApi.Interface;
 
 namespace OpenBve
 {
@@ -87,7 +87,7 @@ namespace OpenBve
 							}
 						}
 					}
-					if(IsRw && this.Text.EndsWith("))"))
+					if (IsRw && this.Text.EndsWith("))"))
 					{
 						int openingBrackets = Text.Count(x => x == '(');
 						int closingBrackets = Text.Count(x => x == ')');
@@ -127,7 +127,7 @@ namespace OpenBve
 									if (stationName)
 									{
 										Interface.AddMessage(MessageType.Error, false, "Invalid opening parenthesis encountered at line " + Line.ToString(Culture) + ", column " +
-										                                                         Column.ToString(Culture) + " in file " + File);
+																								 Column.ToString(Culture) + " in file " + File);
 										openingerror = true;
 									}
 									else

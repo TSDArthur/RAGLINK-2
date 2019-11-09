@@ -1,9 +1,9 @@
-﻿using System;
-using System.Xml;
-using OpenBveApi.Colors;
-using OpenBveApi.Math;
-using System.Linq;
+﻿using OpenBveApi.Colors;
 using OpenBveApi.Interface;
+using OpenBveApi.Math;
+using System;
+using System.Linq;
+using System.Xml;
 
 namespace OpenBve
 {
@@ -25,7 +25,7 @@ namespace OpenBve
 			{
 				return false;
 			}
-			
+
 			bool defined = false;
 			//Check for null
 			if (currentXML.DocumentElement != null)
@@ -80,7 +80,7 @@ namespace OpenBve
 											double R, G, B;
 											if (NumberFormats.TryParseDoubleVb6(Arguments[0].Trim(), out R) && NumberFormats.TryParseDoubleVb6(Arguments[1].Trim(), out G) && NumberFormats.TryParseDoubleVb6(Arguments[2].Trim(), out B))
 											{
-												currentLight.AmbientColor = new Color24((byte)R,(byte)G,(byte)B);
+												currentLight.AmbientColor = new Color24((byte)R, (byte)G, (byte)B);
 												al = true;
 											}
 											else
@@ -229,7 +229,7 @@ namespace OpenBve
 									}
 									Renderer.LightDefinitions[t] = currentLight;
 								}
-								
+
 							}
 						}
 					}

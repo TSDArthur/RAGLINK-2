@@ -77,10 +77,10 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+using OpenTK.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using OpenTK.Graphics;
 
 namespace AssimpNET.Obj
 {
@@ -317,14 +317,14 @@ namespace AssimpNET.Obj
 				GetTextureOptionAndName(clampIndex, ref Model.CurrentMaterial.TextureOpacity);
 			}
 			else if (String.Compare(Buffer, DataIt, EmissiveTexture1, 0, EmissiveTexture1.Length, true) == 0
-			         || String.Compare(Buffer, DataIt, EmissiveTexture2, 0, EmissiveTexture2.Length, true) == 0)
+					 || String.Compare(Buffer, DataIt, EmissiveTexture2, 0, EmissiveTexture2.Length, true) == 0)
 			{
 				// Emissive texture
 				clampIndex = (int)Material.TextureType.TextureEmissiveType;
 				GetTextureOptionAndName(clampIndex, ref Model.CurrentMaterial.TextureEmissive);
 			}
 			else if (String.Compare(Buffer, DataIt, BumpTexture1, 0, BumpTexture1.Length, true) == 0
-			         || String.Compare(Buffer, DataIt, BumpTexture2, 0, BumpTexture2.Length, true) == 0)
+					 || String.Compare(Buffer, DataIt, BumpTexture2, 0, BumpTexture2.Length, true) == 0)
 			{
 				// Bump texture
 				clampIndex = (int)Material.TextureType.TextureBumpType;
@@ -343,7 +343,7 @@ namespace AssimpNET.Obj
 				return;
 			}
 			else if (String.Compare(Buffer, DataIt, DisplacementTexture1, 0, DisplacementTexture1.Length, true) == 0
-			         || String.Compare(Buffer, DataIt, DisplacementTexture2, 0, DisplacementTexture2.Length, true) == 0)
+					 || String.Compare(Buffer, DataIt, DisplacementTexture2, 0, DisplacementTexture2.Length, true) == 0)
 			{
 				// Displacement texture
 				clampIndex = (int)Material.TextureType.TextureDispType;
@@ -452,11 +452,11 @@ namespace AssimpNET.Obj
 					skipToken = 2;
 				}
 				else if (String.Compare(Buffer, DataIt, BlendUOption, 0, BlendUOption.Length, true) == 0
-				         || String.Compare(Buffer, DataIt, BlendVOption, 0, BlendVOption.Length, true) == 0
-				         || String.Compare(Buffer, DataIt, BoostOption, 0, BoostOption.Length, true) == 0
-				         || String.Compare(Buffer, DataIt, ResolutionOption, 0, ResolutionOption.Length, true) == 0
-				         || String.Compare(Buffer, DataIt, BumpOption, 0, BumpOption.Length, true) == 0
-				         || String.Compare(Buffer, DataIt, ChannelOption, 0, ChannelOption.Length, true) == 0)
+						 || String.Compare(Buffer, DataIt, BlendVOption, 0, BlendVOption.Length, true) == 0
+						 || String.Compare(Buffer, DataIt, BoostOption, 0, BoostOption.Length, true) == 0
+						 || String.Compare(Buffer, DataIt, ResolutionOption, 0, ResolutionOption.Length, true) == 0
+						 || String.Compare(Buffer, DataIt, BumpOption, 0, BumpOption.Length, true) == 0
+						 || String.Compare(Buffer, DataIt, ChannelOption, 0, ChannelOption.Length, true) == 0)
 				{
 					skipToken = 2;
 				}
@@ -465,8 +465,8 @@ namespace AssimpNET.Obj
 					skipToken = 3;
 				}
 				else if (String.Compare(Buffer, DataIt, OffsetOption, 0, OffsetOption.Length, true) == 0
-				         || String.Compare(Buffer, DataIt, ScaleOption, 0, ScaleOption.Length, true) == 0
-				         || String.Compare(Buffer, DataIt, TurbulenceOption, 0, TurbulenceOption.Length, true) == 0)
+						 || String.Compare(Buffer, DataIt, ScaleOption, 0, ScaleOption.Length, true) == 0
+						 || String.Compare(Buffer, DataIt, TurbulenceOption, 0, TurbulenceOption.Length, true) == 0)
 				{
 					skipToken = 4;
 				}

@@ -1,8 +1,8 @@
-﻿using System;
-using OpenBveApi.Colors;
+﻿using OpenBveApi.Colors;
 using OpenBveApi.Graphics;
 using OpenBveApi.Textures;
 using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace OpenBve
 {
@@ -24,7 +24,10 @@ namespace OpenBve
 				widths[j] = size.Width;
 				heights[j] = size.Height;
 				float a = widths[j] - j * Element.Value1;
-				if (a > totalwidth) totalwidth = a;
+				if (a > totalwidth)
+				{
+					totalwidth = a;
+				}
 			}
 			Game.ScoreMessagesRendererSize.X += 16.0 * TimeElapsed * ((double)totalwidth - Game.ScoreMessagesRendererSize.X);
 			totalwidth = (float)Game.ScoreMessagesRendererSize.X;
@@ -114,12 +117,19 @@ namespace OpenBve
 					if (Game.SecondsSinceMidnight >= Game.ScoreMessages[j].Timeout)
 					{
 						Game.ScoreMessages[j].RendererAlpha -= TimeElapsed;
-						if (Game.ScoreMessages[j].RendererAlpha < 0.0) Game.ScoreMessages[j].RendererAlpha = 0.0;
+						if (Game.ScoreMessages[j].RendererAlpha < 0.0)
+						{
+							Game.ScoreMessages[j].RendererAlpha = 0.0;
+						}
 					}
 					else
 					{
 						Game.ScoreMessages[j].RendererAlpha += TimeElapsed;
-						if (Game.ScoreMessages[j].RendererAlpha > 1.0) Game.ScoreMessages[j].RendererAlpha = 1.0;
+						if (Game.ScoreMessages[j].RendererAlpha > 1.0)
+						{
+							Game.ScoreMessages[j].RendererAlpha = 1.0;
+						}
+
 						preserve = true;
 					}
 				}
@@ -130,7 +140,11 @@ namespace OpenBve
 						Game.ScoreMessages[j].RendererAlpha = 0.0;
 					}
 				}
-				if (preserve) m++;
+				if (preserve)
+				{
+					m++;
+				}
+
 				double px = Game.ScoreMessages[j].RendererPosition.X + (double)j * (double)Element.Value1;
 				double py = Game.ScoreMessages[j].RendererPosition.Y;
 				float alpha = (float)(Game.ScoreMessages[j].RendererAlpha * Game.ScoreMessages[j].RendererAlpha);

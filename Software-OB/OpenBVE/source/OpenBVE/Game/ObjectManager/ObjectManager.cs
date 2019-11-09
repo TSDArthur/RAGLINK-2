@@ -1,7 +1,7 @@
-﻿using System;
-using OpenBveApi.Math;
+﻿using OpenBveApi.Math;
 using OpenBveApi.Objects;
 using OpenBveApi.World;
+using System;
 
 namespace OpenBve
 {

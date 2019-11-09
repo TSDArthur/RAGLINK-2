@@ -38,7 +38,7 @@ namespace OpenBve.BrakeSystems
 			}
 			else
 			{
-				targetPressure = (double) brakeHandle.Actual / (double) brakeHandle.MaximumNotch;
+				targetPressure = (double)brakeHandle.Actual / (double)brakeHandle.MaximumNotch;
 				targetPressure *= brakeCylinder.ServiceMaximumPressure;
 			}
 
@@ -63,7 +63,11 @@ namespace OpenBve.BrakeSystems
 							if (d > 0.0)
 							{
 								targetPressure = d / DecelerationAtServiceMaximumPressure(brakeHandle.Actual, currentSpeed);
-								if (targetPressure > 1.0) targetPressure = 1.0;
+								if (targetPressure > 1.0)
+								{
+									targetPressure = 1.0;
+								}
+
 								targetPressure *= brakeCylinder.ServiceMaximumPressure;
 							}
 							else
@@ -83,7 +87,10 @@ namespace OpenBve.BrakeSystems
 				double d = brakeCylinder.CurrentPressure;
 				double m = brakeCylinder.EmergencyMaximumPressure;
 				r = GetRate(d / m, r * TimeElapsed);
-				if (r > d) r = d;
+				if (r > d)
+				{
+					r = d;
+				}
 				// air sound
 				if (r > 0.0 & brakeCylinder.CurrentPressure < brakeCylinder.SoundPlayedForPressure)
 				{
@@ -111,7 +118,11 @@ namespace OpenBve.BrakeSystems
 				double d = pm - brakeCylinder.CurrentPressure;
 				double m = brakeCylinder.EmergencyMaximumPressure;
 				r = GetRate(d / m, r * TimeElapsed);
-				if (r > d) r = d;
+				if (r > d)
+				{
+					r = d;
+				}
+
 				double f1 = auxiliaryReservoir.BrakeCylinderCoefficient;
 				double f2 = mainReservoir.BrakePipeCoefficient;
 				double f3 = auxiliaryReservoir.BrakePipeCoefficient;

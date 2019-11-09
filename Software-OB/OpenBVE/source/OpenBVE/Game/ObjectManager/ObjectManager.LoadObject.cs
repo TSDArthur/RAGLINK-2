@@ -1,8 +1,8 @@
-﻿using System;
-using System.Text;
-using OpenBveApi.Interface;
+﻿using OpenBveApi.Interface;
 using OpenBveApi.Math;
 using OpenBveApi.Objects;
+using System;
+using System.Text;
 
 namespace OpenBve
 {

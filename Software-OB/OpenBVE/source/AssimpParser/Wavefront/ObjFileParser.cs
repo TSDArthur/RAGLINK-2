@@ -77,11 +77,11 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+using OpenTK;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using OpenTK;
 
 namespace AssimpNET.Obj
 {
@@ -457,15 +457,15 @@ namespace AssimpNET.Obj
 						// Store relatively index
 						if (iPos == 0)
 						{
-							face.Vertices.Add((uint)(vSize+iVal));
+							face.Vertices.Add((uint)(vSize + iVal));
 						}
 						else if (iPos == 1)
 						{
-							face.TexturCoords.Add((uint)(vtSize+iVal));
+							face.TexturCoords.Add((uint)(vtSize + iVal));
 						}
 						else if (iPos == 2)
 						{
-							face.Normals.Add((uint)(vnSize+iVal));
+							face.Normals.Add((uint)(vnSize + iVal));
 						}
 						else
 						{

@@ -1,6 +1,6 @@
+using OpenTK.Input;
 using System;
 using System.Collections.Generic;
-using OpenTK.Input;
 
 namespace SanYingInput
 {
@@ -17,12 +17,18 @@ namespace SanYingInput
 		/// <summary>
 		/// Index of joy-stick currently chosen
 		/// </summary>
-		internal static int currentDevice { get; private set; }
+		internal static int currentDevice
+		{
+			get; private set;
+		}
 
 		/// <summary>
 		/// State of the previous button
 		/// </summary>
-		internal static List<ButtonState> lastButtonState { get; private set; }
+		internal static List<ButtonState> lastButtonState
+		{
+			get; private set;
+		}
 
 		/// <summary>
 		/// Function to initialize

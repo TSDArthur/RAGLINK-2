@@ -1,7 +1,7 @@
-﻿using System;
-using OpenBveApi.Math;
+﻿using OpenBveApi.Math;
 using OpenBveApi.Objects;
 using OpenBveApi.Textures;
+using System;
 
 namespace OpenBve
 {
@@ -10,8 +10,11 @@ namespace OpenBve
 		/// <summary>
 		/// Defines the behaviour for immediate texture loading
 		/// </summary>
-		internal enum LoadTextureImmediatelyMode { NotYet, Yes, NoLonger }
-		
+		internal enum LoadTextureImmediatelyMode
+		{
+			NotYet, Yes, NoLonger
+		}
+
 		// output mode
 		internal enum OutputMode
 		{
@@ -123,7 +126,11 @@ namespace OpenBve
 						double dy = w1z * w2x - w1x * w2z;
 						double dz = -w1y * w2x + w1x * w2y;
 						double t = dx * dx + dy * dy + dz * dz;
-						if (t == 0.0) continue;
+						if (t == 0.0)
+						{
+							continue;
+						}
+
 						t = 1.0 / Math.Sqrt(t);
 						dx *= t;
 						dy *= t;

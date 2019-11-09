@@ -1,8 +1,8 @@
-﻿using System;
-using OpenBveApi.Math;
+﻿using OpenBveApi.Math;
 using OpenBveApi.Objects;
 using OpenBveApi.Textures;
 using OpenBveApi.World;
+using System;
 
 namespace OpenBve
 {
@@ -30,13 +30,13 @@ namespace OpenBve
 			internal string Copyright;
 
 			/// <summary>Creates a new empty object</summary>
-			internal StaticObject() 
+			internal StaticObject()
 			{
 				Mesh = new Mesh
 				{
-					Faces = new MeshFace[] {},
-					Materials =  new MeshMaterial[] {},
-					Vertices =  new VertexTemplate[] {}
+					Faces = new MeshFace[] { },
+					Materials = new MeshMaterial[] { },
+					Vertices = new VertexTemplate[] { }
 				};
 			}
 
@@ -162,9 +162,9 @@ namespace OpenBve
 					Mesh.Faces[mf + i] = Add.Mesh.Faces[i];
 					for (int j = 0; j < Mesh.Faces[mf + i].Vertices.Length; j++)
 					{
-						Mesh.Faces[mf + i].Vertices[j].Index += (ushort) mv;
+						Mesh.Faces[mf + i].Vertices[j].Index += (ushort)mv;
 					}
-					Mesh.Faces[mf + i].Material += (ushort) mm;
+					Mesh.Faces[mf + i].Material += (ushort)mm;
 				}
 				for (int i = 0; i < Add.Mesh.Materials.Length; i++)
 				{
@@ -180,7 +180,7 @@ namespace OpenBve
 					{
 						Mesh.Vertices[mv + i] = new Vertex((Vertex)Add.Mesh.Vertices[i]);
 					}
-					
+
 				}
 			}
 
@@ -193,18 +193,22 @@ namespace OpenBve
 				float ry2 = ry * ry;
 				float rz2 = rz * rz;
 				bool reverse = x * y * z < 0.0;
-				for (int j = 0; j < Mesh.Vertices.Length; j++) {
+				for (int j = 0; j < Mesh.Vertices.Length; j++)
+				{
 					Mesh.Vertices[j].Coordinates.X *= x;
 					Mesh.Vertices[j].Coordinates.Y *= y;
 					Mesh.Vertices[j].Coordinates.Z *= z;
 				}
-				for (int j = 0; j < Mesh.Faces.Length; j++) {
-					for (int k = 0; k < Mesh.Faces[j].Vertices.Length; k++) {
+				for (int j = 0; j < Mesh.Faces.Length; j++)
+				{
+					for (int k = 0; k < Mesh.Faces[j].Vertices.Length; k++)
+					{
 						double nx2 = Mesh.Faces[j].Vertices[k].Normal.X * Mesh.Faces[j].Vertices[k].Normal.X;
 						double ny2 = Mesh.Faces[j].Vertices[k].Normal.Y * Mesh.Faces[j].Vertices[k].Normal.Y;
 						double nz2 = Mesh.Faces[j].Vertices[k].Normal.Z * Mesh.Faces[j].Vertices[k].Normal.Z;
 						double u = nx2 * rx2 + ny2 * ry2 + nz2 * rz2;
-						if (u != 0.0) {
+						if (u != 0.0)
+						{
 							u = (float)Math.Sqrt((double)((nx2 + ny2 + nz2) / u));
 							Mesh.Faces[j].Vertices[k].Normal.X *= rx * u;
 							Mesh.Faces[j].Vertices[k].Normal.Y *= ry * u;
@@ -212,8 +216,10 @@ namespace OpenBve
 						}
 					}
 				}
-				if (reverse) {
-					for (int j = 0; j < Mesh.Faces.Length; j++) {
+				if (reverse)
+				{
+					for (int j = 0; j < Mesh.Faces.Length; j++)
+					{
 						Mesh.Faces[j].Flip();
 					}
 				}
@@ -746,9 +752,9 @@ namespace OpenBve
 
 							// Conditions for face merger
 							bool mergeable = (type == MeshFace.FaceTypeTriangles) &&
-							                 (type == type2) &&
-							                 (face == face2) &&
-							                 (Mesh.Faces[i].Material == Mesh.Faces[j].Material);
+											 (type == type2) &&
+											 (face == face2) &&
+											 (Mesh.Faces[i].Material == Mesh.Faces[j].Material);
 
 							can_merge[j] = mergeable;
 							merge_vertices += mergeable ? Mesh.Faces[j].Vertices.Length : 0;

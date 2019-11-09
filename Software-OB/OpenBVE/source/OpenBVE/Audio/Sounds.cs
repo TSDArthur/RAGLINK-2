@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
+﻿using OpenBveApi.Interface;
 using OpenTK;
 using OpenTK.Audio;
 using OpenTK.Audio.OpenAL;
-using OpenBveApi.Interface;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
 
 namespace OpenBve
 {
@@ -172,7 +172,11 @@ namespace OpenBve
 		{
 			for (int i = 0; i < BufferCount; i++)
 			{
-				if (!(Buffers[i].Origin is PathOrigin)) continue;
+				if (!(Buffers[i].Origin is PathOrigin))
+				{
+					continue;
+				}
+
 				if (((PathOrigin)Buffers[i].Origin).Path == path)
 				{
 					return Buffers[i];

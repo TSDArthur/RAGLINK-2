@@ -1,10 +1,12 @@
-﻿using System;
-using System.Windows.Forms;
-using OpenBveApi.FileSystem;
+﻿using OpenBveApi.FileSystem;
 using OpenBveApi.Interface;
+using System;
+using System.Windows.Forms;
 
-namespace TrainEditor {
-	internal static class Program {
+namespace TrainEditor
+{
+	internal static class Program
+	{
 
 		// --- members ---
 
@@ -16,18 +18,22 @@ namespace TrainEditor {
 		/// <summary>Is executed when the program starts.</summary>
 		/// <param name="args">The command-line arguments.</param>
 		[STAThread]
-		private static void Main(string[] args) {
+		private static void Main(string[] args)
+		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			try {
+			try
+			{
 				FileSystem = FileSystem.FromCommandLineArgs(args);
 				FileSystem.CreateFileSystem();
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				MessageBox.Show(Translations.GetInterfaceString("errors_filesystem_invalid") + Environment.NewLine + Environment.NewLine + ex.Message, "TrainEditor", MessageBoxButtons.OK, MessageBoxIcon.Hand);
 				return;
 			}
 			Application.Run(new formEditor());
 		}
-		
+
 	}
 }

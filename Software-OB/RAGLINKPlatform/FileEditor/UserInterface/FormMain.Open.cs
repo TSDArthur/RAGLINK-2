@@ -2,7 +2,6 @@
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
-using RAGLINKCommons;
 
 namespace RAGLINKFileEditor.UserInterface
 {
@@ -17,23 +16,23 @@ namespace RAGLINKFileEditor.UserInterface
                 inLoading = true;
                 //MessageBox.Show(SettingsContent.tempFilePath);
                 toolStripLabelMain.Text = "正在打开: " + filePath;
-                if(!File.Exists(filePath))
+                if (!File.Exists(filePath))
                 {
                     retValue = false;
                     return retValue;
                 }
-                string tempFileGUID = RAGLINKCommons.RAGLINKPlatform.FileEncryption.GUIDGenerate() + ".tmp";
-                if(!RAGLINKCommons.RAGLINKPlatform.FileEncryption.DesDecryptFile(filePath, RAGLINKCommons.RAGLINKPlatform.SettingsContent.tempFilePath + "\\"+ tempFileGUID, RAGLINKCommons.RAGLINKPlatform.SettingsContent.encryptKey))
+                string tempFileGUID = RAGLINKCommons.RPlatform.FileEncryption.GUIDGenerate() + ".tmp";
+                if (!RAGLINKCommons.RPlatform.FileEncryption.DesDecryptFile(filePath, RAGLINKCommons.RPlatform.SettingsContent.tempFilePath + "\\" + tempFileGUID, RAGLINKCommons.RPlatform.SettingsContent.encryptKey))
                 {
                     retValue = false;
                     return retValue;
                 }
                 FileIO.FileInfo.filePath = filePath;
                 FileIO.FileInfo.fileName = Path.GetFileName(filePath);
-                FileIO.FileInfo.fileConvertedPath = RAGLINKCommons.RAGLINKPlatform.SettingsContent.tempFilePath + "\\" + tempFileGUID;
+                FileIO.FileInfo.fileConvertedPath = RAGLINKCommons.RPlatform.SettingsContent.tempFilePath + "\\" + tempFileGUID;
                 //MessageBox.Show(FileIO.FileInfo.fileConvertedPath);
                 //Read file meta data start
-                RAGLINKCommons.RAGLINKPlatform.SettingsFileIO settingsFileIO = new RAGLINKCommons.RAGLINKPlatform.SettingsFileIO();
+                RAGLINKCommons.RPlatform.SettingsFileIO settingsFileIO = new RAGLINKCommons.RPlatform.SettingsFileIO();
                 settingsFileIO.SetSettingsFilePath(filePath);
                 FileIO.FileInfo.fileType = settingsFileIO.GetFileType();
                 settingsFileIO.Dispose();
@@ -89,16 +88,19 @@ namespace RAGLINKFileEditor.UserInterface
                 FileIO.FileInfo.isFileOpened = true;
                 FileIO.FileInfo.isFileEdited = false;
                 this.Text = "RAGLINK 文件编辑器 - Untitled";
-                string tempFileGUID = RAGLINKCommons.RAGLINKPlatform.FileEncryption.GUIDGenerate() + ".tmp";
+                string tempFileGUID = RAGLINKCommons.RPlatform.FileEncryption.GUIDGenerate() + ".tmp";
                 FileIO.FileInfo.filePath = string.Empty;
                 FileIO.FileInfo.fileName = string.Empty;
-                FileIO.FileInfo.fileConvertedPath = RAGLINKCommons.RAGLINKPlatform.SettingsContent.tempFilePath + "\\" + tempFileGUID;
+                FileIO.FileInfo.fileConvertedPath = RAGLINKCommons.RPlatform.SettingsContent.tempFilePath + "\\" + tempFileGUID;
             }
             catch (Exception) { };
         }
         private void SaveFileHotKey(int HotKeyID)
         {
-            if (HotKeyID == HotkeySaveFile) SaveFile(false);
+            if (HotKeyID == HotkeySaveFile)
+            {
+                SaveFile(false);
+            }
         }
         private string SelectPath(string dialogTitle)
         {
@@ -107,9 +109,9 @@ namespace RAGLINKFileEditor.UserInterface
             {
                 SaveFileDialog saveDialog = new SaveFileDialog
                 {
-                    Filter = "RAGLINK 行车计划文件|*" + RAGLINKCommons.RAGLINKPlatform.SettingsContent.projectFileExtName + "|"
-                            + "RAGLINK 通用扩展文件|*" + RAGLINKCommons.RAGLINKPlatform.SettingsContent.universalFileExtName,
-                    FilterIndex = FileIO.FileInfo.fileType == RAGLINKCommons.RAGLINKPlatform.SettingsContent.FileType.PROJECT ? 1 : 2,
+                    Filter = "RAGLINK 行车计划文件|*" + RAGLINKCommons.RPlatform.SettingsContent.projectFileExtName + "|"
+                            + "RAGLINK 通用扩展文件|*" + RAGLINKCommons.RPlatform.SettingsContent.universalFileExtName,
+                    FilterIndex = FileIO.FileInfo.fileType == RAGLINKCommons.RPlatform.SettingsContent.FileType.PROJECT ? 1 : 2,
                     RestoreDirectory = true,
                     CheckPathExists = true,
                     Title = dialogTitle
@@ -139,7 +141,10 @@ namespace RAGLINKFileEditor.UserInterface
                             FileIO.FileInfo.filePath = savePath;
                             SaveFileByPath(FileIO.FileInfo.filePath, inClosingFile);
                         }
-                        else goto endSave;
+                        else
+                        {
+                            goto endSave;
+                        }
                     }
                     else
                     {
@@ -147,12 +152,12 @@ namespace RAGLINKFileEditor.UserInterface
                     }
                 }
                 //Read file meta data start
-                RAGLINKCommons.RAGLINKPlatform.SettingsFileIO settingsFileIO = new RAGLINKCommons.RAGLINKPlatform.SettingsFileIO();
+                RAGLINKCommons.RPlatform.SettingsFileIO settingsFileIO = new RAGLINKCommons.RPlatform.SettingsFileIO();
                 settingsFileIO.SetSettingsFilePath(FileIO.FileInfo.fileConvertedPath);
                 FileIO.FileInfo.fileType = settingsFileIO.GetFileType();
                 settingsFileIO.Dispose();
                 //Read file meta data end
-                if (FileIO.FileInfo.fileType != RAGLINKCommons.RAGLINKPlatform.SettingsContent.FileType.UNKNOW)
+                if (FileIO.FileInfo.fileType != RAGLINKCommons.RPlatform.SettingsContent.FileType.UNKNOW)
                 {
                     this.Text = "RAGLINK 文件编辑器 - " + "[" + FileIO.FileInfo.fileType.ToString() + "]" + Path.GetFileName(FileIO.FileInfo.filePath);
                     FileIO.FileInfo.isFileEdited = false;
@@ -165,7 +170,7 @@ namespace RAGLINKFileEditor.UserInterface
                         FileIO.FileInfo.filePath = string.Empty;
                     }
                 }
-                endSave:
+            endSave:
                 toolStripLabelMain.Text = "就绪.";
             }
             catch (Exception) { };
@@ -175,29 +180,33 @@ namespace RAGLINKFileEditor.UserInterface
             bool retValue = false;
             try
             {
-                if(FileIO.FileInfo.fileConvertedPath == string.Empty)
+                if (FileIO.FileInfo.fileConvertedPath == string.Empty)
                 {
                     retValue = false;
                     return retValue;
                 }
                 textBoxEditor.SaveToFile(FileIO.FileInfo.fileConvertedPath, Encoding.Default);
                 //Read file meta data start
-                RAGLINKCommons.RAGLINKPlatform.SettingsFileIO settingsFileIO = new RAGLINKCommons.RAGLINKPlatform.SettingsFileIO();
+                RAGLINKCommons.RPlatform.SettingsFileIO settingsFileIO = new RAGLINKCommons.RPlatform.SettingsFileIO();
                 settingsFileIO.SetSettingsFilePath(FileIO.FileInfo.fileConvertedPath);
                 FileIO.FileInfo.fileType = settingsFileIO.GetFileType();
                 settingsFileIO.Dispose();
                 //Read file meta data end
                 //MessageBox.Show(FileIO.FileInfo.fileType.ToString());
-                if (FileIO.FileInfo.fileType != RAGLINKCommons.RAGLINKPlatform.SettingsContent.FileType.UNKNOW)
+                if (FileIO.FileInfo.fileType != RAGLINKCommons.RPlatform.SettingsContent.FileType.UNKNOW)
                 {
                     UnlockFile();
                     if (File.Exists(filePath))
                     {
                         File.Delete(filePath);
                     }
-                    RAGLINKCommons.RAGLINKPlatform.FileEncryption.DesEncryptFile(FileIO.FileInfo.fileConvertedPath, filePath, RAGLINKCommons.RAGLINKPlatform.SettingsContent.encryptKey);
+                    RAGLINKCommons.RPlatform.FileEncryption.DesEncryptFile(FileIO.FileInfo.fileConvertedPath, filePath, RAGLINKCommons.RPlatform.SettingsContent.encryptKey);
                     //MessageBox.Show(FileIO.FileInfo.fileConvertedPath);
-                    if (inClosingFile) File.Delete(FileIO.FileInfo.fileConvertedPath);
+                    if (inClosingFile)
+                    {
+                        File.Delete(FileIO.FileInfo.fileConvertedPath);
+                    }
+
                     this.Text = "RAGLINK 文件编辑器 - " + "[" + FileIO.FileInfo.fileType.ToString() + "]" + Path.GetFileName(FileIO.FileInfo.filePath);
                 }
                 else
@@ -206,7 +215,11 @@ namespace RAGLINKFileEditor.UserInterface
                 }
             }
             catch (Exception) { };
-            if (!inClosingFile) LockFile(filePath);
+            if (!inClosingFile)
+            {
+                LockFile(filePath);
+            }
+
             return retValue;
         }
 

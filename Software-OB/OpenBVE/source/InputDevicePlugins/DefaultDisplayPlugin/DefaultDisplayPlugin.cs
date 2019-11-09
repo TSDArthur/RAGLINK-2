@@ -1,9 +1,9 @@
-using System;
-using System.Globalization;
-using System.Windows.Forms;
 using OpenBveApi.FileSystem;
 using OpenBveApi.Interface;
 using OpenBveApi.Runtime;
+using System;
+using System.Globalization;
+using System.Windows.Forms;
 
 namespace DefaultDisplayPlugin
 {
@@ -25,7 +25,10 @@ namespace DefaultDisplayPlugin
 		/// <summary>
 		/// The control list that is using for plugin
 		/// </summary>
-		public InputControl[] Controls { get; private set; }
+		public InputControl[] Controls
+		{
+			get; private set;
+		}
 
 		private static FileSystem FileSystem = null;
 		private static int FrameCount = 0;
@@ -72,7 +75,8 @@ namespace DefaultDisplayPlugin
 		/// <param name="owner">The owner of the window</param>
 		public void Config(IWin32Window owner)
 		{
-			using (var form = new Config()) {
+			using (var form = new Config())
+			{
 				form.ShowDialog(owner);
 			}
 		}
@@ -162,7 +166,8 @@ namespace DefaultDisplayPlugin
 
 		protected virtual void OnKeyDown(InputEventArgs e)
 		{
-			if (KeyDown != null) {
+			if (KeyDown != null)
+			{
 				KeyDown(this, e);
 			}
 		}
@@ -195,7 +200,8 @@ namespace DefaultDisplayPlugin
 					if (Lines[i].Length != 0 && !Lines[i].StartsWith(";", StringComparison.OrdinalIgnoreCase))
 					{
 						if (Lines[i].StartsWith("[", StringComparison.Ordinal) &
-							Lines[i].EndsWith("]", StringComparison.Ordinal)) {
+							Lines[i].EndsWith("]", StringComparison.Ordinal))
+						{
 							Section = Lines[i].Substring(1, Lines[i].Length - 2).Trim().ToLowerInvariant();
 						}
 						else
@@ -288,8 +294,10 @@ namespace DefaultDisplayPlugin
 			}
 		}
 
-		internal static void SaveConfig() {
-			try {
+		internal static void SaveConfig()
+		{
+			try
+			{
 				CultureInfo Culture = CultureInfo.InvariantCulture;
 				System.Text.StringBuilder Builder = new System.Text.StringBuilder();
 				Builder.AppendLine("; Options");
@@ -316,7 +324,9 @@ namespace DefaultDisplayPlugin
 				Builder.AppendLine("is_display = " + IsDisplayFps.ToString(Culture));
 				string configFile = OpenBveApi.Path.CombineFile(FileSystem.SettingsFolder, "1.5.0/options_ddp.cfg");
 				System.IO.File.WriteAllText(configFile, Builder.ToString(), new System.Text.UTF8Encoding(true));
-			} catch {
+			}
+			catch
+			{
 				MessageBox.Show("An error occured whilst saving the options to disk." + System.Environment.NewLine +
 								"Please check you have write permission.");
 			}

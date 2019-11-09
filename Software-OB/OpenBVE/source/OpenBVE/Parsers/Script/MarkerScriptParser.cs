@@ -1,10 +1,10 @@
-﻿using System;
-using System.Xml;
-using OpenBveApi.Colors;
-using OpenBveApi.Math;
-using System.Linq;
-using OpenBveApi.Textures;
+﻿using OpenBveApi.Colors;
 using OpenBveApi.Interface;
+using OpenBveApi.Math;
+using OpenBveApi.Textures;
+using System;
+using System.Linq;
+using System.Xml;
 
 namespace OpenBve
 {
@@ -12,7 +12,7 @@ namespace OpenBve
 	{
 		public static bool ReadMarkerXML(string fileName, ref CsvRwRouteParser.Marker marker)
 		{
-			
+
 			//The current XML file to load
 			XmlDocument currentXML = new XmlDocument();
 			//Load the marker's XML file 
@@ -150,7 +150,7 @@ namespace OpenBve
 										Interface.AddMessage(MessageType.Error, false,
 											"No paramaters defined for the late message in " + fileName);
 									}
-									
+
 									foreach (XmlNode cc in c.ChildNodes)
 									{
 										switch (cc.Name.ToLowerInvariant())
@@ -196,13 +196,13 @@ namespace OpenBve
 									}
 									break;
 								case "timeout":
-									if (!NumberFormats.TryParseDouble(c.InnerText, new[] {1.0}, out TimeOut))
+									if (!NumberFormats.TryParseDouble(c.InnerText, new[] { 1.0 }, out TimeOut))
 									{
 										Interface.AddMessage(MessageType.Error, false, "Marker timeout invalid in " + fileName);
 									}
 									break;
 								case "distance":
-									if (!NumberFormats.TryParseDouble(c.InnerText, new[] {1.0}, out EndingPosition))
+									if (!NumberFormats.TryParseDouble(c.InnerText, new[] { 1.0 }, out EndingPosition))
 									{
 										Interface.AddMessage(MessageType.Error, false, "Marker distance invalid in " + fileName);
 									}
@@ -250,7 +250,7 @@ namespace OpenBve
 								{
 									Interface.AddMessage(MessageType.Warning, false, "An early time was defined, but no message was specified in MarkerXML " + fileName);
 								}
-								
+
 							}
 							else
 							{
@@ -323,7 +323,7 @@ namespace OpenBve
 						}
 					}
 				}
-				
+
 			}
 			return true;
 		}
@@ -367,6 +367,6 @@ namespace OpenBve
 		}
 	}
 
-	
+
 
 }

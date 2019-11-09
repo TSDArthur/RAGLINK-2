@@ -252,7 +252,10 @@ namespace SanYingInput
 
 			cmbJoySelect.Items.Clear();
 
-			if (joyNum == 0) return;
+			if (joyNum == 0)
+			{
+				return;
+			}
 
 			cmbJoySelect.MaxDropDownItems = joyNum;
 
@@ -317,10 +320,14 @@ namespace SanYingInput
 			var currentButtonState = JoystickApi.GetButtonsState();
 
 			if (currentButtonState.Count < buttonNum)
+			{
 				return;
+			}
 
 			if (JoystickApi.lastButtonState.Count < buttonNum)
+			{
 				return;
+			}
 
 			for (int i = 0; i < buttonNum; ++i)
 			{

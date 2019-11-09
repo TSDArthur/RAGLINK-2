@@ -17,7 +17,11 @@
 				if (Safety & !Actual)
 				{
 					double t = Game.SecondsSinceMidnight;
-					if (t < ApplicationTime) ApplicationTime = t;
+					if (t < ApplicationTime)
+					{
+						ApplicationTime = t;
+					}
+
 					if (ApplicationTime <= Game.SecondsSinceMidnight)
 					{
 						Actual = true;

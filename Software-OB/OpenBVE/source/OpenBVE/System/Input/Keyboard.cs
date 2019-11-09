@@ -1,6 +1,6 @@
-﻿using System;
+﻿using OpenBveApi.Interface;
 using OpenTK.Input;
-using OpenBveApi.Interface;
+using System;
 
 namespace OpenBve
 {
@@ -23,9 +23,21 @@ namespace OpenBve
 			}
 			BlockKeyRepeat = true;
 			//Check for modifiers
-			if (e.Shift) CurrentKeyboardModifier |= Interface.KeyboardModifier.Shift;
-			if (e.Control) CurrentKeyboardModifier |= Interface.KeyboardModifier.Ctrl;
-			if (e.Alt) CurrentKeyboardModifier |= Interface.KeyboardModifier.Alt;
+			if (e.Shift)
+			{
+				CurrentKeyboardModifier |= Interface.KeyboardModifier.Shift;
+			}
+
+			if (e.Control)
+			{
+				CurrentKeyboardModifier |= Interface.KeyboardModifier.Ctrl;
+			}
+
+			if (e.Alt)
+			{
+				CurrentKeyboardModifier |= Interface.KeyboardModifier.Alt;
+			}
+
 			if (Game.CurrentInterface == Game.InterfaceType.Menu && Game.Menu.IsCustomizingControl())
 			{
 				Game.Menu.SetControlKbdCustomData(e.Key, CurrentKeyboardModifier);
@@ -39,7 +51,11 @@ namespace OpenBve
 				{
 					//Compare the current and previous keyboard states
 					//Only process if they are different
-					if (!Enum.IsDefined(typeof(Key), Interface.CurrentControls[i].Key)) continue;
+					if (!Enum.IsDefined(typeof(Key), Interface.CurrentControls[i].Key))
+					{
+						continue;
+					}
+
 					if (e.Key == Interface.CurrentControls[i].Key & Interface.CurrentControls[i].Modifier == CurrentKeyboardModifier)
 					{
 
@@ -92,7 +108,11 @@ namespace OpenBve
 				{
 					//Compare the current and previous keyboard states
 					//Only process if they are different
-					if (!Enum.IsDefined(typeof(Key), Interface.CurrentControls[i].Key)) continue;
+					if (!Enum.IsDefined(typeof(Key), Interface.CurrentControls[i].Key))
+					{
+						continue;
+					}
+
 					if (e.Key == Interface.CurrentControls[i].Key & Interface.CurrentControls[i].AnalogState == 1.0 & Interface.CurrentControls[i].DigitalState > Interface.DigitalControlState.Released)
 					{
 						Interface.CurrentControls[i].AnalogState = 0.0;

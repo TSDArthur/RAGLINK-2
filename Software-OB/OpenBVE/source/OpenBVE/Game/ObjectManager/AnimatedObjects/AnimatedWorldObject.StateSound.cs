@@ -1,8 +1,8 @@
-﻿using System;
-using OpenBveApi.Math;
+﻿using OpenBveApi.Math;
 using OpenBveApi.Objects;
 using OpenBveApi.Trains;
 using OpenBveApi.World;
+using System;
 
 namespace OpenBve
 {
@@ -124,7 +124,7 @@ namespace OpenBve
 									}
 								}
 							}
-							
+
 						}
 					}
 					else
@@ -178,7 +178,7 @@ namespace OpenBve
 				{
 					if (currentObject.Object.States[i].Object == null)
 					{
-						currentObject.Object.States[i].Object = new StaticObject { RendererIndex =  -1 };
+						currentObject.Object.States[i].Object = new StaticObject { RendererIndex = -1 };
 					}
 				}
 				double r = 0.0;
@@ -193,7 +193,10 @@ namespace OpenBve
 					for (int j = 0; j < currentObject.Object.States[i].Object.Mesh.Vertices.Length; j++)
 					{
 						double t = this.Object.States[i].Object.Mesh.Vertices[j].Coordinates.NormSquared();
-						if (t > r) r = t;
+						if (t > r)
+						{
+							r = t;
+						}
 					}
 				}
 				currentObject.Radius = Math.Sqrt(r);

@@ -1,15 +1,17 @@
-﻿using System;
-using OpenBveApi.Colors;
+﻿using OpenBveApi.Colors;
 using OpenBveApi.Textures;
 using OpenBveApi.Trains;
+using System;
 
-namespace OpenBve {
-	internal static partial class Game {
+namespace OpenBve
+{
+	internal static partial class Game
+	{
 
 		// date and time
-        /// <summary>The current in game time, expressed as the number of seconds since midnight on the first day</summary>
+		/// <summary>The current in game time, expressed as the number of seconds since midnight on the first day</summary>
 		internal static double SecondsSinceMidnight = 0.0;
-        /// <summary>The time at which the current game started, expressed as the number of seconds since midnight on the first day</summary>
+		/// <summary>The time at which the current game started, expressed as the number of seconds since midnight on the first day</summary>
 		internal static double StartupTime = 0.0;
 		/// <summary>Whether the game is in minimal simulation mode: 
 		/// This is used when the game is fast-forwarding on start or station jump.
@@ -18,7 +20,8 @@ namespace OpenBve {
 		internal static bool MinimalisticSimulation = false;
 
 		/// <summary>Defines a region of fog</summary>
-		internal struct Fog {
+		internal struct Fog
+		{
 			/// <summary>The offset at which the fog starts</summary>
 			internal float Start;
 			/// <summary>The offset at which the fog ends</summary>
@@ -28,7 +31,8 @@ namespace OpenBve {
 			/// <summary>The track position at which the fog is placed</summary>
 			internal double TrackPosition;
 			/// <summary>Creates a new region of fog</summary>
-			internal Fog(float Start, float End, Color24 Color, double TrackPosition) {
+			internal Fog(float Start, float End, Color24 Color, double TrackPosition)
+			{
 				this.Start = Start;
 				this.End = End;
 				this.Color = Color;
@@ -40,18 +44,18 @@ namespace OpenBve {
 		internal static Fog PreviousFog = new Fog(NoFogStart, NoFogEnd, Color24.Grey, 0.0);
 		internal static Fog CurrentFog = new Fog(NoFogStart, NoFogEnd, Color24.Grey, 0.5);
 		internal static Fog NextFog = new Fog(NoFogStart, NoFogEnd, Color24.Grey, 1.0);
-		
-		
+
+
 
 		// other trains
 		internal static double[] PrecedingTrainTimeDeltas = new double[] { };
 		internal static double PrecedingTrainSpeedLimit = double.PositiveInfinity;
-		
 
-		
-        /// <summary>The default mode for the train's safety system to start in</summary>
+
+
+		/// <summary>The default mode for the train's safety system to start in</summary>
 		internal static TrainStartMode TrainStart = TrainStartMode.EmergencyBrakesAts;
-        /// <summary>The name of the current train</summary>
+		/// <summary>The name of the current train</summary>
 		internal static string TrainName = "";
 		/// <summary>The initial destination for any train within the game</summary>
 		internal static int InitialDestination = -1;
@@ -60,9 +64,10 @@ namespace OpenBve {
 
 		// ================================
 
-        /// <summary>Call this function to reset the game</summary>
-        /// <param name="ResetLogs">Whether the logs should be reset</param>
-		internal static void Reset(bool ResetLogs) {
+		/// <summary>Call this function to reset the game</summary>
+		/// <param name="ResetLogs">Whether the logs should be reset</param>
+		internal static void Reset(bool ResetLogs)
+		{
 			// track manager
 			for (int i = 0; i < TrackManager.Tracks.Length; i++)
 			{
@@ -104,7 +109,8 @@ namespace OpenBve {
 			InfoTotalQuadStrip = 0;
 			InfoTotalPolygon = 0;
 			InfoStaticOpaqueFaceCount = 0;
-			if (ResetLogs) {
+			if (ResetLogs)
+			{
 				LogRouteName = "";
 				LogTrainName = "";
 				LogDateTime = DateTime.Now;
@@ -123,13 +129,16 @@ namespace OpenBve {
 		// ================================
 
 		// black box
-		internal enum BlackBoxEventToken : short {
+		internal enum BlackBoxEventToken : short
+		{
 			None = 0
 		}
-		internal enum BlackBoxPower : short {
+		internal enum BlackBoxPower : short
+		{
 			PowerNull = 0
 		}
-		internal enum BlackBoxBrake : short {
+		internal enum BlackBoxBrake : short
+		{
 			BrakeNull = 0,
 			Emergency = -1,
 			HoldBrake = -2,
@@ -137,7 +146,8 @@ namespace OpenBve {
 			Lap = -4,
 			Service = -5
 		}
-		internal struct BlackBoxEntry {
+		internal struct BlackBoxEntry
+		{
 			internal double Time;
 			internal double Position;
 			internal float Speed;
@@ -153,15 +163,20 @@ namespace OpenBve {
 		internal static BlackBoxEntry[] BlackBoxEntries = new BlackBoxEntry[256];
 		internal static int BlackBoxEntryCount = 0;
 		private static double BlackBoxNextUpdate = 0.0;
-		internal static void UpdateBlackBox() {
-			if (SecondsSinceMidnight >= BlackBoxNextUpdate) {
+		internal static void UpdateBlackBox()
+		{
+			if (SecondsSinceMidnight >= BlackBoxNextUpdate)
+			{
 				AddBlackBoxEntry(BlackBoxEventToken.None);
 				BlackBoxNextUpdate = SecondsSinceMidnight + 1.0;
 			}
 		}
-		internal static void AddBlackBoxEntry(BlackBoxEventToken EventToken) {
-			if (Interface.CurrentOptions.BlackBox) {
-				if (BlackBoxEntryCount >= BlackBoxEntries.Length) {
+		internal static void AddBlackBoxEntry(BlackBoxEventToken EventToken)
+		{
+			if (Interface.CurrentOptions.BlackBox)
+			{
+				if (BlackBoxEntryCount >= BlackBoxEntries.Length)
+				{
 					Array.Resize<BlackBoxEntry>(ref BlackBoxEntries, BlackBoxEntries.Length << 1);
 				}
 				BlackBoxEntries[BlackBoxEntryCount].Time = SecondsSinceMidnight;
@@ -172,32 +187,48 @@ namespace OpenBve {
 				BlackBoxEntries[BlackBoxEntryCount].ReverserSafety = (short)TrainManager.PlayerTrain.Handles.Reverser.Actual;
 				BlackBoxEntries[BlackBoxEntryCount].PowerDriver = (BlackBoxPower)TrainManager.PlayerTrain.Handles.Power.Driver;
 				BlackBoxEntries[BlackBoxEntryCount].PowerSafety = (BlackBoxPower)TrainManager.PlayerTrain.Handles.Power.Safety;
-				if (TrainManager.PlayerTrain.Handles.EmergencyBrake.Driver) {
+				if (TrainManager.PlayerTrain.Handles.EmergencyBrake.Driver)
+				{
 					BlackBoxEntries[BlackBoxEntryCount].BrakeDriver = BlackBoxBrake.Emergency;
-				} else if (TrainManager.PlayerTrain.Handles.HoldBrake.Driver) {
+				}
+				else if (TrainManager.PlayerTrain.Handles.HoldBrake.Driver)
+				{
 					BlackBoxEntries[BlackBoxEntryCount].BrakeDriver = BlackBoxBrake.HoldBrake;
-				} else if (TrainManager.PlayerTrain.Handles.Brake is TrainManager.AirBrakeHandle) {
-					switch ((TrainManager.AirBrakeHandleState)TrainManager.PlayerTrain.Handles.Brake.Driver) {
-							case TrainManager.AirBrakeHandleState.Release: BlackBoxEntries[BlackBoxEntryCount].BrakeDriver = BlackBoxBrake.Release; break;
-							case TrainManager.AirBrakeHandleState.Lap: BlackBoxEntries[BlackBoxEntryCount].BrakeDriver = BlackBoxBrake.Lap; break;
-							case TrainManager.AirBrakeHandleState.Service: BlackBoxEntries[BlackBoxEntryCount].BrakeDriver = BlackBoxBrake.Service; break;
-							default: BlackBoxEntries[BlackBoxEntryCount].BrakeDriver = BlackBoxBrake.Emergency; break;
+				}
+				else if (TrainManager.PlayerTrain.Handles.Brake is TrainManager.AirBrakeHandle)
+				{
+					switch ((TrainManager.AirBrakeHandleState)TrainManager.PlayerTrain.Handles.Brake.Driver)
+					{
+						case TrainManager.AirBrakeHandleState.Release: BlackBoxEntries[BlackBoxEntryCount].BrakeDriver = BlackBoxBrake.Release; break;
+						case TrainManager.AirBrakeHandleState.Lap: BlackBoxEntries[BlackBoxEntryCount].BrakeDriver = BlackBoxBrake.Lap; break;
+						case TrainManager.AirBrakeHandleState.Service: BlackBoxEntries[BlackBoxEntryCount].BrakeDriver = BlackBoxBrake.Service; break;
+						default: BlackBoxEntries[BlackBoxEntryCount].BrakeDriver = BlackBoxBrake.Emergency; break;
 					}
-				} else {
+				}
+				else
+				{
 					BlackBoxEntries[BlackBoxEntryCount].BrakeDriver = (BlackBoxBrake)TrainManager.PlayerTrain.Handles.Brake.Driver;
 				}
-				if (TrainManager.PlayerTrain.Handles.EmergencyBrake.Safety) {
+				if (TrainManager.PlayerTrain.Handles.EmergencyBrake.Safety)
+				{
 					BlackBoxEntries[BlackBoxEntryCount].BrakeSafety = BlackBoxBrake.Emergency;
-				} else if (TrainManager.PlayerTrain.Handles.HoldBrake.Actual) {
+				}
+				else if (TrainManager.PlayerTrain.Handles.HoldBrake.Actual)
+				{
 					BlackBoxEntries[BlackBoxEntryCount].BrakeSafety = BlackBoxBrake.HoldBrake;
-				} else if (TrainManager.PlayerTrain.Handles.Brake is TrainManager.AirBrakeHandle) {
-					switch ((TrainManager.AirBrakeHandleState)TrainManager.PlayerTrain.Handles.Brake.Safety) {
-							case TrainManager.AirBrakeHandleState.Release: BlackBoxEntries[BlackBoxEntryCount].BrakeSafety = BlackBoxBrake.Release; break;
-							case TrainManager.AirBrakeHandleState.Lap: BlackBoxEntries[BlackBoxEntryCount].BrakeSafety = BlackBoxBrake.Lap; break;
-							case TrainManager.AirBrakeHandleState.Service: BlackBoxEntries[BlackBoxEntryCount].BrakeSafety = BlackBoxBrake.Service; break;
-							default: BlackBoxEntries[BlackBoxEntryCount].BrakeSafety = BlackBoxBrake.Emergency; break;
+				}
+				else if (TrainManager.PlayerTrain.Handles.Brake is TrainManager.AirBrakeHandle)
+				{
+					switch ((TrainManager.AirBrakeHandleState)TrainManager.PlayerTrain.Handles.Brake.Safety)
+					{
+						case TrainManager.AirBrakeHandleState.Release: BlackBoxEntries[BlackBoxEntryCount].BrakeSafety = BlackBoxBrake.Release; break;
+						case TrainManager.AirBrakeHandleState.Lap: BlackBoxEntries[BlackBoxEntryCount].BrakeSafety = BlackBoxBrake.Lap; break;
+						case TrainManager.AirBrakeHandleState.Service: BlackBoxEntries[BlackBoxEntryCount].BrakeSafety = BlackBoxBrake.Service; break;
+						default: BlackBoxEntries[BlackBoxEntryCount].BrakeSafety = BlackBoxBrake.Emergency; break;
 					}
-				} else {
+				}
+				else
+				{
 					BlackBoxEntries[BlackBoxEntryCount].BrakeSafety = (BlackBoxBrake)TrainManager.PlayerTrain.Handles.Brake.Safety;
 				}
 				BlackBoxEntries[BlackBoxEntryCount].EventToken = EventToken;

@@ -34,7 +34,7 @@ namespace CarXmlConvertor
 						break;
 					case '/':
 						//We are closing a declaration
-						if (Line[i -1] == '<')
+						if (Line[i - 1] == '<')
 						{
 							if (this.Tabs > 0)
 							{

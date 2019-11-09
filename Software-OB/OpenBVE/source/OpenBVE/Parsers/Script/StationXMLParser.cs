@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Xml;
+﻿using OpenBveApi.Interface;
 using OpenBveApi.Math;
-using System.Linq;
 using OpenBveApi.Runtime;
 using OpenBveApi.Textures;
-using OpenBveApi.Interface;
+using System;
+using System.IO;
+using System.Linq;
+using System.Xml;
 
 namespace OpenBve
 {
@@ -204,7 +204,7 @@ namespace OpenBve
 											{
 												Interface.AddMessage(MessageType.Error, false, "Arrival sound filename is invalid in XML file " + fileName);
 											}
-											
+
 										}
 										if (File.Exists(arrSound))
 										{
@@ -301,7 +301,7 @@ namespace OpenBve
 											int ttidx = -1;
 											if (!string.IsNullOrEmpty(c.InnerText))
 											{
-												if(NumberFormats.TryParseIntVb6(c.InnerText, out ttidx))
+												if (NumberFormats.TryParseIntVb6(c.InnerText, out ttidx))
 												{
 													if (ttidx < 0)
 													{
@@ -567,7 +567,7 @@ namespace OpenBve
 																break;
 														}
 													}
-													
+
 													break;
 												case "maxcars":
 													if (!NumberFormats.TryParseIntVb6(cc.InnerText, out stopRequest.MaxNumberOfCars))
@@ -577,11 +577,11 @@ namespace OpenBve
 													break;
 											}
 										}
-										
+
 										break;
 								}
 							}
-							
+
 
 						}
 					}

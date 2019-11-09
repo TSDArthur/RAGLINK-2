@@ -1,12 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Xml;
+﻿using OpenBveApi.FunctionScripting;
+using OpenBveApi.Interface;
 using OpenBveApi.Math;
+using OpenBveApi.Objects;
+using System;
+using System.IO;
 using System.Linq;
 using System.Text;
-using OpenBveApi.FunctionScripting;
-using OpenBveApi.Interface;
-using OpenBveApi.Objects;
+using System.Xml;
 
 namespace OpenBve
 {
@@ -49,7 +49,7 @@ namespace OpenBve
 			{
 				currentXML.Load(FileName);
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				//The XML is not strictly valid
 				string[] Lines = File.ReadAllLines(FileName);
@@ -115,7 +115,7 @@ namespace OpenBve
 					return null;
 				}
 			}
-			
+
 			string BaseDir = System.IO.Path.GetDirectoryName(FileName);
 
 			GruppenObject[] CurrentObjects = new GruppenObject[0];
@@ -134,7 +134,7 @@ namespace OpenBve
 							{
 								if (node.Name == "Object" && node.ChildNodes.OfType<XmlElement>().Any())
 								{
-									
+
 									foreach (XmlNode childNode in node.ChildNodes)
 									{
 										if (childNode.Name == "Props" && childNode.Attributes != null)
@@ -148,7 +148,7 @@ namespace OpenBve
 												switch (attribute.Name)
 												{
 													case "Name":
-														string ObjectFile = OpenBveApi.Path.Loksim3D.CombineFile(BaseDir,attribute.Value, Program.FileSystem.LoksimPackageInstallationDirectory);
+														string ObjectFile = OpenBveApi.Path.Loksim3D.CombineFile(BaseDir, attribute.Value, Program.FileSystem.LoksimPackageInstallationDirectory);
 														if (!File.Exists(ObjectFile))
 														{
 															Object.Name = null;
@@ -225,20 +225,21 @@ namespace OpenBve
 						ObjectManager.AnimatedObjectCollection AnimatedObject = null;
 						try
 						{
-							if(CurrentObjects[i].Name.ToLowerInvariant().EndsWith(".l3dgrp"))
+							if (CurrentObjects[i].Name.ToLowerInvariant().EndsWith(".l3dgrp"))
 							{
 								AnimatedObject = ReadObject(CurrentObjects[i].Name, Encoding, CurrentObjects[i].Rotation);
 							}
-							else if(CurrentObjects[i].Name.ToLowerInvariant().EndsWith(".l3dobj"))
+							else if (CurrentObjects[i].Name.ToLowerInvariant().EndsWith(".l3dobj"))
 							{
 								//Object = (ObjectManager.StaticObject)ObjectManager.LoadObject(CurrentObjects[i].Name, Encoding, false, false, CurrentObjects[i].Rotation);
 							}
 							else
 							{
 								throw new Exception("Format " + System.IO.Path.GetExtension(CurrentObjects[i].Name) + " is not currently supported by the Loksim3D object parser");
-							}							
+							}
 						}
-						catch (Exception ex) {
+						catch (Exception ex)
+						{
 							Interface.AddMessage(MessageType.Error, false, ex.Message);
 						}
 						if (Object != null)
@@ -271,12 +272,12 @@ namespace OpenBve
 							int rl = Result.Objects.Length;
 							int l = AnimatedObject.Objects.Length;
 							Array.Resize<ObjectManager.AnimatedObject>(ref Result.Objects, Result.Objects.Length + l);
-							for(int o = rl; o < rl + l; o++)
+							for (int o = rl; o < rl + l; o++)
 							{
 								if (AnimatedObject.Objects[o - rl] != null)
 								{
 									Result.Objects[o] = AnimatedObject.Objects[o - rl].Clone();
-									for(int si = 0; si < Result.Objects[o].States.Length; si++)
+									for (int si = 0; si < Result.Objects[o].States.Length; si++)
 									{
 										Result.Objects[o].States[si].Position += CurrentObjects[i].Position;
 									}
@@ -295,7 +296,7 @@ namespace OpenBve
 						ObjectManager.AnimatedObject a = new ObjectManager.AnimatedObject();
 						ObjectManager.AnimatedObjectState aos = new ObjectManager.AnimatedObjectState(staticObject, Vector3.Zero);
 						a.States = new ObjectManager.AnimatedObjectState[] { aos };
-						Result.Objects[Result.Objects.Length -1] = a;
+						Result.Objects[Result.Objects.Length - 1] = a;
 					}
 				}
 				return Result;

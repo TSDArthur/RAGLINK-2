@@ -2,7 +2,6 @@
 using System.IO;
 using System.Windows.Forms;
 using SystemHotKey;
-using RAGLINKCommons;
 
 namespace RAGLINKFileEditor.UserInterface
 {
@@ -20,7 +19,7 @@ namespace RAGLINKFileEditor.UserInterface
             FormThemeApplier.SetStyle(MainMenuStrip, WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender.VsVersion.Vs2015, DockPanelTheme);
             FormThemeApplier.SetStyle(contextMenuStripMain, WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender.VsVersion.Vs2015, DockPanelTheme);
             //Update paths
-            RAGLINKCommons.RAGLINKPlatform.SettingsContent.UpdateSettingsPath();
+            RAGLINKCommons.RPlatform.SettingsContent.UpdateSettingsPath();
             //Setup hotkey
             /*
             hotkey = new Hotkey(this.Handle);
@@ -44,8 +43,8 @@ namespace RAGLINKFileEditor.UserInterface
             OpenFileDialog openDialog = new OpenFileDialog
             {
                 Filter = "RAGLINK文件|*" +
-                RAGLINKCommons.RAGLINKPlatform.SettingsContent.projectFileExtName + ";*" +
-                RAGLINKCommons.RAGLINKPlatform.SettingsContent.universalFileExtName
+                RAGLINKCommons.RPlatform.SettingsContent.projectFileExtName + ";*" +
+                RAGLINKCommons.RPlatform.SettingsContent.universalFileExtName
             };
             if (openDialog.ShowDialog() == DialogResult.OK)
             {
@@ -122,7 +121,9 @@ namespace RAGLINKFileEditor.UserInterface
             try
             {
                 if (textBoxEditor.Zoom >= 10)
+                {
                     textBoxEditor.Zoom -= 10;
+                }
             }
             catch (Exception) { };
         }
@@ -139,8 +140,15 @@ namespace RAGLINKFileEditor.UserInterface
 
         private void TextBoxEditor_TextChanged(object sender, FastColoredTextBoxNS.TextChangedEventArgs e)
         {
-            if (!FileIO.FileInfo.isFileEdited && !inLoading) this.Text += "*";
-            if (!inLoading) FileIO.FileInfo.isFileEdited = true;
+            if (!FileIO.FileInfo.isFileEdited && !inLoading)
+            {
+                this.Text += "*";
+            }
+
+            if (!inLoading)
+            {
+                FileIO.FileInfo.isFileEdited = true;
+            }
         }
 
         private void MenuItemNew_Click(object sender, EventArgs e)
@@ -173,12 +181,16 @@ namespace RAGLINKFileEditor.UserInterface
         {
             try
             {
-                if (FileIO.FileInfo.isFileEdited) SaveFile(false);
+                if (FileIO.FileInfo.isFileEdited)
+                {
+                    SaveFile(false);
+                }
+
                 string saveAsPath = SelectPath("另存为...");
                 if (saveAsPath != string.Empty)
                 {
                     SaveFileByPath(saveAsPath, false);
-                    if(File.Exists(saveAsPath))
+                    if (File.Exists(saveAsPath))
                     {
                         CloseFile();
                         OpenFile(saveAsPath);

@@ -1,5 +1,4 @@
 ﻿using OpenBveApi.Interface;
-using OpenBveApi.Math;
 
 namespace OpenBve
 {

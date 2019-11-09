@@ -1,10 +1,10 @@
-﻿using System;
+﻿using OpenBveApi.Graphics;
+using OpenBveApi.Textures;
+using OpenTK.Graphics.OpenGL;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using OpenBveApi.Graphics;
-using OpenBveApi.Textures;
-using OpenTK.Graphics.OpenGL;
 namespace OpenBve
 {
 	internal static partial class Textures
@@ -31,15 +31,15 @@ namespace OpenBve
 		/// <returns>Whether registering the texture was successful.</returns>
 		internal static bool RegisterTexture(string path, TextureParameters parameters, out Texture handle)
 		{
-		   /* BUG:
-			* Attempt to delete null texture handles from the end of the array
-			* These sometimes seem to end up there
-			* 
-			* Have also seen a registered textures count of 72 and an array length of 64
-			* Is it possible for a texture to fail to register, but still increment the registered textures count?
-			* 
-			* There appears to be a timing issue somewhere whilst loading, as this only happens intermittantly
-			*/
+			/* BUG:
+			 * Attempt to delete null texture handles from the end of the array
+			 * These sometimes seem to end up there
+			 * 
+			 * Have also seen a registered textures count of 72 and an array length of 64
+			 * Is it possible for a texture to fail to register, but still increment the registered textures count?
+			 * 
+			 * There appears to be a timing issue somewhere whilst loading, as this only happens intermittantly
+			 */
 			if (RegisteredTexturesCount > RegisteredTextures.Length)
 			{
 				/* BUG:
@@ -65,7 +65,7 @@ namespace OpenBve
 				{
 				}
 			}
-			
+
 			/*
 			 * Check if the texture is already registered.
 			 * If so, return the existing handle.
@@ -179,9 +179,15 @@ namespace OpenBve
 			//Set last access time
 			handle.LastAccess = CPreciseTimer.GetClockTicks();
 			if (handle.OpenGlTextures[(int)wrap].Valid)
+			{
 				return true;
+			}
+
 			if (handle.Ignore)
+			{
 				return false;
+			}
+
 			Texture texture;
 			if (handle.Origin.GetTexture(out texture))
 			{
@@ -308,9 +314,10 @@ namespace OpenBve
 		/// <summary>Loads all registered textures.</summary>
 		internal static void LoadAllTextures()
 		{
-						for (int i = 0; i < RegisteredTexturesCount; i++) {
-							LoadTexture(RegisteredTextures[i], OpenGlTextureWrapMode.ClampClamp);
-						}
+			for (int i = 0; i < RegisteredTexturesCount; i++)
+			{
+				LoadTexture(RegisteredTextures[i], OpenGlTextureWrapMode.ClampClamp);
+			}
 		}
 
 
@@ -371,9 +378,15 @@ namespace OpenBve
 		internal static Texture Resize(Texture texture, int width, int height)
 		{
 			if (width == texture.Width && height == texture.Height)
+			{
 				return texture;
+			}
+
 			if (texture.BitsPerPixel != 32)
+			{
 				throw new NotSupportedException("The number of bits per pixel is not supported.");
+			}
+
 			TextureTransparencyType type = texture.GetTransparencyType();
 			/*
 				 * Convert the texture into a bitmap.
@@ -430,7 +443,7 @@ namespace OpenBve
 		internal static void UnloadTexture(Texture handle)
 		{
 			//Null check the texture handle, as otherwise this can cause OpenGL to throw a fit
-			if(handle == null)
+			if (handle == null)
 			{
 				return;
 			}
@@ -471,7 +484,11 @@ namespace OpenBve
 			int count = 0;
 			for (int i = 0; i < RegisteredTexturesCount; i++)
 			{
-				if (RegisteredTextures[i] == null) continue;
+				if (RegisteredTextures[i] == null)
+				{
+					continue;
+				}
+
 				foreach (OpenGlTexture t in RegisteredTextures[i].OpenGlTextures)
 				{
 					if (t.Valid)
@@ -514,7 +531,10 @@ namespace OpenBve
 		internal static int RoundUpToPowerOfTwo(int value)
 		{
 			if (value <= 0)
+			{
 				throw new ArgumentException("The specified value is not positive.");
+			}
+
 			value -= 1;
 			for (int i = 1; i < sizeof(int) * 8; i <<= 1)
 			{

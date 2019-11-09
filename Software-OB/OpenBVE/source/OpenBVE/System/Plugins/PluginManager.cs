@@ -1,16 +1,19 @@
-﻿using System;
+﻿using OpenBveApi.Interface;
+using OpenBveApi.Runtime;
+using OpenBveApi.Trains;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
-using OpenBveApi.Runtime;
-using OpenBveApi.Interface;
-using OpenBveApi.Trains;
 
-namespace OpenBve {
-	internal static class PluginManager {
-		
+namespace OpenBve
+{
+	internal static class PluginManager
+	{
+
 		/// <summary>Represents an abstract plugin.</summary>
-		internal abstract class Plugin {
-			
+		internal abstract class Plugin
+		{
+
 			// --- members ---
 			/// <summary>The file title of the plugin, including the file extension.</summary>
 			internal string PluginTitle;
@@ -62,7 +65,8 @@ namespace OpenBve {
 			/// <summary>Called when the train has finished jumping to a different location.</summary>
 			internal abstract void EndJump();
 			/// <summary>Called every frame to update the plugin.</summary>
-			internal void UpdatePlugin() {
+			internal void UpdatePlugin()
+			{
 				if (Train.Cars == null || Train.Cars.Length == 0)
 				{
 					return;
@@ -93,7 +97,7 @@ namespace OpenBve {
 						s++;
 					}
 					StationsLoaded = true;
-					
+
 				}
 				//End of additions
 				double speed = this.Train.Cars[this.Train.DriverCar].Specs.CurrentPerceivedSpeed;
@@ -152,8 +156,10 @@ namespace OpenBve {
 				this.PluginMessage = data.DebugMessage;
 				this.Train.Specs.DoorInterlockState = (TrainManager.DoorInterlockStates)data.DoorInterlockState;
 				DisableTimeAcceleration = data.DisableTimeAcceleration;
-				for (int i = 0; i < InputDevicePlugin.AvailablePluginInfos.Count; i++) {
-					if (InputDevicePlugin.AvailablePluginInfos[i].Status == InputDevicePlugin.PluginInfo.PluginStatus.Enable) {
+				for (int i = 0; i < InputDevicePlugin.AvailablePluginInfos.Count; i++)
+				{
+					if (InputDevicePlugin.AvailablePluginInfos[i].Status == InputDevicePlugin.PluginInfo.PluginStatus.Enable)
+					{
 						InputDevicePlugin.AvailablePlugins[i].SetElapseData(inputDevicePluginData);
 					}
 				}
@@ -166,16 +172,23 @@ namespace OpenBve {
 			}
 			/// <summary>Gets the driver handles.</summary>
 			/// <returns>The driver handles.</returns>
-			private Handles GetHandles() {
+			private Handles GetHandles()
+			{
 				int reverser = (int)this.Train.Handles.Reverser.Driver;
 				int powerNotch = this.Train.Handles.Power.Driver;
 				int brakeNotch;
-				if (this.Train.Handles.Brake is TrainManager.AirBrakeHandle) {
+				if (this.Train.Handles.Brake is TrainManager.AirBrakeHandle)
+				{
 					brakeNotch = this.Train.Handles.EmergencyBrake.Driver ? 3 : this.Train.Handles.Brake.Driver == (int)TrainManager.AirBrakeHandleState.Service ? 2 : this.Train.Handles.Brake.Driver == (int)TrainManager.AirBrakeHandleState.Lap ? 1 : 0;
-				} else {
-					if (this.Train.Handles.HasHoldBrake) {
+				}
+				else
+				{
+					if (this.Train.Handles.HasHoldBrake)
+					{
 						brakeNotch = this.Train.Handles.EmergencyBrake.Driver ? this.Train.Handles.Brake.MaximumNotch + 2 : this.Train.Handles.Brake.Driver > 0 ? this.Train.Handles.Brake.Driver + 1 : this.Train.Handles.HoldBrake.Driver ? 1 : 0;
-					} else {
+					}
+					else
+					{
 						brakeNotch = this.Train.Handles.EmergencyBrake.Driver ? this.Train.Handles.Brake.MaximumNotch + 1 : this.Train.Handles.Brake.Driver;
 					}
 				}
@@ -186,24 +199,33 @@ namespace OpenBve {
 			/// <summary>Sets the driver handles or the virtual handles.</summary>
 			/// <param name="handles">The handles.</param>
 			/// <param name="virtualHandles">Whether to set the virtual handles.</param>
-			private void SetHandles(Handles handles, bool virtualHandles) {
+			private void SetHandles(Handles handles, bool virtualHandles)
+			{
 				/*
 				 * Process the handles.
 				 */
-				if (this.Train.Handles.SingleHandle & handles.BrakeNotch != 0) {
+				if (this.Train.Handles.SingleHandle & handles.BrakeNotch != 0)
+				{
 					handles.PowerNotch = 0;
 				}
 				/*
 				 * Process the reverser.
 				 */
-				if (handles.Reverser >= -1 & handles.Reverser <= 1) {
-					if (virtualHandles) {
+				if (handles.Reverser >= -1 & handles.Reverser <= 1)
+				{
+					if (virtualHandles)
+					{
 						this.Train.Handles.Reverser.Actual = (TrainManager.ReverserPosition)handles.Reverser;
-					} else {
+					}
+					else
+					{
 						this.Train.ApplyReverser(handles.Reverser, false);
 					}
-				} else {
-					if (virtualHandles) {
+				}
+				else
+				{
+					if (virtualHandles)
+					{
 						this.Train.Handles.Reverser.Actual = this.Train.Handles.Reverser.Driver;
 					}
 					this.PluginValid = false;
@@ -211,14 +233,21 @@ namespace OpenBve {
 				/*
 				 * Process the power.
 				 * */
-				if (handles.PowerNotch >= 0 & handles.PowerNotch <= this.Train.Handles.Power.MaximumNotch) {
-					if (virtualHandles) {
+				if (handles.PowerNotch >= 0 & handles.PowerNotch <= this.Train.Handles.Power.MaximumNotch)
+				{
+					if (virtualHandles)
+					{
 						this.Train.Handles.Power.Safety = handles.PowerNotch;
-					} else {
+					}
+					else
+					{
 						Train.ApplyNotch(handles.PowerNotch, false, 0, true, true);
 					}
-				} else {
-					if (virtualHandles) {
+				}
+				else
+				{
+					if (virtualHandles)
+					{
 						this.Train.Handles.Power.Safety = this.Train.Handles.Power.Driver;
 					}
 					this.PluginValid = false;
@@ -226,103 +255,165 @@ namespace OpenBve {
 				/*
 				 * Process the brakes.
 				 * */
-				if (virtualHandles) {
+				if (virtualHandles)
+				{
 					this.Train.Handles.EmergencyBrake.Safety = false;
 					this.Train.Handles.HoldBrake.Actual = false;
 				}
-				if (this.Train.Handles.Brake is TrainManager.AirBrakeHandle) {
-					if (handles.BrakeNotch == 0) {
-						if (virtualHandles) {
+				if (this.Train.Handles.Brake is TrainManager.AirBrakeHandle)
+				{
+					if (handles.BrakeNotch == 0)
+					{
+						if (virtualHandles)
+						{
 							this.Train.Handles.Brake.Safety = (int)TrainManager.AirBrakeHandleState.Release;
-						} else {
+						}
+						else
+						{
 							this.Train.UnapplyEmergencyBrake();
 							this.Train.ApplyAirBrakeHandle(TrainManager.AirBrakeHandleState.Release);
 						}
-					} else if (handles.BrakeNotch == 1) {
-						if (virtualHandles) {
+					}
+					else if (handles.BrakeNotch == 1)
+					{
+						if (virtualHandles)
+						{
 							this.Train.Handles.Brake.Safety = (int)TrainManager.AirBrakeHandleState.Lap;
-						} else {
+						}
+						else
+						{
 							this.Train.UnapplyEmergencyBrake();
 							this.Train.ApplyAirBrakeHandle(TrainManager.AirBrakeHandleState.Lap);
 						}
-					} else if (handles.BrakeNotch == 2) {
-						if (virtualHandles) {
+					}
+					else if (handles.BrakeNotch == 2)
+					{
+						if (virtualHandles)
+						{
 							this.Train.Handles.Brake.Safety = (int)TrainManager.AirBrakeHandleState.Service;
-						} else {
+						}
+						else
+						{
 							this.Train.UnapplyEmergencyBrake();
 							this.Train.ApplyAirBrakeHandle(TrainManager.AirBrakeHandleState.Release);
 						}
-					} else if (handles.BrakeNotch == 3) {
-						if (virtualHandles) {
+					}
+					else if (handles.BrakeNotch == 3)
+					{
+						if (virtualHandles)
+						{
 							this.Train.Handles.Brake.Safety = (int)TrainManager.AirBrakeHandleState.Service;
 							this.Train.Handles.EmergencyBrake.Safety = true;
-						} else {
+						}
+						else
+						{
 							this.Train.ApplyAirBrakeHandle(TrainManager.AirBrakeHandleState.Service);
 							this.Train.ApplyEmergencyBrake();
 						}
-					} else {
+					}
+					else
+					{
 						this.PluginValid = false;
 					}
-				} else {
-					if (this.Train.Handles.HasHoldBrake) {
-						if (handles.BrakeNotch == this.Train.Handles.Brake.MaximumNotch + 2) {
-							if (virtualHandles) {
+				}
+				else
+				{
+					if (this.Train.Handles.HasHoldBrake)
+					{
+						if (handles.BrakeNotch == this.Train.Handles.Brake.MaximumNotch + 2)
+						{
+							if (virtualHandles)
+							{
 								this.Train.Handles.EmergencyBrake.Safety = true;
 								this.Train.Handles.Brake.Safety = this.Train.Handles.Brake.MaximumNotch;
-							} else {
+							}
+							else
+							{
 								this.Train.ApplyHoldBrake(false);
 								Train.ApplyNotch(0, true, this.Train.Handles.Brake.MaximumNotch, false, true);
 								this.Train.ApplyEmergencyBrake();
 							}
-						} else if (handles.BrakeNotch >= 2 & handles.BrakeNotch <= this.Train.Handles.Brake.MaximumNotch + 1) {
-							if (virtualHandles) {
+						}
+						else if (handles.BrakeNotch >= 2 & handles.BrakeNotch <= this.Train.Handles.Brake.MaximumNotch + 1)
+						{
+							if (virtualHandles)
+							{
 								this.Train.Handles.Brake.Safety = handles.BrakeNotch - 1;
-							} else {
+							}
+							else
+							{
 								this.Train.UnapplyEmergencyBrake();
 								this.Train.ApplyHoldBrake(false);
 								Train.ApplyNotch(0, true, handles.BrakeNotch - 1, false, true);
 							}
-						} else if (handles.BrakeNotch == 1) {
-							if (virtualHandles) {
+						}
+						else if (handles.BrakeNotch == 1)
+						{
+							if (virtualHandles)
+							{
 								this.Train.Handles.Brake.Safety = 0;
 								this.Train.Handles.HoldBrake.Actual = true;
-							} else {
+							}
+							else
+							{
 								this.Train.UnapplyEmergencyBrake();
 								Train.ApplyNotch(0, true, 0, false, true);
 								this.Train.ApplyHoldBrake(true);
 							}
-						} else if (handles.BrakeNotch == 0) {
-							if (virtualHandles) {
+						}
+						else if (handles.BrakeNotch == 0)
+						{
+							if (virtualHandles)
+							{
 								this.Train.Handles.Brake.Safety = 0;
-							} else {
+							}
+							else
+							{
 								this.Train.UnapplyEmergencyBrake();
 								Train.ApplyNotch(0, true, 0, false, true);
 								this.Train.ApplyHoldBrake(false);
 							}
-						} else {
-							if (virtualHandles) {
+						}
+						else
+						{
+							if (virtualHandles)
+							{
 								this.Train.Handles.Brake.Safety = this.Train.Handles.Brake.Driver;
 							}
 							this.PluginValid = false;
 						}
-					} else {
-						if (handles.BrakeNotch == this.Train.Handles.Brake.MaximumNotch + 1) {
-							if (virtualHandles) {
+					}
+					else
+					{
+						if (handles.BrakeNotch == this.Train.Handles.Brake.MaximumNotch + 1)
+						{
+							if (virtualHandles)
+							{
 								this.Train.Handles.EmergencyBrake.Safety = true;
 								this.Train.Handles.Brake.Safety = this.Train.Handles.Brake.MaximumNotch;
-							} else {
+							}
+							else
+							{
 								this.Train.ApplyHoldBrake(false);
 								this.Train.ApplyEmergencyBrake();
 							}
-						} else if (handles.BrakeNotch >= 0 & handles.BrakeNotch <= this.Train.Handles.Brake.MaximumNotch | this.Train.Handles.Brake.DelayedChanges.Length == 0) {
-							if (virtualHandles) {
+						}
+						else if (handles.BrakeNotch >= 0 & handles.BrakeNotch <= this.Train.Handles.Brake.MaximumNotch | this.Train.Handles.Brake.DelayedChanges.Length == 0)
+						{
+							if (virtualHandles)
+							{
 								this.Train.Handles.Brake.Safety = handles.BrakeNotch;
-							} else {
+							}
+							else
+							{
 								this.Train.UnapplyEmergencyBrake();
 								Train.ApplyNotch(0, true, handles.BrakeNotch, false, true);
 							}
-						} else {
-							if (virtualHandles) {
+						}
+						else
+						{
+							if (virtualHandles)
+							{
 								this.Train.Handles.Brake.Safety = this.Train.Handles.Brake.Driver;
 							}
 							this.PluginValid = false;
@@ -339,9 +430,11 @@ namespace OpenBve {
 			/// <remarks>This function should not be called directly. Call UpdatePlugin instead.</remarks>
 			protected abstract void Elapse(ElapseData data);
 			/// <summary>Called to update the reverser. This invokes a call to SetReverser only if a change actually occured.</summary>
-			internal void UpdateReverser() {
+			internal void UpdateReverser()
+			{
 				int reverser = (int)this.Train.Handles.Reverser.Driver;
-				if (reverser != this.LastReverser) {
+				if (reverser != this.LastReverser)
+				{
 					this.LastReverser = reverser;
 					SetReverser(reverser);
 				}
@@ -351,9 +444,11 @@ namespace OpenBve {
 			/// <remarks>This function should not be called directly. Call UpdateReverser instead.</remarks>
 			protected abstract void SetReverser(int reverser);
 			/// <summary>Called to update the power notch. This invokes a call to SetPower only if a change actually occured.</summary>
-			internal void UpdatePower() {
+			internal void UpdatePower()
+			{
 				int powerNotch = this.Train.Handles.Power.Driver;
-				if (powerNotch != this.LastPowerNotch) {
+				if (powerNotch != this.LastPowerNotch)
+				{
 					this.LastPowerNotch = powerNotch;
 					SetPower(powerNotch);
 				}
@@ -363,22 +458,33 @@ namespace OpenBve {
 			/// <remarks>This function should not be called directly. Call UpdatePower instead.</remarks>
 			protected abstract void SetPower(int powerNotch);
 			/// <summary>Called to update the brake notch. This invokes a call to SetBrake only if a change actually occured.</summary>
-			internal void UpdateBrake() {
+			internal void UpdateBrake()
+			{
 				int brakeNotch;
-				if (this.Train.Handles.Brake is TrainManager.AirBrakeHandle) {
-					if (this.Train.Handles.HasHoldBrake) {
+				if (this.Train.Handles.Brake is TrainManager.AirBrakeHandle)
+				{
+					if (this.Train.Handles.HasHoldBrake)
+					{
 						brakeNotch = this.Train.Handles.EmergencyBrake.Driver ? 4 : this.Train.Handles.Brake.Driver == (int)TrainManager.AirBrakeHandleState.Service ? 3 : this.Train.Handles.Brake.Driver == (int)TrainManager.AirBrakeHandleState.Lap ? 2 : this.Train.Handles.HoldBrake.Driver ? 1 : 0;
-					} else {
+					}
+					else
+					{
 						brakeNotch = this.Train.Handles.EmergencyBrake.Driver ? 3 : this.Train.Handles.Brake.Driver == (int)TrainManager.AirBrakeHandleState.Service ? 2 : this.Train.Handles.Brake.Driver == (int)TrainManager.AirBrakeHandleState.Lap ? 1 : 0;
 					}
-				} else {
-					if (this.Train.Handles.HasHoldBrake) {
+				}
+				else
+				{
+					if (this.Train.Handles.HasHoldBrake)
+					{
 						brakeNotch = this.Train.Handles.EmergencyBrake.Driver ? this.Train.Handles.Brake.MaximumNotch + 2 : this.Train.Handles.Brake.Driver > 0 ? this.Train.Handles.Brake.Driver + 1 : this.Train.Handles.HoldBrake.Driver ? 1 : 0;
-					} else {
+					}
+					else
+					{
 						brakeNotch = this.Train.Handles.EmergencyBrake.Driver ? this.Train.Handles.Brake.MaximumNotch + 1 : this.Train.Handles.Brake.Driver;
 					}
 				}
-				if (brakeNotch != this.LastBrakeNotch) {
+				if (brakeNotch != this.LastBrakeNotch)
+				{
 					this.LastBrakeNotch = brakeNotch;
 					SetBrake(brakeNotch);
 				}
@@ -397,26 +503,37 @@ namespace OpenBve {
 			internal abstract void DoorChange(DoorStates oldState, DoorStates newState);
 			/// <summary>Called to update the aspects of the section. This invokes a call to SetSignal only if a change in aspect occured or when changing section boundaries.</summary>
 			/// <param name="data">The sections to submit to the plugin.</param>
-			internal void UpdateSignals(SignalData[] data) {
-				if (data.Length != 0) {
+			internal void UpdateSignals(SignalData[] data)
+			{
+				if (data.Length != 0)
+				{
 					bool update;
-					if (this.Train.CurrentSectionIndex != this.LastSection) {
+					if (this.Train.CurrentSectionIndex != this.LastSection)
+					{
 						update = true;
-					} else if (data.Length != this.LastAspects.Length) {
+					}
+					else if (data.Length != this.LastAspects.Length)
+					{
 						update = true;
-					} else {
+					}
+					else
+					{
 						update = false;
-						for (int i = 0; i < data.Length; i++) {
-							if (data[i].Aspect != this.LastAspects[i]) {
+						for (int i = 0; i < data.Length; i++)
+						{
+							if (data[i].Aspect != this.LastAspects[i])
+							{
 								update = true;
 								break;
 							}
 						}
 					}
-					if (update) {
+					if (update)
+					{
 						SetSignal(data);
 						this.LastAspects = new int[data.Length];
-						for (int i = 0; i < data.Length; i++) {
+						for (int i = 0; i < data.Length; i++)
+						{
 							this.LastAspects[i] = data[i].Aspect;
 						}
 					}
@@ -430,30 +547,46 @@ namespace OpenBve {
 			/// <param name="type">The beacon type.</param>
 			/// <param name="sectionIndex">The section the beacon is attached to, or -1 for the next red signal.</param>
 			/// <param name="optional">Optional data attached to the beacon.</param>
-			internal void UpdateBeacon(int type, int sectionIndex, int optional) {
-				if (sectionIndex == -1) {
+			internal void UpdateBeacon(int type, int sectionIndex, int optional)
+			{
+				if (sectionIndex == -1)
+				{
 					sectionIndex = this.Train.CurrentSectionIndex + 1;
 					SignalData signal = null;
-					while (sectionIndex < Game.Sections.Length) {
+					while (sectionIndex < Game.Sections.Length)
+					{
 						signal = Game.GetPluginSignal(this.Train, sectionIndex);
-						if (signal.Aspect == 0) break;
+						if (signal.Aspect == 0)
+						{
+							break;
+						}
+
 						sectionIndex++;
 					}
-					if (sectionIndex < Game.Sections.Length) {
+					if (sectionIndex < Game.Sections.Length)
+					{
 						SetBeacon(new BeaconData(type, optional, signal));
-					} else {
+					}
+					else
+					{
 						SetBeacon(new BeaconData(type, optional, new SignalData(-1, double.MaxValue)));
 					}
 				}
-				if (sectionIndex >= 0) {
+				if (sectionIndex >= 0)
+				{
 					SignalData signal;
-					if (sectionIndex < Game.Sections.Length) {
+					if (sectionIndex < Game.Sections.Length)
+					{
 						signal = Game.GetPluginSignal(this.Train, sectionIndex);
-					} else {
+					}
+					else
+					{
 						signal = new SignalData(0, double.MaxValue);
 					}
 					SetBeacon(new BeaconData(type, optional, signal));
-				} else {
+				}
+				else
+				{
 					SetBeacon(new BeaconData(type, optional, new SignalData(-1, double.MaxValue)));
 				}
 			}
@@ -463,15 +596,20 @@ namespace OpenBve {
 			protected abstract void SetBeacon(BeaconData beacon);
 			/// <summary>Updates the AI.</summary>
 			/// <returns>The AI response.</returns>
-			internal AIResponse UpdateAI() {
-				if (this.SupportsAI) {
+			internal AIResponse UpdateAI()
+			{
+				if (this.SupportsAI)
+				{
 					AIData data = new AIData(GetHandles());
 					this.PerformAI(data);
-					if (data.Response != AIResponse.None) {
+					if (data.Response != AIResponse.None)
+					{
 						SetHandles(data.Handles, false);
 					}
 					return data.Response;
-				} else {
+				}
+				else
+				{
 					return AIResponse.None;
 				}
 			}
@@ -479,21 +617,23 @@ namespace OpenBve {
 			/// <param name="data">The AI data.</param>
 			/// <remarks>This function should not be called directly. Call UpdateAI instead.</remarks>
 			protected abstract void PerformAI(AIData data);
-			
+
 		}
-		
+
 		/// <summary>Loads a custom plugin for the specified train.</summary>
 		/// <param name="train">The train to attach the plugin to.</param>
 		/// <param name="trainFolder">The absolute path to the train folder.</param>
 		/// <param name="encoding">The encoding to be used.</param>
 		/// <returns>Whether the plugin was loaded successfully.</returns>
-		internal static bool LoadCustomPlugin(TrainManager.Train train, string trainFolder, System.Text.Encoding encoding) {
+		internal static bool LoadCustomPlugin(TrainManager.Train train, string trainFolder, System.Text.Encoding encoding)
+		{
 			string config = OpenBveApi.Path.CombineFile(trainFolder, "ats.cfg");
-			if (!System.IO.File.Exists(config)) {
+			if (!System.IO.File.Exists(config))
+			{
 				return false;
 			}
 			string Text = System.IO.File.ReadAllText(config, encoding);
-			Text = Text.Replace( "\r", "").Replace( "\n", "" );
+			Text = Text.Replace("\r", "").Replace("\n", "");
 			string file;
 			try
 			{
@@ -507,7 +647,7 @@ namespace OpenBve {
 			string title = System.IO.Path.GetFileName(file);
 			if (!System.IO.File.Exists(file))
 			{
-				if(Text.EndsWith(".dll") && encoding.Equals(System.Text.Encoding.Unicode))
+				if (Text.EndsWith(".dll") && encoding.Equals(System.Text.Encoding.Unicode))
 				{
 					// Our filename ends with .dll so probably is not mangled Unicode
 					Interface.AddMessage(MessageType.Error, true, "The train plugin " + title + " could not be found in " + config);
@@ -515,7 +655,7 @@ namespace OpenBve {
 				}
 				// Try again with ASCII encoding
 				Text = System.IO.File.ReadAllText(config, System.Text.Encoding.GetEncoding(1252));
-				Text = Text.Replace( "\r", "").Replace( "\n", "" );
+				Text = Text.Replace("\r", "").Replace("\n", "");
 				try
 				{
 					file = OpenBveApi.Path.CombineFile(trainFolder, Text);
@@ -546,34 +686,39 @@ namespace OpenBve {
 			}
 			return success;
 		}
-		
+
 		/// <summary>Loads the default plugin for the specified train.</summary>
 		/// <param name="train">The train to attach the plugin to.</param>
 		/// <param name="trainFolder">The train folder.</param>
 		/// <returns>Whether the plugin was loaded successfully.</returns>
-		internal static void LoadDefaultPlugin(TrainManager.Train train, string trainFolder) {
+		internal static void LoadDefaultPlugin(TrainManager.Train train, string trainFolder)
+		{
 			string file = OpenBveApi.Path.CombineFile(Program.FileSystem.GetDataFolder("Plugins"), "OpenBveAts.dll");
 			bool success = LoadPlugin(train, file, trainFolder);
-			if (success) {
+			if (success)
+			{
 				train.Plugin.IsDefault = true;
 			}
 		}
-		
+
 		/// <summary>Loads the specified plugin for the specified train.</summary>
 		/// <param name="train">The train to attach the plugin to.</param>
 		/// <param name="pluginFile">The file to the plugin.</param>
 		/// <param name="trainFolder">The train folder.</param>
 		/// <returns>Whether the plugin was loaded successfully.</returns>
-		private static bool LoadPlugin(TrainManager.Train train, string pluginFile, string trainFolder) {
+		private static bool LoadPlugin(TrainManager.Train train, string pluginFile, string trainFolder)
+		{
 			string pluginTitle = System.IO.Path.GetFileName(pluginFile);
-			if (!System.IO.File.Exists(pluginFile)) {
+			if (!System.IO.File.Exists(pluginFile))
+			{
 				Interface.AddMessage(MessageType.Error, true, "The train plugin " + pluginTitle + " could not be found.");
 				return false;
 			}
 			/*
 			 * Unload plugin if already loaded.
 			 * */
-			if (train.Plugin != null) {
+			if (train.Plugin != null)
+			{
 				UnloadPlugin(train);
 			}
 			/*
@@ -583,11 +728,14 @@ namespace OpenBve {
 			int brakeNotches;
 			int powerNotches;
 			bool hasHoldBrake;
-			if (brakeType == BrakeTypes.AutomaticAirBrake) {
+			if (brakeType == BrakeTypes.AutomaticAirBrake)
+			{
 				brakeNotches = 2;
 				powerNotches = train.Handles.Power.MaximumNotch;
 				hasHoldBrake = false;
-			} else {
+			}
+			else
+			{
 				brakeNotches = train.Handles.Brake.MaximumNotch + (train.Handles.HasHoldBrake ? 1 : 0);
 				powerNotches = train.Handles.Power.MaximumNotch;
 				hasHoldBrake = train.Handles.HasHoldBrake;
@@ -601,26 +749,38 @@ namespace OpenBve {
 			 * Check if the plugin is a .NET plugin.
 			 * */
 			Assembly assembly;
-			try {
+			try
+			{
 				assembly = Assembly.LoadFile(pluginFile);
-			} catch (BadImageFormatException) {
+			}
+			catch (BadImageFormatException)
+			{
 				assembly = null;
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				Interface.AddMessage(MessageType.Error, false, "The train plugin " + pluginTitle + " could not be loaded due to the following exception: " + ex.Message);
 				return false;
 			}
-			if (assembly != null) {
+			if (assembly != null)
+			{
 				Type[] types;
-				try {
+				try
+				{
 					types = assembly.GetTypes();
-				} catch (ReflectionTypeLoadException ex) {
-					foreach (Exception e in ex.LoaderExceptions) {
+				}
+				catch (ReflectionTypeLoadException ex)
+				{
+					foreach (Exception e in ex.LoaderExceptions)
+					{
 						Interface.AddMessage(MessageType.Error, false, "The train plugin " + pluginTitle + " raised an exception on loading: " + e.Message);
 					}
 					return false;
 				}
-				foreach (Type type in types) {
-					if (typeof(IRuntime).IsAssignableFrom(type)) {
+				foreach (Type type in types)
+				{
+					if (typeof(IRuntime).IsAssignableFrom(type))
+					{
 						if (type.FullName == null)
 						{
 							//Should never happen, but static code inspection suggests that it's possible....
@@ -628,9 +788,12 @@ namespace OpenBve {
 						}
 						IRuntime api = assembly.CreateInstance(type.FullName) as IRuntime;
 						train.Plugin = new NetPlugin(pluginFile, trainFolder, api, train);
-						if (train.Plugin.Load(specs, mode)) {
+						if (train.Plugin.Load(specs, mode))
+						{
 							return true;
-						} else {
+						}
+						else
+						{
 							train.Plugin = null;
 							return false;
 						}
@@ -643,16 +806,21 @@ namespace OpenBve {
 			 * Check if the plugin is a Win32 plugin.
 			 * 
 			 */
-			try {
-				if (!CheckWin32Header(pluginFile)) {
+			try
+			{
+				if (!CheckWin32Header(pluginFile))
+				{
 					Interface.AddMessage(MessageType.Error, false, "The train plugin " + pluginTitle + " is of an unsupported binary format and therefore cannot be used with openBVE.");
 					return false;
 				}
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				Interface.AddMessage(MessageType.Error, false, "The train plugin " + pluginTitle + " could not be read due to the following reason: " + ex.Message);
 				return false;
 			}
-			if (!Program.CurrentlyRunningOnWindows | IntPtr.Size != 4) {
+			if (!Program.CurrentlyRunningOnWindows | IntPtr.Size != 4)
+			{
 				Interface.AddMessage(MessageType.Warning, false, "The train plugin " + pluginTitle + " can only be used on 32-bit Microsoft Windows or compatible.");
 				return false;
 			}
@@ -662,32 +830,41 @@ namespace OpenBve {
 				return false;
 			}
 			train.Plugin = new Win32Plugin(pluginFile, train);
-			if (train.Plugin.Load(specs, mode)) {
+			if (train.Plugin.Load(specs, mode))
+			{
 				return true;
-			} else {
+			}
+			else
+			{
 				train.Plugin = null;
 				Interface.AddMessage(MessageType.Error, false, "The train plugin " + pluginTitle + " does not export a train interface and therefore cannot be used with openBVE.");
 				return false;
 			}
 		}
-		
+
 		/// <summary>Checks whether a specified file is a valid Win32 plugin.</summary>
 		/// <param name="file">The file to check.</param>
 		/// <returns>Whether the file is a valid Win32 plugin.</returns>
-		private static bool CheckWin32Header(string file) {
-			using (System.IO.FileStream stream = new System.IO.FileStream(file, System.IO.FileMode.Open, System.IO.FileAccess.Read)) {
-				using (System.IO.BinaryReader reader = new System.IO.BinaryReader(stream)) {
-					if (reader.ReadUInt16() != 0x5A4D) {
+		private static bool CheckWin32Header(string file)
+		{
+			using (System.IO.FileStream stream = new System.IO.FileStream(file, System.IO.FileMode.Open, System.IO.FileAccess.Read))
+			{
+				using (System.IO.BinaryReader reader = new System.IO.BinaryReader(stream))
+				{
+					if (reader.ReadUInt16() != 0x5A4D)
+					{
 						/* Not MZ signature */
 						return false;
 					}
 					stream.Position = 0x3C;
 					stream.Position = reader.ReadInt32();
-					if (reader.ReadUInt32() != 0x00004550) {
+					if (reader.ReadUInt32() != 0x00004550)
+					{
 						/* Not PE signature */
 						return false;
 					}
-					if (reader.ReadUInt16() != 0x014C) {
+					if (reader.ReadUInt16() != 0x014C)
+					{
 						/* Not IMAGE_FILE_MACHINE_I386 */
 						return false;
 					}
@@ -695,15 +872,17 @@ namespace OpenBve {
 			}
 			return true;
 		}
-		
+
 		/// <summary>Unloads the currently loaded plugin, if any.</summary>
 		/// <param name="train">Unloads the plugin for the specified train.</param>
-		internal static void UnloadPlugin(TrainManager.Train train) {
-			if (train.Plugin != null) {
+		internal static void UnloadPlugin(TrainManager.Train train)
+		{
+			if (train.Plugin != null)
+			{
 				train.Plugin.Unload();
 				train.Plugin = null;
 			}
 		}
-		
+
 	}
 }

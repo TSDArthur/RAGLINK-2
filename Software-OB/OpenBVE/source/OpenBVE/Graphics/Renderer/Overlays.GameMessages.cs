@@ -1,8 +1,8 @@
-using System;
 using OpenBveApi.Colors;
 using OpenBveApi.Graphics;
 using OpenBveApi.Textures;
 using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace OpenBve
 {
@@ -26,7 +26,10 @@ namespace OpenBve
 				//Run through the list of current messages
 				double a = MessageManager.TextualMessages[j].Width - j * (double)Element.Value1;
 				//If our width is wider than the old, use this as the NEW viewing plane width
-				if (a > totalwidth) totalwidth = a;
+				if (a > totalwidth)
+				{
+					totalwidth = a;
+				}
 			}
 			//Calculate the X-width of the viewing plane
 			Game.MessagesRendererSize.X += 16.0 * TimeElapsed * ((double)totalwidth - Game.MessagesRendererSize.X);
@@ -120,12 +123,19 @@ namespace OpenBve
 					if (Game.SecondsSinceMidnight >= mm.Timeout)
 					{
 						mm.RendererAlpha -= TimeElapsed;
-						if (mm.RendererAlpha < 0.0) mm.RendererAlpha = 0.0;
+						if (mm.RendererAlpha < 0.0)
+						{
+							mm.RendererAlpha = 0.0;
+						}
 					}
 					else
 					{
 						mm.RendererAlpha += TimeElapsed;
-						if (mm.RendererAlpha > 1.0) mm.RendererAlpha = 1.0;
+						if (mm.RendererAlpha > 1.0)
+						{
+							mm.RendererAlpha = 1.0;
+						}
+
 						preserve = true;
 					}
 				}
@@ -136,7 +146,11 @@ namespace OpenBve
 						mm.RendererAlpha = 0.0;
 					}
 				}
-				if (preserve) m++;
+				if (preserve)
+				{
+					m++;
+				}
+
 				double px = mm.RendererPosition.X + (double)j * (double)Element.Value1;
 				double py = mm.RendererPosition.Y;
 				float alpha = (float)(mm.RendererAlpha * mm.RendererAlpha);

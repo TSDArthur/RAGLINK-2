@@ -1,14 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Text;
-using OpenBve.Formats.DirectX;
+﻿using OpenBve.Formats.DirectX;
 using OpenBveApi.Colors;
 using OpenBveApi.Interface;
 using OpenBveApi.Math;
 using OpenBveApi.Objects;
+using System;
+using System.IO;
+using System.Linq;
+using System.Text;
 
-namespace OpenBve 
+namespace OpenBve
 {
 	class NewXParser
 	{
@@ -56,11 +56,19 @@ namespace OpenBve
 				string[] Lines = File.ReadAllLines(FileName, Encoding);
 				// strip away comments
 				bool Quote = false;
-				for (int i = 0; i < Lines.Length; i++) {
-					for (int j = 0; j < Lines[i].Length; j++) {
-						if (Lines[i][j] == '"') Quote = !Quote;
-						if (!Quote) {
-							if (Lines[i][j] == '#' || j < Lines[i].Length - 1 && Lines[i].Substring(j, 2) == "//") {
+				for (int i = 0; i < Lines.Length; i++)
+				{
+					for (int j = 0; j < Lines[i].Length; j++)
+					{
+						if (Lines[i][j] == '"')
+						{
+							Quote = !Quote;
+						}
+
+						if (!Quote)
+						{
+							if (Lines[i][j] == '#' || j < Lines[i].Length - 1 && Lines[i].Substring(j, 2) == "//")
+							{
 								Lines[i] = Lines[i].Substring(0, j);
 								break;
 							}
@@ -71,7 +79,8 @@ namespace OpenBve
 					Lines[i] = string.Join(" ", list);
 				}
 				StringBuilder Builder = new StringBuilder();
-				for (int i = 0; i < Lines.Length; i++) {
+				for (int i = 0; i < Lines.Length; i++)
+				{
 					Builder.Append(Lines[i]);
 					Builder.Append(" ");
 				}
@@ -109,7 +118,7 @@ namespace OpenBve
 			Interface.AddMessage(MessageType.Error, false, "Unsupported X object file encountered in " + FileName);
 			return null;
 		}
-		
+
 		private static ObjectManager.StaticObject LoadTextualX(string Text)
 		{
 			Text = Text.Replace("\r\n", " ").Replace("\n", " ").Replace("\r", " ").Replace("\t", " ").Trim();
@@ -273,7 +282,7 @@ namespace OpenBve
 						{
 							throw new Exception("nFaces was declared as zero, but unrecognised data remains in the block");
 						}
-						
+
 					}
 					int f = builder.Faces.Length;
 					Array.Resize(ref builder.Faces, f + nFaces);
@@ -291,7 +300,7 @@ namespace OpenBve
 							builder.Faces[f + i].Vertices[j].Index = block.ReadUInt16();
 						}
 					}
-					NoFaces:
+				NoFaces:
 					while (block.Position() < block.Length() - 5)
 					{
 						subBlock = block.ReadSubBlock();
@@ -310,12 +319,12 @@ namespace OpenBve
 							builder.Faces[i].Material = (ushort)(globalMaterial + 1);
 						}
 					}
-					else if(nFaceIndices == builder.Faces.Length)
+					else if (nFaceIndices == builder.Faces.Length)
 					{
 						for (int i = 0; i < nFaceIndices; i++)
 						{
 							int fMaterial = block.ReadUInt16();
-							builder.Faces[i].Material = (ushort) (fMaterial + 1);
+							builder.Faces[i].Material = (ushort)(fMaterial + 1);
 						}
 					}
 					else
@@ -332,10 +341,10 @@ namespace OpenBve
 					int m = builder.Materials.Length;
 					Array.Resize(ref builder.Materials, m + 1);
 					builder.Materials[m] = new Material();
-					builder.Materials[m].Color = new Color32((byte)(255 * block.ReadSingle()), (byte)(255 * block.ReadSingle()), (byte)(255 * block.ReadSingle()),(byte)(255 * block.ReadSingle()));
+					builder.Materials[m].Color = new Color32((byte)(255 * block.ReadSingle()), (byte)(255 * block.ReadSingle()), (byte)(255 * block.ReadSingle()), (byte)(255 * block.ReadSingle()));
 					double mPower = block.ReadSingle(); //TODO: Unsure what this does...
 					Color24 mSpecular = new Color24((byte)block.ReadSingle(), (byte)block.ReadSingle(), (byte)block.ReadSingle());
-					builder.Materials[m].EmissiveColor = new Color24((byte)(255 *block.ReadSingle()), (byte)(255 * block.ReadSingle()), (byte)(255 * block.ReadSingle()));
+					builder.Materials[m].EmissiveColor = new Color24((byte)(255 * block.ReadSingle()), (byte)(255 * block.ReadSingle()), (byte)(255 * block.ReadSingle()));
 					builder.Materials[m].EmissiveColorUsed = true; //TODO: Check exact behaviour
 					builder.Materials[m].TransparentColor = Color24.Black; //TODO: Check, also can we optimise which faces have the transparent color set?
 					builder.Materials[m].TransparentColorUsed = true;

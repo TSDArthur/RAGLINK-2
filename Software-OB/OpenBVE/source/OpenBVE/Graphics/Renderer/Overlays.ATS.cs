@@ -1,8 +1,8 @@
-﻿using System;
-using OpenBveApi.Colors;
+﻿using OpenBveApi.Colors;
 using OpenBveApi.Graphics;
 using OpenBveApi.Textures;
 using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace OpenBve
 {
@@ -67,72 +67,86 @@ namespace OpenBve
 								if (TrainManager.PlayerTrain.Plugin.Panel[256] != 0)
 								{
 									sc = MessageColor.Orange;
-								} break;
+								}
+								break;
 							case LampType.AtsOperation:
 								if (TrainManager.PlayerTrain.Plugin.Panel[258] != 0)
 								{
 									sc = MessageColor.Red;
-								} break;
+								}
+								break;
 							case LampType.AtsPPower:
 								if (TrainManager.PlayerTrain.Plugin.Panel[259] != 0)
 								{
 									sc = MessageColor.Green;
-								} break;
+								}
+								break;
 							case LampType.AtsPPattern:
 								if (TrainManager.PlayerTrain.Plugin.Panel[260] != 0)
 								{
 									sc = MessageColor.Orange;
-								} break;
+								}
+								break;
 							case LampType.AtsPBrakeOverride:
 								if (TrainManager.PlayerTrain.Plugin.Panel[261] != 0)
 								{
 									sc = MessageColor.Orange;
-								} break;
+								}
+								break;
 							case LampType.AtsPBrakeOperation:
 								if (TrainManager.PlayerTrain.Plugin.Panel[262] != 0)
 								{
 									sc = MessageColor.Orange;
-								} break;
+								}
+								break;
 							case LampType.AtsP:
 								if (TrainManager.PlayerTrain.Plugin.Panel[263] != 0)
 								{
 									sc = MessageColor.Green;
-								} break;
+								}
+								break;
 							case LampType.AtsPFailure:
 								if (TrainManager.PlayerTrain.Plugin.Panel[264] != 0)
 								{
 									sc = MessageColor.Red;
-								} break;
+								}
+								break;
 							case LampType.Atc:
 								if (TrainManager.PlayerTrain.Plugin.Panel[265] != 0)
 								{
 									sc = MessageColor.Orange;
-								} break;
+								}
+								break;
 							case LampType.AtcPower:
 								if (TrainManager.PlayerTrain.Plugin.Panel[266] != 0)
 								{
 									sc = MessageColor.Orange;
-								} break;
+								}
+								break;
 							case LampType.AtcUse:
 								if (TrainManager.PlayerTrain.Plugin.Panel[267] != 0)
 								{
 									sc = MessageColor.Orange;
-								} break;
+								}
+								break;
 							case LampType.AtcEmergency:
 								if (TrainManager.PlayerTrain.Plugin.Panel[268] != 0)
 								{
 									sc = MessageColor.Red;
-								} break;
+								}
+								break;
 							case LampType.Eb:
 								if (TrainManager.PlayerTrain.Plugin.Panel[270] != 0)
 								{
 									sc = MessageColor.Green;
-								} break;
+								}
+								break;
 							case LampType.ConstSpeed:
 								if (TrainManager.PlayerTrain.Plugin.Panel[269] != 0)
 								{
 									sc = MessageColor.Orange;
-								} break;
+								}
+								break;
 						}
 					}
 					// colors

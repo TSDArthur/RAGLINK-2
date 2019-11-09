@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml;
-using OpenBveApi.Interface;
+﻿using OpenBveApi.Interface;
 using OpenBveApi.Math;
 using OpenBveApi.Objects;
 using OpenBveApi.Textures;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Xml;
 
 namespace OpenBve
 {
@@ -45,7 +45,7 @@ namespace OpenBve
 							double repetitions = 6;
 							foreach (XmlNode c in n.ChildNodes)
 							{
-								
+
 								string[] Arguments = c.InnerText.Split(',');
 								switch (c.Name.ToLowerInvariant())
 								{
@@ -62,7 +62,7 @@ namespace OpenBve
 												mode = BackgroundManager.BackgroundTransitionMode.None;
 												break;
 											default:
-												Interface.AddMessage(MessageType.Error, true, c.InnerText +  "is not a valid background fade mode in file " + fileName);
+												Interface.AddMessage(MessageType.Error, true, c.InnerText + "is not a valid background fade mode in file " + fileName);
 												break;
 										}
 										break;
@@ -84,7 +84,7 @@ namespace OpenBve
 										else
 										{
 											UnifiedObject b = ObjectManager.LoadObject(f, System.Text.Encoding.Default, false, false, false);
-											o = (ObjectManager.StaticObject) b;
+											o = (ObjectManager.StaticObject)b;
 										}
 										break;
 									case "repetitions":
@@ -103,7 +103,7 @@ namespace OpenBve
 										{
 											Interface.AddMessage(MessageType.Error, true, "BackgroundTexture FileName is malformed in file " + fileName);
 											break;
-										}									
+										}
 										if (!System.IO.File.Exists(file))
 										{
 											Interface.AddMessage(MessageType.Error, false, "The background texture file " + c.InnerText + " does not exist in " + fileName);
@@ -138,7 +138,7 @@ namespace OpenBve
 								//TODO: Error message stating they have been ignored
 								return new BackgroundManager.BackgroundObject(o);
 							}
-							
+
 						}
 					}
 					if (Backgrounds.Count == 1)

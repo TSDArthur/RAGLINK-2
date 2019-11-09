@@ -34,7 +34,7 @@
 			internal CarSound[] Flange;
 			internal double[] FlangeVolume;
 			internal CarSound Halt;
-			
+
 			internal CarSound Loop;
 			internal CarSound MasterControllerUp;
 			internal CarSound MasterControllerUpFast;

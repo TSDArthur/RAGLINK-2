@@ -1,8 +1,8 @@
-﻿using System;
-using OpenBveApi.Math;
+﻿using OpenBveApi.Math;
 using OpenBveApi.Objects;
 using OpenBveApi.Textures;
 using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace OpenBve
 {
@@ -87,7 +87,7 @@ namespace OpenBve
 				BackgroundManager.CurrentBackground = BackgroundManager.TargetBackground;
 				BackgroundManager.TargetBackground = null;
 			}
-			
+
 		}
 
 		/// <summary>Renders a static frustrum based background</summary>
@@ -276,7 +276,7 @@ namespace OpenBve
 					if (Object.ObjectBackground.Mesh.Materials[m].DaytimeTexture != null)
 					{
 						Textures.LoadTexture(Object.ObjectBackground.Mesh.Materials[m].DaytimeTexture, wrap);
-						GL.BindTexture(TextureTarget.Texture2D, Object.ObjectBackground.Mesh.Materials[m].DaytimeTexture.OpenGlTextures[(int) wrap].Name);
+						GL.BindTexture(TextureTarget.Texture2D, Object.ObjectBackground.Mesh.Materials[m].DaytimeTexture.OpenGlTextures[(int)wrap].Name);
 					}
 				}
 				int FaceType = Object.ObjectBackground.Mesh.Faces[i].Flags & MeshFace.FaceTypeMask;
@@ -298,7 +298,7 @@ namespace OpenBve
 						GL.Begin(PrimitiveType.Polygon);
 						break;
 				}
-				
+
 				for (int j = 0; j < Object.ObjectBackground.Mesh.Faces[i].Vertices.Length; j++)
 				{
 					GL.Color4(inv255 * (float)Object.ObjectBackground.Mesh.Materials[m].Color.R * 1.0f, inv255 * Object.ObjectBackground.Mesh.Materials[m].Color.G * 1.0f, inv255 * (float)Object.ObjectBackground.Mesh.Materials[m].Color.B * 1.0f, inv255 * (float)Object.ObjectBackground.Mesh.Materials[m].Color.A);
@@ -307,15 +307,15 @@ namespace OpenBve
 					{
 						ColoredVertex vv = v as ColoredVertex;
 						GL.Color3(vv.Color.R, vv.Color.G, vv.Color.B);
-						
+
 					}
 					GL.TexCoord2(v.TextureCoordinates.X, v.TextureCoordinates.Y);
 					GL.Vertex3(v.Coordinates.X, v.Coordinates.Y, v.Coordinates.Z);
-					
+
 				}
 				GL.End();
 			}
 		}
-		
+
 	}
 }

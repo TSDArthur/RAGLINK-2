@@ -1,10 +1,10 @@
-﻿using System;
-using CSScriptLibrary;
+﻿using CSScriptLibrary;
 using OpenBveApi.FunctionScripting;
 using OpenBveApi.Interface;
 using OpenBveApi.Math;
 using OpenBveApi.Objects;
 using OpenBveApi.World;
+using System;
 
 namespace OpenBve
 {
@@ -77,13 +77,41 @@ namespace OpenBve
 			/// <summary>Checks whether this object contains any functions</summary>
 			internal bool IsFreeOfFunctions()
 			{
-				if (this.StateFunction != null) return false;
-				if (this.TrackFollowerFunction != null) return false;
-				if (this.TranslateXFunction != null | this.TranslateYFunction != null | this.TranslateZFunction != null) return false;
-				if (this.RotateXFunction != null | this.RotateYFunction != null | this.RotateZFunction != null) return false;
-				if (this.TextureShiftXFunction != null | this.TextureShiftYFunction != null) return false;
-				if (this.LEDFunction != null) return false;
-				if (this.TranslateXScriptFile != null | this.TranslateYScriptFile != null | this.TranslateZScriptFile != null) return false;
+				if (this.StateFunction != null)
+				{
+					return false;
+				}
+
+				if (this.TrackFollowerFunction != null)
+				{
+					return false;
+				}
+
+				if (this.TranslateXFunction != null | this.TranslateYFunction != null | this.TranslateZFunction != null)
+				{
+					return false;
+				}
+
+				if (this.RotateXFunction != null | this.RotateYFunction != null | this.RotateZFunction != null)
+				{
+					return false;
+				}
+
+				if (this.TextureShiftXFunction != null | this.TextureShiftYFunction != null)
+				{
+					return false;
+				}
+
+				if (this.LEDFunction != null)
+				{
+					return false;
+				}
+
+				if (this.TranslateXScriptFile != null | this.TranslateYScriptFile != null | this.TranslateZScriptFile != null)
+				{
+					return false;
+				}
+
 				return true;
 			}
 			/// <summary>Clones this object</summary>
@@ -165,7 +193,7 @@ namespace OpenBve
 						{
 							ObjectManager.Objects[i].Mesh.Vertices[k] = new Vertex((Vertex)States[t].Object.Mesh.Vertices[k]);
 						}
-						
+
 					}
 					m = States[t].Object.Mesh.Faces.Length;
 					ObjectManager.Objects[i].Mesh.Faces = new MeshFace[m];
@@ -215,7 +243,7 @@ namespace OpenBve
 			/// <param name="Show"></param>
 			/// <param name="TimeElapsed">The time elapsed since this object was last updated</param>
 			/// <param name="EnableDamping">Whether damping is to be applied for this call</param>
-            /// <param name="IsTouch">Whether Animated Object belonging to TouchElement class.</param>
+			/// <param name="IsTouch">Whether Animated Object belonging to TouchElement class.</param>
 			internal void Update(bool IsPartOfTrain, TrainManager.Train Train, int CarIndex, int SectionIndex, double TrackPosition, Vector3 Position, Vector3 Direction, Vector3 Up, Vector3 Side, bool Overlay, bool UpdateFunctions, bool Show, double TimeElapsed, bool EnableDamping, bool IsTouch = false)
 			{
 				int s = CurrentState;
@@ -226,14 +254,21 @@ namespace OpenBve
 					double sd = StateFunction.Perform(Train, CarIndex, Position, TrackPosition, SectionIndex, IsPartOfTrain, TimeElapsed, CurrentState);
 					int si = (int)Math.Round(sd);
 					int sn = States.Length;
-					if (si < 0 | si >= sn) si = -1;
+					if (si < 0 | si >= sn)
+					{
+						si = -1;
+					}
+
 					if (s != si)
 					{
 						Initialize(si, Overlay, Show);
 						s = si;
 					}
 				}
-				if (s == -1) return;
+				if (s == -1)
+				{
+					return;
+				}
 				// translation
 				if (TranslateXFunction != null)
 				{
@@ -788,7 +823,7 @@ namespace OpenBve
 						}
 					}
 					// visibility changed
-                    // TouchElement is handled by another function.
+					// TouchElement is handled by another function.
 					if (!IsTouch)
 					{
 						if (Show)
@@ -818,7 +853,7 @@ namespace OpenBve
 					Array.Resize<WorldObject>(ref AnimatedWorldObjects, AnimatedWorldObjects.Length << 1);
 				}
 				Transformation FinalTransformation = new Transformation(AuxTransformation, BaseTransformation);
-				
+
 				//Place track followers if required
 				if (TrackFollowerFunction != null)
 				{
@@ -834,7 +869,7 @@ namespace OpenBve
 						SectionIndex = SectionIndex,
 						TrackPosition = TrackPosition,
 					};
-					
+
 					currentObject.FrontAxleFollower.TrackPosition = TrackPosition + FrontAxlePosition;
 					currentObject.RearAxleFollower.TrackPosition = TrackPosition + RearAxlePosition;
 					currentObject.FrontAxlePosition = FrontAxlePosition;
@@ -845,7 +880,7 @@ namespace OpenBve
 					{
 						if (currentObject.Object.States[i].Object == null)
 						{
-							currentObject.Object.States[i].Object = new StaticObject { RendererIndex =  -1 };
+							currentObject.Object.States[i].Object = new StaticObject { RendererIndex = -1 };
 						}
 					}
 					double r = 0.0;
@@ -863,7 +898,10 @@ namespace OpenBve
 							double y = States[i].Object.Mesh.Vertices[j].Coordinates.Y;
 							double z = States[i].Object.Mesh.Vertices[j].Coordinates.Z;
 							double t = x * x + y * y + z * z;
-							if (t > r) r = t;
+							if (t > r)
+							{
+								r = t;
+							}
 						}
 					}
 					currentObject.Radius = Math.Sqrt(r);
@@ -889,7 +927,7 @@ namespace OpenBve
 					{
 						if (currentObject.Object.States[i].Object == null)
 						{
-							currentObject.Object.States[i].Object = new StaticObject { RendererIndex =  -1 };
+							currentObject.Object.States[i].Object = new StaticObject { RendererIndex = -1 };
 						}
 					}
 					double r = 0.0;
@@ -907,7 +945,10 @@ namespace OpenBve
 							double y = States[i].Object.Mesh.Vertices[j].Coordinates.Y;
 							double z = States[i].Object.Mesh.Vertices[j].Coordinates.Z;
 							double t = x * x + y * y + z * z;
-							if (t > r) r = t;
+							if (t > r)
+							{
+								r = t;
+							}
 						}
 					}
 					currentObject.Radius = Math.Sqrt(r);
@@ -919,6 +960,6 @@ namespace OpenBve
 			}
 		}
 
-		
+
 	}
 }

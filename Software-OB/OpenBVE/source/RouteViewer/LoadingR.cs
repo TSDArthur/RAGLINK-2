@@ -5,16 +5,17 @@
 // ║ The file from the openBVE main program cannot be used here. ║
 // ╚═════════════════════════════════════════════════════════════╝
 
-using System;
-using System.Threading;
-using System.Text;
-using System.Windows.Forms;
-using OpenBveApi.Interface;
 using OpenBveApi.Math;
 using OpenBveApi.Runtime;
+using System;
+using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 
-namespace OpenBve {
-	internal static class Loading {
+namespace OpenBve
+{
+	internal static class Loading
+	{
 
 		// members
 		internal static double RouteProgress;
@@ -30,7 +31,8 @@ namespace OpenBve {
 		internal static bool JobAvailable;
 
 		// load
-		internal static void Load(string RouteFile, Encoding RouteEncoding) {
+		internal static void Load(string RouteFile, Encoding RouteEncoding)
+		{
 			// members
 			Renderer.InitLoading();
 			RouteProgress = 0.0;
@@ -47,19 +49,28 @@ namespace OpenBve {
 		}
 
 		// get railway folder
-		private static string GetRailwayFolder(string RouteFile) {
-			try {
+		private static string GetRailwayFolder(string RouteFile)
+		{
+			try
+			{
 				string Folder = System.IO.Path.GetDirectoryName(RouteFile);
-				while (true) {
+				while (true)
+				{
 					string Subfolder = OpenBveApi.Path.CombineDirectory(Folder, "Railway");
-					if (System.IO.Directory.Exists(Subfolder)) {
+					if (System.IO.Directory.Exists(Subfolder))
+					{
 						return Subfolder;
 					}
 					System.IO.DirectoryInfo Info = System.IO.Directory.GetParent(Folder);
-					if (Info == null) break;
+					if (Info == null)
+					{
+						break;
+					}
+
 					Folder = Info.FullName;
 				}
-			} catch { }
+			}
+			catch { }
 			//If the Route, Object and Sound folders exist, but are not in a railway folder.....
 			try
 			{
@@ -67,14 +78,18 @@ namespace OpenBve {
 				while (true)
 				{
 					string RouteFolder = OpenBveApi.Path.CombineDirectory(Folder, "Route");
-					string ObjectFolder = OpenBveApi.Path.CombineDirectory(Folder, "Object"); 
+					string ObjectFolder = OpenBveApi.Path.CombineDirectory(Folder, "Object");
 					string SoundFolder = OpenBveApi.Path.CombineDirectory(Folder, "Sound");
 					if (System.IO.Directory.Exists(RouteFolder) && System.IO.Directory.Exists(ObjectFolder) && System.IO.Directory.Exists(SoundFolder))
 					{
 						return Folder;
 					}
 					System.IO.DirectoryInfo Info = System.IO.Directory.GetParent(Folder);
-					if (Info == null) break;
+					if (Info == null)
+					{
+						break;
+					}
+
 					Folder = Info.FullName;
 				}
 			}
@@ -83,16 +98,17 @@ namespace OpenBve {
 		}
 
 		// load threaded
-		private static void LoadThreaded() {
-			#if DEBUG
+		private static void LoadThreaded()
+		{
+#if DEBUG
 			LoadEverythingThreaded();
-			#else
+#else
 			try {
 				LoadEverythingThreaded();
 			} catch (Exception ex) {
 				Interface.AddMessage(MessageType.Critical, false, "The route and train loader encountered the following critical error: " + ex.Message);
 			}
-			#endif
+#endif
 			Complete = true;
 		}
 
@@ -107,13 +123,14 @@ namespace OpenBve {
 			Complete = false;
 			CurrentRouteFile = RouteFile;
 			CurrentRouteEncoding = RouteEncoding;
-			
+
 			//Set the route and train folders in the info class
 			Loader = new Thread(LoadThreaded) { IsBackground = true };
 			Loader.Start();
 		}
 
-		private static void LoadEverythingThreaded() {
+		private static void LoadEverythingThreaded()
+		{
 			string RailwayFolder = GetRailwayFolder(CurrentRouteFile);
 			string ObjectFolder = OpenBveApi.Path.CombineDirectory(RailwayFolder, "Object");
 			string SoundFolder = OpenBveApi.Path.CombineDirectory(RailwayFolder, "Sound");
@@ -129,7 +146,11 @@ namespace OpenBve {
 			// load route
 			bool IsRW = string.Equals(System.IO.Path.GetExtension(CurrentRouteFile), ".rw", StringComparison.OrdinalIgnoreCase);
 			CsvRwRouteParser.ParseRoute(CurrentRouteFile, IsRW, CurrentRouteEncoding, Application.StartupPath, ObjectFolder, SoundFolder, false);
-			System.Threading.Thread.Sleep(1); if (Cancel) return;
+			System.Threading.Thread.Sleep(1); if (Cancel)
+			{
+				return;
+			}
+
 			Game.CalculateSeaLevelConstants();
 			RouteProgress = 1.0;
 			// camera
@@ -142,28 +163,48 @@ namespace OpenBve {
 			Game.SecondsSinceMidnight = 0.0;
 			Game.StartupTime = 0.0;
 			// finished created objects
-			System.Threading.Thread.Sleep(1); if (Cancel) return;
+			System.Threading.Thread.Sleep(1); if (Cancel)
+			{
+				return;
+			}
+
 			ObjectManager.FinishCreatingObjects();
 			// signals
-			System.Threading.Thread.Sleep(1); if (Cancel) return;
-			if (Game.Sections.Length > 0) {
+			System.Threading.Thread.Sleep(1); if (Cancel)
+			{
+				return;
+			}
+
+			if (Game.Sections.Length > 0)
+			{
 				Game.UpdateSection(Game.Sections.Length - 1);
 			}
 			// starting track position
-			System.Threading.Thread.Sleep(1); if (Cancel) return;
+			System.Threading.Thread.Sleep(1); if (Cancel)
+			{
+				return;
+			}
 			// int FirstStationIndex = -1;
 			double FirstStationPosition = 0.0;
-			for (int i = 0; i < Game.Stations.Length; i++) {
-				if (Game.Stations[i].Stops.Length != 0) {
+			for (int i = 0; i < Game.Stations.Length; i++)
+			{
+				if (Game.Stations[i].Stops.Length != 0)
+				{
 					// FirstStationIndex = i;
 					FirstStationPosition = Game.Stations[i].Stops[Game.Stations[i].Stops.Length - 1].TrackPosition;
-					if (Game.Stations[i].ArrivalTime < 0.0) {
-						if (Game.Stations[i].DepartureTime < 0.0) {
+					if (Game.Stations[i].ArrivalTime < 0.0)
+					{
+						if (Game.Stations[i].DepartureTime < 0.0)
+						{
 							Game.SecondsSinceMidnight = 0.0;
-						} else {
+						}
+						else
+						{
 							Game.SecondsSinceMidnight = Game.Stations[i].DepartureTime - Game.Stations[i].StopTime;
 						}
-					} else {
+					}
+					else
+					{
 						Game.SecondsSinceMidnight = Game.Stations[i].ArrivalTime;
 					}
 					Game.StartupTime = Game.SecondsSinceMidnight;

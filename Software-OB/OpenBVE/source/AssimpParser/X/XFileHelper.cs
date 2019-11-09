@@ -77,12 +77,12 @@
 // NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics;
-using VectorKey = System.Collections.Generic.KeyValuePair<double, OpenTK.Vector3>;
-using QuatKey = System.Collections.Generic.KeyValuePair<double, OpenTK.Quaternion>;
+using System.Collections.Generic;
 using MatrixKey = System.Collections.Generic.KeyValuePair<double, OpenTK.Matrix4>;
+using QuatKey = System.Collections.Generic.KeyValuePair<double, OpenTK.Quaternion>;
+using VectorKey = System.Collections.Generic.KeyValuePair<double, OpenTK.Vector3>;
 
 namespace AssimpNET.X
 {

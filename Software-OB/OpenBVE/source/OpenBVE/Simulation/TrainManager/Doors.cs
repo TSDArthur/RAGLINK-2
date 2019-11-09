@@ -66,7 +66,7 @@ namespace OpenBve
 			/// <summary>All doors in the train are neither fully closed nor fully opened.</summary>
 			AllMixed = 32
 		}
-	
+
 		/// <summary>Is called once a frame, to update the door states of the specified train</summary>
 		/// <param name="Train">The train</param>
 		/// <param name="TimeElapsed">The frame time elapsed</param>
@@ -189,11 +189,11 @@ namespace OpenBve
 		{
 			if ((GetDoorsState(Train, Game.Stations[StationIndex].OpenLeftDoors, Game.Stations[StationIndex].OpenRightDoors) & TrainDoorState.AllOpened) == 0)
 			{
-					if (Train.StationDistanceToStopPoint < BackwardsTolerance & -Train.StationDistanceToStopPoint < ForwardsTolerance)
-					{
-						OpenTrainDoors(Train, Game.Stations[StationIndex].OpenLeftDoors, Game.Stations[StationIndex].OpenRightDoors);
-					}
-				
+				if (Train.StationDistanceToStopPoint < BackwardsTolerance & -Train.StationDistanceToStopPoint < ForwardsTolerance)
+				{
+					OpenTrainDoors(Train, Game.Stations[StationIndex].OpenLeftDoors, Game.Stations[StationIndex].OpenRightDoors);
+				}
+
 			}
 		}
 
@@ -377,7 +377,7 @@ namespace OpenBve
 			}
 		}
 
-		
+
 		/// <summary>Returns the combination of door states encountered in a train.</summary>
 		/// <param name="Train">The train to consider.</param>
 		/// <param name="Left">Whether to include left doors.</param>
@@ -408,12 +408,36 @@ namespace OpenBve
 				}
 			}
 			TrainDoorState Result = TrainDoorState.None;
-			if (opened) Result |= TrainDoorState.Opened;
-			if (closed) Result |= TrainDoorState.Closed;
-			if (mixed) Result |= TrainDoorState.Mixed;
-			if (opened & !closed & !mixed) Result |= TrainDoorState.AllOpened;
-			if (!opened & closed & !mixed) Result |= TrainDoorState.AllClosed;
-			if (!opened & !closed & mixed) Result |= TrainDoorState.AllMixed;
+			if (opened)
+			{
+				Result |= TrainDoorState.Opened;
+			}
+
+			if (closed)
+			{
+				Result |= TrainDoorState.Closed;
+			}
+
+			if (mixed)
+			{
+				Result |= TrainDoorState.Mixed;
+			}
+
+			if (opened & !closed & !mixed)
+			{
+				Result |= TrainDoorState.AllOpened;
+			}
+
+			if (!opened & closed & !mixed)
+			{
+				Result |= TrainDoorState.AllClosed;
+			}
+
+			if (!opened & !closed & mixed)
+			{
+				Result |= TrainDoorState.AllMixed;
+			}
+
 			return Result;
 		}
 
@@ -445,12 +469,36 @@ namespace OpenBve
 				}
 			}
 			TrainDoorState Result = TrainDoorState.None;
-			if (opened) Result |= TrainDoorState.Opened;
-			if (closed) Result |= TrainDoorState.Closed;
-			if (mixed) Result |= TrainDoorState.Mixed;
-			if (opened & !closed & !mixed) Result |= TrainDoorState.AllOpened;
-			if (!opened & closed & !mixed) Result |= TrainDoorState.AllClosed;
-			if (!opened & !closed & mixed) Result |= TrainDoorState.AllMixed;
+			if (opened)
+			{
+				Result |= TrainDoorState.Opened;
+			}
+
+			if (closed)
+			{
+				Result |= TrainDoorState.Closed;
+			}
+
+			if (mixed)
+			{
+				Result |= TrainDoorState.Mixed;
+			}
+
+			if (opened & !closed & !mixed)
+			{
+				Result |= TrainDoorState.AllOpened;
+			}
+
+			if (!opened & closed & !mixed)
+			{
+				Result |= TrainDoorState.AllClosed;
+			}
+
+			if (!opened & !closed & mixed)
+			{
+				Result |= TrainDoorState.AllMixed;
+			}
+
 			return Result;
 		}
 	}

@@ -1,30 +1,28 @@
-﻿using OpenBve.RAGLINKPlatform;
-using OpenBveApi.Interface;
+﻿using OpenBve.RPlatform;
 using System;
 using System.IO;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace OpenBve
 {
-	internal partial class formMain : Form
+	internal partial class FormMain : Form
 	{
 		private int selectedPlanID = -1;
 		private bool startButtonCondition = true;
-		private RAGLINKCommons.RAGLINKPlatform.GraphicOptionsManager.GraphicOptionsValue optionsValueLoaded;
-		private RAGLINKCommons.RAGLINKPlatform.GraphicOptionsManager.GraphicOptionsValue optionsValueCurrent;
+		private RAGLINKCommons.RPlatform.GraphicOptionsManager.GraphicOptionsValue optionsValueLoaded;
+		private RAGLINKCommons.RPlatform.GraphicOptionsManager.GraphicOptionsValue optionsValueCurrent;
 		private void UpdatePlanFileList()
 		{
-			RAGLINKCommons.RAGLINKPlatform.ProjectsManager.UpdateProjectItem();
+			RAGLINKCommons.RPlatform.ProjectsManager.UpdateProjectItem();
 			listViewPlanFile.Items.Clear();
 			this.listViewPlanFile.BeginUpdate();
-			for (int i = 0; i < RAGLINKCommons.RAGLINKPlatform.ProjectsManager.projectList.projectCount; i++)
+			for (int i = 0; i < RAGLINKCommons.RPlatform.ProjectsManager.projectList.projectCount; i++)
 			{
 				ListViewItem itemAdded = new ListViewItem();
-				itemAdded.Text = RAGLINKCommons.RAGLINKPlatform.ProjectsManager.projectList.projectName[i] +
-					(RAGLINKCommons.RAGLINKPlatform.ProjectsManager.projectList.projectDebug[i] ? "[调试模式]" : "[运转模式]");
-				itemAdded.SubItems.Add(RAGLINKCommons.RAGLINKPlatform.ProjectsManager.projectList.projectID[i]);
-				itemAdded.SubItems.Add(RAGLINKCommons.RAGLINKPlatform.ProjectsManager.projectList.projectDescribe[i]);
+				itemAdded.Text = RAGLINKCommons.RPlatform.ProjectsManager.projectList.projectName[i] +
+					(RAGLINKCommons.RPlatform.ProjectsManager.projectList.projectDebug[i] ? "[调试模式]" : "[运转模式]");
+				itemAdded.SubItems.Add(RAGLINKCommons.RPlatform.ProjectsManager.projectList.projectID[i]);
+				itemAdded.SubItems.Add(RAGLINKCommons.RPlatform.ProjectsManager.projectList.projectDescribe[i]);
 				listViewPlanFile.Items.Add(itemAdded);
 			}
 			this.listViewPlanFile.EndUpdate();
@@ -34,7 +32,7 @@ namespace OpenBve
 			int retValue = -1;
 			try
 			{
-				retValue = RAGLINKCommons.RAGLINKPlatform.ProjectsManager.projectList.projectID.IndexOf(dataValue);
+				retValue = RAGLINKCommons.RPlatform.ProjectsManager.projectList.projectID.IndexOf(dataValue);
 			}
 			catch (Exception) { };
 			return retValue;
@@ -45,21 +43,32 @@ namespace OpenBve
 			{
 				for (int i = 1; i < Args.Length; i++)
 				{
-					if (Args[i] == RAGLINKCommons.RAGLINKPlatform.SettingsContent.simulatorUIMode)
+					if (Args[i] == RAGLINKCommons.RPlatform.SettingsContent.simulatorUIMode)
 					{
 						this.Show();
 						return;
 					}
-					else if (Args[i] == RAGLINKCommons.RAGLINKPlatform.SettingsContent.simualatorCompilerMode)
+					else if (Args[i] == RAGLINKCommons.RPlatform.SettingsContent.simualatorCompilerMode)
 					{
-						if (i >= Args.Length - 1) break;
+						if (i >= Args.Length - 1)
+						{
+							break;
+						}
 						else
 						{
 							string projectFilePath = Args[i + 1];
-							if (!File.Exists(projectFilePath)) break;
-							int projectIndex = RAGLINKCommons.RAGLINKPlatform.ProjectsManager.projectList.projectFilePath.IndexOf(projectFilePath);
-							string projectGUID = RAGLINKCommons.RAGLINKPlatform.ProjectsManager.projectList.projectID[projectIndex];
-							if (projectGUID == string.Empty) break;
+							if (!File.Exists(projectFilePath))
+							{
+								break;
+							}
+
+							int projectIndex = RAGLINKCommons.RPlatform.ProjectsManager.projectList.projectFilePath.IndexOf(projectFilePath);
+							string projectGUID = RAGLINKCommons.RPlatform.ProjectsManager.projectList.projectID[projectIndex];
+							if (projectGUID == string.Empty)
+							{
+								break;
+							}
+
 							LaunchProject(projectGUID);
 							this.Hide();
 							return;
@@ -77,20 +86,26 @@ namespace OpenBve
 		{
 			TrainMethods.EventsRegister();
 			DataManagerClient.EventsRegister();
-			RAGLINKCommons.RAGLINKPlatform.ProjectLoader.TrainDataLoaderEvent += LoadTrain;
-			RAGLINKCommons.RAGLINKPlatform.ProjectLoader.RouteDataLoaderEvent += LoadRoute;
-			RAGLINKCommons.RAGLINKPlatform.ProjectLoader.GraphicOptionsLoaderEvent += ApplyGraphicOptions;
-			RAGLINKCommons.RAGLINKPlatform.ProjectLoader.StartSimulatorEvent += StartSimulator;
+			RAGLINKCommons.RPlatform.ProjectLoader.TrainDataLoaderEvent += LoadTrain;
+			RAGLINKCommons.RPlatform.ProjectLoader.RouteDataLoaderEvent += LoadRoute;
+			RAGLINKCommons.RPlatform.ProjectLoader.GraphicOptionsLoaderEvent += ApplyGraphicOptions;
+			RAGLINKCommons.RPlatform.ProjectLoader.StartSimulatorEvent += StartSimulator;
 			UpdatePlanFileList();
-			labelVersion.Text = "API 版本：" + RAGLINKCommons.RAGLINKPlatform.SettingsContent.simulatorVersion.ToString();
-			RAGLINKCommons.RAGLINKPlatform.PackagesManager.UpdatePackageList();
+			labelVersion.Text = "API 版本：" + RAGLINKCommons.RPlatform.SettingsContent.simulatorVersion.ToString();
+			RAGLINKCommons.RPlatform.PackagesManager.UpdatePackageList();
+			RAGLINKCommons.RPlatform.ControlObjects.ResetControlObjects();
+			RAGLINKCommons.RPlatform.ControlObjects.UpdateControlObjectsItem();
 		}
 		private bool LoadRoute(string routeFile)
 		{
 			bool retValue = false;
 			try
 			{
-				if (!File.Exists(routeFile)) return retValue;
+				if (!File.Exists(routeFile))
+				{
+					return retValue;
+				}
+
 				Result.RouteFile = routeFile;
 				ShowRouteDelegate showRouteDelegate = new ShowRouteDelegate(ShowRoute);
 				Invoke(showRouteDelegate, false);
@@ -104,7 +119,11 @@ namespace OpenBve
 			bool retValue = false;
 			try
 			{
-				if (!File.Exists(trainFile)) return retValue;
+				if (!File.Exists(trainFile))
+				{
+					return retValue;
+				}
+
 				Result.TrainFolder = Path.GetDirectoryName(trainFile);
 				ShowTrainDelegate showTrainDelegate = new ShowTrainDelegate(ShowTrain);
 				Invoke(showTrainDelegate, false);
@@ -126,7 +145,7 @@ namespace OpenBve
 			}
 			else if (reviewMode == 1)
 			{
-				RAGLINKCommons.RAGLINKPlatform.ProjectLoader.ReviewProjectResources(projectGUID);
+				RAGLINKCommons.RPlatform.ProjectLoader.ReviewProjectResources(projectGUID);
 				labelReviewLoading.Visible = true;
 				labelReviewLoading.Text = "加载预览中...";
 				labelOptionsLoading.Visible = true;
@@ -135,7 +154,7 @@ namespace OpenBve
 			else if (reviewMode == 2)
 			{
 				LoadOptionsOnForm();
-				labelRespackName.Text = "加载的资源包：" + RAGLINKCommons.RAGLINKPlatform.PackagesManager.packageInfo.packageName;
+				labelRespackName.Text = "加载的资源包：" + RAGLINKCommons.RPlatform.PackagesManager.packageInfo.packageName;
 				labelRespackName.Visible = true;
 				buttonStart.Enabled = true & startButtonCondition;
 				labelReviewLoading.Visible = false;
@@ -144,8 +163,8 @@ namespace OpenBve
 		}
 		private void LoadOptionsOnForm()
 		{
-			optionsValueLoaded = RAGLINKCommons.RAGLINKPlatform.GraphicOptionsManager.graphicOptionsValue;
-			optionsValueCurrent = (RAGLINKCommons.RAGLINKPlatform.GraphicOptionsManager.GraphicOptionsValue)optionsValueLoaded.Clone();
+			optionsValueLoaded = RAGLINKCommons.RPlatform.GraphicOptionsManager.graphicOptionsValue;
+			optionsValueCurrent = (RAGLINKCommons.RPlatform.GraphicOptionsManager.GraphicOptionsValue)optionsValueLoaded.Clone();
 			checkBoxFullScreen.Checked = optionsValueLoaded.enableFullScreen;
 			checkBoxWindowsState.Checked = !optionsValueLoaded.enableFullScreen;
 			checkBoxMotionBlur.Checked = optionsValueLoaded.enableMotionBlur;
@@ -215,7 +234,7 @@ namespace OpenBve
 			ApplyGraphicOptions(optionsValueLoaded);
 			buttonSaveOptions.Enabled = false;
 		}
-		private bool ApplyGraphicOptions(RAGLINKCommons.RAGLINKPlatform.GraphicOptionsManager.GraphicOptionsValue optionsData)
+		private bool ApplyGraphicOptions(RAGLINKCommons.RPlatform.GraphicOptionsManager.GraphicOptionsValue optionsData)
 		{
 			bool retValue = false;
 			try
@@ -265,16 +284,19 @@ namespace OpenBve
 			listViewPlanFile.Enabled = dataValue;
 			buttonStart.Enabled = dataValue;
 			startButtonCondition = dataValue;
-			if (dataValue) LoadOptionsOnForm();
+			if (dataValue)
+			{
+				LoadOptionsOnForm();
+			}
 		}
 		private void LaunchProject(string projectGUID)
 		{
 			ButtonStartStateSet(false);
-			RAGLINKCommons.RAGLINKPlatform.UserInterfaceSwap.projectGUID = projectGUID;
+			RAGLINKCommons.RPlatform.UserInterfaceSwap.projectGUID = projectGUID;
 			new System.Threading.Thread((System.Threading.ThreadStart)delegate
 			{
-				RAGLINKCommons.RAGLINKPlatform.formSummaryInit formSummaryInit = new RAGLINKCommons.RAGLINKPlatform.formSummaryInit();
-				formSummaryInit.ShowDialog();
+				RAGLINKCommons.RPlatform.FormSummaryInit FormSummaryInit = new RAGLINKCommons.RPlatform.FormSummaryInit();
+				FormSummaryInit.ShowDialog();
 			}).Start();
 		}
 	}

@@ -22,7 +22,7 @@ uint8_t Device_ID2HW(uint8_t fw_id)
         return retValue;
     }
     //28-55 -> 22-49 IO
-    else
+    else if(fw_id <= 55)
     {
         retValue = fw_id - 6;
         return retValue;
@@ -43,7 +43,7 @@ uint8_t Device_HW2ID(uint8_t hw_id)
         retValue = hw_id + 14;
         return retValue;
     }
-    else
+    else if (hw_id >= 22 && hw_id <= 49)
     {
         retValue = hw_id + 6;
         return retValue;

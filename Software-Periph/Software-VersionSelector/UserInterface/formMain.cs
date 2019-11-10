@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RAGLINK_Version_Selector
+namespace RStarter
 {
-    public partial class frmMain : Form
+    public partial class FormMain : Form
     {
-        public frmMain()
+        public FormMain()
         {
             InitializeComponent();
         }
@@ -21,7 +21,9 @@ namespace RAGLINK_Version_Selector
         {
             this.Hide();
             UpdatePlatformList();
-            StartArgsEvents(Environment.GetCommandLineArgs());
+            StartArgsEvents(FileIO.VersionManager.startArgs);
+            timerAutoLaunch.Enabled = buttonLaunch.Enabled;
+            if (!buttonLaunch.Enabled) labelLaunching.Visible = false;
         }
 
         private void ButtonClose_Click(object sender, EventArgs e)
@@ -56,12 +58,31 @@ namespace RAGLINK_Version_Selector
             if (platformSelectedItem != -1)
                 defaultPlatformVerification = FileIO.VersionManager.platformList.platformVerification[platformSelectedItem];
             FileIO.VersionManager.SetDefaultPlatfrom(defaultPlatformVerification);
+            Application.Exit();
         }
 
         private void ButtonLaunch_Click(object sender, EventArgs e)
         {
-            FileIO.VersionManager.StartPlatformExecute(FileIO.VersionManager.platformList.platformVerification[platformSelectedItem], "-ui");
+            if (FileIO.VersionManager.startArgsStr != string.Empty)
+                FileIO.VersionManager.StartPlatformExecute(FileIO.VersionManager.platformList.platformVerification[platformSelectedItem],
+                    FileIO.VersionManager.startArgsStr);
+            else FileIO.VersionManager.StartPlatformExecute(FileIO.VersionManager.platformList.platformVerification[platformSelectedItem],
+                    FileIO.VersionManager.platformList.platformUIMode[platformSelectedItem]);
             this.Close();
+        }
+
+        static private int timeToLaunch = 5;
+        private void timerAutoLaunch_Tick(object sender, EventArgs e)
+        {
+            timeToLaunch--;
+            labelLaunching.Text = "将于 " + timeToLaunch.ToString() + " 秒钟后自动启动选定项。";
+            if (timeToLaunch == 0) ButtonLaunch_Click(null, null);
+        }
+
+        private void listViewPlatform_Click(object sender, EventArgs e)
+        {
+            timerAutoLaunch.Enabled = false;
+            labelLaunching.Visible = false;
         }
     }
 }

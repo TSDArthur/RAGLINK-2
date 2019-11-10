@@ -532,7 +532,6 @@
     <None Include="Resources\Loading.gif" />
     <None Include="Resources\Info.png" />
     <None Include="Resources\Import.png" />
-    <None Include="Resources\icon.bmp" />
     <None Include="Resources\Export.png" />
     <None Include="Resources\Error.png" />
     <None Include="Resources\Delete.png" />

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("RAGLINK Version Selector")]
+[assembly: AssemblyTitle("RAGLINK Starter")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RAGLINK Version Selector")]
+[assembly: AssemblyProduct("RAGLINK Starter")]
 [assembly: AssemblyCopyright("© 2019 TSDWorks")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

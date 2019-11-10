@@ -7,12 +7,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RAGLINK_Version_Selector.FileIO
+namespace RStarter.FileIO
 {
     public class VersionManager
     {
+        public enum PlatformType
+        {
+            Community = 0,
+            Laboratory = 1
+        };
+
         public class PlatformList
         {
+            public PlatformType studioType;
+            public Version studioVersion;
             public int platformCount;
             public string platformDefault;
             public List<string> platformVerification;
@@ -21,6 +29,8 @@ namespace RAGLINK_Version_Selector.FileIO
             public List<string> platformPath;
             public List<string> platformStudioExecute;
             public List<string> platformImage;
+            public List<string> platformUIMode;
+            public List<string> platformCompilerMode;
             public PlatformList()
             {
                 platformDefault = string.Empty;
@@ -29,33 +39,44 @@ namespace RAGLINK_Version_Selector.FileIO
                 platformVersion = new List<string>();
                 platformPath = new List<string>();
                 platformStudioExecute = new List<string>();
-                platformImage = new List<string>();
+                platformUIMode = new List<string>();
+                platformCompilerMode = new List<string>();
             }
         };
         static public PlatformList platformList = new PlatformList();
         static public int platformSelected = 0;
+        static public string[] startArgs;
+        static public string startArgsStr = string.Empty;
         static public void UpdatePlatformInfo()
         {
             try
             {
                 platformList = new PlatformList();
                 SettingsFileIO settingsFileIO = new SettingsFileIO();
-                settingsFileIO.SetSettingsFilePath(Path.GetFullPath(Application.StartupPath + "\\Platform.ini"));
-                platformList.platformCount = Convert.ToInt32(settingsFileIO.ReadValue("summary", "platform_count"));
-                platformList.platformDefault = settingsFileIO.ReadValue("summary", "platform_default");
-                for (int i = 0; i < platformList.platformCount; i++)
+                DirectoryInfo[] dirArray = new DirectoryInfo(Application.StartupPath).GetDirectories();
+                foreach (DirectoryInfo directoryInfo in dirArray)
                 {
-                    string sectionValue = "platform" + i.ToString();
-                    platformList.platformVerification.Add(settingsFileIO.ReadValue(sectionValue, "platform_verification"));
-                    platformList.platformNameDisplay.Add(settingsFileIO.ReadValue(sectionValue, "platform_name_display"));
-                    platformList.platformVersion.Add(settingsFileIO.ReadValue(sectionValue, "platform_version"));
-                    platformList.platformPath.Add(settingsFileIO.ReadValue(sectionValue, "platform_path"));
-                    platformList.platformStudioExecute.Add(settingsFileIO.ReadValue(sectionValue, "platform_studio_execute"));
-                    platformList.platformImage.Add(settingsFileIO.ReadValue(sectionValue, "platform_image"));
+                    settingsFileIO.SetSettingsFilePath(Application.StartupPath + "\\Platform.ini");
+                    platformList.studioType = (PlatformType)Enum.Parse(typeof(PlatformType), settingsFileIO.ReadValue("summary", "studio_type"), true);
+                    platformList.studioVersion = Version.Parse(settingsFileIO.ReadValue("summary", "studio_version"));
+                    platformList.platformDefault = settingsFileIO.ReadValue("summary", "platform_default");
+                    string fileFullName = Path.GetFullPath(directoryInfo.FullName + "\\Platform.ini");
+                    if (File.Exists(fileFullName))
+                    {
+                        settingsFileIO.SetSettingsFilePath(fileFullName);
+                        platformList.platformVerification.Add(settingsFileIO.ReadValue("platform_define", "platform_verification"));
+                        platformList.platformNameDisplay.Add(settingsFileIO.ReadValue("platform_define", "platform_name"));
+                        platformList.platformVersion.Add(settingsFileIO.ReadValue("platform_define", "platform_version"));
+                        platformList.platformPath.Add(directoryInfo.Name);
+                        platformList.platformStudioExecute.Add(settingsFileIO.ReadValue("platform_define", "complier_excute"));
+                        platformList.platformUIMode.Add(settingsFileIO.ReadValue("platform_define", "ui_mode_args"));
+                        platformList.platformCompilerMode.Add(settingsFileIO.ReadValue("platform_define", "compile_mode_args"));
+                        platformList.platformCount++;
+                    }
                 }
             }
             catch (Exception) { };
-        } 
+        }
         static public void StartPlatformExecute(string platformVerification, string Args)
         {
             platformVerification = platformVerification.ToLower();

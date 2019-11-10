@@ -1,10 +1,11 @@
-﻿using System;
+﻿using RStarter.UserInterface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RAGLINK_Version_Selector
+namespace RStarter
 {
     static class Program
     {
@@ -16,7 +17,7 @@ namespace RAGLINK_Version_Selector
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
+            Application.Run(new FormInit());
         }
     }
 }

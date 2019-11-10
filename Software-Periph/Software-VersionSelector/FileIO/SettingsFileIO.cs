@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RAGLINK_Version_Selector.FileIO
+namespace RStarter.FileIO
 {
     public class SettingsFileIO
     {

@@ -1,0 +1,10 @@
+C:\Documents\RAGLINKProject\RAGLINK\Program\Starter.exe.config
+C:\Documents\RAGLINKProject\RAGLINK\Program\Starter.exe
+C:\Documents\RAGLINKProject\RAGLINK\Program\Starter.pdb
+C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\RStarter.Properties.Resources.resources
+C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\RStarter.FormMain.resources
+C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\RAGLINKStarter.csproj.GenerateResource.cache
+C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\Starter.exe
+C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\Starter.pdb
+C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\RStarter.UserInterface.FormInit.resources
+C:\Documents\RAGLINKProject\RAGLINK\Software-Periph\Software-VersionSelector\obj\Debug\RAGLINKStarter.csprojAssemblyReference.cache

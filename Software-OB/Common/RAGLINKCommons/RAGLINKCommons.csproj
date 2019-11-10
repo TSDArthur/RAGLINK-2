@@ -184,16 +184,10 @@
     <None Include="Resources\Export.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icon.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Import.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Info.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Loading.gif" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Log.png" />
@@ -206,9 +200,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\option.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\PlanReaderBackground.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Prop.png" />
@@ -227,9 +218,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SwitchOn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\TextBack.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\train.png" />
@@ -254,9 +242,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Data.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\InitBackground.jpg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Background.jpg" />

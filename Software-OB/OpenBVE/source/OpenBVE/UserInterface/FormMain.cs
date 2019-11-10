@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace OpenBve
@@ -58,11 +59,12 @@ namespace OpenBve
 				{
 					Application.Run(Dialog);
 				}).Start();
+				Thread.Sleep(100);
 				while (!formCloseTrig)
 				{
-					;
-				}
-
+					//Hack here
+					Thread.Sleep(100);
+				};
 				MainDialogResult result = Dialog.Result;
 				try
 				{

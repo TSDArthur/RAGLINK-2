@@ -514,11 +514,8 @@
     <None Include="Resources\control.png" />
     <None Include="Resources\Connection.png" />
     <None Include="Resources\Board.png" />
-    <None Include="Resources\alarm.wav" />
     <None Include="Resources\About.png" />
-    <None Include="Resources\Warning.png" />
     <None Include="Resources\train.png" />
-    <None Include="Resources\TextBack.jpg" />
     <None Include="Resources\SwitchOn.png" />
     <None Include="Resources\Sel.png" />
     <None Include="Resources\review.png" />
@@ -529,11 +526,8 @@
     <None Include="Resources\New.png" />
     <None Include="Resources\Modify.png" />
     <None Include="Resources\Log.png" />
-    <None Include="Resources\Loading.gif" />
-    <None Include="Resources\Info.png" />
     <None Include="Resources\Import.png" />
     <None Include="Resources\Export.png" />
-    <None Include="Resources\Error.png" />
     <None Include="Resources\Delete.png" />
   </ItemGroup>
   <ItemGroup />

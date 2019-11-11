@@ -120,9 +120,7 @@ namespace RAGLINKCommons.RProxy
             try
             {
                 //Update monitor
-                string labelSpeedTextPart0 = (Math.Abs((int)RPlatform.DataManager.GetTrainData((int)RPlatform.DataManager.TrainDataMap.SPEED_HMI) / 10)).ToString();
-                string labelSpeedTextPart1 = (Math.Abs((int)RPlatform.DataManager.GetTrainData((int)RPlatform.DataManager.TrainDataMap.SPEED_HMI)) % 10).ToString();
-                labelSpeed.Text = labelSpeedTextPart0 + "." + labelSpeedTextPart1 + " KM/H";
+                labelSpeed.Text = Math.Abs((double)RPlatform.DataManager.GetTrainData((int)RPlatform.DataManager.TrainDataMap.SPEED)).ToString("f1") + " KM/H";
                 string labelLimitText = ((int)RPlatform.DataManager.GetTrainData((int)RPlatform.DataManager.TrainDataMap.SPEED_LIMIT)).ToString();
                 labelLimit.Text = labelLimitText + " KM/H";
                 string labelSignalText = "无码";

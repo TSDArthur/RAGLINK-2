@@ -660,6 +660,26 @@ namespace OpenBve
 			catch (Exception) { };
 			return retValue;
 		}
+		static public int GetCurrentStationIndex()
+		{
+			int retValue = -1;
+			try
+			{
+				if (!timetableReady)
+				{
+					UpdateCurrentTimeTable();
+				}
+				int nextStationIndex = GetNextStationIndex();
+				if (Table.Stations.Length == 0 || nextStationIndex - 1 < 0)
+				{
+					return retValue;
+				}
+				retValue = nextStationIndex - 1;
+			}
+			catch (Exception) { };
+			return retValue;
+
+		}
 		static public string GetCurrentStationName()
 		{
 			string errState = "N/A";

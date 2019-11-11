@@ -53,12 +53,7 @@ namespace OpenBve.RPlatform
 						}
 					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.SPEED:
 						{
-							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = Convert.ToInt32(TrainMethods.GetCurrentTrainSpeed());
-							break;
-						}
-					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.SPEED_HMI:
-						{
-							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = Convert.ToInt32(((int)(TrainMethods.GetCurrentTrainSpeedDouble() * 10)));
+							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = Convert.ToDouble(TrainMethods.GetCurrentTrainSpeedDouble());
 							break;
 						}
 					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.SPEED_LIMIT:
@@ -91,9 +86,19 @@ namespace OpenBve.RPlatform
 							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = Convert.ToInt32(TrainMethods.GetRightDoorState() != -1 ? TrainMethods.GetRightDoorState() : 0);
 							break;
 						}
+					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.CURRENT_STATION_INDEX:
+						{
+							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = TrainMethods.GetCurrentStationIndex();
+							break;
+						}
 					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.CURRENT_STATION_NAME:
 						{
 							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = TrainMethods.GetCurrentStationName();
+							break;
+						}
+					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.NEXT_STATION_INDEX:
+						{
+							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = TrainMethods.GetNextStationIndex();
 							break;
 						}
 					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.NEXT_STATION_NAME:
@@ -146,40 +151,16 @@ namespace OpenBve.RPlatform
 							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = RAGLINKCommons.RPlatform.DataManager.HMIData;
 							break;
 						}
-					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.NEXT_STATION_DISTANCE_HMI:
-						{
-							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = (TrainMethods.GetNextStationDistance() >= 1000 ?
-							decimal.Round(decimal.Parse((TrainMethods.GetNextStationDistance() / 1000).ToString()), 2) :
-							decimal.Round(decimal.Parse((TrainMethods.GetNextStationDistance()).ToString()), 1)) +
-							(TrainMethods.GetNextStationDistance() >= 1000 ? " KM" : " M") +
-							" / " + (TrainMethods.GetNextStationStopMode() == 1 ? "VIA" : "STOP");
-							break;
-						}
-					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.CYLINER_PRESSURE_HMI:
-						{
-							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = ((int)(TrainMethods.GetCurrentCylinderPressure() * 10)).ToString();
-							break;
-						}
-					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.PIPE_PRESSURE_HMI:
-						{
-							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = ((int)(TrainMethods.GetCurrentPipePressure() * 10)).ToString();
-							break;
-						}
 					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.NEXT_STATION_STOP:
 						{
 							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = ((int)(TrainMethods.GetNextStationStopMode()));
-							break;
-						}
-					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.STATION_COUNT_HMI:
-						{
-							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = TrainMethods.GetNextStationIndex().ToString() + " / " + TrainMethods.GetStationCount().ToString();
 							break;
 						}
 					case (int)RAGLINKCommons.RPlatform.DataManager.TrainDataMap.TRACK_POSITION:
 						{
 							RAGLINKCommons.RPlatform.DataManager.processData.trainData[i] = TrainMethods.GetCurrentTrackPosition();
 							break;
-						}
+						}	
 				}
 			}
 		}

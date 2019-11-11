@@ -40,7 +40,7 @@ namespace RAGLINKCommons.RProxy
                     {
                         ListViewItem listViewItem = new ListViewItem();
                         listViewItem.Text = i.ToString();
-                        listViewItem.SubItems.Add(((RPlatform.DataManager.HMIInstructions)RPlatform.DataManager.processData.trainData[HMIDataIndex]).HMIDataMap[i].ToString());
+                        listViewItem.SubItems.Add(((RPlatform.DataManager.HMIInstructions)RPlatform.DataManager.processData.trainData[HMIDataIndex]).HMIDataBinding[i].ToString());
                         listViewItem.SubItems.Add(RPlatform.DataManager.processData.trainDataType[HMIDataIndex].ToString());
                         listViewItem.SubItems.Add(RPlatform.DataManager.processData.trainDataClassify[HMIDataIndex].ToString());
                         listViewItem.SubItems.Add(((RPlatform.DataManager.HMIInstructions)RPlatform.DataManager.processData.trainData[HMIDataIndex]).HMIData[i]);

@@ -20,39 +20,36 @@ namespace RAGLINKCommons.RPlatform
             SIGNAL = 4,
             SIGNAL_DIST = 5,
             SPEED = 6,
-            SPEED_HMI = 7,
-            SPEED_LIMIT = 8,
-            HORN = 9,
-            SPEED_CONST = 10,
-            EMERGENCY = 11,
-            LDOOR_OPEN = 12,
-            RDOOR_OPEN = 13,
-            LIGHT_ON = 14,
-            PANTO_UP = 15,
-            SANDER_ON = 16,
+            SPEED_LIMIT = 7,
+            HORN = 8,
+            SPEED_CONST = 9,
+            EMERGENCY = 10,
+            LDOOR_OPEN = 11,
+            RDOOR_OPEN = 12,
+            LIGHT_ON = 13,
+            PANTO_UP = 14,
+            SANDER_ON = 15,
+            CURRENT_STATION_INDEX = 16,
             CURRENT_STATION_NAME = 17,
-            NEXT_STATION_NAME = 18,
-            CURRENT_STATION_DEPART_TIME = 19,
-            NEXT_STATION_ARRIVAL_TIME = 20,
-            NEXT_STATION_DISTANCE = 21,
-            DEADMAN_PRESS = 22,
-            TRACTION_ON = 23,
-            AIR_CONDITION_ON = 24,
-            CYLINER_PRESSURE = 25,
-            PIPE_PRESSURE = 26,
-            DESTINATION_STATION_NAME = 27,
-            STATION_COUNT = 28,
-            CURRENT_TIME = 29,
-            NEXT_STATION_DISTANCE_HMI = 30,
-            CYLINER_PRESSURE_HMI = 31,
-            PIPE_PRESSURE_HMI = 32,
-            STATION_COUNT_HMI = 33,
-            DEADMAN_ENABLE = 34,
-            NEXT_STATION_STOP = 35,
-            DEADMAN_ENABLE_TRIG = 36,
-            TRACK_POSITION = 37,
+            NEXT_STATION_INDEX = 18,
+            NEXT_STATION_NAME = 19,
+            CURRENT_STATION_DEPART_TIME = 20,
+            NEXT_STATION_ARRIVAL_TIME = 21,
+            NEXT_STATION_DISTANCE = 22,
+            DEADMAN_PRESS = 23,
+            TRACTION_ON = 24,
+            AIR_CONDITION_ON = 25,
+            CYLINER_PRESSURE = 26,
+            PIPE_PRESSURE = 27,
+            DESTINATION_STATION_NAME = 28,
+            STATION_COUNT = 29,
+            CURRENT_TIME = 30,
+            DEADMAN_ENABLE = 31,
+            NEXT_STATION_STOP = 32,
+            DEADMAN_ENABLE_TRIG = 33,
+            TRACK_POSITION = 34,
             //HMI instruction datas
-            HMI_INSTRUCTIONS = 38
+            HMI_INSTRUCTIONS = 35
         }
         public enum TrainDataType
         {
@@ -72,16 +69,15 @@ namespace RAGLINKCommons.RPlatform
             public const int HMIDataCount = 24;
             public string[] HMIScrips;
             public string[] HMIData;
-            public TrainDataMap[] HMIDataMap;
+            public TrainDataMap[] HMIDataBinding;
+            public bool[] HMIStringSpecialDeal;
             public HMIInstructions()
             {
-                HMIScrips = new string[HMIDataCount];
-                HMIData = new string[HMIDataCount];
-                HMIDataMap = new TrainDataMap[HMIDataCount]
+                HMIDataBinding = new TrainDataMap[HMIDataCount]
                 {
-                    TrainDataMap.SPEED_HMI,
+                    TrainDataMap.SPEED,
                     TrainDataMap.REVERSER,
-                    TrainDataMap.NEXT_STATION_DISTANCE_HMI,
+                    TrainDataMap.NEXT_STATION_DISTANCE,
                     TrainDataMap.POWER,
                     TrainDataMap.BRAKE,
                     TrainDataMap.SIGNAL,
@@ -99,32 +95,53 @@ namespace RAGLINKCommons.RPlatform
                     TrainDataMap.CURRENT_STATION_DEPART_TIME,
                     TrainDataMap.NEXT_STATION_NAME,
                     TrainDataMap.NEXT_STATION_ARRIVAL_TIME,
-                    TrainDataMap.CYLINER_PRESSURE_HMI,
-                    TrainDataMap.PIPE_PRESSURE_HMI,
+                    TrainDataMap.CYLINER_PRESSURE,
+                    TrainDataMap.PIPE_PRESSURE,
                     TrainDataMap.DESTINATION_STATION_NAME,
-                    TrainDataMap.STATION_COUNT_HMI
+                    TrainDataMap.STATION_COUNT
                 };
-            }
-            public void UpdateHMIInstructions()
-            {
-                try
+                HMIStringSpecialDeal = new bool[HMIDataCount]
                 {
-                    HMIScrips = ControlObjects.controlObjectsInfo[(int)ControlObjects.ControlObjectsList.HMI].objectData.ToArray();
-                    for (int i = 0; i < HMIDataCount; i++)
-                    {
-                        if (HMIScrips[i].Substring(HMIScrips[i].Length - 3, 3) == "txt")
-                        {
-                            string HMIString = HMIScrips[i] + "=\"" + processData.trainData[(int)HMIDataMap[i]].ToString() + "\"";
-                            HMIData[i] = HMIString;
-                        }
-                        else if (HMIScrips[i].Substring(HMIScrips[i].Length - 3, 3) == "val")
-                        {
-                            string HMIString = HMIScrips[i] + "=" + processData.trainData[(int)HMIDataMap[i]].ToString();
-                            HMIData[i] = HMIString;
-                        }
-                    }
+                    true,
+                    false,
+                    true,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    false,
+                    true,
+                    true,
+                    false,
+                    true
+                };
+                HMIScrips = new string[HMIDataCount];
+                HMIData = new string[HMIDataCount];
+            }
+            public void SetHMIData(int dataIndex, string dataStream)
+            {
+                if (HMIScrips[dataIndex].Substring(HMIScrips[dataIndex].Length - 3, 3) == "txt")
+                {
+                    string HMIString = HMIScrips[dataIndex] + "=\"" + dataStream + "\"";
+                    HMIData[dataIndex] = HMIString;
                 }
-                catch (Exception) { };
+                else if (HMIScrips[dataIndex].Substring(HMIScrips[dataIndex].Length - 3, 3) == "val")
+                {
+                    string HMIString = HMIScrips[dataIndex] + "=" + dataStream;
+                    HMIData[dataIndex] = HMIString;
+                }
             }
             public int GetDataCount()
             {
@@ -134,7 +151,7 @@ namespace RAGLINKCommons.RPlatform
         static public HMIInstructions HMIData = new HMIInstructions();
         public class TrainDataManager
         {
-            public const int trainDataCount = 39;
+            public const int trainDataCount = 36;
             public object[] trainData;
             public TrainDataType[] trainDataType;
             public TrainDataClassify[] trainDataClassify;
@@ -149,7 +166,7 @@ namespace RAGLINKCommons.RPlatform
                     TrainDataType.INT,
                     TrainDataType.INT,
                     TrainDataType.INT,
-                    TrainDataType.INT,
+                    TrainDataType.DOUBLE,
                     TrainDataType.INT,
                     TrainDataType.INT,
                     TrainDataType.INT,
@@ -161,6 +178,7 @@ namespace RAGLINKCommons.RPlatform
                     TrainDataType.INT,
                     TrainDataType.INT,
                     TrainDataType.STRING,
+                    TrainDataType.INT,
                     TrainDataType.STRING,
                     TrainDataType.STRING,
                     TrainDataType.STRING,
@@ -172,10 +190,6 @@ namespace RAGLINKCommons.RPlatform
                     TrainDataType.DOUBLE,
                     TrainDataType.STRING,
                     TrainDataType.INT,
-                    TrainDataType.STRING,
-                    TrainDataType.STRING,
-                    TrainDataType.STRING,
-                    TrainDataType.STRING,
                     TrainDataType.STRING,
                     TrainDataType.INT,
                     TrainDataType.INT,
@@ -193,7 +207,6 @@ namespace RAGLINKCommons.RPlatform
                     TrainDataClassify.POSTBACK_DATA,
                     TrainDataClassify.POSTBACK_DATA,
                     TrainDataClassify.POSTBACK_DATA,
-                    TrainDataClassify.POSTBACK_DATA,
                     TrainDataClassify.CONTROL_DATA,
                     TrainDataClassify.CONTROL_DATA,
                     TrainDataClassify.CONTROL_DATA,
@@ -207,13 +220,11 @@ namespace RAGLINKCommons.RPlatform
                     TrainDataClassify.POSTBACK_DATA,
                     TrainDataClassify.POSTBACK_DATA,
                     TrainDataClassify.POSTBACK_DATA,
+                    TrainDataClassify.POSTBACK_DATA,
+                    TrainDataClassify.POSTBACK_DATA,
                     TrainDataClassify.CONTROL_DATA,
                     TrainDataClassify.CONTROL_DATA,
                     TrainDataClassify.CONTROL_DATA,
-                    TrainDataClassify.POSTBACK_DATA,
-                    TrainDataClassify.POSTBACK_DATA,
-                    TrainDataClassify.POSTBACK_DATA,
-                    TrainDataClassify.POSTBACK_DATA,
                     TrainDataClassify.POSTBACK_DATA,
                     TrainDataClassify.POSTBACK_DATA,
                     TrainDataClassify.POSTBACK_DATA,

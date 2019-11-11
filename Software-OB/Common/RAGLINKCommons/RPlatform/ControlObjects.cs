@@ -670,10 +670,57 @@ namespace RAGLINKCommons.RPlatform
         static public void HMI_EVENT()
         {
             int objectID = (int)ControlObjectsList.HMI;
-            if (!controlObjectArrange[objectID].objectEnable)
+            if (!controlObjectArrange[objectID].objectEnable) return;
+
+            //Update HMI Scripts
+            DataManager.HMIData.HMIScrips = controlObjectsInfo[(int)ControlObjectsList.HMI].objectData.ToArray();
+            for (int i = 0; i < DataManager.HMIData.GetDataCount(); i++)
             {
-                return;
-            } ((DataManager.HMIInstructions)DataManager.processData.trainData[(int)DataManager.TrainDataMap.HMI_INSTRUCTIONS]).UpdateHMIInstructions();
+                string currentDataString = string.Empty;
+                if (DataManager.HMIData.HMIStringSpecialDeal[i])
+                {
+                    switch (DataManager.HMIData.HMIDataBinding[i])
+                    {
+                        case DataManager.TrainDataMap.SPEED:
+                            {
+                                currentDataString = Convert.ToInt32((double)DataManager.processData.trainData[(int)DataManager.TrainDataMap.SPEED] * 10).ToString();
+                                break;
+                            }
+                        case DataManager.TrainDataMap.NEXT_STATION_DISTANCE:
+                            {
+                                currentDataString = ((double)DataManager.processData.trainData[(int)DataManager.TrainDataMap.NEXT_STATION_DISTANCE] >= 1000 ?
+                                    decimal.Round(decimal.Parse(((double)DataManager.processData.trainData[(int)DataManager.TrainDataMap.NEXT_STATION_DISTANCE] / 1000).ToString()), 2) :
+                                    decimal.Round(decimal.Parse(((double)DataManager.processData.trainData[(int)DataManager.TrainDataMap.NEXT_STATION_DISTANCE]).ToString()), 1)) +
+                                    ((double)DataManager.processData.trainData[(int)DataManager.TrainDataMap.NEXT_STATION_DISTANCE] >= 1000 ? " KM" : " M") +
+                                    " / " + ((int)DataManager.processData.trainData[(int)DataManager.TrainDataMap.NEXT_STATION_STOP] == 1 ? "VIA" : "STOP");
+                                break;
+                            }
+                        case DataManager.TrainDataMap.CYLINER_PRESSURE:
+                            {
+                                currentDataString = Convert.ToInt32((double)DataManager.processData.trainData[(int)DataManager.TrainDataMap.CYLINER_PRESSURE] * 10).ToString();
+                                break;
+                            }
+                        case DataManager.TrainDataMap.PIPE_PRESSURE:
+                            {
+                                currentDataString = Convert.ToInt32((double)DataManager.processData.trainData[(int)DataManager.TrainDataMap.PIPE_PRESSURE] * 10).ToString();
+                                break;
+                            }
+                        case DataManager.TrainDataMap.STATION_COUNT:
+                            {
+                                currentDataString = DataManager.processData.trainData[(int)DataManager.TrainDataMap.NEXT_STATION_INDEX].ToString() 
+                                    + " / " + DataManager.processData.trainData[(int)DataManager.TrainDataMap.STATION_COUNT].ToString();
+                                break;
+                            }
+                    }
+                }
+                else
+                {
+                    currentDataString = DataManager.processData.trainData[(int)DataManager.HMIData.HMIDataBinding[i]].ToString();
+                }
+                DataManager.HMIData.SetHMIData(i, currentDataString);
+            }
+
+            //Send HMI Scripts
             try
             {
                 foreach (string HMIString in ((DataManager.HMIInstructions)DataManager.processData.trainData[(int)DataManager.TrainDataMap.HMI_INSTRUCTIONS]).HMIData)

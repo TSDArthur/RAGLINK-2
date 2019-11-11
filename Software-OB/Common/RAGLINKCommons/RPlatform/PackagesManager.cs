@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 
 namespace RAGLINKCommons.RPlatform
 {
@@ -83,19 +84,23 @@ namespace RAGLINKCommons.RPlatform
                 SettingsFileIO settingsFileIO = new SettingsFileIO();
                 foreach (DirectoryInfo subDirectory in boardPath.GetDirectories())
                 {
-                    string packageDefineFilePath = Path.GetFullPath(subDirectory.FullName + "\\packageInfo" + SettingsContent.universalFileExtName);
-                    if (File.Exists(packageDefineFilePath))
+                    FileInfo[] packageDefinieFiles = subDirectory.GetFiles();
+                    foreach (FileInfo fileName in packageDefinieFiles)
                     {
-                        settingsFileIO.SetSettingsFilePath(packageDefineFilePath);
-                        if (settingsFileIO.GetFileType() == SettingsContent.FileType.RESPACK)
+                        if (fileName.Extension == SettingsContent.universalFileExtName)
                         {
-                            //MessageBox.Show(packageDefineFilePath);
-                            packageList.packageCount++;
-                            packageList.packageDefineFilePath.Add(packageDefineFilePath);
-                            packageList.packageGUID.Add(settingsFileIO.ReadValue(packageInfoSection, "packageguid"));
-                            packageList.packageName.Add(settingsFileIO.ReadValue(packageInfoSection, "name"));
+                            string packageDefineFilePath = fileName.FullName;
+                            settingsFileIO.SetSettingsFilePath(packageDefineFilePath);
+                            if (settingsFileIO.GetFileType() == SettingsContent.FileType.RESPACK)
+                            {
+                                //MessageBox.Show(packageDefineFilePath);
+                                packageList.packageCount++;
+                                packageList.packageDefineFilePath.Add(packageDefineFilePath);
+                                packageList.packageGUID.Add(settingsFileIO.ReadValue(packageInfoSection, "packageguid"));
+                                packageList.packageName.Add(settingsFileIO.ReadValue(packageInfoSection, "name"));
+                            }
+                            settingsFileIO.Dispose();
                         }
-                        settingsFileIO.Dispose();
                     }
                 }
             }

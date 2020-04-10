@@ -1,4 +1,4 @@
-# ALL NEW RAGLINK 2
+# ALL NEW RAGLINK+ 2
 
 ![N/A](https://raw.githubusercontent.com/TSDArthur/RAGLINK-2/master/Images/1.jpg)
 
